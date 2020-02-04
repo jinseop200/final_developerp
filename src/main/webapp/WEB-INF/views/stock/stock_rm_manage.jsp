@@ -9,7 +9,6 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-
   <!-- Custom fonts for this template -->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -19,17 +18,6 @@
 
   <!-- Custom styles for this page -->
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-  
-  <!-- 정렬 하기 (중요!) -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- 볼 페이지 갯수 -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <!-- 페이지바 -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
-  
 
 </head>
 

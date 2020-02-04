@@ -12,7 +12,14 @@
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
   
- 
+  <!-- 정렬 하기 (중요!) -->
+  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- 볼 페이지 갯수 -->
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- 페이지바 -->
+  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
   
   
   
