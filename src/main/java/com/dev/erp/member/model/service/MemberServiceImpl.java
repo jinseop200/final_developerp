@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.erp.member.model.dao.MemberDAO;
-import com.dev.erp.member.vo.Member;
+import com.dev.erp.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -28,6 +28,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Map<String, String>> selectJobList() {
 		return memberDAO.selectJobList();
+	}
+
+	@Override
+	public List<Member> memberSelectList() {
+		return memberDAO.memberSelectList();
+	}
+
+	@Override
+	public Member selectOneMember(String email) {
+		return memberDAO.selectOneMember(email);
 	}
 }
 

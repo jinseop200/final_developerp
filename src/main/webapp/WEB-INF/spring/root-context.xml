@@ -12,9 +12,9 @@
 	<!-- #7.1. myBatis(JDBC)설정 연결 설정하기 -->
 	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@myerpinstance.cuy7ciqpypcf.ap-northeast-2.rds.amazonaws.com:1521:orcl"/>
 		<property name="username" value="admin"/>
-		<property name="password" value="adminadmin&lt;**--++&gt;gt;]]>"/>
+		<property name="password" value="adminadmin&lt;**--++&gt;&gt;"/>
 	</bean>
 	
 	<!-- #10.1.log4jdbc-remix 관련 dataSource처리  -->

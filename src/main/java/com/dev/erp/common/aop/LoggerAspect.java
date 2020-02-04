@@ -28,7 +28,7 @@ public class LoggerAspect {
 	static final Logger logger 
 		= LoggerFactory.getLogger(LoggerAspect.class);
 	
-	@Pointcut("execution(* com.kh.spring.memo..*(..))")
+	@Pointcut("execution(* com.dev.erp.main..*(..))")
 	public void pointcut() {}
 	
 	

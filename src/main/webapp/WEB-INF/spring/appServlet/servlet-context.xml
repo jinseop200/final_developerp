@@ -57,7 +57,7 @@
 			<beans:bean id="loggerInterceptor" class="com.dev.erp.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/member/memberView.do"/>
+			<mapping path="/main/main.do"/>
 			<beans:bean id="loginInterceptor" class="com.dev.erp.common.interceptor.LoginInterceptor"/>
 		</interceptor>
 	</interceptors>

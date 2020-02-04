@@ -4,18 +4,27 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="member">
-	<insert id="insertMember">	
-		insert into member 
-		values(seq_emp_id.nextval,#{memberName), #{ssn1}, #{email},
-				#{phone},#{dept_code},#{job_code},sysdate,null,'N','1111')
-				
+	<insert id="insertMember">
+		insert into employee values(seq_emp_id.nextval, #{emp_name}, #{emp_no}, #{email}
+		,#{phone}, #{dept_code},#{job_code},sysdate,null,#{quit_yn},#{password})
 	</insert>
 	
-	<select id="selectDeptList">
+	<select id="selectDeptList" resultMap="selectList">
 		select * from department	
 	</select>
-	<select id="selectJobList">
+	<select id="selectJobList" resultMap="selectList">
 		select * from job	
 	</select>
 	
+	<resultMap id="selectList" type="Map">
+	</resultMap>
+	<select  id="memberSelectList" resultMap="selectListMember">
+		select * from employee
+	</select>
+	
+	<resultMap id="selectListMember" type="Member"></resultMap>
+	
+	<select id="selectOneMember" resultType="Member">
+		select * from employee where email=#{email}
+	</select>
 </mapper>

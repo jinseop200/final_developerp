@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" >
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -33,15 +32,14 @@
 	
         
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
                 <h1>로그인</h1>
-                <div class="social-container">
-                </div>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <div class="social-container"></div>
+                <input type="email" name="email"placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
                 <a href="#">비밀번호를 잊으셨나요?</a>
                 <br />
-                <button id="loginButton">로그인 하기</button>
+                <input type="submit" id="loginButton" value="로그인 하기" />
             </form>
         </div>
         
