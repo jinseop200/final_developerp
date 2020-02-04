@@ -80,33 +80,10 @@ $(()=>{
 
 <%--아이디 중복검사 이후 아이디를 변경한 경우--%>
 <%--change이벤트는 blur할 경우, 값변경 내역을 감지한다.--%>
-$("#memberId").change(function(){
-	$("#idValid").val(0);
-});
 $("#email").change(function(){
 	$("#emailValid").val(0);
 });
 	
-	
-$("#memberId").keyup(function(event){
-	var memberId = document.getElementById("memberId");
-	
-	if($("#memberId").val() == ""){
-		$(".idValidateWarning").html('아이디를 입력해 주시기 바랍니다.');
-		$("#memberId").attr("style","border-bottom: 2px solid red");
-		$("#idValid").val(0);
-	}
-	if(!regExpId.test(memberId.value)){
-		$(".idValidateWarning").html('영문,숫자를 포함한 4~12자를 입력해 주세요');
-		$("#memberId").attr("style","border-bottom: 2px solid red");
-		$("#idValid").val(0);
-	}
-	else{
-		$("#memberId").attr("style","border-bottom: 2px solid green");
-		$(".idValidateWarning").html('');
-		$("#idValid").val(1);
-	}
-});	
 
 $("#password").keyup(function(event){
 	var password = document.getElementById("password");
@@ -176,20 +153,21 @@ $("#phone").keyup(function(event){
 	}
 });	
 
-$("#birth").keyup(function(event){
-	var birth = document.getElementById("birth");
+$("#ssn1").keyup(function(event){
+	var ssn1 = document.getElementById("ssn1");
+	var ssn2 = document.getElementById("ssn2");
 	
-	if($("#birth").val() == ""){
-		$(".birthValidateWarning").html('생년월일을 기입해 주시기 바랍니다.');
-		$("#birth").attr("style","border-bottom: 2px solid red");
+	if(($("#ssn1").val() == "")||$("#ssn2").val()==""){
+		$(".ssn1ValidateWarning").html('주민번호를 기입해 주시기 바랍니다.');
+		$("#ssn1").attr("style","border-bottom: 2px solid red");
 	}
-	if(isValidDate2(birth.value)==false){
-		$(".birthValidateWarning").html('생년월일 형식이 올바르지 않습니다.');
-		$("#birth").attr("style","border-bottom: 2px solid red");
+	if((isValidDate2(ssn1.value)==false)||(isValidDate2(ssn2.value)==false)){
+		$(".ssn1ValidateWarning").html('주민번호형식이 올바르지 않습니다.');
+		$("#ssn1").attr("style","border-bottom: 2px solid red");
 	}
 	else{
-		$("#birth").attr("style","border-bottom: 2px solid green");
-		$(".birthValidateWarning").html('');
+		$("#ssn1").attr("style","border-bottom: 2px solid green");
+		$(".ssn1ValidateWarning").html('');
 	}
 });	
 
@@ -199,38 +177,23 @@ $("#birth").keyup(function(event){
 
 <%--회원가입 유효성검사함수(폼제출)--%>
 function enrollValidate(){
-	var memberId = document.getElementById("memberId");
-	var password = document.getElementById("password");
-	var passwordChk = document.getElementById("passwordChk");
 	var memberName = document.getElementById("memberName");
-	var birth = document.getElementById("birth");
 	var email = document.getElementById("email");
 	var phone = document.getElementById("phone");
-	var $idValid = $("#idValid");
+	var ssn1 = document.getElementById("ssn1");
+	var ssn2 = document.getElementById("ssn2");
 	var $emailValid = $("#emailValid");
 	
-	<%--아이디 유효성검사--%>
-	if(!regExpTest(/^[a-zA-Z0-9]{4,12}$/, memberId, "아이디는 4~12자의 영문 대 소문자, 숫자만 사용 가능합니다.")){
-        return false;
-	}
-	
-	<%--아이디 중복검사를 하지않았을경우--%>
-	if($idValid.val() == 0){
-		alert("아이디 중복 검사 해주세요.");
-		return false;
-	}
-
-	<%--비밀번호 유효성검사--%>
-	if(!regExpTest(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/, password, "비밀번호는 8~20자의 영문 대 소문자, 숫자, 특수기호만 사용 가능합니다.")){
-        return false;
-	}
 	<%--이름 유효성검사--%>
 	if(!regExpTest(/^[가-힣]{2,4}$/, memberName, "이름은 2~4자의 한글만 사용 가능합니다.")){
         return false;
 	}
     
-	<%--생년월일 유효성검사--%>
-    if(isValidDate(birth.value)==false){
+	<%--주민번호 유효성검사--%>
+    if(isValidDate(ssn1.value)==false){
+    	return false;
+    }
+    if(isValidDate(ssn2.value)==false){
     	return false;
     }
     
@@ -243,7 +206,6 @@ function enrollValidate(){
 		alert("이메일 중복 검사 해주세요.");
 		return false;
 	}
-	
 	
     <%--전화번호 유효성검사--%>
 	if(!regExpTest(/^01[0179][0-9]{7,8}$/, phone, "전화번호 형식이 올바르지 않습니다.")){
@@ -293,109 +255,15 @@ function emailDuplicatedCheck(){
 }
 
 
-function idDuplicatedCheck(){
-	var regExpId = /^[a-zA-Z0-9]{4,12}$/;
-	var memberId = document.getElementById("memberId");
-	
-	$.ajax({
-		url: "<%=request.getContextPath()%>/member/memberIdDuplicatedCheckServlet",
-		type: "post",
-		data: {memberId: $("#memberId").val()},
-		dataType: "json",
-		success: data => {
-			console.log(data);
-			
-			if((data == 0) && (!$("#memberId").val() == "") && regExpId.test(memberId.value)){
-				alert("사용가능한 아이디 입니다.");
-				$("#memberId").attr("style","border-bottom: 2px solid #00c500");
-				$("#idValid").val(1);
-				
-			}
-			if(($("#memberId").val() == "") || (!regExpId.test(memberId.value))){
-				alert("아이디 형식이 올바르지 않습니다.");
-				$("#memberId").attr("style","border-bottom: 2px solid red");
-				$("#idValid").val(0);
-				
-			}
-			else if(data ==1){
-				alert("중복된 아이디 입니다.");
-				$("#memberId").val("");
-				$("#memberId").attr("style","border-bottom: 2px solid red");
-				$("#idValid").val(0);
-			}
-		},
-		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
-}
-
-
-<%--생년월일 유효성 체크--%>
-function isValidDate(dateStr) {
-     var year = Number(dateStr.substr(0,4)); 
-     var month = Number(dateStr.substr(4,2));
-     var day = Number(dateStr.substr(6,2));
-     var today = new Date(); // 날자 변수 선언
-     var yearNow = today.getFullYear();
-     var adultYear = yearNow-20;
- 
- 
-     if (year < 1900 || year > adultYear){
-          alert("년도를 확인하세요. "+adultYear+"년생 이전 출생자만 등록 가능합니다.");
-          return false;
-     }
-     if (month < 1 || month > 12) { 
-          alert("달은 1월부터 12월까지 입력 가능합니다.");
-          return false;
-     }
-    if (day < 1 || day > 31) {
-          alert("일은 1일부터 31일까지 입력가능합니다.");
-          return false;
-     }
-     if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-          alert(month+"월은 31일이 존재하지 않습니다.");
-          return false;
-     }
-     if (month == 2) {
-          var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-          if (day>29 || (day==29 && !isleap)) {
-               alert(year + "년 2월은  " + day + "일이 없습니다.");
-               return false;
-          }
-     }
-     return true;
-}
-
-<%--생년월일 유효성 체크2--%>
-function isValidDate2(dateStr) {
-     var year = Number(dateStr.substr(0,4)); 
-     var month = Number(dateStr.substr(4,2));
-     var day = Number(dateStr.substr(6,2));
-     var today = new Date(); <%--날자 변수 선언--%>
-     var yearNow = today.getFullYear();
-     var adultYear = yearNow-20;
- 
- 
-     if (year < 1900 || year > adultYear){
-          return false;
-     }
-     if (month < 1 || month > 12) { 
-          return false;
-     }
-    if (day < 1 || day > 31) {
-          return false;
-     }
-     if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-          return false;
-     }
-     if (month == 2) {
-          var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-          if (day>29 || (day==29 && !isleap)) {
-               return false;
-          }
-     }
-     return true;
+var regExp4 = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])$/;
+var regExp5 = /^[1234]\d{6}$/;
+if(!regExpTest(regExp4,ssn1,"숫자만 입력하세요."))
+    return false;
+if(!regExpTest(regExp5,ssn2,"숫자만 입력하세요."))
+    return false;
+if(!ssnCheck(ssn1.value,ssn2.value)){
+    alert("올바른 주민번호가 아닙니다.");
+    return false;
 }
 
 
@@ -418,7 +286,7 @@ function regExpTest(regExp, el, msg){
 	<div class="steps">
 		<hr>
 		<h2>
-			<strong>신입 회원가입(개인정보 입력)</strong>
+			<strong>신규 회원가입(개인정보 입력)</strong>
 		</h2>
 		<hr>
 	</div>
@@ -466,7 +334,7 @@ function regExpTest(regExp, el, msg){
 						<select name="dept" id="dept" >
 							<option value="" selected disabled>부서명</option>
 							<c:forEach items="${dept}">
-								<option value="${dept.code }" >${dept.title }</option>
+								<option value="${dept.id}" >${dept.title}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -480,7 +348,7 @@ function regExpTest(regExp, el, msg){
 						<select name="job" id="job" >
 							<option value="" selected disabled>직급명</option>
 							<c:forEach items="${job}">
-								<option value="${job.code}" >${job.title }</option>
+								<option value="${job.code}" >${job.name}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -492,13 +360,15 @@ function regExpTest(regExp, el, msg){
 					<td></td>
 				</tr>				
 				<tr>
-					<td>생년월일<span>*</span></td>
+					<td>주민번호<span>*</span></td>
 					<td><input class="form-control input-text" type="text"
-						name="birth" id="birth" placeholder="ex)19900101" /></td>
+						name="ssn1" id="ssn1" placeholder="ex)900101" />-
+						<input class="form-control input-text" type="password"
+						name="ssn2" id="ssn2" placeholder="ex)1234567" /></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="birthValidateWarning td-warn"></td>
+					<td class="ssn1ValidateWarning td-warn"></td>
 					<td></td>
 				</tr>
 				

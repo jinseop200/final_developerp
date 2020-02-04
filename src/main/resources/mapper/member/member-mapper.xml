@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="member">
+	<insert id="insertMember">	
+		insert into member 
+		values(seq_emp_id.nextval,#{memberName), #{ssn1}, #{email},
+				#{phone},#{dept_code},#{job_code},sysdate,null,'N','1111')
+				
+	</insert>
+	
+	<select id="selectDeptList">
+		select * from department	
+	</select>
+	<select id="selectJobList">
+		select * from job	
+	</select>
+	
+</mapper>
