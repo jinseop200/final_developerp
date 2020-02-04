@@ -60,7 +60,7 @@
                 <input type="password" placeholder="Password" />
                 <a href="#">비밀번호를 잊으셨나요?</a>
                 <br />
-                <button>로그인 하기</button>
+                <button type="button" onclick="location.href='${pageContext.request.contextPath }/WEB-INF/views/main/main.jsp'">로그인 하기</button>
             </form>
         </div>
         
