@@ -92,9 +92,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">거래처등록</a>
-                <a class="collapse-item" href="cards.html">창고등록</a>
-                <a class="collapse-item" href="cards.html">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/vendorEnrollment.do">거래처등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/warehouseEnrollment.do">창고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/productEnrollment.do">품목등록</a>
               </div>
             </div>
           </li>
