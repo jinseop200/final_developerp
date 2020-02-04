@@ -3,6 +3,6 @@
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-<!-- 여기에 내용입력 -->
+<p1>원재료 재고관리(LOT)</p1>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

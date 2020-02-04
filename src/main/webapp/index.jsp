@@ -13,7 +13,7 @@
 <head>
   <meta charset="UTF-8">
   
-  <title>KH ERP</title>
+  <title>DevelopERP</title>
 
 </head>
 
@@ -68,7 +68,7 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                 	<%-- 로고 이미지 삽입 --%>
-                	<img src="${pageContext.request.contextPath }/resources/images/kherp.jpg"  width=200px;/>
+                	<img src="${pageContext.request.contextPath }/resources/images/logo.jpg"  width=200px;/>
                     <br />
                     <h1>당신을 위한 ERP</h1>
                 	<br />
@@ -79,14 +79,13 @@
                 </div>
                 <div class="overlay-panel overlay-right">
                 	<%-- 로고 이미지 삽입 --%>
-                	<img src="${pageContext.request.contextPath }/resources/images/kherp.jpg"  width=200px;/>
+                	<img src="${pageContext.request.contextPath }/resources/images/logo.jpg"  width=200px;/>
                     <br />
                     <h1>당신을 위한 ERP</h1>
                 	<br />
                     <span>지금 바로 기업에 최적화된 </span>
                     <span>업무환경을 경험하세요!</span>
                     <br />
-                    <button class="ghost" id="signUp">회원가입 페이지</button>
                 </div>
             </div>
         </div>
@@ -119,7 +118,7 @@ document.addEventListener('visibilitychange', function(){
 function myMove() {
   var text = document.getElementById("animate");
   var bar = document.getElementById("bar");
-  var str = "KH-ERP";
+  var str = "DevelopERP";
   var pos = 0;
   var count = 0;
   bar.style.display = "block";
@@ -141,7 +140,7 @@ function myMove() {
     i = window.setInterval(frame, 50);
   }
   function frame() {
-    if (pos < 6 || (pos >= 20 && pos < 31)) {
+    if (pos < 10 || (pos >= 20 && pos < 31)) {
       count++;
       pos++; 
       text.innerHTML = str.substring(0, count);
