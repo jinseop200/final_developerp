@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8">
   
-  <title>KH ERP</title>
+  <title>DevelopERP</title>
   <link rel="stylesheet" href="./style.css">
 
 </head>
@@ -30,32 +30,12 @@
 <div class="login">
 	<div class="container" id="container">
 	
-        <div class="form-container sign-up-container">
-            <form action="#">
-                <h1>회원가입</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_naver.gif" /></a>
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_kakao.gif" /></a>
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_facebook.gif" /></a>
-                </div>
-                <span>이메일로 회원가입하기</span>
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <br />
-                <button>회원가입 하기</button>
-            </form>
-        </div>
         
         <div class="form-container sign-in-container">
             <form action="#">
                 <h1>로그인</h1>
                 <div class="social-container">
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_naver.gif" /></a>
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_kakao.gif" /></a>
-                    <a href="#" class="social"><img src="${pageContext.request.contextPath }/resources/images/btn_facebook.gif" /></a>
                 </div>
-                <span>계정으로 로그인하기</span>
                 <input type="email" placeholder="Email" />
                 <input type="password" placeholder="Password" />
                 <a href="#">비밀번호를 잊으셨나요?</a>
@@ -86,7 +66,6 @@
                     <span>지금 바로 기업에 최적화된 </span>
                     <span>업무환경을 경험하세요!</span>
                     <br />
-                    <button class="ghost" id="signUp">회원가입 페이지</button>
                 </div>
             </div>
         </div>
