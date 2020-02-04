@@ -16,7 +16,7 @@ local.properties
 .recommenders
 Servers/
 pom.xml
-target/
+/target/
 
 # External tool builders
 .externalToolBuilders/
