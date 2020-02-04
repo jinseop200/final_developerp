@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<fmt:requestEncoding value="utf-8"/>
 
 <head>
 
@@ -10,27 +9,27 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>테이블</title>
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+   <!-- Custom styles for this template -->
+  <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
   
   <!-- 정렬 하기 (중요!) -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- 볼 페이지 갯수 -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
   <!-- 페이지바 -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
+  
 
 </head>
 
@@ -53,34 +52,34 @@
             <thead>
             
               <tr>
-                <th>품목이름</th>
-                <th>가격</th>
-                <th>회사위치</th>
-                <th>나이</th>
-                <th>근무시작일</th>
-                <th>봉급</th>
+               <th>로트번호</th>
+               <th>원재료번호</th>
+               <th>창고번호</th>
+               <th>입고수량</th>
+               <th>부적합여부</th>
+               <th>입고일</th>
               </tr>
             </thead>
             
             <tfoot>
               <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+               <th>로트번호</th>
+               <th>원재료번호</th>
+               <th>창고번호</th>
+               <th>입고수량</th>
+               <th>부적합여부</th>
+               <th>입고일</th>
               </tr>
             </tfoot>
             
             <tbody>
               <tr>
-                <td>갤럭시</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
+                <td>M1234</td>
+                <td>1234</td>
+                <td>A11</td>
+                <td>500</td>
+                <td>T</td>
+                <td>2020/02/04</td>
               </tr>
               <tr>
                 <td>Garrett Winters</td>
