@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 
@@ -13,7 +14,6 @@
   <meta charset="UTF-8">
   
   <title>KH ERP</title>
-  <link rel="stylesheet" href="./style.css">
 
 </head>
 
@@ -60,7 +60,7 @@
                 <input type="password" placeholder="Password" />
                 <a href="#">비밀번호를 잊으셨나요?</a>
                 <br />
-                <button>로그인 하기</button>
+                <button id="loginButton">로그인 하기</button>
             </form>
         </div>
         
@@ -166,6 +166,9 @@ function myMove() {
     }
   }
 }
+$("#loginButton").click(function(){
+	location.href = "${pageContext.request.contextPath}/main/main.do";
+})
 </script>
 
 <%-- 로그인 부분 --%>
