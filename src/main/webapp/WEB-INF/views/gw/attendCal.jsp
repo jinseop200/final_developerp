@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <fmt:requestEncoding value="utf-8"/>
+<%
+%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <!DOCTYPE html>
@@ -90,7 +92,25 @@
     calendar.render();
   });
 
+  function here(date){
+	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do";
+		var title = "출/퇴근 기록부";
+		var spec = "left=500px, top=100px, width=300px, height=200px";
+		var popup = open("", title, spec);
+		
+		var frm = document.attendForm;
+		
+		frm.action = url;
+		frm.target = title;
+		frm.method = "POST";
+		//frm.memberId.value = $memberId.val().trim();
+		frm.submit();
+	
+  }
 </script>
+<form name="attendForm">
+		<input type="hidden" name="Id" val= />
+	</form>
 <style>
 
   body {
