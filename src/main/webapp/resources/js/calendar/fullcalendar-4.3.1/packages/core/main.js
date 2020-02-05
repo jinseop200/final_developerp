@@ -3347,6 +3347,7 @@ Docs & License: https://fullcalendar.io/
     // `attrs` and `innerHtml` are use to generate the rest of the HTML tag.
     function buildGotoAnchorHtml(component, gotoOptions, attrs, innerHtml) {
         var dateEnv = component.dateEnv;
+      
         var date;
         var type;
         var forceOff;
@@ -3359,10 +3360,12 @@ Docs & License: https://fullcalendar.io/
             type = gotoOptions.type;
             forceOff = gotoOptions.forceOff;
         }
-        finalOptions = {
-            date: dateEnv.formatIso(date, { omitTime: true }),
-            type: type || 'day'
-        };
+//        finalOptions = {
+//            date: dateEnv.formatIso(date, { omitTime: true }),
+//            type: type || 'day'
+//        };
+        finalOptions=dateEnv.formatIso(date,{omitTime:true});
+       
         if (typeof attrs === 'string') {
             innerHtml = attrs;
             attrs = null;
@@ -3371,7 +3374,7 @@ Docs & License: https://fullcalendar.io/
         innerHtml = innerHtml || '';
         if (!forceOff && component.opt('navLinks')) {
             return '<a' + attrs +
-                ' data-goto="' + htmlEscape(JSON.stringify(finalOptions)) + '">' +
+                ' onclick=here(' + htmlEscape(JSON.stringify(finalOptions)) + ')>' +
                 innerHtml +
                 '</a>';
         }

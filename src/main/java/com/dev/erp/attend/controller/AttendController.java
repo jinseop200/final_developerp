@@ -38,4 +38,23 @@ public class AttendController {
 		mav.setViewName("gw/attendCal");
 		return mav;
 	}
+	@RequestMapping("/attend/attendForm.do")
+	public ModelAndView showAttendForm(ModelAndView mav
+										) {
+//		final int numPerPage = 10;
+//		
+//		//1.업무로직
+//		List<Board> list = boardService.selectBoardList(cPage, numPerPage);
+//		logger.debug("list={}", list);
+//		int totalContents = boardService.selectTotalContents();
+//		
+//		//2.view model처리
+//		mav.addObject("list", list);
+//		mav.addObject("numPerPage", numPerPage);
+//		mav.addObject("cPage", cPage);
+//		mav.addObject("totalContents", totalContents);
+		
+		mav.setViewName("gw/attendForm");
+		return mav;
+	}
 }
