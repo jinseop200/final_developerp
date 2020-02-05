@@ -14,6 +14,7 @@
   
   <title>DevelopERP</title>
   <link rel="stylesheet" href="./style.css">
+=======d
 
 </head>
 
@@ -47,7 +48,7 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                 	<%-- 로고 이미지 삽입 --%>
-                	<img src="${pageContext.request.contextPath }/resources/images/kherp.jpg"  width=200px;/>
+                	<img src="${pageContext.request.contextPath }/resources/images/logo.jpg"  width=200px;/>
                     <br />
                     <h1>당신을 위한 ERP</h1>
                 	<br />
@@ -58,7 +59,7 @@
                 </div>
                 <div class="overlay-panel overlay-right">
                 	<%-- 로고 이미지 삽입 --%>
-                	<img src="${pageContext.request.contextPath }/resources/images/kherp.jpg"  width=200px;/>
+                	<img src="${pageContext.request.contextPath }/resources/images/logo.jpg"  width=200px;/>
                     <br />
                     <h1>당신을 위한 ERP</h1>
                 	<br />
@@ -97,7 +98,7 @@ document.addEventListener('visibilitychange', function(){
 function myMove() {
   var text = document.getElementById("animate");
   var bar = document.getElementById("bar");
-  var str = "KH-ERP";
+  var str = "DevelopERP";
   var pos = 0;
   var count = 0;
   bar.style.display = "block";
@@ -119,7 +120,7 @@ function myMove() {
     i = window.setInterval(frame, 50);
   }
   function frame() {
-    if (pos < 6 || (pos >= 20 && pos < 31)) {
+    if (pos < 10 || (pos >= 20 && pos < 31)) {
       count++;
       pos++; 
       text.innerHTML = str.substring(0, count);

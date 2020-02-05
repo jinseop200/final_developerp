@@ -15,6 +15,18 @@
 
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  
+  <!-- 정렬 하기 (중요!) -->
+  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- 볼 페이지 갯수 -->
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- 페이지바 -->
+  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
+  
+  
+  
   <style>
  .main-container{
     width: 1440px;
@@ -96,9 +108,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">거래처등록</a>
-                <a class="collapse-item" href="cards.html">창고등록</a>
-                <a class="collapse-item" href="cards.html">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/vendorEnrollment.do">거래처등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/warehouseEnrollment.do">창고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/productEnrollment.do">품목등록</a>
               </div>
             </div>
           </li>
@@ -141,9 +153,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="cards.html">제품입고/반품관리</a>
-                <a class="collapse-item" href="cards.html">창고별 재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_rm_manage.do">원재료 재고관리(LOT)</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_product_manage.do">제품입고/반품관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_storage_manage.do">창고별 재고관리</a>
               </div>
             </div>
           </li>
