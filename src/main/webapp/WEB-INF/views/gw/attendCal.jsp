@@ -93,7 +93,7 @@
   });
 
   function here(date){
-	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do";
+	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do?date="+date;
 		var title = "출/퇴근 기록부";
 		var spec = "left=500px, top=100px, width=300px, height=200px";
 		var popup = open("", title, spec);
