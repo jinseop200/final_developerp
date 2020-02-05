@@ -14,7 +14,6 @@
   
   <title>DevelopERP</title>
   <link rel="stylesheet" href="./style.css">
-=======d
 
 </head>
 
