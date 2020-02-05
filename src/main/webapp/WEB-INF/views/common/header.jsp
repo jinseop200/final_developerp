@@ -1,32 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ERP Main</title>
-  <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
+	  <!-- Bootstrap core JavaScript-->
+  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="${pageContext.request.contextPath }/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="${pageContext.request.contextPath }/resources/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="${pageContext.request.contextPath }/resources/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-area-demo.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-pie-demo.js"></script>
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
-  
-  <!-- 정렬 하기 (중요!) -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- 볼 페이지 갯수 -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <!-- 페이지바 -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
-  
-  
-  
   <style>
  .main-container{
     width: 1440px;
@@ -108,9 +109,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/vendorEnrollment.do">거래처등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/warehouseEnrollment.do">창고등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/enrollment/productEnrollment.do">품목등록</a>
+                <a class="collapse-item" href="buttons.html">거래처등록</a>
+                <a class="collapse-item" href="cards.html">창고등록</a>
+                <a class="collapse-item" href="cards.html">품목등록</a>
               </div>
             </div>
           </li>
@@ -153,9 +154,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_rm_manage.do">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_product_manage.do">제품입고/반품관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_storage_manage.do">창고별 재고관리</a>
+                <a class="collapse-item" href="buttons.html">원재료 재고관리(LOT)</a>
+                <a class="collapse-item" href="cards.html">제품입고/반품관리</a>
+                <a class="collapse-item" href="cards.html">창고별 재고관리</a>
               </div>
             </div>
           </li>
@@ -171,7 +172,7 @@
                   <a class="collapse-item" href="buttons.html">히스토그램</a>
                   <a class="collapse-item" href="cards.html">Xbar-R</a>
                   <a class="collapse-item" href="cards.html">P 관리도</a>
-                  <a class="collapse-item" href="cards.html">부적합 관리</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityControll.do">부적합 관리</a>
                 </div>
               </div>
             </li>
@@ -444,7 +445,7 @@
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${memberLoggedIn.email}</span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">사용자</span>
                     <img class="img-profile rounded-circle" src="${pageContext.request.contextPath }/resources/images/account_circle_black.png">
                   </a>
                   <!-- Dropdown - User Information -->
@@ -462,7 +463,7 @@
                       Activity Log
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogOut.do">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Logout
                     </a>
