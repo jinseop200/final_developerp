@@ -16,12 +16,7 @@
   <!-- Custom scripts for all pages-->
   <script src="${pageContext.request.contextPath }/resources/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-area-demo.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-pie-demo.js"></script>
+ 
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -141,6 +136,7 @@
                   <a class="collapse-item" href="buttons.html">주별 생산 계획</a>
                   <a class="collapse-item" href="cards.html">원재료 구매 계획</a>
                   <a class="collapse-item" href="cards.html">생산률 조회</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/jobOrder.do">작업 지시서</a>
                 </div>
               </div>
             </li>
