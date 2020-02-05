@@ -95,6 +95,9 @@ document.addEventListener('visibilitychange', function(){
 });
 
 function myMove() {
+  window.history.forward(function(){
+	  alert("로그아웃해주세요!");
+  });
   var text = document.getElementById("animate");
   var bar = document.getElementById("bar");
   var str = "DevelopERP";

@@ -47,7 +47,6 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-	
 	<!-- #9.인터셉터 등록 -->
 	<interceptors>
 		<interceptor>
@@ -57,9 +56,21 @@
 			<beans:bean id="loggerInterceptor" class="com.dev.erp.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/main/main.do"/>
+			<mapping path="/main/**"/>
+			<mapping path="/member/**"/>
+			<exclude-mapping path="/member/memberLogin.do"/>
 			<beans:bean id="loginInterceptor" class="com.dev.erp.common.interceptor.LoginInterceptor"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/**/"/>
+			<beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                <beans:property name="cacheSeconds" value="0"/>
+                <beans:property name="useExpiresHeader" value="false"/>
+                <beans:property name="useCacheControlHeader" value="true"/>
+                <beans:property name="useCacheControlNoStore" value="true"/>
+            </beans:bean> 
+         </interceptor>
+		
 	</interceptors>
 	
 	<!-- #12.1 파일업로드를 처리할 Resolver클래스 빈등록(빈이름 주의) -->
