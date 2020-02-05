@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="enrollment">
+	<insert id="insertVendor">
+		insert into vendor values(
+			#{vendorNo},
+			#{vendorName},
+			#{incharge},
+			#{vendorPhone},
+			default
+		)
+	</insert>
+	
+	<select id="selectVendorList" resultMap="vendorMap">
+		select * from vendor order by vendor_name desc
+	</select>
+	<resultMap type="map" id="vendorMap">
+	</resultMap>
+	
+</mapper>

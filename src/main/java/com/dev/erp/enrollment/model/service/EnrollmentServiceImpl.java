@@ -1,5 +1,8 @@
 package com.dev.erp.enrollment.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	EnrollmentDAO enrollmentDAO;
 	
 	Logger logger = LoggerFactory.getLogger(EnrollmentServiceImpl.class);
+
+	@Override
+	public int insertVendor(Map<String, String> vendor) {
+		return enrollmentDAO.insertVendor(vendor);
+	}
+
+	@Override
+	public List<Map<String, String>> selectVendorList() {
+		return enrollmentDAO.selectVendorList();
+	}
 	
 	
 }

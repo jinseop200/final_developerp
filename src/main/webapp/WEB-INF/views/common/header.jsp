@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>ERP Main</title>
-	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
-	  <!-- Bootstrap core JavaScript-->
+  <script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
+  <!-- Bootstrap core JavaScript-->
   <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -16,18 +16,14 @@
   <!-- Custom scripts for all pages-->
   <script src="${pageContext.request.contextPath }/resources/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-area-demo.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-pie-demo.js"></script>
+  
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  
   <style>
  .main-container{
     width: 1440px;
@@ -109,9 +105,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">거래처등록</a>
-                <a class="collapse-item" href="cards.html">창고등록</a>
-                <a class="collapse-item" href="cards.html">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do">거래처등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do">창고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/productEnrollment.do">품목등록</a>
               </div>
             </div>
           </li>
