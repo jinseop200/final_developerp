@@ -8,31 +8,29 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
 	
 	<!-- #7.1. myBatis(JDBC)설정 연결 설정하기 -->
 	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="spring"/>
-		<property name="password" value="spring"/>
+		<property name="url" value="jdbc:oracle:thin:@myerpinstance.cuy7ciqpypcf.ap-northeast-2.rds.amazonaws.com:1521:orcl"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="adminadmin&lt;**--++&gt;&gt;"/>
 	</bean>
-
+	
 	<!-- #10.1.log4jdbc-remix 관련 dataSource처리  -->
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">  
-	    <constructor-arg ref="realDataSource" />
-	    <property name="logFormatter">
-	        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">    
-	            <property name="loggingType" value="MULTI_LINE" />
-	            <property name="sqlPrefix" value="[SQL] " />
-	        </bean>
-	    </property>
-	</bean>
-
+        <constructor-arg ref="realDataSource" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">    
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="[SQL] " />
+            </bean>
+        </property>
+    </bean>
+	
 	
 	<!-- #7.2. myBatis(JDBC)설정 : SqlSessionFactory -->
-	<bean id="sqlSessionFactoryBean" 
-		  class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- name=dataSource => 빈객체sqlSessionFactoryBean의  property명 dataSource임(setter) -->
 		<!-- ref의 dataSource는 위에서 선언한 datasource 빈객체를 의미함. -->
 		<property name="dataSource" ref="dataSource"/>
@@ -53,38 +51,32 @@
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 	</bean>
 	
-	
 	<!-- #13.1. 트랜잭션 처리를 위한 트랜잭션매니저 설정해야 한다. -->
-	<bean id="transactionManager" 
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- #13.2. @Transactional이 붙은 메소드를 대상으로 Transaction Advice를 적용함. -->
-	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
 	
-	<!-- ################ 선언적 방식의 트랜잭션 시작 #################### -->
+	<!-- #13.2. @Transactional이 붙은 메소드를 대상으로 Transaction Advice를 적용함. -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- #############선언전 방식의 트랜잭션 시작############# -->
 	<!-- #13.2. 선언적방식의 트랜잭션처리 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="select*" rollback-for="Exception" 
-									  read-only="true"/>
+			<tx:method name="select*" rollback-for="Exception" read-only="true"/>
 			<tx:method name="insert*" rollback-for="Exception"/>
 			<tx:method name="update*" rollback-for="Exception"/>
 			<tx:method name="delete*" rollback-for="Exception"/>
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- #13.3 선언적방식의 트랜잭션 : aop pointcut및 advice등록 -->
+
+	<!-- #13.3. 선언적방식의 트랜잭션 : aop pointcut및 advice등록 -->
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="serviceMethod" 
-					  expression="execution(* com.kh.spring..*ServiceImpl.*(..)))"/>
-		<aop:advisor id="transactionAdvisor" 
-					 advice-ref="txAdvice" 
-					 pointcut-ref="serviceMethod"/>
+		<aop:pointcut id="serviceMethod" expression="execution(* com.dev.erp..*ServiceImpl.*(..)))"/>
+		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	</aop:config>
-	<!-- ################ 선언적 방식의 트랜잭션 끝 #################### -->
-	
-	
+	<!-- #############선언전 방식의 트랜잭션 끝############# -->
 	
 </beans>

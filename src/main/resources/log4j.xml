@@ -75,7 +75,7 @@
 	
 	
 	<!-- Application Loggers -->
-	<logger name="com.kh.spring" additivity="true">
+	<logger name="com.dev.erp" additivity="true">
 		<level value="debug" />
 		<!-- <appender-ref ref="console"/> -->
 	</logger>

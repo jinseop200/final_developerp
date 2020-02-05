@@ -9,12 +9,12 @@
   	<setting name="jdbcTypeForNull" value="NULL"/>
   </settings>
   
-<!--   <typeAliases>
-	<typeAlias type="com.kh.spring.common.typehandler.StringArrayTypeHandler"
+   <typeAliases>
+	<typeAlias type="com.dev.erp.common.typehandler.StringArrayTypeHandler"
 			   alias="strArrTypeHandler"/>
- 	<package name="com.kh.spring"/>
-	<package name="com.kh.spring.demo.model.vo"/>
-	<package name="com.kh.spring.member.model.vo"/>
-  </typeAliases> --> 
+ 	<package name="com.dev.erp"></package>
+ 	<package name="com.dev.erp.member.model.vo"></package>
+ 	
+  </typeAliases>  
   
 </configuration>
