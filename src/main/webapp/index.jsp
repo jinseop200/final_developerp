@@ -19,7 +19,7 @@
 
 
 <body>
-<!-- 타이핑 타이틀 모션 부분 -->
+<!-- Typing 타이틀 모션 부분 -->
 <div id = "typing">
 	<br /><br />
 	<span id="animate" style="font-weight: 500; font-size: 70pt;"></span>
