@@ -107,7 +107,7 @@ public class StockController {
 		logger.info("rmList@Controller={}", rmList);
 		
 		mav.addObject("rmList", rmList);
-		mav.setViewName("rm/rmView");
+		mav.setViewName("stock/rm/rmView");
 		
 		return mav;
 	}

@@ -40,35 +40,21 @@
 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 		  <thead>
 		    <tr>
-		     <th>로트번호</th>
 		     <th>원재료번호</th>
-		     <th>창고번호</th>
-		     <th>입고수량</th>
-		     <th>부적합여부</th>
-		     <th>입고일</th>
+		     <th>원재료이름</th>
+		     <th>규격</th>
+		     <th>총 수량</th>
 		    </tr>
 		  </thead>
 		  
-		  <tfoot>
-		    <tr>
-		     <th>로트번호</th>
-		     <th>원재료번호</th>
-		     <th>창고번호</th>
-		     <th>입고수량</th>
-		     <th>부적합여부</th>
-		     <th>입고일</th>
-		    </tr>
-		  </tfoot>
 		  
 		  <tbody>
 	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
 		        <tr>
-		          <td>${rm.LOT_NO}</td>
 		          <td>${rm.RM_NO}</td>
-		          <td>${rm.STORE_NO}</td>
-		          <td>${rm.QUANTITY}</td>
-		          <td>${rm.FAIL_YN}</td>
-		          <td>${rm.REC_DATE}</td>
+		          <td>${rm.RM_NAME}</td>
+		          <td>${rm.STANDARD}</td>      
+		          <td>${rm.RM_SUM}</td>
 		        </tr>
 	        </c:forEach>
 		  </tbody>

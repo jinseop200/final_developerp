@@ -16,11 +16,11 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">시작일자</label>&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="" class="form-control datepicker">
+                    <input type="text" id="" class="form-control datepicker startDate">
                     </div>
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">종료일자</label>&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="" class="form-control datepicker">
+                    <input type="text" id="" class="form-control datepicker endDate">
                     </div>
             
                 </div>              
@@ -28,14 +28,14 @@
                     <div class="col-md-6 mb-3">
                         <label for="qualityNo"> 관리번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" id="qualityNo" name="qualityNo" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchSpec" type="button">
+                        <button class="btn btn-primary searchSpec" type="button" value="qualityNo">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lotNo">로트번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" id="vendor" name="vendor" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchSpec" type="button">
+                        <button class="btn btn-primary searchSpec" type="button" value="lotNo">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
@@ -44,21 +44,27 @@
                     <div class="col-md-6 mb-3">
                         <label for="type">제품타입 </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" id="vendor" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchSpec" type="button">
+                        <button class="btn btn-primary searchSpec" type="button" value="type">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">창고번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" id="vendor" name="storeName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchSpec" type="button">
+                        <button class="btn btn-primary searchSpec" type="button" value="storeNo">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                 </div>
-              
-                <button id="FrmBtn" class="btn btn-primary" type="submit">조회하기</button>
             </form>
+            <div class="form-row">
+            	<div class="col-md-6 mb-3">
+            	</div>
+                <div class="col-md-6 mb-3">
+	              <button id="FrmBtn" class="btn btn-primary search-end-button">취소</button> &nbsp;&nbsp;&nbsp;
+	              <button id="FrmBtn" class="btn btn-primary search-excute-button">조회</button> 
+                </div>
+            </div>
       </div>
       
       
@@ -72,13 +78,19 @@
             <p>Modal body text goes here.</p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="searchModal-end">끝</button>
+            <button type="button" class="btn btn-primary searchModal-end">끝</button>
         </div>
         </div>
     </div>
   </div>
 
 <style>
+.modal-body{
+ height: 240px;
+}
+.searchModalBody{
+ height: 500px;
+}
 #searchModal {
   width: 60%;
   height: 150px;
@@ -137,17 +149,40 @@
             });
  
             //input을 datepicker로 선언
-            $(".datepicker").datepicker();           
+            $(".startDate").datepicker();           
+            $(".endDate").datepicker();           
             //From의 초기값을 오늘 날짜로 설정
-            $('.datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+            $('.startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+            $('.endDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 			
             $(".searchSpec").click(function(){
-            	$('#mySearchModal').modal();
+            	var title = $(this).siblings().html();
+            	$("#searchModalTitle").html(title);
+            	var searchType = $(this).val();
+            	console.log(searchType);
+            	 $('.searchModalBody').load("${pageContext.request.contextPath}/quality/searchSpecify?searchType="+searchType,function(){
+         	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
+         	        $('#mySearchModal').modal({show:true});
+         	        $(".modal-backdrop.in").css('opacity', 0.4);
+         		});
                     
             });
             
             $(".searchModal-end").click(function(){
             	$('#mySearchModal').modal("hide");
+            });
+            
+            $(".search-end-button").click(function(){
+            	
+            	$('#myModal').modal("hide");
+            });
+            $(".search-excute-button").click(function(){
+            		var bool = confirm("변경된 값으로 수정하시겠습니까?");
+            		
+            		if(bool) {
+            			$("#updateQualityFrm").submit();
+            		}
+            	
             });
         });
 </script>
