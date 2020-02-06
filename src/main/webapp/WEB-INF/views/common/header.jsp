@@ -151,8 +151,8 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">제품입고/반품관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고/입출고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 재고관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
               </div>
             </div>

@@ -6,9 +6,10 @@
 
 	
 	<select id="selectRmStockList" resultMap="stockMap">
-		select * 
-   		from RECIEVING left join RAW_MATERIAL on RECIEVING.RM_NO = RAW_MATERIAL.RM_NO
-   		order by RECIEVING.RM_NO
+	   select RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.STANDARD,  sum(RECIEVING.QUANTITY) AS RM_SUM
+	   from RECIEVING left join RAW_MATERIAL on RECIEVING.RM_NO = RAW_MATERIAL.RM_NO
+	   group by RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.STANDARD
+	   order by RECIEVING.RM_NO
 	</select>
 	
 	<resultMap type="map" id="stockMap">
