@@ -13,5 +13,6 @@
  $("#enrollButton").click(function(){
 		location.href = "${pageContext.request.contextPath}/member/memberEnroll.do";
 	});
+ 
  </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
