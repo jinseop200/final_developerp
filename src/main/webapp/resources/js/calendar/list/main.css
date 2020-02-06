@@ -84,6 +84,7 @@
   /* every event title cell has an <a> tag */
   text-decoration: none;
   color: inherit;
+ 
 }
 
 .fc-list-item-title a[href]:hover {

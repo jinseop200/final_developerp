@@ -129,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		<input type="hidden" name="Id" val= />
 	</form>
 <style>
-
+a.fc-day-number{
+cursor:pointer;}
   body {
     margin: 40px 10px;
     padding: 0;

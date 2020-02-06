@@ -13,4 +13,8 @@ public interface AttendDAO {
 
 	List<Attend> attendShow(String email);
 
+	Attend selectAttendOne(Attend attend);
+
+	Attend selectLeaveOne(Attend attend);
+
 }
