@@ -14,6 +14,13 @@
                 <button class="btn btn-primary" type="button" id="quality-insert-button">
                 	  신규 등록 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" id="quality-update-button">
+                	  수정 
+                </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" id="quality-delete-button">
+                	  삭제
+                </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                
                 <button class="btn btn-primary" type="button" id="quality-search-button">
                 	  부적합 상세 검색하기&nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
                 </button> 
