@@ -42,6 +42,9 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 function attend(date,email){
 	location.href = "${pageContext.request.contextPath}/attend/attendant.do?date="+date+"&email="+email;
 }
+function leave(date,email){
+	location.href = "${pageContext.request.contextPath}/attend/leave.do?date="+date+"&email="+email;
+}
 </script>
 	
 <body onload="printClock()">
@@ -88,6 +91,7 @@ function attend(date,email){
 				</tr>
 			</table>
 					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
+					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
 				
 			
 

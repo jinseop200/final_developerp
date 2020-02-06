@@ -5,8 +5,12 @@
     
 <mapper namespace="attend">
 	<insert id="attendant">
-		insert into attend(email,attend_start) values(#{email},default)
+		insert into attend(email,attend_start) values(#{email},sysdate)
 	</insert>
 	
-	
+	<insert id="leave">
+		insert into attend(email,attend_end) values(#{email},sysdate)
+	</insert>
+	<select id="attendShow" resultType="Attend">
+	select email,attend_start,to_char(attend_start,'yyyy-mm-dd')attendstartform,attend_end,to_char(attend_end,'yyyy-mm-dd')attendendform,reason from attend where email=#{email}</select>
 </mapper>
