@@ -5,9 +5,11 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 
  <button id="enrollButton">관리자회원가입 하기</button>
- 
+ <button id="enrollButton">회원정보변경</button>
+
  
  <script>
+
  $("#enrollButton").click(function(){
 		location.href = "${pageContext.request.contextPath}/member/memberEnroll.do";
 	});

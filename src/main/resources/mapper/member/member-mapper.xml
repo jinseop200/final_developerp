@@ -5,8 +5,8 @@
     
 <mapper namespace="member">
 	<insert id="insertMember">
-		insert into employee values(seq_emp_id.nextval, #{emp_name}, #{emp_no}, #{email}
-		,#{phone}, #{dept_code},#{job_code},sysdate,null,#{quit_yn},#{password})
+		insert into employee values(seq_emp_id.nextval, #{empName}, #{empNo}, #{email}
+		,#{phone}, #{deptCode},#{jobCode},sysdate,null,#{quitYn},#{password})
 	</insert>
 	
 	<select id="selectDeptList" resultMap="selectList">
@@ -22,9 +22,9 @@
 		select * from employee
 	</select>
 	
-	<resultMap id="selectListMember" type="Member"></resultMap>
+	<resultMap id="selectListMember" type="member"></resultMap>
 	
-	<select id="selectOneMember" resultType="Member">
+	<select id="selectOneMember" resultType="member">
 		select * from employee where email=#{email}
 	</select>
 </mapper>

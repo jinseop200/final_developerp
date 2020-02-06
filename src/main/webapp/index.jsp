@@ -19,7 +19,7 @@
 
 
 <body>
-<!-- 타이핑 타이틀 모션 부분 -->
+<!-- Typing 타이틀 모션 부분 -->
 <div id = "typing">
 	<br /><br />
 	<span id="animate" style="font-weight: 500; font-size: 70pt;"></span>
@@ -95,6 +95,9 @@ document.addEventListener('visibilitychange', function(){
 });
 
 function myMove() {
+  window.history.forward(function(){
+	  alert("로그아웃해주세요!");
+  });
   var text = document.getElementById("animate");
   var bar = document.getElementById("bar");
   var str = "DevelopERP";

@@ -1,8 +1,10 @@
 package com.dev.erp.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +51,7 @@ public class MemberController {
 		int result =memberService.insertMember(member);
 			
 		String msg="";
-		String loc="/";
+		String loc="/main/main.do";
 		if(result>0) {
 			msg="회원추가성공!";
 		}
@@ -75,23 +76,27 @@ public class MemberController {
 		
 		return mav;
 	}
-	@GetMapping("/member/memberEmailDuplicatedCheck/{email}")
+	@RequestMapping("/member/memberEmailDuplicatedCheck.do")
 	@ResponseBody
-	public int memberEmailDuplicatedCheck(@PathVariable("email") String email) {
-		List<Member> emailList = memberService.memberSelectList();
-		logger.debug("emailList={}",emailList);
+	public Map<String,Object> memberEmailDuplicatedCheck(@RequestParam("email") String email, HttpServletResponse response) {
 		logger.debug("email={}",email);
-		int result =0;
-		
+		Map<String, Object> map = new HashMap<>();
+		List<Member> emailList = memberService.memberSelectList();
+		int result=0;
 		for(int i=0; i<emailList.size(); i++) {
-			if(email.equals(emailList.get(i).getEmail())){
-				result =1;
+			if(email.equals(emailList.get(i).getEmail())) {
+				result =1;//기존의 값과 일치하는경우
 			}else {
-				result=0;
+				result=0; //아닌경우
 			}
 		}
-		logger.debug("result={}",result);
-		return result;
+		map.put("email", email);
+		
+		boolean isUsable = memberService.selectOneMember(email)==null?true:false;//기존의 값이 없는경우 true
+		map.put("isUsable", isUsable);
+		map.put("result", result);
+		
+		return map;
 	}
 	@PostMapping("/member/memberLogin.do")
 	public ModelAndView memberLogin(@RequestParam String email, @RequestParam String password, ModelAndView mav, HttpSession session) {
