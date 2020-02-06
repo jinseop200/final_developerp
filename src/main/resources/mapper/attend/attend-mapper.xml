@@ -5,12 +5,19 @@
     
 <mapper namespace="attend">
 	<insert id="attendant">
-		insert into attend(email,attend_start) values(#{email},sysdate)
+		insert into attend(email,attend_start) values(#{email},sysdate+(1/24)*9)
 	</insert>
 	
 	<insert id="leave">
-		insert into attend(email,attend_end) values(#{email},sysdate)
+		insert into attend(email,attend_end) values(#{email},sysdate+(1/24)*9)
 	</insert>
 	<select id="attendShow" resultType="Attend">
-	select email,attend_start,to_char(attend_start,'yyyy-mm-dd')attendstartform,attend_end,to_char(attend_end,'yyyy-mm-dd')attendendform,reason from attend where email=#{email}</select>
+	select email,attend_start,to_char(attend_start,'yyyy-mm-dd')attendstartform,attend_end,to_char(attend_end,'yyyy-mm-dd')attendendform,reason from attend where email=#{email}
+	</select>
+	<select id="selectAttendOne" resultType="Attend">
+		select * from attend where email=#{email} and to_char(attend_start,'yyyy-mm-dd')=#{attendStart}
+	</select>
+	<select id="selectLeaveOne" resultType="Attend">
+		select * from attend where email=#{email} and to_char(attend_End,'yyyy-mm-dd')=#{attendEnd}
+	</select>
 </mapper>
