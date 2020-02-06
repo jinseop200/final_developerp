@@ -64,7 +64,7 @@ $(()=>{
 	});
 	
 	<%--입력 모달 창 close시 값 초기화--%>
-	$('#myModal').on('hidden.bs.modal', function (e) {
+	$('#addVendor-Modal').on('hidden.bs.modal', function (e) {
 	    console.log('modal close');
 	  $(this).find('form')[0].reset()
 	});
@@ -281,10 +281,10 @@ function getVendorInfo(){
 
 
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#myModal">거래처 등록</button>
+<button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#addVendor-Modal">거래처 등록</button>
 
 <!-- 거래처등록 Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="addVendor-Modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form class="needs-validation"

@@ -124,7 +124,7 @@
 	    <div class="modal-content ctm">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">납품처 검색</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <button type="button" class="close examplModal-close" aria-label="hidden">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
@@ -141,7 +141,7 @@
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary examplModal-close">Close</button>
 	        <button type="button" class="btn btn-primary">Send message</button>
 	      </div>
 	    </div>
@@ -176,6 +176,9 @@
 		//From의 초기값을 오늘 날짜로 설정
 		$('.datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 		
+		$(".examplModal-close").click(function(){
+			$("#exampleModal").modal('hide');
+		});
 		
 				
 	});
