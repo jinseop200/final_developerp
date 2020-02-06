@@ -97,7 +97,7 @@
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
                 <a class="collapse-item" href="buttons.html">문서결재</a>
-                <a class="collapse-item" href="cards.html">출결관리</a>
+                <a class="collapse-item" href="<%=request.getContextPath()%>/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
                 <a class="collapse-item" href="cards.html">게시판</a>

@@ -38,6 +38,13 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 	  }
 	  return zero + num;
 }
+
+function attend(date,email){
+	location.href = "${pageContext.request.contextPath}/attend/attendant.do?date="+date+"&email="+email;
+}
+function leave(date,email){
+	location.href = "${pageContext.request.contextPath}/attend/leave.do?date="+date+"&email="+email;
+}
 </script>
 	
 <body onload="printClock()">
@@ -46,49 +53,47 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 	<button type="button" 
 				class="btn btn-outline-success btn-block"
 				onclick="fileDownload('${a.originalFileName}','${a.renamedFileName }');">
+				
 			<table>
 				<tr>
 					<td>이메일주소<span>*</span></td>
 					<td>
 						<input class="form-control input-text" type="email"
 						name="email" id="email" value=${memberLoggedIn.email} />
-					</td>
-					
-				</tr>
-				
-				
+					</td>			
+				</tr>		
 				<tr>
 					<td>성명<span>*</span></td>
 					<td><input class="form-control input-text" type="text"
-						name="emp_name" id="emp_name" value=${memberLoggedIn.emp_name} /></td>
-				</tr>
-				
+						name="emp_name" id="emp_name" value=${memberLoggedIn.empName} /></td>
+				</tr>				
 				<tr>
 					<td>부서명<span>*</span></td>
 					<td>
 						<input class="form-control input-text" type="text"
-						name="dept_code" id="dept_code" value=${memberLoggedIn.dept_code} />
+						name="dept_code" id="dept_code" value=${memberLoggedIn.deptCode} />
 					</td>
 				</tr>
-				<tr>
-					<td>직급명<span>*</span></td>
+				<tr>					
 					<td>부서명<span>*</span></td>
 					<td>
 						<input class="form-control input-text" type="text"
-						name="job_code" id="job_code" value=${memberLoggedIn.job_code} />
+						name="job_code" id="job_code" value=${memberLoggedIn.jobCode} />
 					</td>
 					</td>
-				</tr>
-				
+				</tr>				
 				<tr>
 					<td>전화번호<span>*</span></td>
 					<td>
 						<input type="text" class="form-control input-text"
-						name="phone" id="phone" valud=${memberLoggedIn.phone}/>
+						name="phone" id="phone" value="${memberLoggedIn.phone}"/>
 					</td>
 				</tr>
-				
 			</table>
+					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
+					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
+				
 			
+
 
 
