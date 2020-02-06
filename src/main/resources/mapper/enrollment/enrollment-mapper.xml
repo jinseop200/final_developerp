@@ -23,4 +23,12 @@
 		select * from vendor where vendor_no = #{vendorNo}
 	</select>
 	
+	<update id="updateVendor">
+		update vendor
+		set
+		vendor_name = #{vendorName},
+		incharge = #{incharge},
+		vendor_phone = #{vendorPhone}
+		where vendor_no = #{vendorNo}
+	</update>
 </mapper>

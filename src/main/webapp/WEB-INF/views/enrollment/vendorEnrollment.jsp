@@ -47,18 +47,70 @@
 .table-responsive{
 	overflow: hidden;
 }
+#vendorCur{
+	width: 270px;
+}
+#vendorNoCha{
+	width: 270px;
+}
 </style>
 <script>
 
 <%--onload function--%>
 $(()=>{
+	
 	$("#vendorNo").change(function(){
 		$("#vendorNoValid").val(0);
+	});
+	
+	<%--입력 모달 창 close시 값 초기화--%>
+	$('#myModal').on('hidden.bs.modal', function (e) {
+	    console.log('modal close');
+	  $(this).find('form')[0].reset()
+	});
+	
+	<%--수정 모달 창 close시 값 초기화--%>
+	$('#updateVendor').on('hidden.bs.modal', function (e) {
+	    console.log('modal close');
+	  $(this).find('form')[0].reset()
+	});
+	
+	<%--거래처번호 a태그 클릭시 정보수정 Modal 활성화--%>
+	$(".getTr td a").click(function(){ 	
+
+		var str = ""
+		var tdArr = new Array();	// 배열 선언
+		
+		// 현재 클릭된 Row(<tr>)
+		var tr = $(this).parent().parent();
+		var td = tr.children();
+		
+		// tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+		console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+
+		// 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+		td.each(function(i){
+			tdArr.push(td.eq(i).text());
+		});
+		
+		console.log("배열에 담긴 값 : "+tdArr);
+		
+		// td.eq(index)를 통해 값을 가져올 수도 있다.
+		var tdVendorNo = td.eq(0).text();
+		var tdVendorName = td.eq(1).text();
+		var tdIncharge = td.eq(2).text();
+		var tdVendorPhone = td.eq(3).text();
+		$('#updateVendor #vendorNo2').val(tdVendorNo);
+		$('#updateVendor #vendorName2').val(tdVendorName);
+		$('#updateVendor #incharge2').val(tdIncharge);
+		$('#updateVendor #vendorPhone2').val(tdVendorPhone);
+		
+		$('#updateVendor').modal('show');
 	});
 });
 	
 
-
+<%--거래처번호 등록용 유효성검사--%>
 function vendorValidate(){
 	var regExpNumber = /[^0-9]/g;
 	var $vendorNoValid = $("#vendorNoValid");
@@ -107,7 +159,7 @@ function vendorValidate(){
 	return true;
 }
 	
-<%--중복검사 ajax--%>
+<%-- 거래처등록 중복검사 ajax--%>
 function vendorNoDuplicatedCheck(){
 	var vendorNo = $("#vendorNo").val().trim();
 	
@@ -137,6 +189,60 @@ function vendorNoDuplicatedCheck(){
 	});
 }
 
+<%--거래처번호 수정용 유효성검사--%>
+function vendorValidate2(){
+	var regExpNumber = /[^0-9]/g;
+	//var $vendorNoValid = $("#vendorNoValid");
+	
+    //거래처 번호
+	var $vendorNo = $("#vendorNo2");
+	if($vendorNo.val().trim().length == 0){
+        alert("거래처 번호를 입력하세요.");
+        $vendorNo.focus();
+		return false;
+	}
+    //거래처명
+	var $vendorName = $("#vendorName2");
+	if($vendorName.val().trim().length == 0){
+        alert("거래처명을 입력하세요.");
+        $vendorName.focus();
+		return false;
+	}
+    //incharge
+	var $incharge = $("#incharge2");
+	if($incharge.val().trim().length == 0){
+        alert("담당자명을 입력하세요.");
+        $incharge.focus();
+		return false;
+	}
+	//거래처 전화번호
+	var $vendorPhone = $("#vendorPhone2");
+	if($vendorPhone.val().trim().length == 0){
+        alert("거래처 전화번호를 입력하세요.");
+        $vendorPhone.focus();
+		return false;
+    }
+    if(regExpNumber.test($vendorPhone.val())){
+        alert("거래처 전화번호는 숫자만 입력가능합니다.");
+        $vendorPhone.val('');
+        $vendorPhone.focus();
+		return false;
+    }
+    
+    <%--거래처번호 중복검사를 하지않았을경우--%>
+	//if($vendorNoValid.val() == 0){
+	//	alert("거래처번호 중복 검사를 해주세요.");
+	//	return false;
+	//}
+	
+	return true;
+}
+
+
+
+function getVendorInfo(){
+}
+
 </script>
 
 <!-- table start -->
@@ -157,8 +263,8 @@ function vendorNoDuplicatedCheck(){
       </thead>
       <tbody>
       	<c:forEach items="${vendorList}" var="v" varStatus="vs">
-	        <tr>
-	          <td><a data-toggle="modal" href="#myModal" >${v.VENDOR_NO}</a></td>
+	        <tr class="getTr">
+	          <td><a href="#" >${v.VENDOR_NO}</a></td>
 	          <td>${v.VENDOR_NAME}</td>
 	          <td>${v.INCHARGE}</td>
 	          <td>${v.VENDOR_PHONE}</td>
@@ -173,10 +279,11 @@ function vendorNoDuplicatedCheck(){
 
 
 
+
 <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#myModal">거래처 등록</button>
 
-<!-- Modal -->
+<!-- 거래처등록 Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -223,6 +330,103 @@ function vendorNoDuplicatedCheck(){
         </div>
         <div class="modal-footer">
         	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return vendorValidate();">저장</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 거래처수정 Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="updateVendor">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form class="needs-validation"
+         action="${pageContext.request.contextPath}/enrollment/updateVendor.do"
+         method="POST">
+        <div class="modal-header">
+            <h5 class="modal-title">거래처 수정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- search-container start -->
+      <div id="search-container">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="userId">거래처번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="number" id="vendorNo2" name="vendorNo" class="form-control bg-light small" placeholder="거래처번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#updateVendorNo">변경</button>
+                        <input type="hidden" id="vendorNoValid2" value="0"/>
+                    </div>
+                </div>
+                <div class="form-row">
+	               <div class="col-md-6 mb-3">
+	                   <label for="vendor">거래처명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   <input type="text" id="vendorName2" name="vendorName" class="form-control bg-light small" placeholder="거래처명" aria-label="Search" aria-describedby="basic-addon2">
+	                </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="productName">담당자명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="incharge2" name="incharge" class="form-control bg-light small" placeholder="담당자명" aria-label="Search" aria-describedby="basic-addon2">
+                    </div>
+                </div>
+                <div class="form-row">
+	                <div class="col-md-6 mb-3">
+	                    <label for="rmName">거래처 전화번호</label>&nbsp;&nbsp;&nbsp;
+	                    <input type="number" id="vendorPhone2" name="vendorPhone" class="form-control bg-lightsmall" placeholder="거래처 전화번호" aria-label="Search" aria-describedby="basic-addon2">
+	                </div>
+                </div>
+                
+      </div>
+        </div>
+        <div class="modal-footer">
+        	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return vendorValidate2();">수정</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 거래처번호(vendorNo) 수정(update) Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="updateVendorNo">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form class="needs-validation"
+         action="${pageContext.request.contextPath}/enrollment/updateVendor.do"
+         method="POST">
+        <div class="modal-header">
+            <h5 class="modal-title">거래처번호 수정</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- search-container start -->
+      <div id="search-container">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="vendorNoCur">현재 거래처번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="number" id="vendorCur" name="vendorNoCur" class="form-control bg-light small" placeholder="거래처번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="vendorNoCha">변경할 거래처번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="number" id="vendorNoCha" name="vendorNoCha" class="form-control bg-light small" placeholder="거래처번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+                        <button class="btn btn-primary" type="button" onclick="vendorNoDuplicatedCheck();">변경</button>
+                        <input type="hidden" id="vendorNoValid2" value="0"/>
+                    </div>
+                </div>
+      </div>
+        </div>
+        <div class="modal-footer">
+        	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return vendorValidate2();">수정</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
         </form>

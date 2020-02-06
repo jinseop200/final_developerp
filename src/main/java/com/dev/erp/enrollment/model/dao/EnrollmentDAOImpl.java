@@ -7,8 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import oracle.jdbc.internal.OracleStatement.SqlKind;
-
 @Repository
 public class EnrollmentDAOImpl implements EnrollmentDAO {
 
@@ -28,6 +26,11 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	@Override
 	public Map<String, String> selectOneVendorNo(String vendorNo) {
 		return sqlsession.selectOne("enrollment.selectOneVendorNo",vendorNo);
+	}
+
+	@Override
+	public int updateVendor(Map<String, String> vendor) {
+		return sqlsession.update("enrollment.updateVendor", vendor);
 	}
 	
 	
