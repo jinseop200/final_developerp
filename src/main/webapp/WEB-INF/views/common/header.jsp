@@ -105,9 +105,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">거래처등록</a>
-                <a class="collapse-item" href="cards.html">창고등록</a>
-                <a class="collapse-item" href="cards.html">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do">거래처등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do">창고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/productEnrollment.do">품목등록</a>
               </div>
             </div>
           </li>
@@ -137,6 +137,7 @@
                   <a class="collapse-item" href="buttons.html">주별 생산 계획</a>
                   <a class="collapse-item" href="cards.html">원재료 구매 계획</a>
                   <a class="collapse-item" href="cards.html">생산률 조회</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/jobOrder.do">작업 지시서</a>
                 </div>
               </div>
             </li>

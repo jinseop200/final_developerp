@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stock">
+
+	
+	<select id="selectRmStockList" resultMap="stockMap">
+		select * 
+   		from RECIEVING left join RAW_MATERIAL on RECIEVING.RM_NO = RAW_MATERIAL.RM_NO
+   		order by RECIEVING.RM_NO
+	</select>
+	
+	<resultMap type="map" id="stockMap">
+	</resultMap>
+	
+	
+</mapper>

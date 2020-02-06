@@ -1,26 +1,35 @@
-package com.dev.erp.stock;
+package com.dev.erp.stock.controller;
+
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.enrollment.model.service.EnrollmentService;
 import com.dev.erp.quality.controller.qualityController;
+import com.dev.erp.stock.model.service.StockService;
 
 @Controller
 public class StockController {
 
+	@Autowired
+	StockService stockservice;
+	
 	static final Logger logger = LoggerFactory.getLogger(qualityController.class);
 	
 	// ============= 원재료 재고관리 파트 =============
-	@RequestMapping("/stock/rm/rmView.do")
-	public ModelAndView rmView(ModelAndView mav) {
-		
-		mav.setViewName("/stock/rm/rmView");
-		
-		return mav;
-	}
+//	@RequestMapping("/stock/rm/rmView.do")
+//	public ModelAndView rmView(ModelAndView mav) {
+//		
+//		mav.setViewName("/stock/rm/rmView");
+//		
+//		return mav;
+//	}
 	
 	@RequestMapping("/stock/rm/modalRmInsert.do")
 	public ModelAndView modalRmInsert(ModelAndView mav) {
@@ -87,6 +96,23 @@ public class StockController {
 		
 		return mav;
 	}
+	
+	
+	
+	@RequestMapping("/stock/rm/rmView.do")
+	public ModelAndView selectVendorList(ModelAndView mav) {
+		
+		List<Map<String, String>> rmList = stockservice.selectRmStockList();
+		
+		logger.info("rmList@Controller={}", rmList);
+		
+		mav.addObject("rmList", rmList);
+		mav.setViewName("rm/rmView");
+		
+		return mav;
+	}
+	
+	
 	
 	
 }
