@@ -11,5 +11,8 @@
    		order by RECIEVING.RM_NO
 	</select>
 	
+	<resultMap type="map" id="stockMap">
+	</resultMap>
+	
 	
 </mapper>

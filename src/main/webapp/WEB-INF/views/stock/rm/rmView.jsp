@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:requestEncoding value="utf-8"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -58,103 +61,16 @@
 		  </tfoot>
 		  
 		  <tbody>
-			<tr>
-			  <td>M1234</td>
-			  <td>1234</td>
-			  <td>A11</td>
-			  <td>500</td>
-			  <td>T</td>
-			  <td>2020/02/04</td>
-			</tr>
-			<tr>
-			  <td>M1235</td>
-			  <td>1235</td>
-			  <td>A12</td>
-			  <td>501</td>
-			  <td>T</td>
-			  <td>2020/02/05</td>
-			</tr>
-			
-			<tr>
-			  <td>M1236</td>
-			  <td>1236</td>
-			  <td>A13</td>
-			  <td>502</td>
-			  <td>F</td>
-			  <td>2020/02/05</td>
-			</tr>
-			
-			<tr>
-			  <td>M1237</td>
-			  <td>1237</td>
-			  <td>A14</td>
-			  <td>504</td>
-			  <td>T</td>
-			  <td>2020/02/04</td>
-			</tr>
-			
-			<tr>
-			  <td>M1238</td>
-			  <td>1238</td>
-			  <td>A17</td>
-			  <td>500</td>
-			  <td>F</td>
-			  <td>2020/02/10</td>
-			</tr>
-			
-			<tr>
-			  <td>M1250</td>
-			  <td>1250</td>
-			  <td>A24</td>
-			  <td>522</td>
-			  <td>T</td>
-			  <td>2020/02/04</td>
-			</tr>
-			
-			<tr>
-			  <td>M1225</td>
-			  <td>1225</td>
-			  <td>A24</td>
-			  <td>500</td>
-			  <td>T</td>
-			  <td>2020/04/05</td>
-			</tr>
-			
-			<tr>
-			  <td>M1282</td>
-			  <td>1282</td>
-			  <td>A15</td>
-			  <td>525</td>
-			  <td>T</td>
-			  <td>2020/07/07</td>
-			</tr>
-			
-			<tr>
-			  <td>M1274</td>
-			  <td>1274</td>
-			  <td>A20</td>
-			  <td>500</td>
-			  <td>T</td>
-			  <td>2020/03/04</td>
-			</tr>
-			
-			<tr>
-			  <td>M1272</td>
-			  <td>1272</td>
-			  <td>A11</td>
-			  <td>522</td>
-			  <td>F</td>
-			  <td>2020/05/04</td>
-			</tr>
-			
-			<tr>
-			  <td>M1264</td>
-			  <td>1264</td>
-			  <td>A12</td>
-			  <td>504</td>
-			  <td>T</td>
-			  <td>2020/05/04</td>
-			</tr>
+	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
+		        <tr>
+		          <td>${rm.LOT_NO}</td>
+		          <td>${rm.RM_NO}</td>
+		          <td>${rm.STORE_NO}</td>
+		          <td>${rm.QUANTITY}</td>
+		          <td>${rm.FAIL_YN}</td>
+		          <td>${rm.REC_DATE}</td>
+		        </tr>
+	        </c:forEach>
 		  </tbody>
 		  
 		</table>
