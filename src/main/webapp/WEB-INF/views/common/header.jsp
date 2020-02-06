@@ -5,8 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>ERP Main</title>
-	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
-	  <!-- Bootstrap core JavaScript-->
 
   <script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
   <!-- Bootstrap core JavaScript-->
@@ -32,6 +30,7 @@
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
   
+ 
   <style>
  .main-container{
     width: 1440px;
@@ -88,7 +87,7 @@
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
                 <a class="collapse-item" href="buttons.html">문서결재</a>
-                <a class="collapse-item" href="<%=request.getContextPath()%>/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
+                <a class="collapse-item" href="cards.html">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
                 <a class="collapse-item" href="cards.html">게시판</a>
@@ -158,12 +157,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="cards.html">제품입고/반품관리</a>
-                <a class="collapse-item" href="cards.html">창고별 재고관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">제품입고/반품관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_rm_manage.do">원재료 재고관리(LOT)</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_product_manage.do">제품입고/반품관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath}/stock/stock_storage_manage.do">창고별 재고관리</a>
               </div>
             </div>
           </li>
@@ -452,7 +448,6 @@
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${memberLoggedIn.empName}</span>
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">사용자</span>
                     <img class="img-profile rounded-circle" src="${pageContext.request.contextPath }/resources/images/account_circle_black.png">
                   </a>
@@ -483,5 +478,5 @@
             </nav>
             <!-- End of Topbar -->
 
-            <!-- 페이지 내용(Begin Page Content) -->
-            <div class="container-fluid">
+<!-- 페이지 내용(Begin Page Content) -->
+<div class="container-fluid">
