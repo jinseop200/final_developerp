@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dev.erp.enrollment.model.service.EnrollmentService;
-import com.dev.erp.quality.controller.qualityController;
 import com.dev.erp.stock.model.service.StockService;
 
 @Controller
@@ -20,7 +18,7 @@ public class StockController {
 	@Autowired
 	StockService stockservice;
 	
-	static final Logger logger = LoggerFactory.getLogger(qualityController.class);
+	static final Logger logger = LoggerFactory.getLogger(StockController.class);
 	
 	// ============= 원재료 재고관리 파트 =============
 //	@RequestMapping("/stock/rm/rmView.do")
