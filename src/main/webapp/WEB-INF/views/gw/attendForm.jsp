@@ -1,7 +1,16 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <fmt:requestEncoding value="utf-8"/>
+<%String content = (String)request.getAttribute("content");
+String date = (String)request.getAttribute("date");
+Date now = new Date(); 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+String today=sdf.format(now);
 
+%>
 
 <script>
 
@@ -90,8 +99,11 @@ function leave(date,email){
 					</td>
 				</tr>
 			</table>
+		<%if(today.equals(date)){%>
 					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
 					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
+					<%} %>
+<%-- 					</c:if>	 --%>
 				
 			
 

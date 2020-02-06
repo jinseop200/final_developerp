@@ -17,4 +17,8 @@ public interface AttendService {
 	int leave(String email);
 
 	List<Attend> attendShow(String email);
+
+	Attend selectAttendOne(Attend attend);
+
+	Attend selectLeaveOne(Attend attend);
 }

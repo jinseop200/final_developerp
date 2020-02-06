@@ -260,12 +260,12 @@ temporary rendered events).
   font-size: 0.85em;
   line-height: 1.4;
   border-radius: 3px;
-  border: 1px solid #3788d8;
+/*   border: 1px solid #3788d8; */
 }
 
 .fc-event,
 .fc-event-dot {
-  background-color: #3788d8;
+/*   background-color: #3788d8; */
   /* default BACKGROUND color */
 }
 
@@ -279,7 +279,7 @@ temporary rendered events).
 
 .fc-event[href],
 .fc-event.fc-draggable {
-  cursor: pointer;
+/*   cursor: pointer; */
   /* give events with links and draggable events a hand mouse pointer */
 }
 
