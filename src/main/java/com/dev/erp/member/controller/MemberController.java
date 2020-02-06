@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -161,4 +160,49 @@ public class MemberController {
 		
 		return "common/msg";//  /spring 으로 리다이렉트
 	}
+	@RequestMapping("/member/memberAlterPassword.do")
+	public ModelAndView memberAlterPassword(ModelAndView mav) {
+		
+		mav.setViewName("member/memberAlterPassword");
+		return mav;
+	}
+	@RequestMapping("/member/memberPasswordCheck.do")
+	@ResponseBody
+	public Map<String,Object> memberPasswordCheck(@RequestParam("password") String password, @RequestParam("email") String email, HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<>();
+		Member m = memberService.selectOneMember(email);
+		boolean isUsable;
+		if(bcryptPasswordEncoder.matches(password, m.getPassword())) {
+			isUsable=true;
+		}else {
+			isUsable=false;
+		}
+		map.put("isUsable",isUsable);
+			
+		
+		return map;
+	}
+	
+	@PostMapping("/member/updatePasswordEnd.do")
+	@ResponseBody
+	public ModelAndView updatePasswordEnd(ModelAndView mav, @RequestParam("password_Chk") String password_Chk, @RequestParam("email") String email) {
+		String encryptedPassword = bcryptPasswordEncoder.encode(password_Chk);
+		Map<String, Object> param = new HashMap<>();
+		param.put("email", email);
+		param.put("password", encryptedPassword);
+		int result = memberService.updatePassword(param);
+		String msg="";
+		String loc="/main/main.do";
+		if(result>0) {
+			msg="비밀번호 변경성공!";
+		}
+		mav.addObject("loc",loc);
+		mav.addObject("msg",msg);
+		
+		mav.setViewName("common/msg");
+		
+		
+		return mav;
+	}
+	
 }

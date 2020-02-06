@@ -27,4 +27,8 @@
 	<select id="selectOneMember" resultType="member">
 		select * from employee where email=#{email}
 	</select>
+	
+	<update id="updatePassword">
+		update employee set password=#{password} where email=#{email}
+	</update>
 </mapper>

@@ -39,4 +39,10 @@ public class MemberDAOImpl implements MemberDAO {
 	public Member selectOneMember(String email) {
 		return sqlSession.selectOne("member.selectOneMember",email);
 	}
+
+	@Override
+	public int updatePassword(Map<String, Object> param) {
+		return sqlSession.update("member.updatePassword",param);
+	}
+
 }

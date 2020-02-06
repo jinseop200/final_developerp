@@ -450,6 +450,14 @@
                   </a>
                   <!-- Dropdown - User Information -->
                   <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                 	<div class="mypage_head">
+                 		<img src="${pageContext.request.contextPath}/resources/images/profile.png" class="mypage_image" />
+                 		<span class="mypage_alterpassword" onclick="mypage_alterpassword();">
+                 			<img src="${pageContext.request.contextPath}/resources/images/lock.png" class="mypage_lock" />
+                 			비밀번호 변경
+                 		</span>
+                 	</div>
+                 	<div class="mypage_blank"></div>
                     <a class="dropdown-item" href="#">
                       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
@@ -474,6 +482,60 @@
 
             </nav>
             <!-- End of Topbar -->
+            <style>
+            .mypage_head{
+            background-color:steelblue; width:400px; height:100px;
+            }
+            .dropdown-menu{
+            padding:0;
+            }
+            .mypage_head .mypage_image{
+            width:90px; height:90px; position:absolute; top:13%; left:40%; box-shadow:0px 1px 3px 2px #ccc;
+            }
+            .mypage_alterpassword{
+            color:white; position:absolute; top:30%; right:1%;
+            }
+            .mypage_alterpassword .mypage_lock{
+            width:30px; height:30px; position:absolute; top:-29%; left:-32%;
+            }
+            .mypage_blank{
+            height:31px;
+            }
+            </style>
+            
+             <!-- Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="myModal">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title"></h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
+			        
+			        </div>
+			    </div>
+			</div>
+			
+			<script>
+			function mypage_alterpassword(){
+			    $('.controll-modal-body').load("${pageContext.request.contextPath}/member/memberAlterPassword.do",function(){
+			        $('#myModal').modal({backdrop: 'static', keyboard: false});
+			        $('#myModal').modal({show:true});
+			        $(".modal-backdrop.in").css('opacity', 0.4);
+			        
+			        $(".controll-title").html("");
+			        $(".controll-title").html("비밀번호 변경");
+			    });
+					$("#myModal").modal();			        
+			};
+			  </script>
+  
 
             <!-- 페이지 내용(Begin Page Content) -->
             <div class="container-fluid">
+            
