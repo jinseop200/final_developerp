@@ -11,4 +11,6 @@ public interface EnrollmentService {
 
 	Map<String, String> selectOneVendorNo(String vendorNo);
 
+	int updateVendor(Map<String, String> vendor);
+
 }

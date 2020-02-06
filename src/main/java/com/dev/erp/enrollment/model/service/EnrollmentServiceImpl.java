@@ -32,6 +32,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public Map<String, String> selectOneVendorNo(String vendorNo) {
 		return enrollmentDAO.selectOneVendorNo(vendorNo);
 	}
+
+	@Override
+	public int updateVendor(Map<String, String> vendor) {
+		return enrollmentDAO.updateVendor(vendor);
+	}
 	
 	
 }

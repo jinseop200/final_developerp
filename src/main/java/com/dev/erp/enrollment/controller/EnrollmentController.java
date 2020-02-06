@@ -74,7 +74,7 @@ public class EnrollmentController {
 	
 	@RequestMapping("/enrollment/vendorNoDuplicatedCheck.do")
 	@ResponseBody
-	public Map<String, Object> checkidDuplicate3(@RequestParam("vendorNo") String vendorNo) {
+	public Map<String, Object> vendorNoDuplicatedCheck(@RequestParam("vendorNo") String vendorNo) {
 		
 		logger.info("vendorNo@Controller={}",vendorNo);
 		
@@ -89,5 +89,29 @@ public class EnrollmentController {
 		return map;
 	}
 	
-	
+	@RequestMapping("/enrollment/updateVendor.do")
+	public ModelAndView updateVendor(@RequestParam String vendorNo,
+										 @RequestParam String vendorName,
+										 @RequestParam String incharge,
+										 @RequestParam String vendorPhone,
+										 ModelAndView mav) {
+		logger.info("vendorName@Controller={}",vendorName);
+		
+		Map<String, String> vendor = new HashMap<>();
+		vendor.put("vendorNo", vendorNo);
+		vendor.put("vendorName", vendorName);
+		vendor.put("incharge", incharge);
+		vendor.put("vendorPhone", vendorPhone);
+		vendor.put("regDate", null);
+		
+		logger.info("vendor@controller={}",vendor);
+		
+		int result = enrollmentservice.updateVendor(vendor); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
+		
+		return mav;
+	}
 }
