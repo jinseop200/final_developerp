@@ -155,9 +155,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do">거래처등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do">창고등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/productEnrollment.do">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 입출고/재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
               </div>
             </div>
           </li>
