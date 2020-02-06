@@ -5,14 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>ERP Main</title>
-<<<<<<< HEAD
-	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
-	  <!-- Bootstrap core JavaScript-->
-=======
 
   <script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
   <!-- Bootstrap core JavaScript-->
->>>>>>> 2f2ebd9336f49333b431a627aed5704f07a3c05a
   <script src="${pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -22,25 +17,13 @@
   <!-- Custom scripts for all pages-->
   <script src="${pageContext.request.contextPath }/resources/js/sb-admin-2.min.js"></script>
 
-<<<<<<< HEAD
-  <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-area-demo.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-pie-demo.js"></script>
-=======
->>>>>>> 2f2ebd9336f49333b431a627aed5704f07a3c05a
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
-<<<<<<< HEAD
-=======
   
->>>>>>> 2f2ebd9336f49333b431a627aed5704f07a3c05a
   <style>
  .main-container{
     width: 1440px;
@@ -97,7 +80,7 @@
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
                 <a class="collapse-item" href="buttons.html">문서결재</a>
-                <a class="collapse-item" href="<%=request.getContextPath()%>/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
+                <a class="collapse-item" href="cards.html">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
                 <a class="collapse-item" href="cards.html">게시판</a>
@@ -122,9 +105,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">거래처등록</a>
-                <a class="collapse-item" href="cards.html">창고등록</a>
-                <a class="collapse-item" href="cards.html">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do">거래처등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do">창고등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/productEnrollment.do">품목등록</a>
               </div>
             </div>
           </li>
@@ -167,15 +150,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-<<<<<<< HEAD
-                <a class="collapse-item" href="buttons.html">원재료 재고관리(LOT)</a>
-                <a class="collapse-item" href="cards.html">제품입고/반품관리</a>
-                <a class="collapse-item" href="cards.html">창고별 재고관리</a>
-=======
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고관리(LOT)</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">제품입고/반품관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
->>>>>>> 2f2ebd9336f49333b431a627aed5704f07a3c05a
               </div>
             </div>
           </li>
@@ -464,11 +441,7 @@
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<<<<<<< HEAD
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${memberLoggedIn.empName}</span>
-=======
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">사용자</span>
->>>>>>> 2f2ebd9336f49333b431a627aed5704f07a3c05a
                     <img class="img-profile rounded-circle" src="${pageContext.request.contextPath }/resources/images/account_circle_black.png">
                   </a>
                   <!-- Dropdown - User Information -->
