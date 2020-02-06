@@ -17,4 +17,7 @@ public interface MemberDAO {
 
 	Member selectOneMember(String email);
 
+
+	int updatePassword(Map<String, Object> param);
+
 }

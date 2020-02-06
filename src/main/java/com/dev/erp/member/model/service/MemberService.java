@@ -17,4 +17,6 @@ public interface MemberService {
 
 	Member selectOneMember(String email);
 
+	int updatePassword(Map<String, Object> param);
+
 }
