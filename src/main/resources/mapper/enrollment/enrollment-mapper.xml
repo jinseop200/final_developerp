@@ -19,4 +19,8 @@
 	<resultMap type="map" id="vendorMap">
 	</resultMap>
 	
+	<select id="selectOneVendorNo" resultMap="vendorMap">
+		select * from vendor where vendor_no = #{vendorNo}
+	</select>
+	
 </mapper>

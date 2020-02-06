@@ -13,7 +13,6 @@
 	<typeAlias type="com.dev.erp.common.typehandler.StringArrayTypeHandler"
 			   alias="strArrTypeHandler"/>
  	<package name="com.dev.erp"></package>
- 	<package name="com.dev.erp.member.model.vo"></package>
  	
   </typeAliases>  
   

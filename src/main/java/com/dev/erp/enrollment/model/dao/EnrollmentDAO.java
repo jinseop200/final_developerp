@@ -9,4 +9,6 @@ public interface EnrollmentDAO {
 
 	List<Map<String, String>> selectVendorList();
 
+	Map<String, String> selectOneVendorNo(String vendorNo);
+
 }

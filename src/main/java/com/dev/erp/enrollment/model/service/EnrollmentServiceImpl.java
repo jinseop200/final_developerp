@@ -27,6 +27,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public List<Map<String, String>> selectVendorList() {
 		return enrollmentDAO.selectVendorList();
 	}
+
+	@Override
+	public Map<String, String> selectOneVendorNo(String vendorNo) {
+		return enrollmentDAO.selectOneVendorNo(vendorNo);
+	}
 	
 	
 }

@@ -106,22 +106,22 @@ $("#emp_name").keyup(function(event){
 	}
 });	
 
-$("#email").keyup(function(event){
-	var email = document.getElementById("email");
+// $("#email").keyup(function(event){
+// 	var email = document.getElementById("email");
 	
-	if($("#email").val() == ""){
-		$(".emailValidateWarning").html('이메일을 입력해 주시기 바랍니다.');
-		$("#email").attr("style","border-bottom: 2px solid red");
-	}
-	if(!regExpEmail.test(email.value)){
-		$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
-		$("#email").attr("style","border-bottom: 2px solid red");
-	}
-	else{
-		$("#email").attr("style","border-bottom: 2px solid green");
-		$(".emailValidateWarning").html('');
-	}
-});
+// 	if($("#email").val() == ""){
+// 		$(".emailValidateWarning").html('이메일을 입력해 주시기 바랍니다.');
+// 		$("#email").attr("style","border-bottom: 2px solid red");
+// 	}
+// 	if(!regExpEmail.test(email.value)){
+// 		$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
+// 		$("#email").attr("style","border-bottom: 2px solid red");
+// 	}
+// 	else{
+// 		$("#email").attr("style","border-bottom: 2px solid green");
+// 		$(".emailValidateWarning").html('');
+// 	}
+// });
 
 $("#phone").keyup(function(event){
 	var phone = document.getElementById("phone");
@@ -185,7 +185,16 @@ function enrollValidate(){
 	var ssn1 = document.getElementById("ssn1");
 	var ssn2 = document.getElementById("ssn2");
 	var $emailValid = $("#emailValid");
-	
+	console.log($emailValid.val());
+    <%--이메일 유효성검사--%>
+	if(!regExpTest(/\w+@\w+\.\w+/g, email, "이메일 형식이 올바르지 않습니다.")){
+        return false;
+	}
+	<%--이메일 중복검사를 하지않았을경우--%>
+	if($emailValid.val() == 0){
+		alert("이메일 중복 검사 해주세요.");
+		return false;
+	}
 	<%--이름 유효성검사--%>
 	if(!regExpTest(/^[가-힣]{2,4}$/, emp_name, "이름은 2~4자의 한글만 사용 가능합니다.")){
         return false;
@@ -198,24 +207,12 @@ function enrollValidate(){
     if(isValidDate(ssn2.value)==false){
     	return false;
     }
-    
-    <%--이메일 유효성검사--%>
-	if(!regExpTest(/\w+@\w+\.\w+/g, email, "이메일 형식이 올바르지 않습니다.")){
-        return false;
-	}
-	<%--이메일 중복검사를 하지않았을경우--%>
-	if($emailValid.val() == 0){
-		alert("이메일 중복 검사 해주세요.");
-		return false;
-	}
 	
     <%--전화번호 유효성검사--%>
 	if(!regExpTest(/^01[0179][0-9]{7,8}$/, phone, "전화번호 형식이 올바르지 않습니다.")){
         return false;
 	}
 
-	return true;
-	
 	var regExp4 = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])$/;
 	var regExp5 = /^[1234]\d{6}$/;
 	if(!regExpTest(regExp4,ssn1,"숫자만 입력하세요."))
@@ -226,38 +223,41 @@ function enrollValidate(){
 	    alert("올바른 주민번호가 아닙니다.");
 	    return false;
 	}
+	
+	return true;
+	
 }
 
 
 <%--중복검사 ajax--%>
 function emailDuplicatedCheck(){
 	var regExpEmail = /\w+@\w+\.\w+/g;
-	var email=$("#email").serialize();
-	var email2 = document.getElementById("email");
+	var email=$("#email").val().trim();
 	
 	$.ajax({
-		url: "${pageContext.request.contextPath}/member/memberEmailDuplicatedCheck/"+email,
-		type: "get",
+		url: "${pageContext.request.contextPath}/member/memberEmailDuplicatedCheck.do",
+		data:{email:email},
 		dataType: "json",
-		contentType:"application/json;charset=UTF-8",
 		success: data => {
 			console.log(data);
 			
-			if((data == 0) && (!$("#email").val() == "") && regExpEmail.test(email2.value)){
-				alert("사용가능한 이메일 입니다.");
+			if((data.result ==0 && (data.isUsable==true) && regExpEmail.test(email))){
+				$(".emailValidateWarning").html('사용가능한 이메일입니다.');
+				$(".emailValidateWarning").attr("style","color:#00c500");
 				$("#email").attr("style","border-bottom: 2px solid #00c500");
 				$("#emailValid").val(1);
-				
 			}
-			 if(($("#email").val() == "") || (!regExpEmail.test(email2.value))){
-				alert("이메일 형식이 올바르지 않습니다.");
-				$("#email").attr("style","border-bottom: 2px solid red");
-				$("#emailValid").val(0);
+// 			else if(!regExpEmail.test(email)){
+// 				$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
+// 				$("#email").val("");
+// 				$("#email").attr("style","border-bottom: 2px solid red");
+// 				$("#emailValid").val(0);
 				
-			} 
-			else if(data ==1){
-				alert("중복된 이메일 입니다.");
+// 			} 
+			else {
+				$(".emailValidateWarning").html('중복된 이메일입니다.');
 				$("#email").val("");
+				$(".emailValidateWarning").attr("style","red");
 				$("#email").attr("style","border-bottom: 2px solid red");
 				$("#emailValid").val(0);
 			}

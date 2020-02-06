@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.enrollment.model.service.EnrollmentService;
@@ -68,6 +69,24 @@ public class EnrollmentController {
 		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
 		
 		return mav;
+	}
+	
+	
+	@RequestMapping("/enrollment/vendorNoDuplicatedCheck.do")
+	@ResponseBody
+	public Map<String, Object> checkidDuplicate3(@RequestParam("vendorNo") String vendorNo) {
+		
+		logger.info("vendorNo@Controller={}",vendorNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("vendorNo", vendorNo);
+		
+		boolean isUsable = enrollmentservice.selectOneVendorNo(vendorNo)==null?true:false;
+		map.put("isUsable", isUsable);
+		
+		logger.info("isUsable@Controller={}",isUsable);
+
+		return map;
 	}
 	
 	

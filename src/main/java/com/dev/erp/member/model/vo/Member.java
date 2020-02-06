@@ -22,16 +22,16 @@ public class Member implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private int emp_id;
-	private String emp_name;
-	private String emp_no;
+	private int empId;
+	private String empName;
+	private String empNo;
 	private String email;
 	private int phone;
-	private String dept_code;
-	private String job_code;
-	private Date hire_date;
-	private Date quit_date;
-	private String quit_yn;
+	private String deptCode;
+	private String jobCode;
+	private Date hireDate;
+	private Date quitDate;
+	private String quitYn;
 	private String password;
 	
 }

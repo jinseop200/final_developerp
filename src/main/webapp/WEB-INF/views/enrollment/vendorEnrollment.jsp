@@ -49,46 +49,93 @@
 }
 </style>
 <script>
-	function vendorValidate(){
-		var regExpNumber = /[^0-9]/g;
 
-	    //거래처 번호
-		var $vendorNo = $("#vendorNo");
-		if($vendorNo.val().trim().length == 0){
-	        alert("거래처 번호를 입력하세요.");
-	        $vendorNo.focus();
-			return false;
-		}
-	    //거래처명
-		var $vendorName = $("#vendorName");
-		if($vendorName.val().trim().length == 0){
-	        alert("거래처명을 입력하세요.");
-	        $vendorName.focus();
-			return false;
-		}
-	    //incharge
-		var $incharge = $("#incharge");
-		if($incharge.val().trim().length == 0){
-	        alert("담당자명을 입력하세요.");
-	        $incharge.focus();
-			return false;
-		}
-		//거래처 전화번호
-		var $vendorPhone = $("#vendorPhone");
-		if($vendorPhone.val().trim().length == 0){
-	        alert("거래처 전화번호를 입력하세요.");
-	        $vendorPhone.focus();
-			return false;
-	    }
-	    if(regExpNumber.test($vendorPhone.val())){
-	        alert("거래처 전화번호는 숫자만 입력가능합니다.");
-	        $vendorPhone.val('');
-	        $vendorPhone.focus();
-			return false;
-	    }
-		return true;
+<%--onload function--%>
+$(()=>{
+	$("#vendorNo").change(function(){
+		$("#vendorNoValid").val(0);
+	});
+});
+	
+
+
+function vendorValidate(){
+	var regExpNumber = /[^0-9]/g;
+	var $vendorNoValid = $("#vendorNoValid");
+	
+    //거래처 번호
+	var $vendorNo = $("#vendorNo");
+	if($vendorNo.val().trim().length == 0){
+        alert("거래처 번호를 입력하세요.");
+        $vendorNo.focus();
+		return false;
+	}
+    //거래처명
+	var $vendorName = $("#vendorName");
+	if($vendorName.val().trim().length == 0){
+        alert("거래처명을 입력하세요.");
+        $vendorName.focus();
+		return false;
+	}
+    //incharge
+	var $incharge = $("#incharge");
+	if($incharge.val().trim().length == 0){
+        alert("담당자명을 입력하세요.");
+        $incharge.focus();
+		return false;
+	}
+	//거래처 전화번호
+	var $vendorPhone = $("#vendorPhone");
+	if($vendorPhone.val().trim().length == 0){
+        alert("거래처 전화번호를 입력하세요.");
+        $vendorPhone.focus();
+		return false;
+    }
+    if(regExpNumber.test($vendorPhone.val())){
+        alert("거래처 전화번호는 숫자만 입력가능합니다.");
+        $vendorPhone.val('');
+        $vendorPhone.focus();
+		return false;
+    }
+    
+    <%--거래처번호 중복검사를 하지않았을경우--%>
+	if($vendorNoValid.val() == 0){
+		alert("거래처번호 중복 검사를 해주세요.");
+		return false;
 	}
 	
+	return true;
+}
+	
+<%--중복검사 ajax--%>
+function vendorNoDuplicatedCheck(){
+	var vendorNo = $("#vendorNo").val().trim();
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/enrollment/vendorNoDuplicatedCheck.do",
+		data: {vendorNo : vendorNo},
+		dataType: "json",
+		contentType:"application/json;charset=UTF-8",
+		success: data => {
+			console.log(data);
+			if(data.isUsable == true){
+				alert("사용가능한 거래처번호 입니다.");
+				$("#vendorNo").attr("style","border-bottom: 2px solid #00c500");
+				$("#vendorNoValid").val(1);
+			} 
+			else{
+				alert("중복된 거래처번호 입니다.");
+				$("#vendorNo").val("");
+				$("#vendorNo").attr("style","border-bottom: 2px solid red");
+				$("#vendorNoValid").val(0);
+			}
+			
+		},
+		error : (jqxhr, textStatus, errorThrown)=>{
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+}
 
 </script>
 
@@ -111,7 +158,7 @@
       <tbody>
       	<c:forEach items="${vendorList}" var="v" varStatus="vs">
 	        <tr>
-	          <td>${v.VENDOR_NO}</td>
+	          <td><a data-toggle="modal" href="#myModal" >${v.VENDOR_NO}</a></td>
 	          <td>${v.VENDOR_NAME}</td>
 	          <td>${v.INCHARGE}</td>
 	          <td>${v.VENDOR_PHONE}</td>
@@ -148,8 +195,9 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="userId">거래처번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="vendorNo" name="vendorNo" class="form-control bg-light small" placeholder="거래처번호" aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary" type="button">중복확인</button>
+                        <input type="number" id="vendorNo" name="vendorNo" class="form-control bg-light small" placeholder="거래처번호" aria-label="Search" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary" type="button" onclick="vendorNoDuplicatedCheck();">중복확인</button>
+                        <input type="hidden" id="vendorNoValid" value="0"/>
                     </div>
                 </div>
                 <div class="form-row">
