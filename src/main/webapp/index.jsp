@@ -33,7 +33,7 @@
             <form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
                 <h1>로그인</h1>
                 <div class="social-container"></div>
-                <input type="email" name="email"placeholder="Email" />
+                <input type="email" name="email" placeholder="Email" />
                 <input type="password" name="password" placeholder="Password" />
                 <a href="#">비밀번호를 잊으셨나요?</a>
                 <br />
@@ -145,9 +145,6 @@ function myMove() {
     }
   }
 }
-$("#loginButton").click(function(){
-	location.href = "${pageContext.request.contextPath}/main/main.do";
-})
 </script>
 
 <%-- 로그인 부분 --%>

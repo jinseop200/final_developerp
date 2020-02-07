@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,7 +87,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
-                <a class="collapse-item" href="buttons.html">문서결재</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do">문서결재</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
@@ -155,9 +159,9 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do">거래처등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do">창고등록</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/enrollment/productEnrollment.do">품목등록</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 입출고/재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
               </div>
             </div>
           </li>
@@ -177,6 +181,22 @@
                 </div>
               </div>
             </li>
+           <c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>관리자페이지</span>
+              </a>
+              <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">DETAIL</h6>
+                  <a class="collapse-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">신입사원등록</a>
+                  <a class="collapse-item" href="cards.html">Xbar-R</a>
+                  <a class="collapse-item" href="cards.html">P 관리도</a>
+                </div>
+              </div>
+            </li>
+            </c:if>
 
           <!-- Divider -->
           <hr class="sidebar-divider">
@@ -459,20 +479,20 @@
                  		</span>
                  	</div>
                  	<div class="mypage_blank"></div>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Profile
+                    <a class="dropdown-item empNameBold" href="#">
+                    	${memberLoggedIn.empName}
                     </a>
                     <a class="dropdown-item" href="#">
-                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Settings
+                    	${dept_title.DEPT_TITLE}  /  ${job_name.JOB_NAME}
                     </a>
                     <a class="dropdown-item" href="#">
-                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Activity Log
+                    	<img src="${pageContext.request.contextPath}/resources/images/phone.png" class="mypage_phoneimg" />
+                    	${memberLoggedIn.phone}   
+                    	<i class="fas fa-envelope fa-fw"></i>
+                    	${memberLoggedIn.email }
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogOut.do">
+                    <a class="dropdown-item mypageLogout" href="${pageContext.request.contextPath}/member/memberLogOut.do">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Logout
                     </a>
@@ -493,14 +513,26 @@
             .mypage_head .mypage_image{
             width:90px; height:90px; position:absolute; top:13%; left:40%; box-shadow:0px 1px 3px 2px #ccc;
             }
+            .mypage_phoneimg{
+            width:25px; height:25px;
+            }
             .mypage_alterpassword{
-            color:white; position:absolute; top:30%; right:1%;
+            color:white; position:absolute; top:30%; right:1%; cursor:pointer;
             }
             .mypage_alterpassword .mypage_lock{
             width:30px; height:30px; position:absolute; top:-29%; left:-32%;
             }
             .mypage_blank{
             height:31px;
+            }
+            .dropdown-item{
+          	text-align:center;
+            }
+            .empNameBold{
+            font-weight:bold;
+            }
+            .mypageLogout{
+            text-align:left;
             }
             </style>
             

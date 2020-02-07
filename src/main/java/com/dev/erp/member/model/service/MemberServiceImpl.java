@@ -45,5 +45,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.updatePassword(param);
 	}
 
+	@Override
+	public Map<String, String> selectOneDept(String email) {
+		return memberDAO.selectOneDept(email);
+	}
+	
+	@Override
+	public Map<String, String> selectOneJob(String email) {
+		return memberDAO.selectOneJob(email);
+	}
+
 }
 

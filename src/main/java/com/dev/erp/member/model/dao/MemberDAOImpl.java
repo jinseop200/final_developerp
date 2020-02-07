@@ -45,4 +45,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("member.updatePassword",param);
 	}
 
+	@Override
+	public Map<String, String> selectOneDept(String email) {
+		return sqlSession.selectOne("member.selectOneDept",email);
+	}
+	
+	@Override
+	public Map<String, String> selectOneJob(String email) {
+		return sqlSession.selectOne("member.selectOneJob",email);
+	}
+
 }

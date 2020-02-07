@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ import com.dev.erp.member.model.exception.MemberException;
 import com.dev.erp.member.model.service.MemberService;
 import com.dev.erp.member.model.vo.Member;
 
-@SessionAttributes(value= {"memberLoggedIn"})
+@SessionAttributes(value= {"memberLoggedIn","dept_title","job_name"})
 @Controller
 public class MemberController {
 
@@ -104,8 +105,8 @@ public class MemberController {
 		try {
 			//1.업무로직
 			Member m = memberService.selectOneMember(email);
-			logger.debug("member={}",m);
-			
+			Map<String, String> deptOne = memberService.selectOneDept(email);
+			Map<String, String> jobOne = memberService.selectOneJob(email);
 			String msg="";
 			String loc="/";
 			
@@ -119,6 +120,8 @@ public class MemberController {
 					msg="로그인 성공!";
 	//				session.setAttribute("memberLoggedIn", m);
 					mav.addObject("memberLoggedIn", m);
+					mav.addObject("dept_title",deptOne);
+					mav.addObject("job_name", jobOne);
 					loc="/main/main.do";
 					
 				}else {
@@ -201,6 +204,19 @@ public class MemberController {
 		
 		mav.setViewName("common/msg");
 		
+		
+		return mav;
+	}
+	@RequestMapping("/member/memberFindMypage.do")
+	public ModelAndView memberFindMypage(ModelAndView mav, @RequestParam("email") String email) {
+		Map<String, String> deptOne = memberService.selectOneDept(email);
+		Map<String, String> jobOne = memberService.selectOneJob(email);
+		
+		mav.addObject("dept_title",deptOne);
+		mav.addObject("job_name",jobOne);
+		
+		
+		mav.setViewName("main/main");
 		
 		return mav;
 	}

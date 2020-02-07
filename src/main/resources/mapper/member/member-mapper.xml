@@ -31,4 +31,12 @@
 	<update id="updatePassword">
 		update employee set password=#{password} where email=#{email}
 	</update>
+	
+	<select id="selectOneJob" resultType="Map">
+		select job_name from job where job_code=(select job_code from employee where email=#{email})
+	</select>
+	
+	<select id="selectOneDept" resultType="Map">
+		select dept_title from department where dept_id=(select dept_code from employee where email=#{email})
+	</select>
 </mapper>
