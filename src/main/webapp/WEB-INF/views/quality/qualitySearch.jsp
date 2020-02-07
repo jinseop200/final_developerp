@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lotNo">로트번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="vendor" name="vendor" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="lotNo" name="lotNo" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <button class="btn btn-primary searchSpec" type="button" value="lotNo">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
@@ -43,14 +43,14 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="type">제품타입 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="vendor" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="type" name="type" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <button class="btn btn-primary searchSpec" type="button" value="type">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="storeNo">창고번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="vendor" name="storeName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <label for="storeNo">창고이름 </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="storeNo" name="storeNo" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <button class="btn btn-primary searchSpec" type="button" value="storeNo">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
@@ -160,7 +160,7 @@
             	$("#searchModalTitle").html(title);
             	var searchType = $(this).val();
             	console.log(searchType);
-            	 $('.searchModalBody').load("${pageContext.request.contextPath}/quality/searchSpecify?searchType="+searchType,function(){
+            	 $('.searchModalBody').load("${pageContext.request.contextPath}/quality/searchSpecify.do?searchType="+searchType,function(){
          	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
          	        $('#mySearchModal').modal({show:true});
          	        $(".modal-backdrop.in").css('opacity', 0.4);

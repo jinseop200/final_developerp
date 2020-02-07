@@ -3,6 +3,7 @@ package com.dev.erp.quality.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,21 +35,35 @@ public class QualityDAOImpl implements QualityDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> selectStoreAll() {
+	public List<Map<String, String>> selectStoreAll(int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("quality.selectStoreAll");
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("quality.selectStoreAll",null,rowBounds);
 	}
 
 	@Override
-	public List<Map<String, String>> selectQualityColumn(String searchType) {
+	public List<Map<String, String>> selectQualityColumn(String searchType, int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("quality.selectQualityColumn", searchType);
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("quality.selectQualityColumn", searchType, rowBounds);
 	}
 
 	@Override
 	public List<Map<String, String>> selectProductTypeAll() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("quality.selectProductTypeAll");
+	}
+
+	@Override
+	public int selectAllCountByStoreNo() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectAllCountByStoreNo");
+	}
+
+	@Override
+	public int selectAllCountForQuality() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectAllCountForQuality");
 	}
 	
 	
