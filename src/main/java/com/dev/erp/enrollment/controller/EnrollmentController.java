@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.enrollment.model.service.EnrollmentService;
+import com.google.gson.Gson;
 
 @Controller
 public class EnrollmentController {
@@ -90,10 +91,10 @@ public class EnrollmentController {
 	}
 	
 	@RequestMapping("/enrollment/updateVendor.do")
-	public ModelAndView updateVendor(@RequestParam String vendorNo,
-										 @RequestParam String vendorName,
-										 @RequestParam String incharge,
-										 @RequestParam String vendorPhone,
+	public ModelAndView updateVendor(@RequestParam("vendorNo") String vendorNo,
+									 @RequestParam("vendorName") String vendorName,
+							 		 @RequestParam("incharge") String incharge,
+						 		 	 @RequestParam("vendorPhone") String vendorPhone,
 										 ModelAndView mav) {
 		logger.info("vendorName@Controller={}",vendorName);
 		
@@ -114,4 +115,51 @@ public class EnrollmentController {
 		
 		return mav;
 	}
+	
+	
+	@RequestMapping("/enrollment/updateVendorNo.do")
+	public ModelAndView updateVendorNo(@RequestParam String vendorNoCur,
+										 @RequestParam String vendorNoCha,
+										 ModelAndView mav) {
+		logger.info("vendorNoCur@Controller={}",vendorNoCur);
+		logger.info("vendorNoCha@Controller={}",vendorNoCha);
+		
+		Map<String, String> vendorNo = new HashMap<>();
+		vendorNo.put("vendorNoCur", vendorNoCur);
+		vendorNo.put("vendorNoCha", vendorNoCha);
+		
+		logger.info("vendor@controller={}",vendorNo);
+		
+		int result = enrollmentservice.updateVendorNo(vendorNo); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/updateVendorNo2.do")
+	public ModelAndView updateVendorNo2(@RequestParam String vendorNoCur,
+										 @RequestParam String vendorNoCha,
+										 ModelAndView mav) {
+		logger.info("vendorNoCur@Controller={}",vendorNoCur);
+		logger.info("vendorNoCha@Controller={}",vendorNoCha);
+		
+		Map<String, String> vendorNo = new HashMap<>();
+		vendorNo.put("vendorNoCur", vendorNoCur);
+		vendorNo.put("vendorNoCha", vendorNoCha);
+		
+		logger.info("vendor@controller={}",vendorNo);
+		
+		int result = enrollmentservice.updateVendorNo(vendorNo); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
+		
+		return mav;
+	}
+	
+	
 }

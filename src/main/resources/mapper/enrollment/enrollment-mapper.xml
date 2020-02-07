@@ -31,4 +31,11 @@
 		vendor_phone = #{vendorPhone}
 		where vendor_no = #{vendorNo}
 	</update>
+	
+	<update id="updateVendorNo">
+		update vendor
+		set
+		vendor_no = #{vendorNoCha}
+		where vendor_no = #{vendorNoCur}
+	</update>
 </mapper>

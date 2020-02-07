@@ -13,4 +13,6 @@ public interface EnrollmentDAO {
 
 	int updateVendor(Map<String, String> vendor);
 
+	int updateVendorNo(Map<String, String> vendorNo);
+
 }

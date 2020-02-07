@@ -32,6 +32,11 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int updateVendor(Map<String, String> vendor) {
 		return sqlsession.update("enrollment.updateVendor", vendor);
 	}
+
+	@Override
+	public int updateVendorNo(Map<String, String> vendorNo) {
+		return sqlsession.update("enrollment.updateVendorNo", vendorNo);
+	}
 	
 	
 }
