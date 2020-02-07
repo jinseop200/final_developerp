@@ -115,22 +115,22 @@ function storageNoDuplicatedCheck(e){
 		contentType:"application/json;charset=UTF-8",
 		success: data => {
 			console.log(data);
-			if(data.isUsable == true){
+			if(data.isUsable == true && data.storageNo != ""){
 				alert("사용가능한 창고번호 입니다.");
 				$("#storageNo").attr("style","border-bottom: 2px solid #00c500");
-				//$("#vendorNoCha").attr("style","border-bottom: 2px solid #00c500");
 				$("#storageNoValid").val(1);
-				//$("#vendorNoUpdateValid").val(1);
 			} 
-			else{
-				alert("중복된 거래처번호 입니다.");
+			if((data.isUsable == true || data.isUsable == false) && data.storageNo == ""){
+				alert("중복확인할 창고번호를 입력해 주세요.");
 				$("#storageNo").val("");
-				//$("#vendorNoCha").val("");
 				$("#storageNo").attr("style","border-bottom: 2px solid red");
-				//$("#vendorNoCha").attr("style","border-bottom: 2px solid red");
 				$("#storageNoValid").val(0);
-				//$("#vendorNoUpdateValid").val(0);
-				
+			} 
+			else if(data.isUsable == false){
+				alert("중복된 창고번호 입니다.");
+				$("#storageNo").val("");
+				$("#storageNo").attr("style","border-bottom: 2px solid red");
+				$("#storageNoValid").val(0);
 			}
 			
 		},
@@ -196,6 +196,7 @@ function storageUpdateValidate(){
 </div>
 </div>
 </div>
+
 <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#addStorage-Modal">창고 등록</button>
 
