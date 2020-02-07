@@ -176,14 +176,23 @@ function vendorNoDuplicatedCheck(e){
 		contentType:"application/json;charset=UTF-8",
 		success: data => {
 			console.log(data);
-			if(data.isUsable == true){
+			if(data.isUsable == true && data.vendorNo != ""){
 				alert("사용가능한 거래처번호 입니다.");
 				$("#vendorNo").attr("style","border-bottom: 2px solid #00c500");
 				$("#vendorNoCha").attr("style","border-bottom: 2px solid #00c500");
 				$("#vendorNoValid").val(1);
 				$("#vendorNoUpdateValid").val(1);
-			} 
-			else{
+			}
+			if((data.isUsable == true || data.isUsable == false) && data.vendorNo == ""){
+				alert("중복확인할 거래처번호를 입력해 주세요.");
+				$("#vendorNo").val("");
+				$("#vendorNoCha").val("");
+				$("#vendorNo").attr("style","border-bottom: 2px solid red");
+				$("#vendorNoCha").attr("style","border-bottom: 2px solid red");
+				$("#vendorNoValid").val(0);
+				$("#vendorNoUpdateValid").val(0);
+			}
+			else if(data.isUsable == false){
 				alert("중복된 거래처번호 입니다.");
 				$("#vendorNo").val("");
 				$("#vendorNoCha").val("");

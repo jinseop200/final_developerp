@@ -37,21 +37,33 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectStoreAll() {
+	public List<Map<String, String>> selectStoreAll(int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return qualityDAO.selectStoreAll();
+		return qualityDAO.selectStoreAll(cPage,numPerPage);
 	}
 
 	@Override
-	public List<Map<String, String>> selectQualityColumn(String searchType) {
+	public List<Map<String, String>> selectQualityColumn(String searchType, int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return qualityDAO.selectQualityColumn(searchType);
+		return qualityDAO.selectQualityColumn(searchType, cPage, numPerPage);
 	}
 
 	@Override
 	public List<Map<String, String>> selectProductTypeAll() {
 		// TODO Auto-generated method stub
 		return qualityDAO.selectProductTypeAll();
+	}
+
+	@Override
+	public int selectAllCountByStoreNo() {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectAllCountByStoreNo();
+	}
+
+	@Override
+	public int selectAllCountForQuality() {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectAllCountForQuality();
 	}
 
 }
