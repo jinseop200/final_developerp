@@ -29,11 +29,7 @@ public class EnrollmentController {
 		
 	}
 	
-	@RequestMapping("/enrollment/warehouseEnrollment.do")
-	public void warehouseEnrollment() {
-		
-	}
-	
+	//===============================거래처등록 start===============================
 	@RequestMapping("/enrollment/vendorEnrollment.do")
 	public ModelAndView selectVendorList(ModelAndView mav) {
 		
@@ -161,5 +157,78 @@ public class EnrollmentController {
 		return mav;
 	}
 	
+	//===============================거래처등록 end===============================
+	
+	
+	
+	//===============================창고등록 start===============================
+	@RequestMapping("/enrollment/warehouseEnrollment.do")
+	public ModelAndView storageEnrollment(ModelAndView mav) {
+		List<Map<String, String>> storageList = enrollmentservice.selectStorageList();
+		
+		logger.info("warehouseList@Controller={}", storageList);
+		
+		mav.addObject("storageList", storageList);
+		mav.setViewName("enrollment/warehouseEnrollment");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/addStorage.do")
+	public ModelAndView insertStorage(@RequestParam String storageNo,
+										 @RequestParam String storageName,
+										 ModelAndView mav) {
+		
+		Map<String, String> storage = new HashMap<>();
+		storage.put("storageNo", storageNo);
+		storage.put("storageName", storageName);
+		storage.put("regDate", null);
+		
+		logger.info("storage@controller={}",storage);
+		
+		int result = enrollmentservice.insertStorage(storage); 
+		
+		mav.addObject("storage", storage);
+		mav.setViewName("redirect:/enrollment/warehouseEnrollment.do");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/storageNoDuplicatedCheck.do")
+	@ResponseBody
+	public Map<String, Object> storageNoDuplicatedCheck(@RequestParam("storageNo") String storageNo) {
+		
+		logger.info("storageNo@Controller={}",storageNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("storageNo", storageNo);
+		
+		boolean isUsable = enrollmentservice.selectOneStorageNo(storageNo)==null?true:false;
+		map.put("isUsable", isUsable);
+		
+		logger.info("isUsable@Controller={}",isUsable);
+
+		return map;
+	}
+	
+	@RequestMapping("/enrollment/updateStorage.do")
+	public ModelAndView updateStorage(@RequestParam("storageNo") String storageNo,
+									 @RequestParam("storageName") String storageName,
+										 ModelAndView mav) {
+
+		Map<String, String> storage = new HashMap<>();
+		storage.put("storageNo", storageNo);
+		storage.put("storageName", storageName);
+		
+		logger.info("storage@controller={}",storage);
+		
+		int result = enrollmentservice.updateStorage(storage); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/enrollment/warehouseEnrollment.do");
+		
+		return mav;
+	}
 	
 }

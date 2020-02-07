@@ -42,6 +42,26 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int updateVendorNo(Map<String, String> vendorNo) {
 		return enrollmentDAO.updateVendorNo(vendorNo);
 	}
+
+	@Override
+	public List<Map<String, String>> selectStorageList() {
+		return enrollmentDAO.selectStorageList();
+	}
+
+	@Override
+	public int insertStorage(Map<String, String> storage) {
+		return enrollmentDAO.insertStorage(storage);
+	}
+
+	@Override
+	public Map<String, String> selectOneStorageNo(String storageNo) {
+		return enrollmentDAO.selectOneStorageNo(storageNo);
+	}
+
+	@Override
+	public int updateStorage(Map<String, String> storage) {
+		return enrollmentDAO.updateStorage(storage);
+	}
 	
 	
 }

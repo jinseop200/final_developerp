@@ -72,21 +72,23 @@ $(()=>{
 	<%--입력 모달 창 close시 값 초기화--%>
 	$('#addVendor-Modal').on('hidden.bs.modal', function (e) {
 	    console.log('modal close');
-	  $(this).find('form')[0].reset()
+	  $(this).find('form')[0].reset();
 	  $("#vendorNoValid").val(0);
+	  $("#vendorNo").removeAttr('style');
 	});
 	
 	<%--수정 모달 창 close시 값 초기화--%>
 	$('#updateVendor').on('hidden.bs.modal', function (e) {
 	    console.log('modal close');
-	  $(this).find('form')[0].reset()
-	  
+	  $(this).find('form')[0].reset();
 	});
 	
 	<%--거래처번호 수정 모달 창 close시 값 초기화--%>
 	$('#updateVendorNo').on('hidden.bs.modal', function (e) {
 	    console.log('modal close');
 	  $("#vendorNoUpdateValid").val(0);
+	  $(this).find('form')[0].reset();
+ 	  $("#vendorNoCha").removeAttr('style');
 	});
 	
 	<%--거래처번호 a태그 클릭시 정보수정 Modal 활성화--%>
