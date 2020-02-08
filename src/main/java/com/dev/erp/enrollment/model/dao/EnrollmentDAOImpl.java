@@ -32,6 +32,31 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int updateVendor(Map<String, String> vendor) {
 		return sqlsession.update("enrollment.updateVendor", vendor);
 	}
+
+	@Override
+	public int updateVendorNo(Map<String, String> vendorNo) {
+		return sqlsession.update("enrollment.updateVendorNo", vendorNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectStorageList() {
+		return sqlsession.selectList("enrollment.selectStorageList");
+	}
+
+	@Override
+	public int insertStorage(Map<String, String> storage) {
+		return sqlsession.insert("enrollment.insertStorage", storage);
+	}
+
+	@Override
+	public Map<String, String> selectOneStorageNo(String storageNo) {
+		return sqlsession.selectOne("enrollment.selectOneStorageNo",storageNo);
+	}
+
+	@Override
+	public int updateStorage(Map<String, String> storage) {
+		return sqlsession.update("enrollment.updateStorage",storage);
+	}
 	
 	
 }

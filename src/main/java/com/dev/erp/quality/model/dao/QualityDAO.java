@@ -13,10 +13,14 @@ public interface QualityDAO {
 
 	int qualityUpdateOne(Quality quality);
 
-	List<Map<String, String>> selectStoreAll();
+	List<Map<String, String>> selectStoreAll(int cPage, int numPerPage);
 
-	List<Map<String, String>> selectQualityColumn(String searchType);
+	List<Map<String, String>> selectQualityColumn(String searchType, int cPage, int numPerPage);
 
 	List<Map<String, String>> selectProductTypeAll();
+
+	int selectAllCountByStoreNo();
+
+	int selectAllCountForQuality();
 
 }

@@ -13,4 +13,14 @@ public interface EnrollmentService {
 
 	int updateVendor(Map<String, String> vendor);
 
+	int updateVendorNo(Map<String, String> vendorNo);
+
+	List<Map<String, String>> selectStorageList();
+
+	int insertStorage(Map<String, String> storage);
+	
+	Map<String, String> selectOneStorageNo(String storageNo);
+
+	int updateStorage(Map<String, String> storage);
+
 }

@@ -31,4 +31,37 @@
 		vendor_phone = #{vendorPhone}
 		where vendor_no = #{vendorNo}
 	</update>
+	
+	<update id="updateVendorNo">
+		update vendor
+		set
+		vendor_no = #{vendorNoCha}
+		where vendor_no = #{vendorNoCur}
+	</update>
+	
+	<select id="selectStorageList" resultMap="storageMap">
+		select * from storage order by store_no asc
+	</select>
+	<resultMap type="map" id="storageMap">
+	</resultMap>
+	
+	<insert id="insertStorage">
+		insert into storage values(
+			#{storageNo},
+			#{storageName},
+			default
+		)
+	</insert>
+	
+	<select id="selectOneStorageNo" resultMap="storageMap">
+		select * from storage where store_no = #{storageNo}
+	</select>
+	
+	<update id="updateStorage">
+		update storage
+		set
+		store_name = #{storageName}
+		where store_no = #{storageNo}
+	</update>
+	
 </mapper>

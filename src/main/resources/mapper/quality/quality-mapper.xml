@@ -26,4 +26,13 @@
 	<select id="selectProductTypeAll" resultType="map">
 		select type as "content" from product_type order by pt_no
 	</select>
+	
+	<select id="selectAllCountByStoreNo" resultType="_int">
+		select count(*) from storage
+	</select>
+	
+	<select id="selectAllCountForQuality" resultType="_int">
+		select count(*) from quality
+	</select>
+	
 </mapper>
