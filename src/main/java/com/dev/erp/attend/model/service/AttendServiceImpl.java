@@ -37,5 +37,9 @@ public class AttendServiceImpl implements AttendService {
 	public Attend selectLeaveOne(Attend attend) {
 		return attendDAO.selectLeaveOne(attend);
 	}
+	@Override
+	public String checkAttend(Attend attend) {
+		return attendDAO.checkAttend(attend);
+	}
 
 }

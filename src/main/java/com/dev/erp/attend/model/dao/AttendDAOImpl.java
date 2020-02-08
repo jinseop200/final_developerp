@@ -38,4 +38,9 @@ public class AttendDAOImpl implements AttendDAO {
 	public Attend selectLeaveOne(Attend attend) {
 		return sqlSession.selectOne("attend.selectLeaveOne",attend);
 	}
+
+	@Override
+	public String checkAttend(Attend attend) {
+		return sqlSession.selectOne("attend.checkAttend",attend);
+	}
 }

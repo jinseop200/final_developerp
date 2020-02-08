@@ -61,9 +61,13 @@ public class AttendController {
 
 	}
 	@RequestMapping("/attend/attendForm.do")
-	public ModelAndView showAttendForm(ModelAndView mav, @RequestParam String date
+	public ModelAndView showAttendForm(ModelAndView mav, @RequestParam String date,@RequestParam String email
 			) {
 		System.out.println("dddddd"+date);
+		System.out.println("eaaaaaa"+email);
+		Attend attend=new Attend(email,"",date,"","","","");
+		String attendDate=attendService.checkAttend(attend);
+		System.out.println(attendDate);
 		//		final int numPerPage = 10;
 		//		
 		//		//1.업무로직
@@ -77,6 +81,7 @@ public class AttendController {
 		//		mav.addObject("cPage", cPage);
 		//		mav.addObject("totalContents", totalContents);
 		mav.addObject("date",date);
+		mav.addObject("attendDate",attendDate);
 		mav.setViewName("gw/attendForm");
 		return mav;
 	}

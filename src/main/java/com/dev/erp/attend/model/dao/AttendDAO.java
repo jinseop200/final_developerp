@@ -17,4 +17,6 @@ public interface AttendDAO {
 
 	Attend selectLeaveOne(Attend attend);
 
+	String checkAttend(Attend attend);
+
 }

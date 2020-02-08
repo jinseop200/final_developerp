@@ -21,4 +21,6 @@ public interface AttendService {
 	Attend selectAttendOne(Attend attend);
 
 	Attend selectLeaveOne(Attend attend);
+
+	String checkAttend(Attend attend);
 }

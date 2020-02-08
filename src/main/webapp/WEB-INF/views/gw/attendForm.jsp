@@ -5,6 +5,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <fmt:requestEncoding value="utf-8"/>
 <%String content = (String)request.getAttribute("content");
+String attendDate = (String)request.getAttribute("attendDate");
 String date = (String)request.getAttribute("date");
 Date now = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
@@ -100,9 +101,13 @@ function leave(date,email){
 				</tr>
 			</table>
 		<%if(today.equals(date)){%>
+		<%if(attendDate==null){%>
 					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
+					<%}else{ %>
 					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
-					<%} %>
+					<button type="button" class="attend-button" onclick='earlyleave("${date}","${memberLoggedIn.email}")'>조퇴</button>
+					<%} }%>
+					
 <%-- 					</c:if>	 --%>
 				
 			
