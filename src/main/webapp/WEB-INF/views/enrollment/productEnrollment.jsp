@@ -213,6 +213,7 @@ $("#addProductBtn").click(function(){
 		        
 		        $(".controll-title").html("");
 		        $(".controll-title").html("원재료 등록");
+		        $('#ptTypeRadioBtns').show();
 		    });
 		}
 		else if(radioValue == 2){
@@ -223,6 +224,7 @@ $("#addProductBtn").click(function(){
 		        
 		        $(".controll-title").html("");
 		        $(".controll-title").html("반제품 등록");
+		        $('#ptTypeRadioBtns').show();
 		    });
 		}
 		else if(radioValue == 3){
@@ -233,6 +235,7 @@ $("#addProductBtn").click(function(){
 		        
 		        $(".controll-title").html("");
 		        $(".controll-title").html("완제품 등록");
+		        $('#ptTypeRadioBtns').show();
 		    });
 		}
 		
@@ -246,6 +249,7 @@ $("#addProductBtn").click(function(){
 	        
 	        $(".controll-title").html("");
 	        $(".controll-title").html("원재료 등록");
+	        $('#ptTypeRadioBtns').show();
 	    });
 	}
 	else if(radioVal == 2){
@@ -256,6 +260,7 @@ $("#addProductBtn").click(function(){
 	        
 	        $(".controll-title").html("");
 	        $(".controll-title").html("반제품 등록");
+	        $('#ptTypeRadioBtns').show();
 	    });
 	}
 	else if(radioVal == 3){
@@ -266,6 +271,7 @@ $("#addProductBtn").click(function(){
 	        
 	        $(".controll-title").html("");
 	        $(".controll-title").html("완제품 등록");
+	        $('#ptTypeRadioBtns').show();
 	    });
 	}
 	
