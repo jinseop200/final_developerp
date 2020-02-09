@@ -20,14 +20,19 @@ public class StockController {
 	
 	static final Logger logger = LoggerFactory.getLogger(StockController.class);
 	
-	// ============= 원재료 재고관리 파트 =============
-//	@RequestMapping("/stock/rm/rmView.do")
-//	public ModelAndView rmView(ModelAndView mav) {
-//		
-//		mav.setViewName("/stock/rm/rmView");
-//		
-//		return mav;
-//	}
+	// ========================================= 원재료 재고관리 파트 =========================================
+	@RequestMapping("/stock/rm/rmView.do")
+	public ModelAndView selectVendorList(ModelAndView mav) {
+		
+		List<Map<String, String>> rmList = stockservice.selectRmStockList();
+		
+		logger.info("rmList@Controller={}", rmList);
+		
+		mav.addObject("rmList", rmList);
+		mav.setViewName("stock/rm/rmView");
+		
+		return mav;
+	}
 	
 	@RequestMapping("/stock/rm/modalRmInsert.do")
 	public ModelAndView modalRmInsert(ModelAndView mav) {
@@ -45,13 +50,21 @@ public class StockController {
 		return mav;
 	}
 	
-	// ============= 제품입고/반품관리 =============
+	
+	
+	// ========================================= 제품입고/반품관리 =========================================
 	@RequestMapping("/stock/product/productView.do")
 	public ModelAndView productView(ModelAndView mav) {
 		
+		List<Map<String, String>> productList = stockservice.selectProductStockList();
+		
+		logger.info("productList@Controller={}", productList);
+		
+		mav.addObject("productList",productList);
 		mav.setViewName("/stock/product/productView");
 		
 		return mav;
+		
 	}
 	
 	@RequestMapping("/stock/product/modalProductInsert.do")
@@ -70,10 +83,15 @@ public class StockController {
 		return mav;
 	}
 	
-	// ============= 창고별 재고 관리 =============
+	// ========================================= 창고별 재고 관리 =========================================
 	@RequestMapping("/stock/storage/storageView.do")
 	public ModelAndView storageView(ModelAndView mav) {
 		
+		List<Map<String, String>> storageList = stockservice.selectStorageStockList();
+		
+		logger.info("storageList@Controller={}", storageList);
+		
+		mav.addObject("storageList",storageList);
 		mav.setViewName("/stock/storage/storageView");
 		
 		return mav;
@@ -97,18 +115,7 @@ public class StockController {
 	
 	
 	
-	@RequestMapping("/stock/rm/rmView.do")
-	public ModelAndView selectVendorList(ModelAndView mav) {
-		
-		List<Map<String, String>> rmList = stockservice.selectRmStockList();
-		
-		logger.info("rmList@Controller={}", rmList);
-		
-		mav.addObject("rmList", rmList);
-		mav.setViewName("stock/rm/rmView");
-		
-		return mav;
-	}
+	
 	
 	
 	

@@ -20,4 +20,16 @@ public class StockServiceImpl implements StockService {
 		return stockDAO.selectRmStockList();
 	}
 
+	@Override
+	public List<Map<String, String>> selectProductStockList() {
+		
+		return stockDAO.selectProductStockList();
+	}
+
+	@Override
+	public List<Map<String, String>> selectStorageStockList() {
+		
+		return stockDAO.selectStorageStockList();
+	}
+
 }
