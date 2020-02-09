@@ -55,5 +55,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.selectOneJob(email);
 	}
 
+	@Override
+	public int updateMember(Member member) {
+		return memberDAO.updateMember(member);
+	}
+
+	@Override
+	public int updateProfileImage(Member member) {
+		return memberDAO.updateProfileImage(member);
+	}
+
 }
 

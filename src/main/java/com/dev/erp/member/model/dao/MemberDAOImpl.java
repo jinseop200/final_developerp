@@ -55,4 +55,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("member.selectOneJob",email);
 	}
 
+	@Override
+	public int updateMember(Member member) {
+		return sqlSession.update("member.updateMember",member);
+	}
+
+	@Override
+	public int updateProfileImage(Member member) {
+		return sqlSession.update("member.updateProfileImage",member);
+	}
+
 }

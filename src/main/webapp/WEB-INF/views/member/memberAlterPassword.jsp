@@ -87,32 +87,6 @@ function password_validate(){
 </script>
 <style>
 
-.btn {
-	height: 33px;
-	font-size: 13px;
-	display: inline-block;
-}
-
-.action {
-	background: black;
-}
-
-#enroll-btn {
-	margin:0 auto;
-}
-
-#button-group {
-	padding: 0px 50px;
-}
-
-#button-group .step {
-	margin-top: 0px;
-}
-
-.td-warn{
-	font-size: 14px;
-    color: rgba(221, 30, 47, 1);
-}
 </style>
 <body>
 
@@ -121,11 +95,12 @@ function password_validate(){
 			<input type="hidden" value="${memberLoggedIn.email}" id="email" name="email"/>
 			<table>
 				<tr class="current_password">
-					<td>현재 비밀번호</td>
+					<td>현재 비밀번호&nbsp;&nbsp;</td>
 					<td>
 						<input type="password" name="password" id="password" />
 					</td>
 					<td class="current_password">
+						&nbsp;&nbsp;
 						<input type="button" class="btn btn-outline-secondary" onclick="passwordCheck();"
 						id="btn-password-already" value="비밀번호 확인" />
 						<input type="hidden" id="passwordValid" value="0"/>
@@ -137,13 +112,14 @@ function password_validate(){
 					<td></td>
 				</tr>
 				<tr class="future_password">
-					<td>변경할 비밀번호</td>
+					<td>변경할 비밀번호&nbsp;&nbsp;</td>
 					<td>
 						<input type="password" name="password_Change" id="password_Change" >
 					</td>
 				</tr>
+				<tr class="future_password"><td>&nbsp;</td></tr>
 				<tr class="future_password">
-					<td>비밀번호 확인</td>
+					<td>비밀번호 확인&nbsp;&nbsp;</td>
 					<td>	
 						<input type="password" id="password_Chk" name="password_Chk" ><br>
 					</td>
@@ -153,12 +129,12 @@ function password_validate(){
 					<td class="passwordChkValidateWarning td-warn"></td>
 					<td></td>
 				</tr>
-				<tr>
-					<td colspan='2'>
-						<input type="submit" value="변경" name="submit" />
-					</td>
-				</tr>
+				<tr><td>&nbsp;</td></tr>
 			</table>
+			<div class="modal-footer">
+        	<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">변경</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        	</div>
 		</form>
 	</div>
 </body>

@@ -6,7 +6,7 @@
 <mapper namespace="member">
 	<insert id="insertMember">
 		insert into employee values(seq_emp_id.nextval, #{empName}, #{empNo}, #{email}
-		,#{phone}, #{deptCode},#{jobCode},sysdate,null,#{quitYn},#{password})
+		,#{phone}, #{deptCode},#{jobCode},sysdate,null,#{quitYn},#{password},#{profileImg})
 	</insert>
 	
 	<select id="selectDeptList" resultMap="selectList">
@@ -39,4 +39,11 @@
 	<select id="selectOneDept" resultType="Map">
 		select dept_title from department where dept_id=(select dept_code from employee where email=#{email})
 	</select>
+	
+	<update id="updateMember">
+		update employee set emp_name=#{empName},emp_no=#{empNo},email=#{email},phone=#{phone},dept_code=#{deptCode},job_code=#{jobCode} where email=#{email}
+	</update>
+	<update id="updateProfileImage">
+		update employee set profileimage=#{profileImage} where email=#{email}
+	</update>
 </mapper>

@@ -24,4 +24,8 @@ public interface MemberDAO {
 	
 	Map<String, String> selectOneJob(String email);
 
+	int updateMember(Member member);
+
+	int updateProfileImage(Member member);
+
 }

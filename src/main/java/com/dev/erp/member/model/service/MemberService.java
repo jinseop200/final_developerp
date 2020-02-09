@@ -23,4 +23,8 @@ public interface MemberService {
 	
 	Map<String, String> selectOneJob(String email);
 
+	int updateMember(Member member);
+
+	int updateProfileImage(Member member);
+
 }

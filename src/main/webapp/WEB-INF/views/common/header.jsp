@@ -87,7 +87,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do">문서결재</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}">문서결재</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
@@ -464,33 +464,37 @@
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item dropdown no-arrow mypage">
+                  <a class="nav-link dropdown-toggle mypage" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">${memberLoggedIn.empName}</span>
                     <img class="img-profile rounded-circle" src="${pageContext.request.contextPath }/resources/images/account_circle_black.png">
                   </a>
                   <!-- Dropdown - User Information -->
-                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in mypage" aria-labelledby="userDropdown">
                  	<div class="mypage_head">
-                 		<img src="${pageContext.request.contextPath}/resources/images/profile.png" class="mypage_image" />
+                 		<form action="<%=request.getContextPath()%>/member/memberProfile.do" id="profileImgSubmit" method="POST" enctype="multipart/form-data">
+	                 		<input type="file" id="profileImage" name="uploadFile" onchange="changeValue(this)"/>
+	                 		<input type="hidden" id="email" name="email" value="${memberLoggedIn.email }"/>
+	                 		<img src="${pageContext.request.contextPath}/resources/upload/member/${memberLoggedIn.profileImage}"  class="mypage_image" />
+                 		</form>
                  		<span class="mypage_alterpassword" onclick="mypage_alterpassword();">
                  			<img src="${pageContext.request.contextPath}/resources/images/lock.png" class="mypage_lock" />
                  			비밀번호 변경
                  		</span>
                  	</div>
                  	<div class="mypage_blank"></div>
-                    <a class="dropdown-item empNameBold" href="#">
+                    <span class="dropdown-item empNameBold" onclick="mypage_updateName();">
                     	${memberLoggedIn.empName}
-                    </a>
-                    <a class="dropdown-item" href="#">
+                    </span>
+                    <span class="dropdown-item"onclick="mypage_updateName();" >
                     	${dept_title.DEPT_TITLE}  /  ${job_name.JOB_NAME}
-                    </a>
-                    <a class="dropdown-item" href="#">
+                    </span>
+                    <span class="dropdown-item" onclick="mypage_updateName();">
                     	<img src="${pageContext.request.contextPath}/resources/images/phone.png" class="mypage_phoneimg" />
                     	${memberLoggedIn.phone}   
                     	<i class="fas fa-envelope fa-fw"></i>
                     	${memberLoggedIn.email }
-                    </a>
+                    </span>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item mypageLogout" href="${pageContext.request.contextPath}/member/memberLogOut.do">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -512,6 +516,7 @@
             }
             .mypage_head .mypage_image{
             width:90px; height:90px; position:absolute; top:13%; left:40%; box-shadow:0px 1px 3px 2px #ccc;
+            cursor:pointer;
             }
             .mypage_phoneimg{
             width:25px; height:25px;
@@ -527,6 +532,7 @@
             }
             .dropdown-item{
           	text-align:center;
+          	cursor:pointer;
             }
             .empNameBold{
             font-weight:bold;
@@ -534,14 +540,35 @@
             .mypageLogout{
             text-align:left;
             }
+            #profileImage{
+            display:none;
+            }
             </style>
             
-             <!-- Modal -->
-			<div class="modal" tabindex="-1" role="dialog" id="myModal">
+             <!-- 비밀번호변경 Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="updatePassword">
 			    <div class="modal-dialog" role="document">
 			        <div class="modal-content">
 			        <div class="modal-header">
-			            <h5 class="modal-title controll-title"></h5>
+			            <h5 class="modal-title controll-title">비밀번호 변경</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
+			        
+			        </div>
+			    </div>
+			</div>
+			
+             <!-- 이름변경 Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id=updateInfo>
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title">내정보 변경</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			            <span aria-hidden="true">&times;</span>
 			            </button>
@@ -555,16 +582,38 @@
 			</div>
 			
 			<script>
+			$(function(){
+				$(".mypage_image").click(function (e){
+					$("#profileImage").click();
+				});
+			});
+			
+			function changeValue(obj){
+					$("#profileImgSubmit").submit();
+					alert("프로필사진이 수정되었습니다");
+	    	       	$("li.nav-item.dropdown.no-arrow.mypage").addClass("show");
+	    	       	$("a#userDropdown.nav-link.dropdown-toggle.mypage").attr("aria-expanded","true");
+	    	       	$("div.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in.mypage").addClass("show");
+
+	         };
+
 			function mypage_alterpassword(){
 			    $('.controll-modal-body').load("${pageContext.request.contextPath}/member/memberAlterPassword.do",function(){
-			        $('#myModal').modal({backdrop: 'static', keyboard: false});
-			        $('#myModal').modal({show:true});
+			        $('#updatePassword').modal({backdrop: 'static', keyboard: false});
+			        $('#updatePassword').modal({show:true});
 			        $(".modal-backdrop.in").css('opacity', 0.4);
 			        
-			        $(".controll-title").html("");
-			        $(".controll-title").html("비밀번호 변경");
 			    });
-					$("#myModal").modal();			        
+					$("#updatePassword").modal();			        
+			};
+			function mypage_updateName(){
+			    $('.controll-modal-body').load("${pageContext.request.contextPath}/member/memberUpdateInfo.do",function(){
+			        $('#updateInfo').modal({backdrop: 'static', keyboard: false});
+			        $('#updateInfo').modal({show:true});
+			        $(".modal-backdrop.in").css('opacity', 0.4);
+			        
+			    });
+					$("#updateInfo").modal();			        
 			};
 			  </script>
   
