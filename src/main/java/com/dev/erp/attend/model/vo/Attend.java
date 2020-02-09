@@ -20,5 +20,7 @@ public class Attend {
 	private String attendStartForm;
 	private String attendEnd;
 	private String attendEndForm;
+	private String earlyAttend;
+	private String earlyAttendForm;
 	private String reason;
 }

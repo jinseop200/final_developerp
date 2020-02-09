@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function here(date){
-	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do?date="+date;
+	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do?date="+date+"&email="+'${memberLoggedIn.email}';
 		var title = "출/퇴근 기록부";
 		var spec = "left=500px, top=100px, width=650px, height=500px";
 		var popup = open("", title, spec);

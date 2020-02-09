@@ -29,13 +29,22 @@ public class AttendServiceImpl implements AttendService {
 	public List<Attend> attendShow(String email) {
 		return attendDAO.attendShow(email);
 	}
+
 	@Override
-	public Attend selectAttendOne(Attend attend) {
-		return attendDAO.selectAttendOne(attend);
+	public String checkAttend(Attend attend) {
+		return attendDAO.checkAttend(attend);
 	}
 	@Override
-	public Attend selectLeaveOne(Attend attend) {
-		return attendDAO.selectLeaveOne(attend);
+	public int earlyLeave(Attend attend) {
+		return attendDAO.earlyLeave(attend);
+	}
+	@Override
+	public String checkend(Attend attend) {
+		return attendDAO.checkend(attend);
+	}
+	@Override
+	public String checkearly(Attend attend) {
+		return attendDAO.checkearly(attend);
 	}
 
 }

@@ -29,13 +29,24 @@ public class AttendDAOImpl implements AttendDAO {
 		return sqlSession.selectList("attend.attendShow",email);
 	}
 
+
 	@Override
-	public Attend selectAttendOne(Attend attend) {
-		return sqlSession.selectOne("attend.selectAttendOne",attend);
+	public String checkAttend(Attend attend) {
+		return sqlSession.selectOne("attend.checkAttend",attend);
 	}
 
 	@Override
-	public Attend selectLeaveOne(Attend attend) {
-		return sqlSession.selectOne("attend.selectLeaveOne",attend);
+	public int earlyLeave(Attend attend) {
+		return sqlSession.insert("attend.earlyLeave",attend);
+	}
+
+	@Override
+	public String checkend(Attend attend) {
+		return sqlSession.selectOne("attend.checkend",attend);
+	}
+
+	@Override
+	public String checkearly(Attend attend) {
+		return sqlSession.selectOne("attend.checkearly",attend);
 	}
 }
