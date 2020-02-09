@@ -62,6 +62,71 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int updateStorage(Map<String, String> storage) {
 		return enrollmentDAO.updateStorage(storage);
 	}
+
+	@Override
+	public List<Map<String, String>> selectproductList() {
+		return enrollmentDAO.selectproductList();
+	}
+
+	@Override
+	public int insertProduct(Map<String, String> product) {
+		return enrollmentDAO.insertProduct(product);
+	}
+
+	@Override
+	public Map<String, String> selectOneProductNo(String productNo) {
+		return enrollmentDAO.selectOneProductNo(productNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectAccountAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectAccountAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllCountByAccountNo() {
+		return enrollmentDAO.selectAllCountByAccountNo();
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductTypeAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectProductTypeAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllCountByProductNo() {
+		return enrollmentDAO.selectAllCountByProductNo();
+	}
+
+	@Override
+	public Map<String, String> selectOneProductNoForRawMaterial(String productNo) {
+		return enrollmentDAO.selectOneProductNoForRawMaterial(productNo);
+	}
+
+	@Override
+	public int insertRawMaterial(Map<String, String> rawMaterial) {
+		return enrollmentDAO.insertRawMaterial(rawMaterial);
+	}
+
+	@Override
+	public int updateProductNo(Map<String, String> productNo) {
+		return enrollmentDAO.updateProductNo(productNo);
+	}
+
+	@Override
+	public int updateRawMaterial(Map<String, String> rawMaterial) {
+		return enrollmentDAO.updateRawMaterial(rawMaterial);
+	}
+
+	@Override
+	public int updateProduct(Map<String, String> product) {
+		return enrollmentDAO.updateProduct(product);
+	}
+
+	@Override
+	public int updateProductNoForProductList(Map<String, String> productNo) {
+		return enrollmentDAO.updateProductNoForProductList(productNo);
+	}
 	
 	
 }

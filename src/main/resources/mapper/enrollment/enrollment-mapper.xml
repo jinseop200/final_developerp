@@ -64,4 +64,116 @@
 		where store_no = #{storageNo}
 	</update>
 	
+	<select id="selectproductList" resultMap="productMap">
+		select pl_no, vendor_no, pt_no, product_name, null as delivery, inprice, outprice, spec, tol, reg_date,
+		case pt_no when 1 then '원재료'
+		                   when 2 then '반제품'
+		                   when 3 then '완제품'
+		                   end as pt_type
+		from product_list
+		union all
+		select rm_no, account_no, pt_no, rm_name, delivery, inprice, outprice, spec, tol, reg_date,
+		case pt_no when 1 then '원재료'
+		                   when 2 then '반제품'
+		                   when 3 then '완제품'
+		                   end
+		from raw_material
+		order by pl_no
+	</select>
+	<resultMap type="map" id="productMap">
+	</resultMap>
+	
+	<insert id="insertProduct">
+		insert into product_list values(
+			#{productNo},
+			#{accountNo},
+			#{productName},
+			#{inPrice},
+			#{outPrice},
+			#{spec},
+			#{tol},
+			default,
+			#{ptNo}
+		)
+	</insert>
+	
+	<select id="selectOneProductNo" resultMap="productMap">
+		select * from product_list where pl_no = #{productNo}
+	</select>
+	
+	<select id="selectAccountAll" resultType="map">
+		select vendor_no as "content2", vendor_name as "content" from vendor order by vendor_no
+	</select>
+	
+	<select id="selectAllCountByAccountNo" resultType="_int">
+		select count(*) from vendor
+	</select>
+	
+	<select id="selectProductTypeAll" resultType="map">
+		select pt_no as "content2", type as "content" from product_type order by pt_no
+	</select>
+	
+	<select id="selectAllCountByProductNo" resultType="_int">
+		select count(*) from product_type
+	</select>
+	
+	<select id="selectOneProductNoForRawMaterial" resultMap="productMap">
+		select * from raw_material where rm_no = #{productNo}
+	</select>
+	
+	<insert id="insertRawMaterial">
+		insert into raw_material values(
+			#{productNo},
+			#{accountNo},
+			#{ptNo},
+			#{productName},
+			#{delivery},
+			#{inPrice},
+			#{outPrice},
+			#{spec},
+			#{tol},
+			default
+		)
+	</insert>
+	
+	<update id="updateProductNo">
+		update raw_material
+		set
+		rm_no = #{productNoCha}
+		where rm_no = #{productNoCur}
+	</update>
+	
+	<update id="updateRawMaterial">
+		update raw_material
+		set
+		ACCOUNT_NO = #{accountNo},
+		PT_NO = #{ptNo},
+		DELIVERY = #{delivery},
+		RM_NAME = #{productName},
+		INPRICE = #{inPrice},
+		OUTPRICE = #{outPrice},
+		SPEC = #{spec},
+		TOL = #{tol}
+		where RM_NO = #{productNo}
+	</update>
+	
+	<update id="updateProduct">
+		update product_list
+		set
+		VENDOR_NO = #{accountNo},
+		PT_NO = #{ptNo},
+		PRODUCT_NAME = #{productName},
+		INPRICE = #{inPrice},
+		OUTPRICE = #{outPrice},
+		SPEC = #{spec},
+		TOL = #{tol}
+		where PL_NO = #{productNo}
+	</update>
+	
+	<update id="updateProductNoForProductList">
+		update product_list
+		set
+		pl_no = #{productNoCha}
+		where pl_no = #{productNoCur}
+	</update>
 </mapper>

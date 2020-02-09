@@ -23,4 +23,30 @@ public interface EnrollmentDAO {
 
 	int updateStorage(Map<String, String> storage);
 
+	List<Map<String, String>> selectproductList();
+
+	int insertProduct(Map<String, String> product);
+
+	Map<String, String> selectOneProductNo(String productNo);
+
+	List<Map<String, String>> selectAccountAll(int cPage, int numPerPage);
+
+	int selectAllCountByAccountNo();
+
+	List<Map<String, String>> selectProductTypeAll(int cPage, int numPerPage);
+
+	int selectAllCountByProductNo();
+
+	Map<String, String> selectOneProductNoForRawMaterial(String productNo);
+
+	int insertRawMaterial(Map<String, String> rawMaterial);
+
+	int updateProductNo(Map<String, String> productNo);
+
+	int updateRawMaterial(Map<String, String> rawMaterial);
+
+	int updateProduct(Map<String, String> product);
+
+	int updateProductNoForProductList(Map<String, String> productNo);
+
 }
