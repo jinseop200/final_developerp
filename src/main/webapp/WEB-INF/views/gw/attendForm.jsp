@@ -6,6 +6,8 @@
 <fmt:requestEncoding value="utf-8"/>
 <%String content = (String)request.getAttribute("content");
 String attendDate = (String)request.getAttribute("attendDate");
+String endDate = (String)request.getAttribute("endDate");
+String earlyDate = (String)request.getAttribute("earlyDate");
 String date = (String)request.getAttribute("date");
 Date now = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
@@ -53,7 +55,18 @@ function attend(date,email){
 	location.href = "${pageContext.request.contextPath}/attend/attendant.do?date="+date+"&email="+email;
 }
 function leave(date,email){
+	var currentDate = new Date(); 
+	 if(currentDate.getHours()<17)
+		alert("아직퇴근시간이 아닙니다.");
+	 else
 	location.href = "${pageContext.request.contextPath}/attend/leave.do?date="+date+"&email="+email;
+}
+function earlyleave(email){
+	var reason=document.getElementById("reason");
+	if(reason.value.trim().length==0)
+		alert("조퇴 내용을 입력해 주세요");
+	else
+	location.href = "${pageContext.request.contextPath}/attend/earlyleave.do?reason="+reason.value+"&email="+email;
 }
 </script>
 	
@@ -69,7 +82,7 @@ function leave(date,email){
 					<td>이메일주소<span>*</span></td>
 					<td>
 						<input class="form-control input-text" type="email"
-						name="email" id="email" value=${memberLoggedIn.email} />
+						name="email" id="email" value=${memberLoggedIn.email} readonly/>
 					</td>			
 				</tr>		
 				<tr>
@@ -99,16 +112,20 @@ function leave(date,email){
 						name="phone" id="phone" value="${memberLoggedIn.phone}"/>
 					</td>
 				</tr>
-			</table>
+				<tr>
+				<td>
 		<%if(today.equals(date)){%>
 		<%if(attendDate==null){%>
 					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
-					<%}else{ %>
+					<%}else if(earlyDate==null&& endDate==null){ %>
 					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
-					<button type="button" class="attend-button" onclick='earlyleave("${date}","${memberLoggedIn.email}")'>조퇴</button>
+					<button type="button" class="attend-button" onclick='earlyleave("${memberLoggedIn.email}")'>조퇴</button>
+					<textarea id="reason"> </textarea>
 					<%} }%>
+					</td>
+				</tr>
+			</table>
 					
-<%-- 					</c:if>	 --%>
 				
 			
 

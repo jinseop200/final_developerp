@@ -12,15 +12,18 @@
 		insert into attend(email,attend_end) values(#{email},sysdate+(1/24)*9)
 	</insert>
 	<select id="attendShow" resultType="Attend">
-	select email,attend_start,to_char(attend_start,'yyyy-mm-dd')attendstartform,attend_end,to_char(attend_end,'yyyy-mm-dd')attendendform,reason from attend where email=#{email}
-	</select>
-	<select id="selectAttendOne" resultType="Attend">
-		select * from attend where email=#{email} and to_char(attend_start,'yyyy-mm-dd')=#{attendStart}
-	</select>
-	<select id="selectLeaveOne" resultType="Attend">
-		select * from attend where email=#{email} and to_char(attend_End,'yyyy-mm-dd')=#{attendEnd}
+	select email,attend_start,to_char(attend_start,'yyyy-mm-dd')attendstartform,attend_end,to_char(attend_end,'yyyy-mm-dd')attendendform,early_attend,to_char(early_attend,'yyyy-mm-dd')earlyattendform,reason from attend where email=#{email}
 	</select>
 	<select id="checkAttend" resultType="string">
 	select to_char(attend_start,'yyyy-mm-dd')attendstartform from attend where email=#{email} and to_char(attend_start,'yyyy-mm-dd')=#{attendStart}
 	</select>
+	<select id="checkend" resultType="string">
+	select to_char(attend_end,'yyyy-mm-dd')attendendform from attend where email=#{email} and to_char(attend_end,'yyyy-mm-dd')=#{attendEnd}
+	</select>
+	<select id="checkearly" resultType="string">
+	select to_char(early_attend,'yyyy-mm-dd')earlyattendform from attend where email=#{email} and to_char(early_attend,'yyyy-mm-dd')=#{earlyAttend}
+	</select>
+	<insert id="earlyLeave">
+		insert into attend(email,early_attend,reason) values(#{email},sysdate+(1/24)*9,#{reason})
+	</insert>
 </mapper>
