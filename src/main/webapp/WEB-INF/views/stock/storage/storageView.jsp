@@ -41,22 +41,24 @@
 		  <thead>
 		    <tr>
 		     <th>창고번호</th>
-		     <th>제품번호</th>
-		     <th>제품이름</th>
-		     <th>규격</th>
-		     <th>총 수량</th>
+		     <th>창고이름</th>
+		     <th>로트번호</th>
+		     <th>품목분류</th>
+		     <th>품목이름</th>
+		     <th>수량</th>
 		    </tr>
 		  </thead>
 		  
 		  
 		  <tbody>
-	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
+	      	<c:forEach items="${storageList}" var="storageList" varStatus="vs">
 		        <tr>
-		          <td>${rm.RM_NO}</td>
-		          <td>${rm.RM_NO}</td>
-		          <td>${rm.RM_NAME}</td>
-		          <td>${rm.STANDARD}</td>      
-		          <td>${rm.RM_SUM}</td>
+		          <td>${storageList.STORE_NO}</td>
+		          <td>${storageList.STORE_NAME}</td>
+		          <td>${storageList.LOT_NO}</td>
+		          <td>${storageList.TYPE}</td>
+		          <td>${storageList.STORED_ITEM_NAME}</td>
+		          <td>${storageList.QUANTITY}</td>      
 		        </tr>
 	        </c:forEach>
 		  </tbody>

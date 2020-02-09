@@ -42,8 +42,8 @@
 		    <tr>
 		     <th>원재료번호</th>
 		     <th>원재료이름</th>
-		     <th>규격</th>
 		     <th>총 수량</th>
+		     <th>날짜</th>
 		    </tr>
 		  </thead>
 		  
@@ -52,9 +52,9 @@
 	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
 		        <tr>
 		          <td>${rm.RM_NO}</td>
-		          <td>${rm.RM_NAME}</td>
-		          <td>${rm.STANDARD}</td>      
+		          <td>${rm.RM_NAME}</td>    
 		          <td>${rm.RM_SUM}</td>
+		          <td>${rm.REC_DATE}</td>
 		        </tr>
 	        </c:forEach>
 		  </tbody>
@@ -66,7 +66,7 @@
           
           
 <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="rmModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 	        <div class="modal-header">
@@ -86,8 +86,8 @@
 <script>
 	$("#quality-insert-button").click(function(){
 	 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmInsert.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#rmModal').modal({backdrop: 'static', keyboard: false});
+	        $('#rmModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 수정하기");
@@ -96,8 +96,8 @@
 	
 	$("#quality-search-button").click(function(){
 	    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSearch.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#rmModal').modal({backdrop: 'static', keyboard: false});
+	        $('#rmModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 상세 검색하기");
@@ -106,7 +106,7 @@
 </script>
 
 <style>
-#myModal{
+#rmModal{
 	z-index: 1060;
 }
 </style>

@@ -42,19 +42,19 @@
 		    <tr>
 		     <th>제품번호</th>
 		     <th>제품이름</th>
-		     <th>규격</th>
 		     <th>총 수량</th>
+		     <th>생산일</th>
 		    </tr>
 		  </thead>
 		  
 		  
 		  <tbody>
-	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
+	      	<c:forEach items="${productList}" var="product" varStatus="vs">
 		        <tr>
-		          <td>${rm.RM_NO}</td>
-		          <td>${rm.RM_NAME}</td>
-		          <td>${rm.STANDARD}</td>      
-		          <td>${rm.RM_SUM}</td>
+		          <td>${product.LOT_NO}</td>
+		          <td>${product.PRODUCT_NAME}</td>
+		          <td>${product.QUANTITY}</td>      
+		          <td>${product.PRODUCTION}</td>
 		        </tr>
 	        </c:forEach>
 		  </tbody>
