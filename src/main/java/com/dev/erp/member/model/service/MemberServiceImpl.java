@@ -45,5 +45,25 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.updatePassword(param);
 	}
 
+	@Override
+	public Map<String, String> selectOneDept(String email) {
+		return memberDAO.selectOneDept(email);
+	}
+	
+	@Override
+	public Map<String, String> selectOneJob(String email) {
+		return memberDAO.selectOneJob(email);
+	}
+
+	@Override
+	public int updateMember(Member member) {
+		return memberDAO.updateMember(member);
+	}
+
+	@Override
+	public int updateProfileImage(Member member) {
+		return memberDAO.updateProfileImage(member);
+	}
+
 }
 

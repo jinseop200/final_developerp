@@ -1,9 +1,15 @@
 package com.dev.erp.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,19 +19,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.member.model.exception.MemberException;
 import com.dev.erp.member.model.service.MemberService;
 import com.dev.erp.member.model.vo.Member;
 
-@SessionAttributes(value= {"memberLoggedIn"})
+@SessionAttributes(value= {"memberLoggedIn","dept_title","job_name"})
 @Controller
 public class MemberController {
 
@@ -41,9 +49,9 @@ public class MemberController {
 	public ModelAndView memberEnrollEnd(ModelAndView mav, @RequestParam("email") String email,
 			@RequestParam("password") String password, @RequestParam("emp_name") String emp_name,
 			@RequestParam("dept_code") String dept_code, @RequestParam("job_code") String job_code,@RequestParam("ssn1") String ssn1,
-			@RequestParam("ssn2") String ssn2,@RequestParam("phone") int phone
+			@RequestParam("ssn2") String ssn2,@RequestParam("phone") String phone
 			) {
-		Member member = new Member(0,emp_name,(ssn1+"-"+ssn2),email,phone,dept_code,job_code,null,null,"N",password);
+		Member member = new Member(0,emp_name,(ssn1+"-"+ssn2),email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
 		String rawPassword=member.getPassword();
 		String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
 		member.setPassword(encryptedPassword);
@@ -67,7 +75,6 @@ public class MemberController {
 		
 		List<Map<String,String>> deptList = memberService.selectDeptList();
 		List<Map<String,String>> jobList = memberService.selectJobList();
-		logger.debug("deptList={}",deptList);
 		
 		mav.addObject("dept",deptList);
 		mav.addObject("job",jobList);
@@ -104,8 +111,8 @@ public class MemberController {
 		try {
 			//1.업무로직
 			Member m = memberService.selectOneMember(email);
-			logger.debug("member={}",m);
-			
+			Map<String, String> deptOne = memberService.selectOneDept(email);
+			Map<String, String> jobOne = memberService.selectOneJob(email);
 			String msg="";
 			String loc="/";
 			
@@ -119,6 +126,8 @@ public class MemberController {
 					msg="로그인 성공!";
 	//				session.setAttribute("memberLoggedIn", m);
 					mav.addObject("memberLoggedIn", m);
+					mav.addObject("dept_title",deptOne);
+					mav.addObject("job_name", jobOne);
 					loc="/main/main.do";
 					
 				}else {
@@ -166,6 +175,17 @@ public class MemberController {
 		mav.setViewName("member/memberAlterPassword");
 		return mav;
 	}
+	@RequestMapping("/member/memberUpdateInfo.do")
+	public ModelAndView memberUpdateInfo(ModelAndView mav) {
+		List<Map<String,String>> deptList = memberService.selectDeptList();
+		List<Map<String,String>> jobList = memberService.selectJobList();
+		
+		mav.addObject("dept",deptList);
+		mav.addObject("job",jobList);
+		mav.setViewName("member/memberUpdateInfo");
+		return mav;
+	}
+	
 	@RequestMapping("/member/memberPasswordCheck.do")
 	@ResponseBody
 	public Map<String,Object> memberPasswordCheck(@RequestParam("password") String password, @RequestParam("email") String email, HttpServletResponse response) {
@@ -202,6 +222,93 @@ public class MemberController {
 		mav.setViewName("common/msg");
 		
 		
+		return mav;
+	}
+	@RequestMapping("/member/memberFindMypage.do")
+	public ModelAndView memberFindMypage(ModelAndView mav, @RequestParam("email") String email) {
+		Map<String, String> deptOne = memberService.selectOneDept(email);
+		Map<String, String> jobOne = memberService.selectOneJob(email);
+		
+		mav.addObject("dept_title",deptOne);
+		mav.addObject("job_name",jobOne);
+		
+		
+		mav.setViewName("main/main");
+		
+		return mav;
+	}
+	@PostMapping("/member/memberUpdateInfoEnd.do")
+	public ModelAndView memberUpdateInfoEnd(ModelAndView mav,@RequestParam("email") String email,
+			@RequestParam("password") String password, @RequestParam("emp_name") String emp_name,
+			@RequestParam("dept_code") String dept_code, @RequestParam("job_code") String job_code,@RequestParam("ssn1") String ssn1,
+			@RequestParam("phone") String phone) {
+		Member member = new Member(0,emp_name,ssn1,email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
+		String rawPassword=member.getPassword();
+		String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
+		member.setPassword(encryptedPassword);
+		
+		int result =memberService.updateMember(member);
+		Map<String, String> deptOne = memberService.selectOneDept(email);
+		Map<String, String> jobOne = memberService.selectOneJob(email);
+			
+		String msg="";
+		String loc="/main/main.do";
+		if(result>0) {
+			msg="회원정보수정성공!";
+			mav.addObject("memberLoggedIn", member);
+			mav.addObject("dept_title",deptOne);
+			mav.addObject("job_name", jobOne);
+		}
+		
+		mav.addObject("loc",loc);
+		mav.addObject("msg",msg);
+		
+		mav.setViewName("common/msg");
+		
+		return mav;
+	}
+	@RequestMapping("/member/memberProfile.do")
+	public ModelAndView memberProfile(ModelAndView mav, @RequestParam("email") String email, 
+									@RequestParam(value="uploadFile",required=false) MultipartFile profileImage, 
+									HttpServletRequest request) {
+			String saveDirectory = request.getSession()
+										  .getServletContext()
+										  .getRealPath("/resources/upload/member");
+			Member member = new Member();
+			//동적으로 directory 생성하기
+			File dir = new File(saveDirectory);
+			if(dir.exists() == false)
+				dir.mkdir();
+			//MultipartFile객체 파일업로드 처리 시작//////////////
+				if(!profileImage.isEmpty()) {
+					//파일명 재생성
+					String originalFileName = profileImage.getOriginalFilename();
+					String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+					int rndNum = (int)(Math.random()*1000);
+					String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
+					
+					//서버컴퓨터에 파일저장
+					try {
+						profileImage.transferTo(new File(saveDirectory+"/"+renamedFileName));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					member.setEmail(email);
+					member.setProfileImage(renamedFileName);
+				}
+			//MultipartFile객체 파일업로드 처리 끝//////////////
+			//2.업무로직
+			int result = memberService.updateProfileImage(member);
+			member = memberService.selectOneMember(email);
+			if(result>0) {
+				//3. view단 처리		
+				mav.addObject("memberLoggedIn",member);
+				mav.setViewName("main/main");
+			}
+			
 		return mav;
 	}
 	

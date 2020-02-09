@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="document">
+
+	<select id="selectDocList" resultMap="selectDoc">
+		select * from document where doc_writer=#{empName} order by doc_no desc
+	</select>
+	<resultMap id="selectDoc" type="document"></resultMap>
+	<select id="selectDocTypeAll" resultType="map">
+		select * from doc_type
+	</select> 
+	<insert id="insertDocument">
+		insert into document values(seq_doc_no.nextval,#{typeNo},#{docType},#{docTitle},#{docStatus},
+									#{docWriter},#{docLastapproval},#{docContent},#{regDate})
+	</insert>
+	
+	<insert id="insertDocumentLine">
+		<selectKey keyProperty="docNo" resultType="_int"
+				   order="BEFORE">
+			select seq_doc_no.currval from dual
+		</selectKey>
+		insert into doc_line values(seq_line_no.nextval, #{docNo}, #{typeNo}, #{prevWriter},
+									#{nextWriter},#{returnYn})
+	</insert>
+</mapper>

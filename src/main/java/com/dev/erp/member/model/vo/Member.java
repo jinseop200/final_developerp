@@ -26,12 +26,12 @@ public class Member implements Serializable {
 	private String empName;
 	private String empNo;
 	private String email;
-	private int phone;
+	private String phone;
 	private String deptCode;
 	private String jobCode;
 	private Date hireDate;
 	private Date quitDate;
 	private String quitYn;
 	private String password;
-	
+	private String profileImage;
 }

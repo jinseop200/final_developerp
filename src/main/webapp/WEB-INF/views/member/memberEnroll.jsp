@@ -247,13 +247,13 @@ function emailDuplicatedCheck(){
 				$("#email").attr("style","border-bottom: 2px solid #00c500");
 				$("#emailValid").val(1);
 			}
-// 			else if(!regExpEmail.test(email)){
-// 				$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
-// 				$("#email").val("");
-// 				$("#email").attr("style","border-bottom: 2px solid red");
-// 				$("#emailValid").val(0);
+			else if(!regExpEmail.test(email)){
+				$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
+				$("#email").val("");
+				$("#email").attr("style","border-bottom: 2px solid red");
+				$("#emailValid").val(0);
 				
-// 			} 
+			} 
 			else {
 				$(".emailValidateWarning").html('중복된 이메일입니다.');
 				$("#email").val("");
