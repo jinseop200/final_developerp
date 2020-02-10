@@ -22,7 +22,7 @@ public class StockController {
 	
 	// ========================================= 원재료 재고관리 파트 =========================================
 	@RequestMapping("/stock/rm/rmView.do")
-	public ModelAndView selectVendorList(ModelAndView mav) {
+	public ModelAndView selectRmStockList(ModelAndView mav) {
 		
 		List<Map<String, String>> rmList = stockservice.selectRmStockList();
 		
@@ -50,11 +50,34 @@ public class StockController {
 		return mav;
 	}
 	
+	// ========================================= 원재료 입출고관리 파트 =========================================
+	@RequestMapping("/stock/rm/rmSnrView.do")
+	public ModelAndView selectRmSnrStockList(ModelAndView mav) {
+		
+		List<Map<String, String>> rmSnrList = stockservice.selectRmSnrStockList();
+		
+		logger.info("rmSnrList@Controller={}", rmSnrList);
+		
+		mav.addObject("rmSnrList", rmSnrList);
+		mav.setViewName("stock/rm/rmSnrView");
+		
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// ========================================= 제품입고/반품관리 =========================================
 	@RequestMapping("/stock/product/productView.do")
-	public ModelAndView productView(ModelAndView mav) {
+	public ModelAndView selectProductStockList(ModelAndView mav) {
 		
 		List<Map<String, String>> productList = stockservice.selectProductStockList();
 		
@@ -85,7 +108,7 @@ public class StockController {
 	
 	// ========================================= 창고별 재고 관리 =========================================
 	@RequestMapping("/stock/storage/storageView.do")
-	public ModelAndView storageView(ModelAndView mav) {
+	public ModelAndView selectStorageStockList(ModelAndView mav) {
 		
 		List<Map<String, String>> storageList = stockservice.selectStorageStockList();
 		

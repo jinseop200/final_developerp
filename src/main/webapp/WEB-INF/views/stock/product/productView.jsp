@@ -17,11 +17,11 @@
 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
 	<div class="input-group" style="margin:30px;">
 		<div class="input-group-append">
-			<button class="btn btn-primary" type="button" id="quality-insert-button">
-				  재고 수정하기 
+			<button class="btn btn-primary" type="button" id="productUpdate_button">
+				  완제품 재고 수정하기 
 			</button> &nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn btn-primary" type="button" id="quality-search-button">
-				  재고 상세 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
+			<button class="btn btn-primary" type="button" id="productSearch_button">
+				  완제품 재고 상세 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
 			</button> 
 		</div>
 	</div>
@@ -40,10 +40,10 @@
 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 		  <thead>
 		    <tr>
+		     <th>생산일</th>
 		     <th>제품번호</th>
 		     <th>제품이름</th>
-		     <th>총 수량</th>
-		     <th>생산일</th>
+		     <th>수량</th>
 		    </tr>
 		  </thead>
 		  
@@ -51,10 +51,10 @@
 		  <tbody>
 	      	<c:forEach items="${productList}" var="product" varStatus="vs">
 		        <tr>
+		          <td>${product.PRODUCTION}</td>
 		          <td>${product.LOT_NO}</td>
 		          <td>${product.PRODUCT_NAME}</td>
 		          <td>${product.QUANTITY}</td>      
-		          <td>${product.PRODUCTION}</td>
 		        </tr>
 	        </c:forEach>
 		  </tbody>
@@ -66,7 +66,7 @@
           
           
 <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="productModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 	        <div class="modal-header">
@@ -84,20 +84,20 @@
 
   
 <script>
-	$("#quality-insert-button").click(function(){
+	$("#productUpdate_button").click(function(){
 	 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmInsert.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#productModal').modal({backdrop: 'static', keyboard: false});
+	        $('#productModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 수정하기");
 		});
 	});
 	
-	$("#quality-search-button").click(function(){
+	$("#productSearch_button").click(function(){
 	    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSearch.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#productModal').modal({backdrop: 'static', keyboard: false});
+	        $('#productModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 상세 검색하기");
@@ -106,7 +106,7 @@
 </script>
 
 <style>
-#myModal{
+#productModal{
 	z-index: 1060;
 }
 </style>

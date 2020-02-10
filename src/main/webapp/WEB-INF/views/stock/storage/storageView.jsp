@@ -17,10 +17,10 @@
 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
 	<div class="input-group" style="margin:30px;">
 		<div class="input-group-append">
-			<button class="btn btn-primary" type="button" id="quality-insert-button">
+			<button class="btn btn-primary" type="button" id="storageUpdate_button">
 				  재고 수정하기 
 			</button> &nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn btn-primary" type="button" id="quality-search-button">
+			<button class="btn btn-primary" type="button" id="storageSearch_button">
 				  재고 상세 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
 			</button> 
 		</div>
@@ -70,7 +70,7 @@
           
           
 <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="storageModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 	        <div class="modal-header">
@@ -88,20 +88,20 @@
 
   
 <script>
-	$("#quality-insert-button").click(function(){
+	$("#storageUpdate_button").click(function(){
 	 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmInsert.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#storageModal').modal({backdrop: 'static', keyboard: false});
+	        $('#storageModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 수정하기");
 		});
 	});
 	
-	$("#quality-search-button").click(function(){
+	$("#storageSearch_button").click(function(){
 	    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSearch.do",function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	        $('#storageModal').modal({backdrop: 'static', keyboard: false});
+	        $('#storageModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("재고 상세 검색하기");
@@ -110,7 +110,7 @@
 </script>
 
 <style>
-#myModal{
+#storageModal{
 	z-index: 1060;
 }
 </style>

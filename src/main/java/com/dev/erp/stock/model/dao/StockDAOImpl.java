@@ -19,6 +19,11 @@ public class StockDAOImpl implements StockDAO {
 	}
 
 	@Override
+	public List<Map<String, String>> selectRmSnrStockList() {
+		return sqlsession.selectList("stock.selectRmSnrStockList");
+	}
+	
+	@Override
 	public List<Map<String, String>> selectProductStockList() {
 		return sqlsession.selectList("stock.selectProductStockList");
 	}
@@ -27,5 +32,7 @@ public class StockDAOImpl implements StockDAO {
 	public List<Map<String, String>> selectStorageStockList() {
 		return sqlsession.selectList("stock.selectStorageStockList");
 	}
+
+	
 
 }
