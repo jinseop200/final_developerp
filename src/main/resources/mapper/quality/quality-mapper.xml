@@ -8,8 +8,11 @@
 		select * from quality order by quality_no desc
 	</select>
 	<resultMap id="qualityVO" type="quality"></resultMap>
-	<select id="selectOnebyQualityNo" resultType="quality">
-		select * from quality where quality_no = #{quality_no}
+	<select id="selectOnebyQualityNo" resultType="map">
+		select p.*, s.store_name from (
+		select q.*, r.spec, r.rm_name as "PNAME" from quality q join raw_material r on q.rm_no = r.rm_no
+		union
+		select q.*, l.spec, l.product_name as "PNAME" from quality q join product_list l on l.pl_no = q.pl_no) p join storage s on p.store_no = s.store_no where quality_no =#{quality_no}
 	</select>
 	<update id="qualityUpdateOne" >
 		update quality set lot_no = #{lotNo}, store_no=#{storeNo}, type=#{type}, quality_comment=#{qualityComment}
@@ -35,4 +38,56 @@
 		select count(*) from quality
 	</select>
 	
+	<select id="searchBySpecify" resultMap="qualityVO">
+		select * from quality q join storage s on q.store_no=s.store_no
+		where (q.reg_date between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1)
+		<if test="qualityNo != null and qualityNo !=''">
+		 and q.quality_No = #{qualityNo}
+		</if>
+		<if test="lotNo != null and lotNo !=''">
+		 and q.lot_No = #{lotNo}
+		</if>
+		<if test="type != null and type !=''">
+		 and q.type = #{type}
+		</if>
+		<if test="storeName != null and storeName !=''">
+		 and s.store_Name = #{storeName}
+		</if>
+	
+	</select>
+	
+	<select id="insectionWatingList" resultType="map" parameterType="String">
+		select * from (select p.lot_no, l.product_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, production as "ENROLL_DATE", l.spec, l.tol 
+		from production p join product_list l on p.pl_no = l.pl_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N'
+		union
+		select p.lot_no, l.rm_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, rec_date as "ENROLL_DATE", l.spec, l.tol 
+		from recieving p join raw_material l on p.rm_no = l.rm_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N') where 1=1
+		<if test="_parameter != null and !_parameter.equals('')">
+		 and type = #{_parameter}
+		</if> 
+	</select>
+	
+	<select id="selectInsectionOnebyLotNo" resultType="map">
+		select * from (select p.lot_no, l.product_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, production as "ENROLL_DATE", l.spec, l.tol 
+		from production p join product_list l on p.pl_no = l.pl_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N'
+		union
+		select p.lot_no, l.rm_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, rec_date as "ENROLL_DATE", l.spec, l.tol 
+		from recieving p join raw_material l on p.rm_no = l.rm_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N')
+		where lot_no = #{lotNo}
+	</select>
+	
+	<update id="updateInsectionYNInRecieving">
+		update recieving set insection_yn = 'Y', quality_yn = #{qualityYN}, store_no=#{storeNo}, measurement=#{measurement} where lot_no = #{lotNo}
+	</update>
+	<update id="updateInsectionYNInProduction">
+		update production set insection_yn = 'Y', quality_yn = #{qualityYN}, store_no=#{storeNo}, measurement=#{measurement} where lot_no = #{lotNo}
+	</update>
+	
+	<insert id="insertQualityInfo">
+		insert into quality values (seq_quality_no.nextval, #{lotNo}, #{storeNo}, #{type}, #{qualityComment},default,#{measurement})
+	</insert>
+	
+	<select id="selectStoreNoByStoreName" resultType="string">
+		select store_no from storage where store_Name=#{storeName}
+	</select>
 </mapper>

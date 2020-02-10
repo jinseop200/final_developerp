@@ -24,16 +24,16 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public Quality selectOnebyQualityNo(int quality_no) {
+	public Map<String, String> selectOnebyQualityNo(String quality_no) {
 		
-		Quality qualityContent = qualityDAO.selectOnebyQualityNo(quality_no);
+		Map<String, String> qualityContent = qualityDAO.selectOnebyQualityNo(quality_no);
 		
 		return qualityContent;
 	}
 
 	@Override
-	public int qualityUpdateOne(Quality quality) {
-		return qualityDAO.qualityUpdateOne(quality);
+	public int qualityUpdateOne(Map<String, String> param) {
+		return qualityDAO.qualityUpdateOne(param);
 	}
 
 	@Override
@@ -65,5 +65,49 @@ public class QualityServiceImpl implements QualityService {
 		// TODO Auto-generated method stub
 		return qualityDAO.selectAllCountForQuality();
 	}
+
+	@Override
+	public List<Map<String, String>> searchBySpecify(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return qualityDAO.searchBySpecify(map);
+	}
+
+	@Override
+	public List<Map<String, String>> insectionWatingList(String type) {
+		// TODO Auto-generated method stub
+		return qualityDAO.insectionWatingList(type);
+	}
+
+	@Override
+	public Map<String,String> selectInsectionOnebyLotNo(String lotNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectInsectionOnebyLotNo(lotNo);
+	}
+
+	@Override
+	public int updateInsectionYNInRecieving(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.updateInsectionYNInRecieving(param);
+	}
+
+	@Override
+	public int updateInsectionYNInProduction(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.updateInsectionYNInProduction(param);
+	}
+
+	@Override
+	public int insertQualityInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.insertQualityInfo(param);
+	}
+
+	@Override
+	public String selectStoreNoByStoreName(String storeName) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectStoreNoByStoreName(storeName);
+	}
+
+
 
 }

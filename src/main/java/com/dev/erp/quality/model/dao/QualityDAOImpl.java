@@ -23,15 +23,15 @@ public class QualityDAOImpl implements QualityDAO {
 	}
 
 	@Override
-	public Quality selectOnebyQualityNo(int quality_no) {
+	public Map<String, String> selectOnebyQualityNo(String quality_no) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("quality.selectOnebyQualityNo", quality_no);
 	}
 
 	@Override
-	public int qualityUpdateOne(Quality quality) {
+	public int qualityUpdateOne(Map<String, String> param) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("quality.qualityUpdateOne",quality);
+		return sqlSession.update("quality.qualityUpdateOne",param);
 	}
 
 	@Override
@@ -65,6 +65,49 @@ public class QualityDAOImpl implements QualityDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("quality.selectAllCountForQuality");
 	}
+
+	@Override
+	public List<Map<String, String>> searchBySpecify(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.searchBySpecify",map);
+	}
+
+	@Override
+	public List<Map<String, String>> insectionWatingList(String type) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.insectionWatingList", type);
+	}
+
+	@Override
+	public Map<String,String> selectInsectionOnebyLotNo(String lotNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectInsectionOnebyLotNo",lotNo);
+	}
+
+	@Override
+	public int updateInsectionYNInRecieving(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("quality.updateInsectionYNInRecieving", param);
+	}
+
+	@Override
+	public int updateInsectionYNInProduction(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("quality.updateInsectionYNInProduction", param);
+	}
+
+	@Override
+	public int insertQualityInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("quality.insertQualityInfo",param);
+	}
+
+	@Override
+	public String selectStoreNoByStoreName(String storeName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectStoreNoByStoreName",storeName);
+	}
+
 	
 	
 }

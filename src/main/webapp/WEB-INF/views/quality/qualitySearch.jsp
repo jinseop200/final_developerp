@@ -11,16 +11,16 @@
 <body>
       <!-- search-container start -->
       <div id="search-container">
-          <form class="needs-validation" novalidate>
+          <form class="needs-validation" id="searchQualityFrm" name="searchQualityFrm" action="${pageContext.request.contextPath }/quality/searchSpecifyEnd.do" method="get">
                          
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">시작일자</label>&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="" class="form-control datepicker startDate">
+                    <input type="text" id="" name="startDate" class="form-control datepicker startDate">
                     </div>
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">종료일자</label>&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="" class="form-control datepicker endDate">
+                    <input type="text" id="" name="endDate" class="form-control datepicker endDate">
                     </div>
             
                 </div>              
@@ -177,10 +177,10 @@
             	$('#myModal').modal("hide");
             });
             $(".search-excute-button").click(function(){
-            		var bool = confirm("변경된 값으로 수정하시겠습니까?");
+            		var bool = confirm("변경된 값으로 조회하시겠습니까?");
             		
             		if(bool) {
-            			$("#updateQualityFrm").submit();
+            			$("#searchQualityFrm").submit();
             		}
             	
             });
