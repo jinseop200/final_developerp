@@ -2,8 +2,11 @@ package com.dev.erp.document.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.util.Utils;
 import com.dev.erp.document.model.service.DocumentService;
 import com.dev.erp.document.model.vo.Document;
 import com.dev.erp.document.model.vo.DocumentLine;
 import com.dev.erp.member.controller.MemberController;
+import com.dev.erp.member.model.vo.Member;
 
 @Controller
 public class DocumentController {
@@ -76,4 +82,48 @@ public class DocumentController {
 		mav.setViewName("common/msg");
 		return mav;
 	}
+	@RequestMapping("/document/documentSelectList.do")
+	public ModelAndView documentSelectList(ModelAndView mav) {
+		
+		mav.setViewName("document/documentSelectList");
+		return mav;
+	}
+	@RequestMapping("/document/documentListPage.do")
+	@ResponseBody
+	public Map<String,Object> documentListPage(@RequestParam(defaultValue="1") int cPage, HttpServletResponse rexsponse) {
+		
+		List<Map<String,String>> list = new ArrayList<>();
+		final int numPerPage = 7;
+		int totalContents = 0;
+		list = documentService.selectMemberList(cPage,numPerPage);  
+		totalContents = documentService.selectAllCountByAccountNo(); 
+		String url = "documentListPage.do?";
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("numPerPage",numPerPage);
+		map.put("cPage",cPage);
+		map.put("totalContents",totalContents);
+		map.put("list",list);
+		map.put("pageBar", pageBar);
+		return map;
+	}
+	@RequestMapping("/document/documentDetailView.do")
+	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("docNo") int docNo) {
+		
+		Document document = new Document();
+		document = documentService.documentDetailView(docNo);
+		mav.addObject("list",document);
+		mav.setViewName("document/documentDetailView");
+		
+		return mav;
+	}
+	@RequestMapping("/document/updateDocument.do")
+	public ModelAndView updateDocumnet(ModelAndView mav, @RequestParam("docNo") int docNo) {
+		
+		int result = documentService.updateDocument(docNo);
+		return mav;
+	}
+	
+	
 }

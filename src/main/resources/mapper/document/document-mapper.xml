@@ -5,7 +5,7 @@
 <mapper namespace="document">
 
 	<select id="selectDocList" resultMap="selectDoc">
-		select * from document where doc_writer=#{empName} order by doc_no desc
+		select D.* from document D left join doc_line L on D.doc_no=L.doc_no where D.doc_writer=#{empName} or L.prev_writer=#{empName} or L.next_writer=#{empName}
 	</select>
 	<resultMap id="selectDoc" type="document"></resultMap>
 	<select id="selectDocTypeAll" resultType="map">
@@ -24,4 +24,16 @@
 		insert into doc_line values(seq_line_no.nextval, #{docNo}, #{typeNo}, #{prevWriter},
 									#{nextWriter},#{returnYn})
 	</insert>
+	
+	<select id="selectMemberList" resultType="map">
+		select E.emp_id as "emp_id",E.emp_name as "emp_name" ,d.dept_title as "dept_title",J.job_name as "job_name" from employee E left join department D on E.dept_code = D.dept_id left join job J on E.job_code=J.job_code order by E.emp_id
+	</select>
+	
+	<select id="selectAllCountByAccountNo" resultType="_int">
+		select count(*) from employee
+	</select>
+	
+	<select id="documentDetailView" resultType="document">
+		select * from document where doc_no = #{docNo}
+	</select>
 </mapper>

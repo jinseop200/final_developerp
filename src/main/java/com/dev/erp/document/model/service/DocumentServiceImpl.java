@@ -36,4 +36,24 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentDAO.insertDocumentLine(documentLine);
 	}
 
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		return documentDAO.selectMemberList(cPage,numPerPage);
+	}
+
+	@Override
+	public int selectAllCountByAccountNo() {
+		return documentDAO.selectAllCountByAccountNo();
+	}
+
+	@Override
+	public Document documentDetailView(int docNo) {
+		return documentDAO.documentDetailView(docNo);
+	}
+
+	@Override
+	public int updateDocument(int docNo) {
+		return documentDAO.updateDocument(docNo);
+	}
+
 }

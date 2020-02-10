@@ -16,5 +16,13 @@ public interface DocumentService {
 
 	int insertDocumentLine(DocumentLine documentLine);
 
+	List<Map<String, String>> selectMemberList(int cPage, int numPerPage);
+
+	int selectAllCountByAccountNo();
+
+	Document documentDetailView(int docNo);
+
+	int updateDocument(int docNo);
+
 
 }

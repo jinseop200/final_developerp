@@ -3,6 +3,7 @@ package com.dev.erp.document.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,6 +35,27 @@ public class DocumentDAOImpl implements DocumentDAO {
 	@Override
 	public int insertDocumentLine(DocumentLine documentLine) {
 		return sqlSession.insert("document.insertDocumentLine",documentLine);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("document.selectMemberList",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllCountByAccountNo() {
+		return sqlSession.selectOne("document.selectAllCountByAccountNo");
+	}
+
+	@Override
+	public Document documentDetailView(int docNo) {
+		return sqlSession.selectOne("document.documentDetailView",docNo);
+	}
+
+	@Override
+	public int updateDocument(int docNo) {
+		return sqlSession.update("document.updateDocument",docNo);
 	}
 
 }
