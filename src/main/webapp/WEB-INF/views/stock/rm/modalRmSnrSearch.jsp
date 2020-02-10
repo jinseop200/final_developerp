@@ -5,7 +5,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>재고 수정하기</title>
+<title>재고 상세검색</title>
 </head>
 
 <body>
