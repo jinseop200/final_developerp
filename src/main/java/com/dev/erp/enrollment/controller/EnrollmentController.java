@@ -335,8 +335,6 @@ public class EnrollmentController {
 		String url = "searchSpecifyPage.do?searchType="+searchType;
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
 		
-		logger.debug("searchSpecify@list={}",list);
-		logger.debug("!!!!!!!!!!!!!cPage={}",cPage);
 		Map<String,Object> map = new HashMap<>();
 		map.put("numPerPage",numPerPage);
 		map.put("cPage",cPage);

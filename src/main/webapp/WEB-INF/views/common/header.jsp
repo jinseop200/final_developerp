@@ -550,12 +550,12 @@
 			    <div class="modal-dialog" role="document">
 			        <div class="modal-content">
 			        <div class="modal-header">
-			            <h5 class="modal-title controll-title">비밀번호 변경</h5>
+			            <h5 class="modal-title controll-title-updatePassword">비밀번호 변경</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			            <span aria-hidden="true">&times;</span>
 			            </button>
 			        </div>
-			        <div class="modal-body controll-modal-body">
+			        <div class="modal-body controll-modal-body-updatePassword">
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        
@@ -568,12 +568,12 @@
 			    <div class="modal-dialog" role="document">
 			        <div class="modal-content">
 			        <div class="modal-header">
-			            <h5 class="modal-title controll-title">내정보 변경</h5>
+			            <h5 class="modal-title controll-title-updateInfo">내정보 변경</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			            <span aria-hidden="true">&times;</span>
 			            </button>
 			        </div>
-			        <div class="modal-body controll-modal-body">
+			        <div class="modal-body controll-modal-body-updateInfo">
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        
@@ -598,7 +598,7 @@
 	         };
 
 			function mypage_alterpassword(){
-			    $('.controll-modal-body').load("${pageContext.request.contextPath}/member/memberAlterPassword.do",function(){
+			    $('.controll-modal-body-updatePassword').load("${pageContext.request.contextPath}/member/memberAlterPassword.do",function(){
 			        $('#updatePassword').modal({backdrop: 'static', keyboard: false});
 			        $('#updatePassword').modal({show:true});
 			        $(".modal-backdrop.in").css('opacity', 0.4);
@@ -607,7 +607,7 @@
 					$("#updatePassword").modal();			        
 			};
 			function mypage_updateName(){
-			    $('.controll-modal-body').load("${pageContext.request.contextPath}/member/memberUpdateInfo.do",function(){
+			    $('.controll-modal-body-updateInfo').load("${pageContext.request.contextPath}/member/memberUpdateInfo.do",function(){
 			        $('#updateInfo').modal({backdrop: 'static', keyboard: false});
 			        $('#updateInfo').modal({show:true});
 			        $(".modal-backdrop.in").css('opacity', 0.4);

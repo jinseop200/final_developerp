@@ -33,63 +33,44 @@
 <body>
       <!-- search-container start -->
       <div id="insert-container">
-          <form class="needs-validation" action="${pageContext.request.contextPath}/document/enrollDocument.do" 
+          <form class="needs-validation" action="${pageContext.request.contextPath}/document/updateDocument.do?docNo=${list.docNo}" 
           		name="documentEnrollFrm" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
           		</div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                    <label for="datepicker">일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="documentDate" name="documentDate" class="form-control datepicker occuredDate">
+                    <label for="documentDate">일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
+	                <input type="text" id="documentDate" value="${list.regDate}" readonly name="documentDate" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
                     </div>
                 </div>   
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
 	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <input type="text" id="documentTitle" name="documentTitle" class="form-control bg-light small" placeholder="제목" required aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="text" id="documentTitle" value="${list.docTitle}" readonly name="documentTitle" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
 	                </div> 
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;
-                        <input type="text" id="docLastapproval" name="docLastapproval" class="form-control bg-light small" required placeholder="결재자리스트" aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchDocument" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="documentMiddle">참조자 &nbsp; </label>&nbsp;&nbsp;
-                        <input type="text" id="documentMiddle" name="documentMiddle" class="form-control bg-light small" required placeholder="참조자리스트" aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchDocument" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
+                        <input type="text" id="docLastapproval" value="${list.docLastapproval}" readonly name="docLastapproval" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <tr>
-						<td>
-							<select name="documentType" id="documentType" required>
-								<option value="" selected disabled >구분</option>
-									<c:forEach items="${docTypeList}" var="d">
-										<option value="${d.DOC_TYPE}">${d.DOC_TYPE}</option>
-									</c:forEach>
-							</select>
-						</td>
-					</tr>
+                        <input type="text" id="docType" value="${list.docType}" readonly name="docLastapproval" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
 					
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <textarea class="form-control quality-comment" required name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control quality-comment" placeholder="${list.docContent}" readonly name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
 				<div class="modal-footer">
-        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">전송</button>
+        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">결재승인</button>
             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         		</div>       
             </form>
@@ -141,7 +122,6 @@
 
 </style>
 <script>  
-
   $(function() {
             //모든 datepicker에 대한 공통 옵션 설정
             $.datepicker.setDefaults({
@@ -168,23 +148,7 @@
             //From의 초기값을 오늘 날짜로 설정
             $('.occuredDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
         });
-  $(()=>{
-	  $(".searchDocument").click(function(){
-	    	var title = $(this).siblings().html();
-	    	$("#searchModalTitle").html(title);
-	    	 $('.searchModalBody').load("${pageContext.request.contextPath}/document/documentSelectList.do",function(){
-	 	        $('#searchDocument').modal({backdrop: 'static', keyboard: false});
-	 	        $('#searchDocument').modal({show:true});
-	 	        $(".modal-backdrop.in").css('opacity', 0.4);
-	 		});
-	            
-	    });
-	  
-	  $(".searchModal-end").click(function(){
-	    	$('#searchDocument').modal("hide");
-	    }); 
-	  
-})
+  
   
 </script>
 </body>

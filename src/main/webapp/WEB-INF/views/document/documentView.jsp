@@ -10,23 +10,9 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">내결재관리</h1>
-           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
-            <div class="input-group" style="margin:30px;" >
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="document-insert-button">
-                	  신규 
-                </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="quality-search-button">
-                	  부적합 상세 검색하기&nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
-                </button> 
-              </div>
-            </div>
-          </form>
-          <br />
 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4" style="clear:both;">
+          <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
             </div>
@@ -47,7 +33,7 @@
                   </thead>
                   <tbody>
                 	<c:forEach items="${docList }" var="l">
-	                    <tr value="${l.docNo }">
+	                    <tr class="getTr">
 	                      <td>${l.docNo }</td>
 	                      <td>${l.regDate }</td>
 	                      <td>${l.docTitle }</td>
@@ -55,7 +41,7 @@
 	                      <td>${l.docWriter}</td>
 	                      <td>${l.docLastapproval}</td>
 	                      <td>${l.docStatus}</td>
-	                      <td>${l.regDate }</td>
+	                      <td><a href="#">보기</a></td>
 	                    </tr>
                   	</c:forEach>
                   </tbody>
@@ -64,8 +50,10 @@
             </div>
           </div>
           
-  <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+          <button class="btn btn-primary" type="button" id="document-insert-button">신규 </button>
+          
+  <!-- insertDocument Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="documentAddModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -81,55 +69,69 @@
         </div>
     </div>
 </div>
+
+  <!-- detailView Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="documentDetailView">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body controll-modal-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
+<%--documentLastApproval modal --%>
+<div class="modal" tabindex="-1" role="dialog" id="searchDocument">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title search-title" id="searchModalTitle"> </h5>
+      </div>
+      <div class="modal-body searchModalBody">
+          <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary searchModal-end">닫기</button>
+      </div>
+      </div>
+  </div>
+</div>
   
 <script>
-$(".quality-table tbody tr").click(function(){
-// 	console.log($(this).children().eq(0).html());
-// 	alert($(this).children().eq(0).html());
-	var quality_no = $(this).children().eq(0).html();
-	
-// 	var url = "${pageContext.request.contextPath}/quality/insertQualityForm.do";
-// 	var title = "login";
-// 	var spec = "left=350px, top=200px, width=600px, height=400px";
-	
-// 	open(url, title, spec);
-	 $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/updateQualityForm.do?quality_no="+quality_no,function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+$(()=>{
+	$(".getTr td a").click(function(){
+		var tr = $(this).parent().parent();
+		var td = tr.children();
+		
+		var tdDocNo = td.eq(0).text();
+		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?docNo="+tdDocNo,function(){
+	        $('#documentDetailView').modal({backdrop: 'static', keyboard: false});
+	        $('#documentDetailView').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
-	        $(".controll-title").html("부적합 정보 수정");
+	        $(".controll-title").html("결재내용보기");
 		});
-});
-$("#quality-search-button").click(function(){
-    $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/qualitySearch.do",function(){
-        $('#myModal').modal({backdrop: 'static', keyboard: false});
-        $('#myModal').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        
-        $(".controll-title").html("");
-        $(".controll-title").html("부적합 상세조회");
-        
-    });
-});
+		
+	})
+})
 $("#document-insert-button").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/document/insertDocumentForm.do",function(){
-        $('#myModal').modal({backdrop: 'static', keyboard: false});
-        $('#myModal').modal({show:true});
+        $('#documentAddModal').modal({backdrop: 'static', keyboard: false});
+        $('#documentAddModal').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         $(".controll-title").html("");
         $(".controll-title").html("기안서 작성");
 	});
 });
+
 </script>
-<style>
-#myModal{
-	z-index: 1060;
-}
-.quality-table tbody tr td:hover{
-	cursor:pointer;
-}
-</style>
 
 
   <!-- Page level plugins -->

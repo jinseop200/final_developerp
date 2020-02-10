@@ -29,6 +29,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.util.Utils;
 import com.dev.erp.member.model.exception.MemberException;
 import com.dev.erp.member.model.service.MemberService;
 import com.dev.erp.member.model.vo.Member;
@@ -311,5 +312,4 @@ public class MemberController {
 			
 		return mav;
 	}
-	
 }
