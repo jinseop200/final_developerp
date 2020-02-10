@@ -49,4 +49,8 @@ public interface EnrollmentService {
 
 	int updateProductNoForProductList(Map<String, String> productNo);
 
+	int selectAllRawmaterial();
+
+	List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage);
+
 }

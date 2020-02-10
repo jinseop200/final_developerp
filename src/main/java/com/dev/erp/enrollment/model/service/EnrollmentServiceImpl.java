@@ -127,6 +127,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int updateProductNoForProductList(Map<String, String> productNo) {
 		return enrollmentDAO.updateProductNoForProductList(productNo);
 	}
+
+	@Override
+	public int selectAllRawmaterial() {
+		return enrollmentDAO.selectAllRawmaterial();
+	}
+
+	@Override
+	public List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectRawmaterialAll(cPage, numPerPage);
+	}
 	
 	
 }

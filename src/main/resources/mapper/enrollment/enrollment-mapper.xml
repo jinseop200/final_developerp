@@ -176,4 +176,14 @@
 		pl_no = #{productNoCha}
 		where pl_no = #{productNoCur}
 	</update>
+	
+	<select id="selectAllRawmaterial" resultType="_int">
+		select count(*) from raw_material
+	</select>
+	
+	<select id="selectRawmaterialAll" resultType="map">
+		select rm_no as "content2", rm_name as "content" from raw_material order by rm_no
+	</select>
+	
+	
 </mapper>
