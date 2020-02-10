@@ -38,9 +38,9 @@
 	</select>
 	
 	<update id="approveDocument">
-		update document set doc_status ='결재완료' where doc_no =#{docNo}
+		update document set doc_status ='결재' where doc_no =#{docNo}
 	</update>
 	<update id="refuseDocument">
-		update document set doc_status ='결재취소' where doc_no =#{docNo}
+		update document set doc_status ='반려' where doc_no =#{docNo}
 	</update>
 </mapper>

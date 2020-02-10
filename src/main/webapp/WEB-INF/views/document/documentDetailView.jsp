@@ -72,8 +72,8 @@
                 </div>
 				<div class="modal-footer">
 					<c:if test="${memberLoggedIn.empName == list.docLastapproval}">
-        			<button type="submit" id="FrmBtn" name="submitApprove" value="1" class="btn btn-primary">승인</button>
-        			<button type="submit" id="FrmBtn" name="submitApprove" value="0" class="btn btn-primary">거절</button>
+        			<button type="submit" id="FrmBtn" name="submitApprove" value="1" class="btn btn-primary">결재</button>
+        			<button type="submit" id="FrmBtn" name="submitApprove" value="0" class="btn btn-primary">반려</button>
         			</c:if>
             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         		</div>       
