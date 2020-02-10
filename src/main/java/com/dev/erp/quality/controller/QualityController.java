@@ -1,5 +1,6 @@
 package com.dev.erp.quality.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,27 +63,31 @@ public class QualityController {
 		return mav;
 	}
 	@RequestMapping("/quality/updateQualityForm.do")
-	public ModelAndView qualityUpdate(ModelAndView mav, @RequestParam("quality_no") int quality_no) {
+	public ModelAndView qualityUpdate(ModelAndView mav, @RequestParam("quality_no") String quality_no) {
 		
-		Quality qualityContent = qualityService.selectOnebyQualityNo(quality_no);
+		Map<String,String> qualityContent = qualityService.selectOnebyQualityNo(quality_no);
 		
 		mav.addObject("qualityContent", qualityContent);
 		mav.setViewName("quality/updateQualityForm");
 		
-	 	String date = qualityContent.getRegDate().toString();
-	 	String year = date.substring(2, 4);
-	 	String month = date.substring(5, 7);
-	 	String day = date.substring(8);
 	 	
 		return mav;
 	}
 	
 	@RequestMapping(value="/quality/updateQualtyFormEnd.do", method=RequestMethod.POST )
-	public ModelAndView qualityUpdateEnd(ModelAndView mav, Quality quality) {
+	public ModelAndView qualityUpdateEnd(ModelAndView mav, @RequestParam("storeNo") String storeName,
+			@RequestParam("lotNo") String lotNo, @RequestParam("type") String type,
+			@RequestParam("qualityComment") String qualityComment, @RequestParam("qualityNo") String qualityNo) {
 		
 //		logger.debug("qualityUpdate quality={}",quality);
-		
-		int result= qualityService.qualityUpdateOne(quality);
+		String storeNo = qualityService.selectStoreNoByStoreName(storeName);
+		Map<String,String> param = new HashMap<>();
+		param.put("storeNo",storeNo);
+		param.put("lotNo",lotNo);
+		param.put("type",type);
+		param.put("qualityComment",qualityComment);
+		param.put("qualityNo",qualityNo);
+		int result= qualityService.qualityUpdateOne(param);
 		
 		mav.addObject("msg",result>0?"등록성공":"등록실패");
 		mav.addObject("loc","/quality/qualityControll.do");
@@ -102,7 +107,7 @@ public class QualityController {
 	
 	@RequestMapping("/quality/searchSpecifyPage.do")
 	@ResponseBody
-	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType, @RequestParam(defaultValue="1") int cPage, HttpServletResponse rexsponse) {
+	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType, @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
 		
 		List<Map<String,String>> list = new ArrayList<>();
 		final int numPerPage = 5;
@@ -138,6 +143,97 @@ public class QualityController {
 		map.put("speclist",list);
 		map.put("pageBar", pageBar);
 		return map;
+	}
+	
+	@RequestMapping("/quality/searchSpecifyEnd.do")
+	public ModelAndView searchSpecifyEnd(ModelAndView mav, @RequestParam("startDate") String startDate,
+											@RequestParam("endDate") String endDate, 
+											@RequestParam(value="qualityNo", required=false) String qualityNo,
+											@RequestParam(value="lotNo", required=false) String lotNo,
+											@RequestParam(value="type", required=false) String type,
+											@RequestParam(value="storeNo", required=false) String storeName) {
+		
+		
+		Map<String,String> map = new HashMap<>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("qualityNo", qualityNo);
+		map.put("lotNo", lotNo);
+		map.put("type", type);
+		map.put("storeName", storeName);
+		
+		List<Map<String,String>> list = new ArrayList<>();
+		list = qualityService.searchBySpecify(map);
+		
+		mav.addObject("list",list);
+		
+		mav.setViewName("quality/qualityControll");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/quality/qualityInsection.do")
+	public ModelAndView qualityInsectionView(ModelAndView mav, @RequestParam(value="type", required=false) String type) {
+		
+		List<Map<String,String>> list = new ArrayList<>();
+		List<Map<String,String>> typeList = new ArrayList<>();
+		
+		typeList = qualityService.selectProductTypeAll();
+		list  = qualityService.insectionWatingList(type);
+		
+		mav.addObject("type",type);
+		mav.addObject("list",list);
+		mav.addObject("typeList",typeList);
+		mav.setViewName("quality/qualityInsection");
+		return mav;
+	}
+	
+	@RequestMapping("/quality/insectionQualityForm.do")
+	public ModelAndView qualityInsection(ModelAndView mav, @RequestParam("lotNo") String lotNo) {
+		logger.debug("lotNo={}",lotNo);
+		Map<String,String> insectionContent = qualityService.selectInsectionOnebyLotNo(lotNo);
+		
+		mav.addObject("insectionContent", insectionContent);
+		mav.setViewName("quality/insectionQualityForm");
+		
+	 	
+		return mav;
+	}
+	
+	@RequestMapping("/quality/insectionQualityFormEnd.do")
+	public ModelAndView qualityInsectionFormEnd(ModelAndView mav, 
+												@RequestParam("lotNo") String lotNo,
+												@RequestParam("qualityYN") String qualityYN,
+												@RequestParam("type") String type,
+												@RequestParam("measurement") String measurement,
+												@RequestParam(value="qualityComment", required=false) String qualityComment,
+												@RequestParam("storeNo") String storeName) {
+		
+		
+		String storeNo = qualityService.selectStoreNoByStoreName(storeName);
+		Map<String, String> param = new HashMap<>();
+		param.put("lotNo", lotNo);
+		param.put("type", type);
+		param.put("measurement", measurement);
+		param.put("qualityYN", qualityYN);
+		param.put("storeNo", storeNo);
+		param.put("qualityComment",qualityComment);
+		int result = 0;
+		switch(type) {
+		case "원재료" : result = qualityService.updateInsectionYNInRecieving(param); break;
+		case "완제품" : result = qualityService.updateInsectionYNInProduction(param); break;
+		}
+		
+		if("N".equals(qualityYN)) {
+			result = qualityService.insertQualityInfo(param);
+		}
+		
+		mav.addObject("msg",result>0?"등록완료!":"등록실패!");
+		mav.addObject("loc","/quality/qualityInsection.do");
+		
+		mav.setViewName("common/msg");
+		
+		return mav;
 	}
 	
 	

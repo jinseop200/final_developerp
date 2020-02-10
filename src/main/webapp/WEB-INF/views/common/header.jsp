@@ -173,6 +173,7 @@
                   <a class="collapse-item" href="buttons.html">히스토그램</a>
                   <a class="collapse-item" href="cards.html">Xbar-R</a>
                   <a class="collapse-item" href="cards.html">P 관리도</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityInsection.do">품질 검사 관리</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityControll.do">부적합 관리</a>
                 </div>
               </div>

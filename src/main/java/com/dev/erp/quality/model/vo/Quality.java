@@ -20,4 +20,7 @@ public class Quality {
 	private String type;
 	private String qualityComment;
 	private Date regDate;
+	private int ptNo;
+	private int rmNo;
+	private String pName;
 }

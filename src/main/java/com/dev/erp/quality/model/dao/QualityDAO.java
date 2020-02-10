@@ -9,9 +9,9 @@ public interface QualityDAO {
 
 	List<Map<String, String>> selectQaulityAll();
 
-	Quality selectOnebyQualityNo(int quality_no);
+	Map<String, String> selectOnebyQualityNo(String quality_no);
 
-	int qualityUpdateOne(Quality quality);
+	int qualityUpdateOne(Map<String, String> param);
 
 	List<Map<String, String>> selectStoreAll(int cPage, int numPerPage);
 
@@ -22,5 +22,20 @@ public interface QualityDAO {
 	int selectAllCountByStoreNo();
 
 	int selectAllCountForQuality();
+
+	List<Map<String, String>> searchBySpecify(Map<String, String> map);
+
+	List<Map<String, String>> insectionWatingList(String type);
+
+	Map<String, String> selectInsectionOnebyLotNo(String lotNo);
+
+	int updateInsectionYNInRecieving(Map<String, String> param);
+
+	int updateInsectionYNInProduction(Map<String, String> param);
+
+	int insertQualityInfo(Map<String, String> param);
+
+	String selectStoreNoByStoreName(String storeName);
+
 
 }
