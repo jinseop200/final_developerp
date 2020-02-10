@@ -125,6 +125,17 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int updateProductNoForProductList(Map<String, String> productNo) {
 		return sqlsession.update("enrollment.updateProductNoForProductList",productNo);
 	}
+
+	@Override
+	public int selectAllRawmaterial() {
+		return sqlsession.selectOne("enrollment.selectAllRawmaterial");
+	}
+
+	@Override
+	public List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectRawmaterialAll",null,rowBounds);
+	}
 	
 	
 }

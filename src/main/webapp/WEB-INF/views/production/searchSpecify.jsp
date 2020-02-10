@@ -11,19 +11,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-
 <body>
-<div class="card shadow mb-4">
-<div class="card-header py-3">
-  <h6 class="m-0 font-weight-bold text-primary"></h6>
-</div>
-<div class="card-body">
-<div class="table-responsive">
-  	<!-- <div class="input-group-append">
-		<input type="text" id="myInput" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
-    	<i class="fas fa-search fa-lg"></i>
-  	</div> -->
-     <table class="table table-bordered quality-specify-table" id="dataTable2" width="100%" cellspacing="0">
+     <table class="table table-bordered quality-specify-table" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
            <th>No</th>
@@ -41,13 +30,9 @@
            </c:if>
          </tr>
        </thead>
-       <tbody id="tbodyList">
+       <tbody>
        </tbody>
      </table>
-     </div>
-     </div>
-     <input type="hidden" id="trNum" value="nulla"/>
-</div>
      <div class="pageBar"></div>
 <%--      ${pageBar} --%>
 </body>
@@ -57,49 +42,19 @@
 	cursor : auto;
 	background-color:#ccc;
 }
-.fa-lg {
-    font-size: 1.53333em;
-    line-height: 1.45em;
-    vertical-align: 0.2333em;
-    padding-left: 11px;
-}
+
 </style>
 
 <script>
 $(()=>{
 	console.log("${searchType}");
 	morePage(0);
-	
-	//input search
-	$("#myInput").on("keyup", function() {
-	    var value = $(this).val().toLowerCase();
-	    $("#tbodyList tr").filter(function() {
-	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	    });
-	  });
-	
-	
-	
-	
 });
 
 
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
-	var value2 = $(this).children().eq(2).html();
-	var trNum = $("#trNum").val();
-	console.log(trNum);
 	console.log(value);
-	
-	if(trNum != "nulla"){
-		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
-		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
-		console.log($(".table-editable tr").eq(trNum));
-		console.log("eq0",$(".table-editable tr").eq(0));
-		console.log($(".table-editable tr").eq(trNum).find("td").eq(2));
-		
-	}
-	
 	$("#${searchType}").val(value);
 	$("#mySearchModal").modal('hide');
 });
@@ -139,8 +94,7 @@ function morePage(a){
 }
 
 
+
 </script>
-
-
 
 </html>

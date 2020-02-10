@@ -323,6 +323,10 @@ public class EnrollmentController {
 			list =  enrollmentservice.selectProductTypeAll(cPage,numPerPage); 
 			totalContents = enrollmentservice.selectAllCountByProductNo();
 			break;
+		case "rawMaterial" :  
+			list =  enrollmentservice.selectRawmaterialAll(cPage,numPerPage); 
+			totalContents = enrollmentservice.selectAllRawmaterial();
+			break;
 //		case "qualityNo" : 
 //			list = enrollmentservice.selectQualityColumn("quality_no", cPage,numPerPage);  
 //			totalContents = enrollmentservice.selectAllCountForQuality();

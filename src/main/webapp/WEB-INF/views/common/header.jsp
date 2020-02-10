@@ -128,8 +128,8 @@
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="buttons.html">BOM 목록관리</a>
-                <a class="collapse-item" href="cards.html">생산입고</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/production/BOMListManagement.do">BOM 목록관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/production/warehousing.do">생산입고</a>
               </div>
             </div>
           </li>
