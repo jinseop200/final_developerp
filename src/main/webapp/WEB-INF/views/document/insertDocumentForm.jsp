@@ -47,20 +47,20 @@
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
 	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <input type="text" id="documentTitle" name="documentTitle" class="form-control bg-light small" placeholder="제목" required aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="text" id="documentTitle" name="documentTitle" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2">
 	                </div> 
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;
-                        <input type="text" id="docLastapproval" name="docLastapproval" class="form-control bg-light small" required placeholder="결재자리스트" aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="docLastapproval" name="docLastapproval" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
                         <button class="btn btn-primary searchDocument" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="documentMiddle">참조자 &nbsp; </label>&nbsp;&nbsp;
-                        <input type="text" id="documentMiddle" name="documentMiddle" class="form-control bg-light small" required placeholder="참조자리스트" aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="documentMiddle" name="documentMiddle" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
                         <button class="btn btn-primary searchDocument" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>

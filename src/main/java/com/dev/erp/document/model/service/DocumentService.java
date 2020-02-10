@@ -22,7 +22,9 @@ public interface DocumentService {
 
 	Document documentDetailView(int docNo);
 
-	int updateDocument(int docNo);
+	int approveDocument(int docNo);
+
+	int refuseDocument(int docNo);
 
 
 }
