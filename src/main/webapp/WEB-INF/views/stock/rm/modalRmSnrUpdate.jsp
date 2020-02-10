@@ -9,81 +9,81 @@
 </head>
 
 <body>
-      <!-- search-container start -->
-      <div id="search-container">
-          <form class="needs-validation"
-           action="${pageContext.request.contextPath}/rm/modalRmSnrUpdate.do"
-           method="POST">
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="productNo">품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- 					     <input type="number" id="productNo" name="productNo" class="form-control bg-light small" placeholder="품목코드" aria-label="Search" aria-describedby="basic-addon2">
-					     <button class="btn btn-primary" type="button" onclick="productNoDuplicatedCheck($('#productNo').val());">중복확인</button>
-					     <input type="hidden" id="productNoValid" value="0"/>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="accountNo">거래처등록번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="accountNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="productName">품목명</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="품목명" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="delivery">구매소요일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="delivery" name="delivery" class="form-control bg-light small" placeholder="구매소요일" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="inPrice">입고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="inPrice" name="inPrice" class="form-control bg-light small" placeholder="입고단가" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="outPrice">출고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="outPrice" name="outPrice" class="form-control bg-light small" placeholder="출고단가" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="spec">기준치</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="spec" name="spec" class="form-control bg-light small" placeholder="규격" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="tol">공차</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="tol" name="tol" class="form-control bg-light small" placeholder="공차" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
-					</div>
-				</div>
-				<hr class="hrSize"/>
-            	<div class="form-row col-lg-20 col-lg-push-9 btns">
-	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" onclick="return addProductValidate();">등록</button> 
-	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-                </div>
-             </form>
-           </div>
-      </div>
+<!-- search-container start -->
+<div id="search-container">
+	<form class="needs-validation"
+	 	  action="${pageContext.request.contextPath}/rm/modalRmSnrUpdate.do"
+	      method="POST">
+		
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="productNo">품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				     <input type="number" id="productNo" name="productNo" class="form-control bg-light small" placeholder="품목코드" aria-label="Search" aria-describedby="basic-addon2">
+			     <button class="btn btn-primary" type="button" onclick="productNoDuplicatedCheck($('#productNo').val());">중복확인</button>
+			     <input type="hidden" id="productNoValid" value="0"/>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="accountNo">거래처등록번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+			     <button class="btn btn-primary searchBtn" type="button" value="accountNo">
+				 <i class="fas fa-search fa-sm"></i>
+				 </button>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+			     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
+				 <i class="fas fa-search fa-sm"></i>
+				 </button>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="productName">품목명</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="품목명" aria-label="Search" aria-describedby="basic-addon2">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="delivery">구매소요일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="delivery" name="delivery" class="form-control bg-light small" placeholder="구매소요일" aria-label="Search" aria-describedby="basic-addon2">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="inPrice">입고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="inPrice" name="inPrice" class="form-control bg-light small" placeholder="입고단가" aria-label="Search" aria-describedby="basic-addon2">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="outPrice">출고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="outPrice" name="outPrice" class="form-control bg-light small" placeholder="출고단가" aria-label="Search" aria-describedby="basic-addon2">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="spec">기준치</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="spec" name="spec" class="form-control bg-light small" placeholder="규격" aria-label="Search" aria-describedby="basic-addon2">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-lg-20 mb-3 rowResize">
+			     <label for="tol">공차</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			     <input type="number" id="tol" name="tol" class="form-control bg-light small" placeholder="공차" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
+			</div>
+		</div>
+		<hr class="hrSize"/>
+		        	<div class="form-row col-lg-20 col-lg-push-9 btns">
+		           <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" onclick="return addProductValidate();">등록</button> 
+		           <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+		            </div>
+	</form>
+</div>
       
 <%--Search modal --%>
 <div class="modal" tabindex="-1" role="dialog" id="mySearchModal">
