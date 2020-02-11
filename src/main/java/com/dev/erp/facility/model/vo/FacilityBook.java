@@ -14,6 +14,7 @@ import lombok.ToString;
 public class FacilityBook {
 	 private int bookNo;
      private int facilityNo;
+     private String email;
      private String bookDay;
      private String bookStarttime;
      private String bookEndtime;

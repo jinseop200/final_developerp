@@ -35,4 +35,9 @@ public int insertBook(FacilityBook facilityBook) {
 public List<FacilityBook> facilityTime(FacilityBook facilityBook) {
 	return facilityDAO.facilityTime(facilityBook);
 }
+
+@Override
+public List<FacilityBook> facilityBookListGet(FacilityBook facilityBook) {
+	return facilityDAO.facilityBookListGet(facilityBook);
+}
 }
