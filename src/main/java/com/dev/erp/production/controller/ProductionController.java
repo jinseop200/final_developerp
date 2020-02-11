@@ -1,5 +1,7 @@
 package com.dev.erp.production.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.enrollment.model.service.EnrollmentService;
@@ -50,6 +55,38 @@ public class ProductionController {
 		
 		mav.setViewName("production/addBOMForm");
 		return mav;
+	}
+
+	
+	@RequestMapping("/production/selectRawMaterialList.do")
+	public ModelAndView selectRawMaterialList(ModelAndView mav) {
+		
+		List<Map<String, String>> rawmaterialList = productionService.selectRawMaterialList();
+		
+		mav.addObject("rawmaterialList",rawmaterialList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/product/addBOM.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object addBOM(@RequestParam(value="pNames[]", required=false) List<String> pNameList,
+										 ModelAndView mav) {
+		logger.info("data_@Controller={}",pNameList);
+		System.out.println(pNameList);
+//		Map<String, String> vendor = new HashMap<>();
+//		vendor.put("vendorNo", vendorNo);
+//		vendor.put("vendorName", vendorName);
+//		vendor.put("incharge", incharge);
+//		vendor.put("vendorPhone", vendorPhone);
+//		vendor.put("regDate", null);
+//		
+//		logger.info("vendor@controller={}",vendor);
+		
+		//int result = enrollmentservice.insertVendor(vendor); 
+		
+		//mav.addObject("vendor", vendor);
+		
+		return pNameList;
 	}
 	
 	
