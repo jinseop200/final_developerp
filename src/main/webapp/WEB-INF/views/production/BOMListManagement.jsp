@@ -119,7 +119,9 @@ $(".BOMAddBtn").click(function(){
         
         $(".controll-title").html("");
         $(".controll-title").html("BOM 등록");
-        $("#productInfo").val(tdPtNo+" "+tdPtName);
+        //$("#productInfo").val(tdPtNo+" "+tdPtName);
+        $("#productCode").val(tdPtNo);
+        $("#productInfo").val(tdPtName);
         
     });
     
