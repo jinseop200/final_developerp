@@ -52,8 +52,13 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
-	public int updateDocument(int docNo) {
-		return documentDAO.updateDocument(docNo);
+	public int approveDocument(int docNo) {
+		return documentDAO.approveDocument(docNo);
+	}
+
+	@Override
+	public int refuseDocument(int docNo) {
+		return documentDAO.refuseDocument(docNo);
 	}
 
 }

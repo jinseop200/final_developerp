@@ -54,8 +54,13 @@ public class DocumentDAOImpl implements DocumentDAO {
 	}
 
 	@Override
-	public int updateDocument(int docNo) {
-		return sqlSession.update("document.updateDocument",docNo);
+	public int approveDocument(int docNo) {
+		return sqlSession.update("document.approveDocument",docNo);
+	}
+
+	@Override
+	public int refuseDocument(int docNo) {
+		return sqlSession.update("document.refuseDocument",docNo);
 	}
 
 }

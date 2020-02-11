@@ -36,4 +36,11 @@
 	<select id="documentDetailView" resultType="document">
 		select * from document where doc_no = #{docNo}
 	</select>
+	
+	<update id="approveDocument">
+		update document set doc_status ='결재' where doc_no =#{docNo}
+	</update>
+	<update id="refuseDocument">
+		update document set doc_status ='반려' where doc_no =#{docNo}
+	</update>
 </mapper>

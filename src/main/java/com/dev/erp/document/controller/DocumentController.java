@@ -23,7 +23,6 @@ import com.dev.erp.document.model.service.DocumentService;
 import com.dev.erp.document.model.vo.Document;
 import com.dev.erp.document.model.vo.DocumentLine;
 import com.dev.erp.member.controller.MemberController;
-import com.dev.erp.member.model.vo.Member;
 
 @Controller
 public class DocumentController {
@@ -119,9 +118,30 @@ public class DocumentController {
 		return mav;
 	}
 	@RequestMapping("/document/updateDocument.do")
-	public ModelAndView updateDocumnet(ModelAndView mav, @RequestParam("docNo") int docNo) {
+	public ModelAndView updateDocumnet(ModelAndView mav, @RequestParam("docNo") int docNo, @RequestParam("empName") String empName, 
+										@RequestParam("submitApprove") int submitApprove) {
+		int result1=0;
+		int result2=0;
+		if(submitApprove ==1) {
+			result1 = documentService.approveDocument(docNo);
+		}else {
+			result2 = documentService.refuseDocument(docNo);
+		}
+		String msg="";
+		String loc="/document/documentView.do?empName="+empName;
+		if(result1>0) {
+			msg="결재가 승인되었습니다.";
+			mav.addObject("msg",msg);
+			mav.addObject("loc",loc);
+			mav.setViewName("common/msg");
+		}
+		if(result2>0) {
+			msg="결재가 거절되었습니다.";
+			mav.addObject("msg",msg);
+			mav.addObject("loc",loc);
+			mav.setViewName("common/msg");
+		}
 		
-		int result = documentService.updateDocument(docNo);
 		return mav;
 	}
 	

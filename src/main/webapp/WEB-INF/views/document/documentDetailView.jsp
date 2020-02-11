@@ -33,10 +33,11 @@
 <body>
       <!-- search-container start -->
       <div id="insert-container">
-          <form class="needs-validation" action="${pageContext.request.contextPath}/document/updateDocument.do?docNo=${list.docNo}" 
+          <form class="needs-validation" action="${pageContext.request.contextPath}/document/updateDocument.do" 
           		name="documentEnrollFrm" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
+          		<input type="hidden" value="${list.docNo}" id="docNo" name="docNo" />
           		</div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
@@ -59,7 +60,7 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="docType" value="${list.docType}" readonly name="docLastapproval" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="docType" value="${list.docType}" readonly name="docType" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
 					
                     </div>
                 </div>
@@ -70,7 +71,10 @@
                     </div>
                 </div>
 				<div class="modal-footer">
-        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">결재승인</button>
+					<c:if test="${memberLoggedIn.empName == list.docLastapproval}">
+        			<button type="submit" id="FrmBtn" name="submitApprove" value="1" class="btn btn-primary">결재</button>
+        			<button type="submit" id="FrmBtn" name="submitApprove" value="0" class="btn btn-primary">반려</button>
+        			</c:if>
             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         		</div>       
             </form>
