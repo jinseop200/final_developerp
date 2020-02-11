@@ -43,4 +43,7 @@
 	<update id="refuseDocument">
 		update document set doc_status ='반려' where doc_no =#{docNo}
 	</update>
+	<select id="documentLineView" resultType="documentLine">
+		select * from doc_line where doc_no = #{docNo}
+	</select>
 </mapper>

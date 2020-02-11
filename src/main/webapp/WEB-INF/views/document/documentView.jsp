@@ -32,9 +32,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                	<c:forEach items="${docList }" var="l">
+                	<c:forEach items="${docList }" var="l" varStatus="vs">
 	                    <tr class="getTr">
-	                      <td>${l.docNo }</td>
+	                      <td id="${l.docNo}">${vs.count}</td>
 	                      <td>${l.regDate }</td>
 	                      <td>${l.docTitle }</td>
 	                      <td>${l.docType }</td>
@@ -110,7 +110,7 @@ $(()=>{
 		var tr = $(this).parent().parent();
 		var td = tr.children();
 		
-		var tdDocNo = td.eq(0).text();
+		var tdDocNo = td.eq(0).attr("id");
 		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?docNo="+tdDocNo,function(){
 	        $('#documentDetailView').modal({backdrop: 'static', keyboard: false});
 	        $('#documentDetailView').modal({show:true});

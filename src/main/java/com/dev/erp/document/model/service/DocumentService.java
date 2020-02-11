@@ -26,5 +26,7 @@ public interface DocumentService {
 
 	int refuseDocument(int docNo);
 
+	DocumentLine documentLineView(int docNo);
+
 
 }

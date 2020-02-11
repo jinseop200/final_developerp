@@ -63,4 +63,9 @@ public class DocumentDAOImpl implements DocumentDAO {
 		return sqlSession.update("document.refuseDocument",docNo);
 	}
 
+	@Override
+	public DocumentLine documentLineView(int docNo) {
+		return sqlSession.selectOne("document.documentLineView",docNo);
+	}
+
 }

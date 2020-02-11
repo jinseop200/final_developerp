@@ -38,6 +38,13 @@ $(()=>{
 $(".document-list-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	console.log(value);
+	var docApproval = $("[name=docLastapproval]").val()
+	if( docApproval==""){
+		$("[name=docLastapproval]").val(value);
+	}else{
+		$("[name=documentMiddle]").val(value);
+		
+	}
 	$("#searchDocument").modal('hide');
 });
 

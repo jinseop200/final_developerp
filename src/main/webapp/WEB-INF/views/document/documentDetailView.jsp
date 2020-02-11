@@ -56,7 +56,12 @@
                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;
                         <input type="text" id="docLastapproval" value="${list.docLastapproval}" readonly name="docLastapproval" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="documentMiddle">참조자 &nbsp; </label>&nbsp;&nbsp;
+                        <input type="text" id="documentMiddle" name="documentMiddle" value="${docLine.prevWriter}" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
+                    </div>
                 </div>
+                
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -122,6 +127,9 @@
 }
 #searchDocument {
 	z-index:1080;
+}
+#accordionSidebar{
+	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
 
 </style>
