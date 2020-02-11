@@ -111,7 +111,7 @@ $(()=>{
 		var td = tr.children();
 		
 		var tdDocNo = td.eq(0).attr("id");
-		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?docNo="+tdDocNo,function(){
+		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?empName=${memberLoggedIn.empName}&docNo="+tdDocNo,function(){
 	        $('#documentDetailView').modal({backdrop: 'static', keyboard: false});
 	        $('#documentDetailView').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);

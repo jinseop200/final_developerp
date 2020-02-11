@@ -26,19 +26,53 @@
 	                    <input type="text" id="documentTitle" name="documentTitle" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2">
 	                </div> 
                 </div>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
+                <div class="form-row" style="width:750px">
+                    <div class="col-md-6 mb-3 col-md-6 mb-3">
                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;
-                        <input type="text" id="docLastapproval" name="docLastapproval" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="docLastapproval" style="width:195px;" name="docLastapproval" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary plusApprovalBtn" type="button">
+                            <i class="fas fa-plus fa-sm"></i>
+                        </button>
+                        <button class="btn btn-primary minusApprovalBtn" type="button">
+                            <i class="fas fa-minus fa-sm"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <button class="btn btn-primary searchDocument" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="documentMiddle">참조자 &nbsp; </label>&nbsp;&nbsp;
-                        <input type="text" id="documentMiddle" name="documentMiddle" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchDocument" type="button">
-                            <i class="fas fa-search fa-sm"></i>
+                </div>
+                <div class="form-row approval1" style="width:750px">
+                    <div class="col-md-6 mb-3 col-md-6 mb-3">
+                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="docLastapproval" style="width:195px;" name="docLastapproval1" class="form-control bg-light small"  aria-label="Search" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary plusApprovalBtn1" type="button">
+                            <i class="fas fa-plus fa-sm"></i>
+                        </button>
+                        <button class="btn btn-primary minusApprovalBtn1" type="button">
+                            <i class="fas fa-minus fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row approval2" style="width:750px">
+                    <div class="col-md-6 mb-3 col-md-6 mb-3">
+                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="docLastapproval" style="width:195px;" name="docLastapproval2" class="form-control bg-light small"  aria-label="Search" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary plusApprovalBtn2" type="button">
+                            <i class="fas fa-plus fa-sm"></i>
+                        </button>
+                        <button class="btn btn-primary minusApprovalBtn2" type="button">
+                            <i class="fas fa-minus fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row approval3" style="width:750px">
+                    <div class="col-md-6 mb-3 col-md-6 mb-3">
+                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="docLastapproval" style="width:195px;" name="docLastapproval3" class="form-control bg-light small"  aria-label="Search" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary minusApprovalBtn3" type="button">
+                            <i class="fas fa-minus fa-sm"></i>
                         </button>
                     </div>
                 </div>
@@ -74,19 +108,20 @@
 
 
 <style>
-.modal-body{
- height: 500px;
+.col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
+	width:350px !important;
 }
-#searchModal {
+.modal-body{
+}
+.controll-modal-body{
   width: 60%;
-  height: 150px;
 }
 #insert-container {
     width:660px;
-    height: 150px;
 }
 .modal-content{
 	width:700px;
+	height:100% !important; 
 }
 #formGroupExampleInput {
     width: 70%;
@@ -97,7 +132,6 @@
 }
 .quality-comment {
 	width:200%;
-	height:300%;
 }
 #insert-container .btn-primary{
     background-color:#777;
@@ -121,6 +155,7 @@
 </style>
 <script>  
 
+
   $(()=>{
 	  var date = new Date();
 	  var yyyy = date.getFullYear();
@@ -128,7 +163,44 @@
 	  var dd = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
 	   
 	  $("input[type=date]").val(yyyy+"-"+mm+"-"+dd);
-
+	  
+	  $(".form-row.approval1").hide();
+	  $(".form-row.approval2").hide();
+	  $(".form-row.approval3").hide();
+	  
+	  $(".plusApprovalBtn").click(function(){
+		 $(".plusApprovalBtn").hide();
+		 $(".form-row.approval1").show();
+	  });
+	  $(".plusApprovalBtn1").click(function(){
+		 $(".plusApprovalBtn1").hide();
+		 $(".form-row.approval2").show();
+	  });
+	  $(".minusApprovalBtn").click(function(){
+		  $("[name=docLastapproval]").val("");
+	  });
+	  $(".minusApprovalBtn1").click(function(){
+		 $(".plusApprovalBtn").show();
+		 $(".form-row.approval1").hide();
+		 $("[name=docLastapproval1]").val("");
+	  });
+	  $(".plusApprovalBtn2").click(function(){
+		 $(".plusApprovalBtn2").hide();
+		 $(".form-row.approval3").show();
+	  });
+	  $(".minusApprovalBtn2").click(function(){
+		 $(".plusApprovalBtn1").show();
+		 $(".form-row.approval2").hide();
+		 $("[name=docLastapproval2]").val("");
+	  });
+	  $(".minusApprovalBtn3").click(function(){
+		 $(".plusApprovalBtn2").show();
+		 $(".form-row.approval3").hide();
+		 $("[name=docLastapproval3]").val("");
+	  });
+	  
+	  
+	  
 	  $(".searchDocument").click(function(){
 	    	var title = $(this).siblings().html();
 	    	$("#searchModalTitle").html(title);

@@ -38,12 +38,19 @@ $(()=>{
 $(".document-list-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	console.log(value);
-	var docApproval = $("[name=docLastapproval]").val()
+	var docApproval = $("[name=docLastapproval]").val();
+	var docApproval1 = $("[name=docLastapproval1]").val();
+	var docApproval2 = $("[name=docLastapproval2]").val();
+	var docApproval3 = $("[name=docLastapproval3]").val();
 	if( docApproval==""){
 		$("[name=docLastapproval]").val(value);
-	}else{
-		$("[name=documentMiddle]").val(value);
 		
+	}else if(docApproval1==""){
+		$("[name=docLastapproval1]").val(value);
+	}else if(docApproval2==""){
+		$("[name=docLastapproval2]").val(value);
+	}else if(docApproval3==""){
+		$("[name=docLastapproval3]").val(value);
 	}
 	$("#searchDocument").modal('hide');
 });

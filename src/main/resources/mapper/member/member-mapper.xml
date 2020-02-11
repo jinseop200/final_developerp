@@ -6,7 +6,7 @@
 <mapper namespace="member">
 	<insert id="insertMember">
 		insert into employee values(seq_emp_id.nextval, #{empName}, #{empNo}, #{email}
-		,#{phone}, #{deptCode},#{jobCode},sysdate,null,#{quitYn},#{password},#{profileImg})
+		,#{phone}, #{deptCode},#{jobCode},sysdate,null,#{quitYn},#{password},#{profileImage})
 	</insert>
 	
 	<select id="selectDeptList" resultMap="selectList">

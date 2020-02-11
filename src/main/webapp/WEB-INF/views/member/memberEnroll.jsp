@@ -232,8 +232,8 @@ function enrollValidate(){
 <%--중복검사 ajax--%>
 function emailDuplicatedCheck(){
 	var regExpEmail = /\w+@\w+\.\w+/g;
-	var email=$("#email").val().trim();
-	
+	var email=$(".table-box #email").val().trim();
+	console.log(email);
 	$.ajax({
 		url: "${pageContext.request.contextPath}/member/memberEmailDuplicatedCheck.do",
 		data:{email:email},

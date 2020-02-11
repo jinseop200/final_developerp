@@ -51,19 +51,45 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentDAO.documentDetailView(docNo);
 	}
 
-	@Override
-	public int approveDocument(int docNo) {
-		return documentDAO.approveDocument(docNo);
-	}
 
 	@Override
-	public int refuseDocument(int docNo) {
-		return documentDAO.refuseDocument(docNo);
-	}
-
-	@Override
-	public DocumentLine documentLineView(int docNo) {
+	public List<DocumentLine> documentLineView(int docNo) {
 		return documentDAO.documentLineView(docNo);
+	}
+
+	@Override
+	public int approveDocument(Map<String, Object> param) {
+		return documentDAO.approveDocument(param);
+	}
+
+	@Override
+	public int refuseDocument(Map<String, Object> param) {
+		return documentDAO.approveDocument(param);
+	}
+
+	@Override
+	public DocumentLine documentPrevWriter(Map<String, Object> map) {
+		return documentDAO.documentPrevWriter(map);
+	}
+
+	@Override
+	public DocumentLine documentNextWriter(Map<String, Object> map) {
+		return documentDAO.documentNextWriter(map);
+	}
+
+	@Override
+	public int updateDocument(int docNo) {
+		return documentDAO.updateDocument(docNo);
+	}
+
+	@Override
+	public int notUpdateDocument(int docNo) {
+		return documentDAO.notUpdateDocument(docNo);
+	}
+
+	@Override
+	public DocumentLine selectDocumentLine(Map<String, Object> map2) {
+		return documentDAO.selectDocumentLine(map2);
 	}
 
 }
