@@ -97,7 +97,7 @@
 		        $('#rmModal').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 		        $(".controll-title").html("");
-		        $(".controll-title").html("원재료 입출고 수정하기");
+		        $(".controll-title").html("원재료 입고 정보 수정");
 			});
 		});
 		
@@ -107,7 +107,7 @@
 		        $('#rmModal').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 		        $(".controll-title").html("");
-		        $(".controll-title").html("원재고 입출고 상세 검색하기");
+		        $(".controll-title").html("원재고 입출고 상세 검색");
 		    });
 		});
 	</script>

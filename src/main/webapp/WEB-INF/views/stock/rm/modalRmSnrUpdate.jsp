@@ -5,40 +5,34 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>원재료 재고 수정</title>
+	<title>원재료 입출고 수정</title>
 </head>
 
 <body>
 <!-- search-container start -->
 <div id="search-container">
 	<form class="needs-validation"
-	 	  action="${pageContext.request.contextPath}/rm/modalRmSnrUpdate.do"
+	 	  action="${pageContext.request.contextPath}/stock/rm/UpdateRm.do"
 	      method="POST">
 		
 		<div class="form-row">
 			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="productNo">품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				     <input type="number" id="productNo" name="productNo" class="form-control bg-light small" placeholder="품목코드" aria-label="Search" aria-describedby="basic-addon2">
-			     <button class="btn btn-primary" type="button" onclick="productNoDuplicatedCheck($('#productNo').val());">중복확인</button>
-			     <input type="hidden" id="productNoValid" value="0"/>
+			    <label for="productNo">품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			    <input type="number" id="productNo" name="productNo" class="form-control bg-light small" placeholder="품목코드" aria-label="Search" aria-describedby="basic-addon2" >
 			</div>
 		</div>
+		
 		<div class="form-row">
 			<div class="col-lg-20 mb-3 rowResize">
 			     <label for="accountNo">거래처등록번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-			     <button class="btn btn-primary searchBtn" type="button" value="accountNo">
-				 <i class="fas fa-search fa-sm"></i>
-				 </button>
+			     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" >
+
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="col-lg-20 mb-3 rowResize">
 			     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-			     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
-				 <i class="fas fa-search fa-sm"></i>
-				 </button>
+			     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" >
 			</div>
 		</div>
 		<div class="form-row">
@@ -77,11 +71,18 @@
 			     <input type="number" id="tol" name="tol" class="form-control bg-light small" placeholder="공차" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
 			</div>
 		</div>
+		
+		<div class="col-md-6 mb-3">
+	              <label for="datepicker">입고일자</label>&nbsp;&nbsp;&nbsp;
+			     <input type="date" id="regDate" name="regDate" class="form-control bg-light small" placeholder="입고날짜" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
+        </div>
+		
+		
 		<hr class="hrSize"/>
-		        	<div class="form-row col-lg-20 col-lg-push-9 btns">
-		           <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" onclick="return addProductValidate();">등록</button> 
-		           <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-		            </div>
+        	<div class="form-row col-lg-20 col-lg-push-9 btns">
+           		<button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" >등록</button> 
+           		<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+            </div>
 	</form>
 </div>
       
@@ -107,7 +108,7 @@
 
 <style>
 .modal-body{
- height: 596px;
+ height: 680px;
 }
 .searchModalBody{
  height: 500px;
@@ -186,6 +187,7 @@ $(()=>{
 	
 	
 })
+
 <%--onload end--%>
 
 
@@ -196,44 +198,6 @@ $(function() {
     });
 });
   
-
-  <%-- 품목코드 중복검사 ajax--%>
-  function productNoDuplicatedCheck(e){
-  	var productNo = e;
-  	console.log(productNo);
-  	
-  	$.ajax({
-  		url: "${pageContext.request.contextPath}/enrollment/productNoDuplicatedCheckForRawMaterial.do",
-  		data: {productNo : productNo},
-  		dataType: "json",
-  	 	async: false,
-  		contentType:"application/json;charset=UTF-8",
-  		success: data => {
-  			console.log(data);
-  			if(data.isUsable == true && data.productNo != ""){
-  				alert("사용가능한 품목코드 입니다.");
-  				$("#productNo").attr("style","border-bottom: 2px solid #00c500");
-  				$("#productNoValid").val(1);
-  			} 
-  			if((data.isUsable == true || data.isUsable == false) && data.productNo == ""){
-  				alert("중복확인할 품목코드를 입력해 주세요.");
-  				$("#productNo").val("");
-  				$("#productNo").attr("style","border-bottom: 2px solid red");
-  				$("#productNoValid").val(0);
-  			} 
-  			else if(data.isUsable == false){
-  				alert("중복된 품목코드 입니다.");
-  				$("#productNo").val("");
-  				$("#productNo").attr("style","border-bottom: 2px solid red");
-  				$("#productNoValid").val(0);
-  			}
-  			
-  		},
-  		error : (jqxhr, textStatus, errorThrown)=>{
-  			console.log(jqxhr, textStatus, errorThrown);
-  		}
-  	});
-  }
   
   
   <%--완제품 등록 유효성검사--%>
@@ -305,17 +269,11 @@ function addProductValidate(){
   		return false;
       }
   	
-    <%--품목코드 중복검사를 하지않았을경우--%>
-  	if($productNoValid.val() == 0){
-  		alert("품목코드 중복 검사를 해주세요.");
-  		return false;
-  	}
-  	
   	return true;
   }  
   
-  
-  
 </script>
+
+
 </body>
 </html>

@@ -13,5 +13,8 @@ public interface StockService {
 
 	List<Map<String, String>> selectStorageStockList();
 
+	int UpdateRm(Map<String, String> rawMaterial);
+
+
 
 }

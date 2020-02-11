@@ -1,5 +1,6 @@
 package com.dev.erp.stock.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.stock.model.service.StockService;
@@ -34,21 +36,15 @@ public class StockController {
 		return mav;
 	}
 	
-	@RequestMapping("/stock/rm/modalRmInsert.do")
-	public ModelAndView modalRmInsert(ModelAndView mav) {
-		
-		mav.setViewName("/stock/rm/modalRmInsert");
-		
-		return mav;
-	}
-	
 	@RequestMapping("/stock/rm/modalRmSearch.do")
-	public ModelAndView modalRmSearch(ModelAndView mav) {
+	public ModelAndView modalRmInsert(ModelAndView mav) {
 		
 		mav.setViewName("/stock/rm/modalRmSearch");
 		
 		return mav;
 	}
+
+
 	
 	// ========================================= 원재료 입출고관리 파트 =========================================
 	@RequestMapping("/stock/rm/rmSnrView.do")
@@ -64,10 +60,61 @@ public class StockController {
 		return mav;
 	}
 	
+
+	@RequestMapping("/stock/rm/modalRmSnrSearch.do")
+	public ModelAndView modalRmSnrSearch(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrSearch");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/stock/rm/modalRmSnrUpdate.do")
+	public ModelAndView modalRmSnrUpdate(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrUpdate");
+		
+		return mav;
+	}
 	
 	
 	
 	
+	@RequestMapping("/stock/rm/UpdateRm.do")
+	public ModelAndView modalRmSnrUpdate(@RequestParam String productNo,
+										 @RequestParam String accountNo,
+										 @RequestParam String ptNo,
+										 @RequestParam String delivery,
+										 @RequestParam String productName,
+										 @RequestParam String inPrice,
+										 @RequestParam String outPrice,
+										 @RequestParam String spec,
+										 @RequestParam String tol,
+										 @RequestParam String regDate,
+										 ModelAndView mav) {
+
+		Map<String, String> rawMaterial = new HashMap<>();
+		rawMaterial.put("productNo", productNo);
+		rawMaterial.put("accountNo", accountNo);
+		rawMaterial.put("ptNo", ptNo);
+		rawMaterial.put("delivery", delivery);
+		rawMaterial.put("productName", productName);
+		rawMaterial.put("inPrice", inPrice);
+		rawMaterial.put("outPrice", outPrice);
+		rawMaterial.put("spec", spec);
+		rawMaterial.put("tol", tol);
+		rawMaterial.put("regDate", regDate);
+		
+		logger.info("rawMaterial@controller={}",rawMaterial);
+		
+		int result = stockservice.UpdateRm(rawMaterial); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("/stock/rm/rmSnrView.do");
+		
+		return mav;
+	}
 	
 	
 	

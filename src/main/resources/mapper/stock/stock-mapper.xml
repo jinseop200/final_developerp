@@ -39,4 +39,18 @@
 	</select>
 	
 	
+	<update id="UpdateRm">
+		update raw_material
+		set account_no = #{accountNo},
+			pt_no = #{ptNo},
+			rm_name = #{productName},
+			delivery = #{delivery},
+			inprice = #{inPrice},
+			outprice = #{outPrice},
+			spec = #{spec},
+			tol = #{tol}
+		where rm_no = #{productNo}
+	</update>
+	
+	
 </mapper>
