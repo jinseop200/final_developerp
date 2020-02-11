@@ -29,9 +29,9 @@
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath }/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  <!--  chart -->
   <style>
  .main-container{
     width: 1440px;
@@ -174,7 +174,7 @@
               <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">DETAIL</h6>
-                  <a class="collapse-item" href="buttons.html">히스토그램</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do">부적합 현황</a>
                   <a class="collapse-item" href="cards.html">Xbar-R</a>
                   <a class="collapse-item" href="cards.html">P 관리도</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityInsection.do">품질 검사 관리</a>

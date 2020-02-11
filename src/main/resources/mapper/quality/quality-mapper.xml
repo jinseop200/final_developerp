@@ -15,7 +15,7 @@
 		select q.*, l.spec, l.product_name as "PNAME" from quality q join product_list l on l.pl_no = q.pl_no) p join storage s on p.store_no = s.store_no where quality_no =#{quality_no}
 	</select>
 	<update id="qualityUpdateOne" >
-		update quality set lot_no = #{lotNo}, store_no=#{storeNo}, type=#{type}, quality_comment=#{qualityComment}
+		update quality set lot_no = #{lotNo}, measurement=#{measurement},store_no=#{storeNo}, type=#{type}, quality_comment=#{qualityComment}
 		where quality_no = #{qualityNo}
 	</update>
 	
@@ -68,12 +68,15 @@
 	</select>
 	
 	<select id="selectInsectionOnebyLotNo" resultType="map">
-		select * from (select p.lot_no, l.product_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, production as "ENROLL_DATE", l.spec, l.tol 
-		from production p join product_list l on p.pl_no = l.pl_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N'
-		union
-		select p.lot_no, l.rm_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, rec_date as "ENROLL_DATE", l.spec, l.tol 
-		from recieving p join raw_material l on p.rm_no = l.rm_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no where p.insection_yn = 'N')
-		where lot_no = #{lotNo}
+		select *
+		 from 
+		 (select p.lot_no, l.product_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, production as "ENROLL_DATE", l.spec, l.tol, p.pl_no 
+				from production p join product_list l on p.pl_no = l.pl_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no
+		 where p.insection_yn = 'N'
+				union
+				select p.lot_no, l.rm_name as "PRODUCT_NAME", t.type, s.store_name, p.quantity, p.quality_yn, p.insection_yn, rec_date as "ENROLL_DATE", l.spec, l.tol,l.rm_no 
+				from recieving p join raw_material l on p.rm_no = l.rm_no join product_type t on p.pt_no = t.pt_no join storage s on p.store_no=s.store_no
+		 where p.insection_yn = 'N') where lot_no = #{lotNo}
 	</select>
 	
 	<update id="updateInsectionYNInRecieving">
@@ -84,7 +87,7 @@
 	</update>
 	
 	<insert id="insertQualityInfo">
-		insert into quality values (seq_quality_no.nextval, #{lotNo}, #{storeNo}, #{type}, #{qualityComment},default,#{measurement})
+		insert into quality values (seq_quality_no.nextval, #{lotNo}, #{storeNo}, #{type}, #{qualityComment},default,#{measurement},#{plNo},#{rmNo})
 	</insert>
 	
 	<select id="selectStoreNoByStoreName" resultType="string">

@@ -6,7 +6,7 @@
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
  <!-- Custom styles for this page -->
-     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Page Heading -->
@@ -41,7 +41,7 @@
                   </thead>
                   <tbody>
                 	<c:forEach items="${list }" var="l">
-	                    <tr value="${l.qualityNo }">
+	                    <tr>
 	                      <td>${l.qualityNo }</td>
 	                      <td>${l.lotNo }</td>
 	                      <td>${l.storeNo }</td>
@@ -56,67 +56,86 @@
           </div>
           
   <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="qualityControllModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title controll-title"></h5>
+            <h5 class="modal-title quality-controll-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body quality-controll-modal-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
         </div>
     </div>
 </div>
+
+  <!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="myUpdateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title Update-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body update-modal-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+ <div class="modal" tabindex="-1" role="dialog" id="mySearchModal">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	        <div class="modal-header">
+	            <h5 class="modal-title search-title" id="searchModalTitle"> </h5>
+	        </div>
+	        <div class="modal-body searchModalBody">
+	            <p>Modal body text goes here.</p>
+	        </div>
+	        <div class="modal-footer">
+	            <button type="button" class="btn btn-primary searchModal-end">끝</button>
+	        </div>
+	        </div>
+	    </div>
+	  </div>
+
   
 <script>
 $(".quality-table tbody tr").click(function(){
-// 	console.log($(this).children().eq(0).html());
-// 	alert($(this).children().eq(0).html());
 	var quality_no = $(this).children().eq(0).html();
-	
-// 	var url = "${pageContext.request.contextPath}/quality/insertQualityForm.do";
-// 	var title = "login";
-// 	var spec = "left=350px, top=200px, width=600px, height=400px";
-	
-// 	open(url, title, spec);
-	 $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/updateQualityForm.do?quality_no="+quality_no,function(){
-	        $('#myModal').modal({backdrop: 'static', keyboard: false});
-	        $('#myModal').modal({show:true});
+	$('.update-modal-body').children().remove();
+	 $('.update-modal-body').load("${pageContext.request.contextPath}/quality/updateQualityForm.do?quality_no="+quality_no,function(){
+	        $('#myUpdateModal').modal({backdrop: 'static', keyboard: false});
+	        $('#myUpdateModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
-	        $(".controll-title").html("");
-	        $(".controll-title").html("부적합 정보 수정");
+	        $(".Update-title").html("");
+	        $(".Update-title").html("부적합 정보 수정");
 		});
 });
 $("#quality-search-button").click(function(){
-    $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/qualitySearch.do",function(){
-        $('#myModal').modal({backdrop: 'static', keyboard: false});
-        $('#myModal').modal({show:true});
+    $('.quality-controll-modal-body').load("${pageContext.request.contextPath}/quality/qualitySearch.do",function(){
+        $('#qualityControllModal').modal({backdrop: 'static', keyboard: false});
+        $('#qualityControllModal').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         
-        $(".controll-title").html("");
-        $(".controll-title").html("부적합 상세조회");
+        $(".quality-controll-title").html("");
+        $(".quality-controll-title").html("부적합 상세조회");
         
     });
 });
-$("#quality-insert-button").click(function(){
- $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/insertQualityForm.do",function(){
-        $('#myModal').modal({backdrop: 'static', keyboard: false});
-        $('#myModal').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        $(".controll-title").html("");
-        $(".controll-title").html("부적합 등록");
-	});
-});
+
+	
+	
 </script>
 <style>
-#myModal{
-	z-index: 1060;
-}
 .quality-table tbody tr td:hover{
 	cursor:pointer;
 }
