@@ -55,13 +55,6 @@ public class QualityController {
 		return mav;
 	}
 	
-	@RequestMapping("/quality/insertQualityForm.do")
-	public ModelAndView qualityInsert(ModelAndView mav) {
-		
-		mav.setViewName("/quality/insertQualityForm");
-		
-		return mav;
-	}
 	@RequestMapping("/quality/updateQualityForm.do")
 	public ModelAndView qualityUpdate(ModelAndView mav, @RequestParam("quality_no") String quality_no) {
 		
@@ -77,7 +70,8 @@ public class QualityController {
 	@RequestMapping(value="/quality/updateQualtyFormEnd.do", method=RequestMethod.POST )
 	public ModelAndView qualityUpdateEnd(ModelAndView mav, @RequestParam("storeNo") String storeName,
 			@RequestParam("lotNo") String lotNo, @RequestParam("type") String type,
-			@RequestParam("qualityComment") String qualityComment, @RequestParam("qualityNo") String qualityNo) {
+			@RequestParam("qualityComment") String qualityComment, @RequestParam("qualityNo") String qualityNo,
+			@RequestParam("measurement") String measurement) {
 		
 //		logger.debug("qualityUpdate quality={}",quality);
 		String storeNo = qualityService.selectStoreNoByStoreName(storeName);
@@ -86,6 +80,7 @@ public class QualityController {
 		param.put("lotNo",lotNo);
 		param.put("type",type);
 		param.put("qualityComment",qualityComment);
+		param.put("measurement",measurement);
 		param.put("qualityNo",qualityNo);
 		int result= qualityService.qualityUpdateOne(param);
 		
@@ -207,13 +202,25 @@ public class QualityController {
 												@RequestParam("type") String type,
 												@RequestParam("measurement") String measurement,
 												@RequestParam(value="qualityComment", required=false) String qualityComment,
-												@RequestParam("storeNo") String storeName) {
+												@RequestParam("storeNo") String storeName,
+												@RequestParam("plRmNo") String plRmNo) {
 		
 		
 		String storeNo = qualityService.selectStoreNoByStoreName(storeName);
+		String plNo = "";
+		String rmNo = "";
+		if(type.equals("원재료")) {
+			rmNo = plRmNo;
+		}
+		else {
+			plNo = plRmNo;
+		}
+
 		Map<String, String> param = new HashMap<>();
 		param.put("lotNo", lotNo);
 		param.put("type", type);
+		param.put("rmNo", rmNo);
+		param.put("plNo", plNo);
 		param.put("measurement", measurement);
 		param.put("qualityYN", qualityYN);
 		param.put("storeNo", storeNo);
@@ -232,6 +239,14 @@ public class QualityController {
 		mav.addObject("loc","/quality/qualityInsection.do");
 		
 		mav.setViewName("common/msg");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/quality/doughnutHistoGraph.do")
+	public ModelAndView donutHistoGraph(ModelAndView mav) {
+		
+		mav.setViewName("quality/doughnutHistoGraph");
 		
 		return mav;
 	}

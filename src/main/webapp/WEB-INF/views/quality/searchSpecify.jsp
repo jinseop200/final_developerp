@@ -5,13 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
      <table class="table table-bordered quality-specify-table" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
@@ -30,7 +23,6 @@
      </table>
      <div class="pageBar"></div>
 <%--      ${pageBar} --%>
-</body>
 
 <style>
 .quality-specify-table tbody tr:hover td{
@@ -52,7 +44,7 @@ $(()=>{
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	console.log(value);
-	$("#${searchType}").val(value);
+	$("[name=${searchType}]").val(value);
 	$("#mySearchModal").modal('hide');
 });
 
@@ -93,5 +85,3 @@ function morePage(a){
 
 
 </script>
-
-</html>
