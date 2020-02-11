@@ -11,11 +11,10 @@
 
 <body>
       <!-- search-container start -->
-      <div id="search-container">
+<!--       <div id="search-container"> -->
 <!--           <form class="needs-validation" novalidate> -->
 
       <form name="facilityBook" action="${pageContext.request.contextPath}/facility/facilityBookInsert.do" method="post">
-      <div>
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
 					<label for="datepicker">예약일자</label>&nbsp;&nbsp;&nbsp; <input
@@ -62,65 +61,55 @@
 							<option value="2200">22:00</option>
 							<option value="2330">23:30</option>
 							<option value="2400">24:00</option>
-
-
-
 						</select> <br>
 						</p>
-						- 예약 종료 시간 : <select name="bookEndtime" id="reservE"
-							>
-<!-- 							onchange="selectReservEnd(this.value)" -->
+						- 예약 종료 시간 : <select name="bookEndtime" id="reservE">
 						</select>
-<!-- 					</form> -->
 				</div>
 			</div>
-			</div> 
 			<div class="form-row">
-                    <div class="col-md-6 mb-3">
-                       
+                    <div class="col-md-6 mb-3">                      
                         <input type="text" id="facilityNo" name="facilityNo" class="form-control bg-light small" value=${facility.facilityNo} aria-label="Search" aria-describedby="basic-addon2" hidden>
-                        
                     </div>
                     </div>             
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="qualityNo"> 회원 아이디 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="qualityNo" name="email" class="form-control bg-light small" value='${memberLoggedIn.email}' aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="email" name="email" class="form-control bg-light small" value='${memberLoggedIn.email}' aria-label="Search" aria-describedby="basic-addon2" readonly>
                         
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lotNo">시설명 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="lotNo" name="facilityName" class="form-control bg-light small" value=${facility.facilityName} aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="facilityName" name="facilityName" class="form-control bg-light small" value=${facility.facilityName} aria-label="Search" aria-describedby="basic-addon2" readonly>
                        
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <label for="type">전화번호 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="type" name="facilityPhone" class="form-control bg-light small" value=${facility.facilityPhone} aria-label="Search" aria-describedby="basic-addon2">
+                        <label for="type">전화번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="type" name="facilityPhone" class="form-control bg-light small" value=${facility.facilityPhone} aria-label="Search" aria-describedby="basic-addon2" readonly>
                        
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="storeNo">장소 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="storeNo" name="facilityLocation" class="form-control bg-light small"value=${facility.facilityLocation} aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="col-md-6 mb-3" id="btn">
+                        <label for="storeNo">장소&nbsp;&nbsp;&nbsp;&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" id="facilityLocation" name="facilityLocation" class="form-control bg-light small"value=${facility.facilityLocation} aria-label="Search" aria-describedby="basic-addon2" readonly>
                         
                     </div>
                 </div>
-          
-            <div class="form-row">
-            	<div class="col-md-6 mb-3">
-            	</div>
-                <div class="col-md-6 mb-3">
-	              <button id="FrmBtn" class="btn btn-primary search-end-button">취소</button> &nbsp;&nbsp;&nbsp;
+         
+            <div class="form-row" style="text-align:right;float:right;display:inline;">
+            	<div class="col-md-6 mb-3" style="display:inline;">
 	              <input type="submit" class="btn btn-outline-success" value="예약" >
-<!-- 	              <button id="FrmBtn" class="btn btn-primary search-excute-button">조회</button>  -->
-                </div>
-            </div>
-      </div>
-      </div>
+	              <input type="button" class="btn btn-outline-success"id="FrmBtn" value="취소">
+	              </div>
       </form>
-      
-      
+      </div>
+	            
+     
+	              
+<!--             </div> -->
+<!--       </div> -->
+      <br>
   <div class="modal" tabindex="-1" role="dialog" id="mySearchModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -138,8 +127,12 @@
   </div>
 
 <style>
+#myModal{
+	z-index: 1060;
+	width:100%;	
+	height:100%;	
+}
 .modal-body{
- height: 240px;
 }
 .searchModalBody{
  height: 500px;
@@ -177,6 +170,7 @@
 }
 #mySearchModal {
 	z-index:1080;
+	
 }
 </style>
 <script>    
@@ -208,15 +202,11 @@
             $('.startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
             $('.endDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 			
-            $(".search-excute-button").click(function(){
-            		var bool = confirm("예약하시겠습니까?");
-            		
-            		if(bool) {
-            			$("#updateQualityFrm").submit();
-            		}
-            	
+            $("#FrmBtn").click(function(){           	
+            	$('#myModal').modal("hide");
             });
-            
+
+		
             $('#date').change(function(){ 
             var bookDay = $('#date').val();
 			var facilityNo=$('#facilityNo').val();
@@ -224,7 +214,6 @@
 					url: "${pageContext.request.contextPath}/facility/facilityTime.do?bookDay="+bookDay+"&facilityNo="+facilityNo,
 					dataType: "json",
 					success: data => {
-						console.log(data);
 						var reservS = document.getElementById('reservS');
 						var count = reservS.childElementCount;
 						var str='';
@@ -240,23 +229,9 @@
 						
 							if((facility.bookStarttime*1)<=num&&(facility.bookEndtime*1)>=num)
 								{
-								$("#reservS option:eq("+i+")").prop('disabled',true);
-								if(str.indexOf(num)!=-1){
-									flag2=i;
+								$("#reservS option:eq("+i+")").prop('disabled',true);								
 								}
-								if(facility.bookEndtime*1==num){
-									flag=i;
-									str+=num+' ';
-								}
-								if(facility.bookStarttime*1==num){
-									str+=num+' ';
-								}
-								
-								}
-							if(flag!=0)
-								$("#reservS option:eq("+flag+")").prop('disabled',false);
-							if(flag2!=0)
-								$("#reservS option:eq("+flag+")").prop('disabled',true);
+
 							}
 						});
 						},
@@ -274,7 +249,6 @@
 				url: "${pageContext.request.contextPath}/facility/facilityTime.do?bookDay="+bookDay+"&facilityNo="+facilityNo,
 				dataType: "json",
 				success: data => {
-					console.log(data);
 					var reservS = document.getElementById('reservS');
 					var count = reservS.childElementCount;
 					var str='';
@@ -313,9 +287,6 @@
 
 	    var rsSi = parseInt(rstart.substring(0,2)); 
 	    var rsBun = rstart.substring(2,4); 
-	    console.log(rstart);//1200
-	    console.log(rsSi);//12
-	    console.log(rsBun);//00
 	    if(rstart != ''){ 
 	      $("#reservE option").each(function() { 
 	        $(this).remove(); 

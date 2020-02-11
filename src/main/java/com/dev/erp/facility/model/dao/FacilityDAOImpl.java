@@ -34,4 +34,9 @@ public class FacilityDAOImpl implements FacilityDAO {
 	public List<FacilityBook> facilityTime(FacilityBook facilityBook) {
 		return sqlSession.selectList("facility.facilityTime",facilityBook);
 	}
+
+	@Override
+	public List<FacilityBook> facilityBookListGet(FacilityBook facilityBook) {
+	return sqlSession.selectList("facility.facilityBookListGet",facilityBook);
+	}
 }

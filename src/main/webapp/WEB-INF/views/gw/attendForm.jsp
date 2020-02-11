@@ -14,7 +14,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 String today=sdf.format(now);
 
 %>
-
+<title>출/퇴근 기록부</title>
 <script>
 
 function printClock() {
@@ -35,7 +35,7 @@ function printClock() {
     if(currentSeconds >= 50){// 50초 이상일 때 색을 변환해 준다.
        currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
     }
-    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:50px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:30px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
     
     setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
 }
@@ -71,60 +71,72 @@ function earlyleave(email){
 </script>
 	
 <body onload="printClock()">
-	<div style="border:1px solid #dedede; width:600px; height:250px; line-height:250px; color:#666;font-size:100px; text-align:center;" id="clock">
+	<div style=" width:400px; height:121px; line-height:114px; color:#005B9E;font-size:60px; text-align:right;" id="clock">
 	</div>
 	<button type="button" 
-				class="btn btn-outline-success btn-block"
-				onclick="fileDownload('${a.originalFileName}','${a.renamedFileName }');">
+				class="btn btn-outline-success btn-block" disabled style="border:0; outline:0; width:480px; ">
 				
 			<table>
 				<tr>
 					<td>이메일주소<span>*</span></td>
 					<td>
-						<input class="form-control input-text" type="email"
-						name="email" id="email" value=${memberLoggedIn.email} readonly/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.email}
+<!-- 						<input class="form-control input-text" type="email" -->
+<!-- 						name="email" id="email" value=${memberLoggedIn.email} readonly/> -->
 					</td>			
 				</tr>		
 				<tr>
 					<td>성명<span>*</span></td>
-					<td><input class="form-control input-text" type="text"
-						name="emp_name" id="emp_name" value=${memberLoggedIn.empName} /></td>
+					<td>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.empName}
+<!-- 					<input class="form-control input-text" type="text" -->
+<!-- 						name="emp_name" id="emp_name" value=${memberLoggedIn.empName} readonly/> -->
+						</td>
 				</tr>				
 				<tr>
 					<td>부서명<span>*</span></td>
 					<td>
-						<input class="form-control input-text" type="text"
-						name="dept_code" id="dept_code" value=${memberLoggedIn.deptCode} />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.deptCode}
+<!-- 						<input class="form-control input-text" type="text" -->
+<!-- 						name="dept_code" id="dept_code" value=${memberLoggedIn.deptCode} readonly/> -->
 					</td>
 				</tr>
 				<tr>					
-					<td>부서명<span>*</span></td>
+					<td>직책명<span>*</span></td>
 					<td>
-						<input class="form-control input-text" type="text"
-						name="job_code" id="job_code" value=${memberLoggedIn.jobCode} />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.jobCode}
+<!-- 						<input class="form-control input-text" type="text" -->
+<!-- 						name="job_code" id="job_code" value=${memberLoggedIn.jobCode} readonly/> -->
 					</td>
 					</td>
 				</tr>				
 				<tr>
 					<td>전화번호<span>*</span></td>
 					<td>
-						<input type="text" class="form-control input-text"
-						name="phone" id="phone" value="${memberLoggedIn.phone}"/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.phone}
+<!-- 						<input type="text" class="form-control input-text" -->
+<%-- 						name="phone" id="phone" value="${memberLoggedIn.phone}"/> --%>
 					</td>
 				</tr>
-				<tr>
-				<td>
+				
+				
+			</table>
+			<br>
+				</button>
+					<div >
 		<%if(today.equals(date)){%>
 		<%if(attendDate==null){%>
-					<button type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")'>출근</button>
+					<input type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")' value="출근" style="width:57px;height:25px;background-color:#005B9E; color:white;border:0; outline:0;cursor:pointer;"/>
 					<%}else if(earlyDate==null&& endDate==null){ %>
-					<button type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")'>퇴근</button>
-					<button type="button" class="attend-button" onclick='earlyleave("${memberLoggedIn.email}")'>조퇴</button>
-					<textarea id="reason"> </textarea>
+					<span>조퇴사유: <input type="text"id="reason" placeholder="*조퇴시 필수 작성"/></span>
+					<br>
+					<br>
+					<input type="button" class="attend-button" onclick='earlyleave("${memberLoggedIn.email}")' value="조퇴" style="width:57px;height:25px;background-color:#005B9E; color:white;border:0; outline:0;cursor:pointer;"/>
+				
+					<input type="button" class="attend-button" onclick='leave("${date}","${memberLoggedIn.email}")' value="퇴근" style="width:57px;height:25px;background-color:#005B9E; color:white;border:0; outline:0;cursor:pointer;" />	
+<!-- 					text-align:right;float:right;display:inline; -->
 					<%} }%>
-					</td>
-				</tr>
-			</table>
+					</div>
 					
 				
 			

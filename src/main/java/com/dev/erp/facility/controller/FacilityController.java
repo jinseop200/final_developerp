@@ -57,17 +57,32 @@ public class FacilityController {
 	return mav;
 
 	}
-	@RequestMapping("facility/facilityTime.do")
+	@RequestMapping("/facility/facilityTime.do")
 	@ResponseBody
-	public List<FacilityBook> facilityTim(ModelAndView mav,FacilityBook facilityBook){
+	public List<FacilityBook> facilityTime(ModelAndView mav,FacilityBook facilityBook){
 		System.out.println("sadfaa"+facilityBook);
 //		List<Map<String,String>> list = new ArrayList<>();
 		List<FacilityBook>list=facilityService.facilityTime(facilityBook);
 		System.out.println(list);
 		return list;
 	}
+	@RequestMapping("/facility/facilityBookList.do")
+	public ModelAndView facilityBookList(ModelAndView mav,@RequestParam int facilityNo) {
+		mav.addObject("facilityNo",facilityNo);
+		mav.setViewName("gw/facilityBookList");
+		return mav;
+	}
+	@RequestMapping("/facility/facilityBookListGet.do")
+	@ResponseBody
+	public List<FacilityBook> facilityBookListGet(ModelAndView mav,@RequestParam String bookDay,@RequestParam int facilityNo){
+		FacilityBook facilityBook=new FacilityBook(0,facilityNo," ",bookDay," "," ");
+		List<FacilityBook> list=facilityService.facilityBookListGet(facilityBook);
+		mav.addObject("facilityNo",facilityNo);
+		mav.setViewName("gw/facilityBookList");
+		return list;
+	}
+	
 }
-
 
 
 //@RequestMapping("/attend/attendShow.do")

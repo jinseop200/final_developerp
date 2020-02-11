@@ -16,4 +16,6 @@ public interface FacilityDAO {
 
 	List<FacilityBook> facilityTime(FacilityBook facilityBook);
 
+	List<FacilityBook> facilityBookListGet(FacilityBook facilityBook);
+
 }
