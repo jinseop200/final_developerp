@@ -44,12 +44,12 @@
                 	<c:forEach items="${list}" var="l">
 	                    <tr value="${l.facilityNo }">
 	                      <td>${l.facilityNo }</td>
-	                      <td>${l.facilityName}</td>
-	                      <td>${l.facilityPhone }</td>
+	                      <td><a href="#" onclick="bookList(${l.facilityNo},'${l.facilityName}')">${l.facilityName}</a></td>
+	                      <td>${l.facilityPhone}</td>
 	                      <td>${l.facilityLocation}</td>
 	                      <td> <button class="btn btn-primary" type="button" id="quality-search-button">
                 	 예약하기 <i class="fas fa-search fa-sm"></i>
-                </button> </td>
+                	  </button> </td>
 	                    </tr>
                   	</c:forEach>
                   </tbody>
@@ -77,22 +77,8 @@
 </div>
   
 <script>
-// $("#quality-search-button").click(function(){
 $(".btn-primary").click(function(){
-// 	console.log($(this).children().eq(0).html());
-// 	alert($(this).children().eq(0).html());
-//  	var facilityNo = $(this).children().eq(0).html();
  	var facilityNo= $(this).closest("tr").children().eq(0).html();
-//  	console.log(a);
-// 	var facilityNo =$(".quality-table tbody tr").children().eq(0).html();
-	//var facilityNo =$("#dd").val();
-	
-// 	var url = "${pageContext.request.contextPath}/quality/insertQualityForm.do";
-// 	var title = "login";
-// 	var spec = "left=350px, top=200px, width=600px, height=400px";
-	
-// 	open(url, title, spec);
-
 	 $('.controll-modal-body').load("${pageContext.request.contextPath}/facility/facilityBook.do?facilityNo="+facilityNo,function(){
 	        $('#myModal').modal({backdrop: 'static', keyboard: false});
 	        $('#myModal').modal({show:true});
@@ -101,30 +87,23 @@ $(".btn-primary").click(function(){
 	        $(".controll-title").html("시설물예약");
 		});
 });
-// $("#quality-search-button").click(function(){
-//     $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/qualitySearch.do",function(){
-//         $('#myModal').modal({backdrop: 'static', keyboard: false});
-//         $('#myModal').modal({show:true});
-//         $(".modal-backdrop.in").css('opacity', 0.4);
-        
-//         $(".controll-title").html("");
-//         $(".controll-title").html("부적합 상세조회");
-        
-//     });
-// });
-// $("#quality-insert-button").click(function(){
-//  $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/insertQualityForm.do",function(){
-//         $('#myModal').modal({backdrop: 'static', keyboard: false});
-//         $('#myModal').modal({show:true});
-//         $(".modal-backdrop.in").css('opacity', 0.4);
-//         $(".controll-title").html("");
-//         $(".controll-title").html("부적합 등록");
-// 	});
-// });
+function bookList(facilityNo,facilityName){
+
+ $('.controll-modal-body').load("${pageContext.request.contextPath}/facility/facilityBookList.do?facilityNo="+facilityNo,function(){
+        $('#myModal').modal({backdrop: 'static', keyboard: false});
+        $('#myModal').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("");
+        $(".controll-title").html("시설물예약 현황("+facilityName+")");
+	});}
+
 </script>
 <style>
 #myModal{
 	z-index: 1060;
+	width:100%;	
+	height:100%;
+	
 }
 
 </style>

@@ -16,4 +16,6 @@ public interface FacilityService {
 
 	List<FacilityBook> facilityTime(FacilityBook facilityBook);
 
+	List<FacilityBook> facilityBookListGet(FacilityBook facilityBook);
+
 }
