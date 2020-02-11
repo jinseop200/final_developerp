@@ -11,8 +11,9 @@
 <body>
       <!-- search-container start -->
       <div id="search-container">
-          <form class="needs-validation"
-           action="${pageContext.request.contextPath}/enrollment/updateProduct.do"
+          <form id="frmSubmit" 
+           class="needs-validation"
+           action="${pageContext.request.contextPath}/product/addBOM.do"
            method="POST">
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
@@ -42,14 +43,14 @@
 				            <th class="text-center">Remove</th>
 				          </tr>
 				        </thead>
-				        <tbody>
+				        <tbody class="BOMTbody">
 				          <tr>
-				            <td class="pt-3-half" contenteditable="true"></td>
-				            <td class="pt-3-half tdPtCode" contenteditable="true"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="true"></td>
+				            <td class="pt-3-half no" contenteditable="false"></td>
+				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
+				            <td class="pt-3-half pName" contenteditable="false"></td>
+				            <td class="pt-3-half pSpec" contenteditable="false"></td>
+				            <td class="pt-3-half pDAN" contenteditable="false"></td>
+				            <td class="pt-3-half pCount" contenteditable="true"></td>
 				            <!-- <td class="pt-3-half">
 				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
 				                    aria-hidden="true"></i></a></span>
@@ -89,10 +90,10 @@
 				
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" >수정</button> 
-	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
                 </div>
              </form>
+	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button> 
+	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
            </div>
            
       </div>
@@ -200,12 +201,12 @@ $(()=>{
 	
 	 const newTr = `
 	<tr class="hide">
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half tdPtCode" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
+	  <td class="pt-3-half no" contenteditable="true"></td>
+      <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
+      <td class="pt-3-half pName" contenteditable="true"></td>
+      <td class="pt-3-half pSpec" contenteditable="true"></td>
+      <td class="pt-3-half pDAN" contenteditable="true"></td>
+      <td class="pt-3-half pCount" contenteditable="true"></td>
 	  <td>
 	    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
 	  </td>
@@ -284,6 +285,36 @@ $(()=>{
 })
 <%--onload end--%>
 
+//button submit
+$(document).on('click','#FrmBtn',function(){
+	//$("#frmSubmit").submit();
+	//var BOMTbody = $("#frmSubmit tr").text();
+// 	var BOMTbody = new Array();
+// 	BOMTbody = $("#frmSubmit tr");
+// 	console.log("BOMTbody2", $("#frmSubmit tr").text());
+// 	console.log(BOMTbody);
+	
+	var pName = $(".pName");
+	var pNames = [];
+	for(var i=0;i<pName.length;i++) {
+		pNames.push(pName.eq(i).text());
+	}
+	var data_ = {"pNames":pNames};
+	console.log(data_);
+ 	$.ajax({
+ 		////url: "${pageContext.request.contextPath}/product/addBOM.do?pNames="+pNames,
+ 		url: "${pageContext.request.contextPath}/product/addBOM.do",
+ 		data: data_,
+ 		type : 'POST', 
+ 		dataType: "json",
+ 		success: data => {
+ 			console.log(data);
+ 		},
+ 		error : (jqxhr, textStatus, errorThrown)=>{
+ 			console.log(jqxhr, textStatus, errorThrown);
+ 		}
+ 	});
+})
 
 $(function() {
     //폼닫기
