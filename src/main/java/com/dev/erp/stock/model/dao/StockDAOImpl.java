@@ -33,6 +33,11 @@ public class StockDAOImpl implements StockDAO {
 		return sqlsession.selectList("stock.selectStorageStockList");
 	}
 
+	@Override
+	public int UpdateRm(Map<String, String> rawMaterial) {
+		return sqlsession.update("stock.UpdateRm", rawMaterial);
+	}
+
 	
 
 }

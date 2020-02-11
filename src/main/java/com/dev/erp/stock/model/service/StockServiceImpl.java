@@ -38,6 +38,12 @@ public class StockServiceImpl implements StockService {
 		return stockDAO.selectStorageStockList();
 	}
 
+	@Override
+	public int UpdateRm(Map<String, String> rawMaterial) {
+		
+		return stockDAO.UpdateRm(rawMaterial);
+	}
+
 	
 
 }

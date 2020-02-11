@@ -13,5 +13,7 @@ public interface StockDAO {
 
 	List<Map<String, String>> selectStorageStockList();
 
+	int UpdateRm(Map<String, String> rawMaterial);
+
 
 }
