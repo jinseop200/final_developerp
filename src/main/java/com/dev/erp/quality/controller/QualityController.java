@@ -1,6 +1,5 @@
 package com.dev.erp.quality.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.quality.model.service.QualityService;
-import com.dev.erp.quality.model.vo.Quality;
+import com.google.gson.Gson;
 
 @Controller
 public class QualityController {
@@ -244,7 +243,68 @@ public class QualityController {
 	}
 	
 	@RequestMapping("/quality/doughnutHistoGraph.do")
-	public ModelAndView donutHistoGraph(ModelAndView mav) {
+	public ModelAndView donutHistoGraph(ModelAndView mav, 
+										@RequestParam(value="startDate", required=false) String startDate,
+										@RequestParam(value="endDate", required=false) String endDate) {
+		
+		
+		Map<String,String> param = new HashMap<>();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		
+		List<Map<String,String>> rTotalYCount = qualityService.selectRPercentByQualityY(param);
+		double yCount = 0;
+		String y = "";
+		for(int i=0;i<rTotalYCount.size();i++) {
+//			yCount+=Double.parseDouble((((Map<String,String>)pTotalYCount.get(i)).get("y")));
+			Map<String,String> rmap = new HashMap<>();
+			rmap = rTotalYCount.get(i);
+			yCount += Double.parseDouble(String.valueOf(rmap.get("y")));
+		}
+		y = String.valueOf(yCount);
+		List<Map<String,String>> rTotalNCount = qualityService.selectRPercentByQualityN(param);
+		Map<String,String> map = new HashMap<>();
+		map.put("label", "합격");
+		map.put("y", y);
+		rTotalNCount.add(map);
+		
+		//Product
+		map = new HashMap<>();
+		List<Map<String,String>> pTotalYCount = qualityService.selectPPercentByQualityY(param);
+		yCount = 0;
+		y = "";
+		for(int i=0;i<pTotalYCount.size();i++) {
+//			yCount+=Double.parseDouble((((Map<String,String>)pTotalYCount.get(i)).get("y")));
+			Map<String,String> pmap = new HashMap<>();
+			pmap = pTotalYCount.get(i);
+			yCount += Double.parseDouble(String.valueOf(pmap.get("y")));
+		}
+		y = String.valueOf(yCount);
+		List<Map<String,String>> pTotalNCount = qualityService.selectPPercentByQualityN(param);
+		map.put("label", "합격");
+		map.put("y", y);
+		pTotalNCount.add(map);
+		
+		
+		String rmList = "";
+		String pdList = "";
+		rmList = new Gson().toJson(rTotalNCount);
+		pdList = new Gson().toJson(pTotalNCount);
+		mav.addObject("rmList", rmList);
+		mav.addObject("pdList",pdList);
+		//도넛차트 종료
+		
+		//컬럼차트 시작
+		List<Map<String,String>> columnAll = qualityService.selectCountAllByInsectionY(param);
+		List<Map<String,String>> columnOther = qualityService.selectCountQNByInsectionY(param);
+		String column1 = "";
+		String column2 = "";
+		column1 = new Gson().toJson(columnAll);
+		column2 = new Gson().toJson(columnOther);
+		mav.addObject("column1",column1);
+		mav.addObject("column2",column2);
+		
+		
 		
 		mav.setViewName("quality/doughnutHistoGraph");
 		

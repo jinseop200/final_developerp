@@ -108,6 +108,42 @@ public class QualityDAOImpl implements QualityDAO {
 		return sqlSession.selectOne("quality.selectStoreNoByStoreName",storeName);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectRPercentByQualityY",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectRPercentByQualityN",param);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectPPercentByQualityY",param);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectPPercentByQualityN",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountAllByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectCountAllByInsectionY",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountQNByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectCountQNByInsectionY",param);
+	}
+
 	
 	
 }

@@ -108,6 +108,42 @@ public class QualityServiceImpl implements QualityService {
 		return qualityDAO.selectStoreNoByStoreName(storeName);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectRPercentByQualityY(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectRPercentByQualityN(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectPPercentByQualityY(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectPPercentByQualityN(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountAllByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectCountAllByInsectionY(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountQNByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectCountQNByInsectionY(param);
+	}
+
 
 
 }
