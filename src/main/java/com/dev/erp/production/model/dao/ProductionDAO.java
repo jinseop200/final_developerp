@@ -7,4 +7,7 @@ public interface ProductionDAO {
 
 	List<Map<String, String>> selectRawMaterialList();
 
+	int insertBOMlist(Map<String, Object> paramMap);
+
+
 }

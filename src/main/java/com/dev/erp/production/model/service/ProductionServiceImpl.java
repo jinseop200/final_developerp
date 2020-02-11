@@ -19,7 +19,8 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDAO.selectRawMaterialList();
 	}
 
-	
-	
-	
+	@Override
+	public int insertBOMlist(Map<String, Object> paramMap) {
+		return productionDAO.insertBOMlist(paramMap);
+	}
 }

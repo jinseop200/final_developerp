@@ -17,6 +17,12 @@ public class ProductionDAOImpl implements ProductionDAO {
 	public List<Map<String, String>> selectRawMaterialList() {
 		return sqlSession.selectList("production.selectRawMaterialList");
 	}
+
+	@Override
+	public int insertBOMlist(Map<String, Object> paramMap) {
+		return sqlSession.insert("production.insertBOMlist", paramMap);
+	}
+
 	
 	
 }

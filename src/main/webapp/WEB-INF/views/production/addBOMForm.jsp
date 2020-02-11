@@ -19,6 +19,8 @@
 					<div class="col-lg-20 mb-3 rowResize">
 					     <label for="productInfo">생산품목 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  					     <input type="text" id="productInfo" name="productInfo" class="form-control bg-light small" placeholder="생산품목" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					     <label for="productCode">생산품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 					     <input type="text" id="productCode" name="productCode" class="form-control bg-light small" placeholder="생산품목코드" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					     <label for="ptAmount">생산수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="number" id="ptAmount" name="ptAmount" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2">
 					</div>
@@ -36,8 +38,6 @@
 				            <th class="text-center">No</th>
 				            <th class="text-center">품목코드</th>
 				            <th class="text-center">품목명</th>
-				            <th class="text-center">규격명</th>
-				            <th class="text-center">단위</th>
 				            <th class="text-center">수량</th>
 				            <!-- <th class="text-center">Sort</th> -->
 				            <th class="text-center">Remove</th>
@@ -45,11 +45,9 @@
 				        </thead>
 				        <tbody class="BOMTbody">
 				          <tr>
-				            <td class="pt-3-half no" contenteditable="false"></td>
+				            <td class="pt-3-half pNo" contenteditable="false"></td>
 				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
 				            <td class="pt-3-half pName" contenteditable="false"></td>
-				            <td class="pt-3-half pSpec" contenteditable="false"></td>
-				            <td class="pt-3-half pDAN" contenteditable="false"></td>
 				            <td class="pt-3-half pCount" contenteditable="true"></td>
 				            <!-- <td class="pt-3-half">
 				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
@@ -90,10 +88,10 @@
 				
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-                </div>
-             </form>
 	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button> 
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+                </div>
+             </form>
            </div>
            
       </div>
@@ -169,7 +167,7 @@
 .scResize{
 	height: 110px;
 }
-#edTable {
+/* #edTable {
     counter-reset: rowNumber;
 }
 
@@ -178,7 +176,7 @@
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
-}
+} */
 </style>
 <script>    
 
@@ -193,6 +191,10 @@ $(()=>{
     	$('#updateProductNo').modal("hide");
     });
 	
+	var trNum = $(".BOMTbody tr").length;
+	for(var i=1;i<=trNum;i++){
+		$(".pNo").text(i);
+	}
 	
 	 <%--editable table script--%>
 	 const $tableID = $('#table');
@@ -201,11 +203,9 @@ $(()=>{
 	
 	 const newTr = `
 	<tr class="hide">
-	  <td class="pt-3-half no" contenteditable="true"></td>
+	  <td class="pt-3-half pNo" contenteditable="false"></td>
       <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
-      <td class="pt-3-half pName" contenteditable="true"></td>
-      <td class="pt-3-half pSpec" contenteditable="true"></td>
-      <td class="pt-3-half pDAN" contenteditable="true"></td>
+      <td class="pt-3-half pName" contenteditable="false"></td>
       <td class="pt-3-half pCount" contenteditable="true"></td>
 	  <td>
 	    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
@@ -213,20 +213,27 @@ $(()=>{
 	</tr>`;
 
 	 $('.table-add').on('click', 'i', () => {
-
+		 
 	   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-	   if ($tableID.find('tbody tr').length === 0) {
-
-	     $('tbody').append(newTr);
-	   }
-
 	   $tableID.find('table').append(newTr);
+		
+	   var trNum = $("#frmSubmit tr").length;
+	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
+		for(var i=firstNum;i<=trNum;i++){
+			$(".pNo").eq(i).text(i+1);
+		}
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
-
 	   $(this).parents('tr').detach();
+	   
+	   var trNum = $("#frmSubmit tr").length;
+	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
+		for(var i=firstNum;i<=trNum;i++){
+			$(".pNo").eq(i).text(i+1);
+		}
+	   
 	 });
 
 	 $tableID.on('click', '.table-up', function () {
@@ -294,15 +301,34 @@ $(document).on('click','#FrmBtn',function(){
 // 	console.log("BOMTbody2", $("#frmSubmit tr").text());
 // 	console.log(BOMTbody);
 	
+	var pNo = $(".pNo");
+	var pNos = [];
+
+	var pCode = $(".pCode");
+	var pCodes = [];
+	
 	var pName = $(".pName");
 	var pNames = [];
+	
+	var pCount = $(".pCount");
+	var pCounts = [];
+	
+	var productCode = $("#productCode").val();
+	
 	for(var i=0;i<pName.length;i++) {
 		pNames.push(pName.eq(i).text());
+		pNos.push(pNo.eq(i).text());
+		pCounts.push(pCount.eq(i).text());
+		pCodes.push(pCode.eq(i).text());
 	}
-	var data_ = {"pNames":pNames};
+	var data_ = {"pNos":pNos,
+				 "pCodes":pCodes,
+				 "pNames":pNames,
+				 "pCounts":pCounts,
+				 "productCode":productCode
+				 };
 	console.log(data_);
  	$.ajax({
- 		////url: "${pageContext.request.contextPath}/product/addBOM.do?pNames="+pNames,
  		url: "${pageContext.request.contextPath}/product/addBOM.do",
  		data: data_,
  		type : 'POST', 
