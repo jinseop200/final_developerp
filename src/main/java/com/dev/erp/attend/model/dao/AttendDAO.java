@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.dev.erp.attend.model.vo.Attend;
+import com.dev.erp.facility.model.vo.Facility;
 
 public interface AttendDAO {
 
@@ -22,5 +23,7 @@ public interface AttendDAO {
 	String checkend(Attend attend);
 
 	String checkearly(Attend attend);
+
+
 
 }
