@@ -71,7 +71,7 @@
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
 	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button" id="sc-btn" data-toggle="modal" data-target="#exampleModal">
+	                <button class="btn btn-primary searchSpec" type="button" id="ctmList" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
@@ -119,21 +119,35 @@
      	</form>
     </div>
     
-   	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="searchCustomer">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	        <div class="modal-header">
-	            <h5 class="modal-title controll-title" id="sc-title"></h5>
-	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">&times;</span>
-	            </button>
-	        </div>
-	        <div class="modal-body controll-modal-body " id="sc-body">
-	            <!-- <p>Modal body text goes here.</p> -->
-	        </div>
-	        </div>
+    <!-- Modal -->
+	<!-- 납품처 리스트 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-center" role="document">
+	    <div class="modal-content ctm">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">납품처 검색</h5>
+	        <button type="button" class="close examplModal-close" aria-label="hidden">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Recipient:</label>
+	            <input type="text" class="form-control" id="recipient-name">
+	          </div>
+	          <div class="form-group">
+	            <label for="message-text" class="col-form-label">Message:</label>
+	            <textarea class="form-control" id="message-text"></textarea>
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary examplModal-close">Close</button>
+	        <button type="button" class="btn btn-primary">Send message</button>
+	      </div>
 	    </div>
+	  </div>
 	</div>
 
 
@@ -168,14 +182,6 @@
 			$("#exampleModal").modal('hide');
 		});
 		
-		$("#sc-btn").click(function(){
-			 $('#sc-body').load("${pageContext.request.contextPath}/productplan/searchCustomer.do",function(){
-			        $('#searchCustomer').modal({backdrop: 'static', keyboard: false});
-			        $('#searchCustomer').modal({show:true});
-			        $(".modal-backdrop.in").css('opacity', 0.4);
-			        $("sc-title").html("납품처 검색");
-				});
-			});
 				
 	});
 	</script>
