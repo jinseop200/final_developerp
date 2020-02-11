@@ -26,5 +26,7 @@ public interface DocumentDAO {
 
 	int refuseDocument(int docNo);
 
+	DocumentLine documentLineView(int docNo);
+
 
 }

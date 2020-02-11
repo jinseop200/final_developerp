@@ -111,8 +111,12 @@ public class DocumentController {
 	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("docNo") int docNo) {
 		
 		Document document = new Document();
+		DocumentLine docLine = new DocumentLine();
 		document = documentService.documentDetailView(docNo);
+		docLine = documentService.documentLineView(docNo);
+		logger.debug("docLine={}",docLine);
 		mav.addObject("list",document);
+		mav.addObject("docLine",docLine);
 		mav.setViewName("document/documentDetailView");
 		
 		return mav;

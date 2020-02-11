@@ -61,4 +61,9 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentDAO.refuseDocument(docNo);
 	}
 
+	@Override
+	public DocumentLine documentLineView(int docNo) {
+		return documentDAO.documentLineView(docNo);
+	}
+
 }
