@@ -33,7 +33,7 @@ public class ProductionController {
 	@RequestMapping("/production/BOMListManagement.do")
 	public ModelAndView BOMListManagement(ModelAndView mav) {
 		
-		List<Map<String, String>> productList = enrollmentService.selectproductList();
+		List<Map<String, String>> productList = productionService.selectproductList();
 		
 		logger.info("vendorList@Controller={}", productList);
 		
@@ -57,6 +57,22 @@ public class ProductionController {
 		return mav;
 	}
 
+	//add
+	@RequestMapping("/production/updateBOMForm.do")
+	public ModelAndView updateBOMForm(@RequestParam("tdPtNo") String tdPtNo, ModelAndView mav) {
+		
+		logger.info("tdPtNo@Controller={}",tdPtNo);
+		int bomNo = productionService.selectBOMNobyProductCode(tdPtNo);
+		logger.info("bomNo@Controller={}",bomNo);
+		
+		List<Map<String, String>> BOMrmList = productionService.selectBOMRmListByBOMNo(bomNo);
+		
+		logger.info("BOMrmList@Controller={}", BOMrmList);
+		
+		mav.addObject("BOMrmList", BOMrmList);
+		mav.setViewName("production/updateBOMForm");
+		return mav;
+	}
 	
 	@RequestMapping("/production/selectRawMaterialList.do")
 	public ModelAndView selectRawMaterialList(ModelAndView mav) {
@@ -113,7 +129,6 @@ public class ProductionController {
 		logger.info("bomNo@Conteroller={}",bomNo);
 		
 		
-//		logger.info("productCode@Controller={}",arraylist);
 		logger.info("productCode@Controller={}",productCode);
 		logger.info("pNoList@Controller={}",pNoList);
 		logger.info("pCodeList@Controller={}",pCodeList);
@@ -121,16 +136,13 @@ public class ProductionController {
 		logger.info("pCountList@Controller={}",pCountList);
 		logger.info("pNoListSize@Controller={}",pNoList.get(0));
 		logger.info("pNoListSize@Controller={}",pNoList.get(1));
-//		
 		int toTalSize = pNoList.size();
-//	
-		
-//		return null;
 		
 		List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("productCode", productCode);
+		paramMap.put("bomNo", bomNo);
 		
 		for(int i=0; i<pCodeList.size();i++) {
 			Map<String,Object> temp = new HashMap<>();
@@ -147,6 +159,23 @@ public class ProductionController {
 
 		
 		return paramMap;
+	}
+	
+	@RequestMapping("/production/selectBOMForm.do")
+	@ResponseBody
+	public Map<String, Object> selectBOMForm(@RequestParam("tdPtNo") String tdPtNo) {
+		
+		logger.info("productNo@Controller={}",tdPtNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("tdPtNo", tdPtNo);
+		
+		boolean isUsable = productionService.selectBOMForm(tdPtNo)==null?true:false;
+		map.put("isUsable", isUsable);
+		
+		logger.info("isUsable@Controller={}",isUsable);
+
+		return map;
 	}
 	
 	

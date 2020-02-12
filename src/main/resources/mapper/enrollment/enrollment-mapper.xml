@@ -67,14 +67,12 @@
 	<select id="selectproductList" resultMap="productMap">
 		select pl_no, vendor_no, pt_no, product_name, null as delivery, inprice, outprice, spec, tol, reg_date,
 		case pt_no when 1 then '원재료'
-		                   when 2 then '반제품'
 		                   when 3 then '완제품'
 		                   end as pt_type
 		from product_list
 		union all
 		select rm_no, account_no, pt_no, rm_name, delivery, inprice, outprice, spec, tol, reg_date,
 		case pt_no when 1 then '원재료'
-		                   when 2 then '반제품'
 		                   when 3 then '완제품'
 		                   end
 		from raw_material

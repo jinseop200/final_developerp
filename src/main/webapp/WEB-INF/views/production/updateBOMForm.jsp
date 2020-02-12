@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,10 @@
 <body>
       <!-- search-container start -->
       <div id="search-container">
+          <form id="frmSubmit" 
+           class="needs-validation"
+           action="${pageContext.request.contextPath}/product/addBOM.do"
+           method="POST">
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
 					     <label for="productInfo">생산품목 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,11 +45,12 @@
 				          </tr>
 				        </thead>
 				        <tbody class="BOMTbody">
+				          <c:forEach items="${BOMrmList}" var="b">
 				          <tr>
 				            <td class="pt-3-half pNo" contenteditable="false"></td>
-				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
-				            <td class="pt-3-half pName" contenteditable="false"></td>
-				            <td class="pt-3-half pCount" contenteditable="true"></td>
+				            <td class="pt-3-half pCode tdPtCode" contenteditable="true">${b.RM_NO}</td>
+				            <td class="pt-3-half pName" contenteditable="false">${b.RM_NAME}</td>
+				            <td class="pt-3-half pCount" contenteditable="true">${b.QUANTITY}</td>
 				            <!-- <td class="pt-3-half">
 				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
 				                    aria-hidden="true"></i></a></span>
@@ -54,6 +62,7 @@
 				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
 				            </td>
 				          </tr>
+				          </c:forEach>
 				          <!-- This is our clonable table line
 				          <tr>
 				            <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
@@ -83,7 +92,8 @@
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
                 </div>
-	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button> 
+             </form>
+	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >수정</button> 
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
            </div>
            
@@ -286,7 +296,7 @@ $(()=>{
 <%--onload end--%>
 
 //button submit
-$(document).off('click').on('click','#FrmBtn',function(){
+$(document).on('click','#FrmBtn',function(){
 	//$("#frmSubmit").submit();
 	//var BOMTbody = $("#frmSubmit tr").text();
 // 	var BOMTbody = new Array();
@@ -324,7 +334,6 @@ $(document).off('click').on('click','#FrmBtn',function(){
  	$.ajax({
  		url: "${pageContext.request.contextPath}/production/addBOM.do",
  		data: data_,
- 		async: false,
  		type : 'POST', 
 // 		contentType : "application; charset=utf-8",
  		dataType: "json",

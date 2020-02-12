@@ -78,10 +78,10 @@
 			</div>
 			
 			<!-- Group of material radios - option 2 -->
-			<div class="form-check">
+			<!-- <div class="form-check">
 			  <input type="radio" class="form-check-input" id="materialGroupExample2" name="groupOfMaterialRadios" value="2">
 			  <label class="form-check-label" for="materialGroupExample2">반제품</label>&nbsp;&nbsp;&nbsp;
-			</div>
+			</div> -->
 			
 			<!-- Group of material radios - option 3 -->
 			<div class="form-check">
@@ -144,7 +144,7 @@ $(()=>{
 		        
 		    });
 		}
-		else if(tdPtType == '반제품'){
+		/* else if(tdPtType == '반제품'){
 			$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/updateSemiProductForm.do",function(){
 		        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
 		        $('#productAddModal').modal({show:true});
@@ -164,7 +164,7 @@ $(()=>{
 		        $("#tol").val(tdTol);
 		        $("#productNoCur").val(tdProductNo);
 		    });
-		}
+		} */
 		else if(tdPtType == '완제품'){
 			$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/updateProductForm.do",function(){
 		        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
@@ -216,7 +216,7 @@ $("#addProductBtn").click(function(){
 		        $('#ptTypeRadioBtns').show();
 		    });
 		}
-		else if(radioValue == 2){
+/* 		else if(radioValue == 2){
 			$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/addSemiProductForm.do",function(){
 		        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
 		        $('#productAddModal').modal({show:true});
@@ -226,7 +226,7 @@ $("#addProductBtn").click(function(){
 		        $(".controll-title").html("반제품 등록");
 		        $('#ptTypeRadioBtns').show();
 		    });
-		}
+		} */
 		else if(radioValue == 3){
 			$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/addProductForm.do",function(){
 		        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
@@ -252,7 +252,7 @@ $("#addProductBtn").click(function(){
 	        $('#ptTypeRadioBtns').show();
 	    });
 	}
-	else if(radioVal == 2){
+/* 	else if(radioVal == 2){
 		$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/addSemiProductForm.do",function(){
 	        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
 	        $('#productAddModal').modal({show:true});
@@ -262,7 +262,7 @@ $("#addProductBtn").click(function(){
 	        $(".controll-title").html("반제품 등록");
 	        $('#ptTypeRadioBtns').show();
 	    });
-	}
+	} */
 	else if(radioVal == 3){
 		$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/addProductForm.do",function(){
 	        $('#productAddModal').modal({backdrop: 'static', keyboard: false});
