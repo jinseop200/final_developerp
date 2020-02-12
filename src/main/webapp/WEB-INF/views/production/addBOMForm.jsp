@@ -329,9 +329,10 @@ $(document).on('click','#FrmBtn',function(){
 				 };
 	console.log(data_);
  	$.ajax({
- 		url: "${pageContext.request.contextPath}/product/addBOM.do",
+ 		url: "${pageContext.request.contextPath}/production/addBOM.do",
  		data: data_,
  		type : 'POST', 
+// 		contentType : "application; charset=utf-8",
  		dataType: "json",
  		success: data => {
  			console.log(data);

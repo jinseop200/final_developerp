@@ -9,5 +9,9 @@ public interface ProductionDAO {
 
 	int insertBOMlist(Map<String, Object> paramMap);
 
+	int insertBOM(String productCode);
+
+	int selectBOMNobyProductCode(String productCode);
+
 
 }

@@ -23,4 +23,15 @@ public class ProductionServiceImpl implements ProductionService {
 	public int insertBOMlist(Map<String, Object> paramMap) {
 		return productionDAO.insertBOMlist(paramMap);
 	}
+
+	@Override
+	public int insertBOM(String productCode) {
+		return productionDAO.insertBOM(productCode);
+	}
+
+	@Override
+	public int selectBOMNobyProductCode(String productCode) {
+		return productionDAO.selectBOMNobyProductCode(productCode);
+	}
+
 }

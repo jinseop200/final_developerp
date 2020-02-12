@@ -10,15 +10,29 @@
 	<resultMap type="map" id="rawmaterialMap">
 	</resultMap>
 
-	<insert id="insertBOMlist" parameterType="java.util.Map">
-		insert into bom(bom_no, pl_no, rm_no, quantity, reg_date) 
-        VALUES
-		<foreach collection="list" item="item" separator="," open="" close="">
-			   (bom_seq.nextval, 
-               #{item.productCode},
+<!-- 	<insert id="insertBOMlist" parameterType="java.util.Map">
+	 <if test="BOMList.size != 0">
+		<foreach collection="BOMList" item="item" separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+	   		   into bom(bom_no, pl_no, rm_no, quantity, reg_date) 
+        	   VALUES 
+	   		   (bom_seq.nextval, 
+		       #{productCode},
                #{item.pCodeList},
                #{item.pCountList},
                SYSDATE)
         </foreach>
+     </if>
+	</insert> -->
+
+	<insert id="insertBOM">
+		insert into bom values(
+			seq_bom.nextval,
+			#{productCode},
+			default
+		)
 	</insert>
+	
+	<select id="selectBOMNobyProductCode" resultType="_int">
+		select bom_no from bom where pl_no = #{productCode}
+	</select>
 </mapper>

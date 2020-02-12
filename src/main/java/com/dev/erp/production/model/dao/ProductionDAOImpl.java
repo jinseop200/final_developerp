@@ -23,6 +23,16 @@ public class ProductionDAOImpl implements ProductionDAO {
 		return sqlSession.insert("production.insertBOMlist", paramMap);
 	}
 
+	@Override
+	public int insertBOM(String productCode) {
+		return sqlSession.insert("production.insertBOM",productCode);
+	}
+
+	@Override
+	public int selectBOMNobyProductCode(String productCode) {
+		return sqlSession.selectOne("production.selectBOMNobyProductCode",productCode);
+	}
+
 	
 	
 }
