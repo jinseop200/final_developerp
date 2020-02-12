@@ -41,18 +41,19 @@ public class ProductPlanController {
 		
 		return mav;
 	}
-	@RequestMapping("/productplan/endProductListPage.do")
-	@ResponseBody
+	@RequestMapping(value="/productplan/endProductListPage.do")
+
 	public ModelAndView selectEndProduct(ModelAndView mav,
-										 @RequestParam(defaultValue="1") int cPage) {
-		
+										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
+
 		final int numPerPage = 5;
 		int totalContents = 0;
 		List<Map<String, String>> list = productPlanService.selectEndProduct(cPage, numPerPage);
 		logger.info("listCheck={}", list);
 		totalContents= productPlanService.selectTotalContentsByEp();
 		
-		String url = "endProductListPage.do";
+		String url = "endProductListPage.do?";
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
 		
 		mav.addObject("endProductList", list);
@@ -61,7 +62,7 @@ public class ProductPlanController {
 		mav.addObject("numPerPage", numPerPage);
 		mav.addObject("pageBar", pageBar);
 		mav.setViewName("jsonView");
-		logger.info("mavCheck={}"+mav);
+		
 		return mav;
 	}
 	
@@ -115,7 +116,7 @@ public class ProductPlanController {
 		
 	}
 	//작업지시서 수정
-	@RequestMapping("productplan/updateJobOrder.do")
+	@RequestMapping("/productplan/updateJobOrder.do")
 	public ModelAndView updateJobOrderForm(ModelAndView mav) {
 		
 		mav.setViewName("productplan/updateJobOrder");
@@ -123,11 +124,12 @@ public class ProductPlanController {
 	}
 	
 	//작업지시서 삭제
-	@RequestMapping("productplan/deleteOneJo.do")
+	@RequestMapping("/productplan/deleteOneJo.do")
 	public ModelAndView deleteOneJo(@RequestParam("joNo") int joNo, 
 									ModelAndView mav) {
 		
 		int result = productPlanService.deleteOneJo(joNo);
+		logger.info("result={}", result);
 		mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
 		mav.addObject("loc","/productplan/jobOrder.do");
 		mav.setViewName("common/msg");

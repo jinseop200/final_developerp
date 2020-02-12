@@ -12,7 +12,7 @@
 <title>제품조회(modal-body)</title>
 
 <style>
-.quality-specify-table tbody tr:hover td{
+.endProduct-table tbody tr:hover td{
 	cursor : auto;
 	background-color:#ccc;
 }
@@ -42,7 +42,7 @@ $(()=>{
 
 
 $(".endProduct-table tbody").on('dblclick','tr',function(){
-	var value = $(this).children().eq(1).html(); //선택 행 값 담기
+	var value = $(this).children().eq(2).html(); //선택 행 값 담기
 	console.log(value);
 	$("#productName").val(value); //input창에 뿌려주기
 	$("#searchProduct").modal('hide');
@@ -63,6 +63,7 @@ function morePage(a){
 	$.ajax({
 		url : url_,
 		dataType : "json",
+		contentType: "application/json; charset=utf-8",
 		success : data => {
 			var epl = data.endProductList;
 			$(".endProduct-table tbody").children().remove();
