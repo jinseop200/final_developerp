@@ -7,6 +7,13 @@ public interface ProductionService {
 
 	List<Map<String, String>> selectRawMaterialList();
 
-	int insertBOMlist(List<Map<String, Object>> BOMList);
+
+	int insertBOMlist(Map<String, Object> paramMap);
+
+
+	int insertBOM(String productCode);
+
+
+	int selectBOMNobyProductCode(String productCode);
 
 }
