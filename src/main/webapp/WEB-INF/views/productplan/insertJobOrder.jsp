@@ -38,15 +38,13 @@
 #insert-container .btn-primary{
     background-color:#777;
     border-color: #777;
+    float:right;
+    margin-right: 5px;
 
 }
 #insert-container .btn-primary:hover{
     background-color:#777;
     border-color: #777;
-}
-#insert-container #FrmBtn{
-    float:right;
-    margin-right: 5px;
 }
 
 </style>
@@ -54,17 +52,17 @@
 <body>
 	<!-- search-container start -->
     <div id="insert-container">
-        <form class="needs-validation" 
-        	  action="${pageContext.request.contextPath }/productplan/insertJobOrderddd.do"
+        <form class="needs-validation" id="insertJoForm"
+        	  action="${pageContext.request.contextPath }/productplan/insertJobOrderEnd.do"
         	  method="POST" >	
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	            <label for="datepicker">발생일자</label>&emsp;
-	            <input type="text" id="enrollDate" name="enrollDate" class="form-control datepicker">
+	            <input type="text" id="enrollDate" name="enrollDate" class="form-control enrollDate">
 	            </div>
 	            <div class="col-md-6 mb-3">
 	            <label for="datepicker">납기일자</label>&emsp;
-	            <input type="text" id="dueDate" name="dueDate" class="form-control datepicker">
+	            <input type="text" id="dueDate" name="dueDate" class="form-control dueDate">
 	            </div>
 	        </div>        
 	        <div class="form-row">
@@ -105,22 +103,18 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시 내용</label><br />
-	                <textarea class="form-control quality-comment" cols="100" rows="5" aria-label="With textarea"></textarea>	
+	                <textarea class="form-control quality-comment" name="orderContent" cols="100" rows="5" aria-label="With textarea"></textarea>	
 	            </div>
 	        </div>
-	        <div class="form-row">
-	        	<div class="col-md-6 mb-3">
-	        	</div>
-	            <div class="col-md-6 mb-3">
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">취소</button>
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">등록</button>
-	            </div>
+	        <div class="modal-footer">
+	           <button type="submit" id="enroll-btn" class="btn btn-primary" >등록</button>
+	           <button type="button" id="cancel-btn" class="btn btn-primary" data-dismiss="modal" >취소</button>
 	        </div>
      	</form>
     </div>
     
    	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="searchCustomer">
+	<div class="modal" tabindex="-1" role="dialog" id="jo-searchModal">
 	    <div class="modal-dialog" role="document">
 	        <div class="modal-content">
 	        <div class="modal-header">
@@ -129,7 +123,7 @@
 	            <span aria-hidden="true">&times;</span>
 	            </button>
 	        </div>
-	        <div class="modal-body controll-modal-body " id="sc-body">
+	        <div class="modal-body searchBody">
 	            <!-- <p>Modal body text goes here.</p> -->
 	        </div>
 	        </div>
@@ -160,16 +154,20 @@
 		});
 		
 		//input을 datepicker로 선언
-		$(".datepicker").datepicker();           
+		$(".enrollDate").datepicker();           
+		$(".dueDate").datepicker();           
 		//From의 초기값을 오늘 날짜로 설정
-		$('.datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+		$('.enrollDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+		$('.dueDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 		
-		$(".examplModal-close").click(function(){
-			$("#exampleModal").modal('hide');
+		//신규등록 취소버튼
+		$("#cancel-btn").click(function(){
+			$("#joModal").modal('hide');
 		});
 		
+		
 		$("#sc-btn").click(function(){
-			 $('#sc-body').load("${pageContext.request.contextPath}/productplan/searchCustomer.do",function(){
+			 $('.searchBody').load("${pageContext.request.contextPath}/productplan/searchCustomer.do",function(){
 			        $('#searchCustomer').modal({backdrop: 'static', keyboard: false});
 			        $('#searchCustomer').modal({show:true});
 			        $(".modal-backdrop.in").css('opacity', 0.4);

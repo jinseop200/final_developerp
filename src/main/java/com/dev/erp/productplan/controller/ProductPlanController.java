@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +44,7 @@ public class ProductPlanController {
 		return mav;
 	}
 	@RequestMapping(value="/productplan/endProductListPage.do")
-
+	@ResponseBody
 	public ModelAndView selectEndProduct(ModelAndView mav,
 										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
@@ -89,6 +91,7 @@ public class ProductPlanController {
 		
 		return mav;
 	}
+	
 	//작업지시서 신규등록
 	@RequestMapping("/productplan/insertJobOrderEnd.do")
 	public ModelAndView insertJobOrder(@RequestParam String enrollDate,
@@ -97,6 +100,8 @@ public class ProductPlanController {
 									   @RequestParam String manager,
 									   @RequestParam String productName,
 									   @RequestParam String quantity,
+									   @RequestParam String orderContent,
+									   
 									   ModelAndView mav) {
 		
 		Map<String, String> joList = new HashMap<>();
@@ -106,12 +111,14 @@ public class ProductPlanController {
 		joList.put("manager", manager);
 		joList.put("productName", productName);
 		joList.put("quantity", quantity);
+		joList.put("orderContent",orderContent);
 		
 		logger.info("joList@controller={}", joList);
 		int result = productPlanService.insertJobOrder(joList);
-		
+		mav.addObject("msg", result>0?"등록 성공!":"등록 실패!");
+		mav.addObject("loc", "/productplan/jobOrder.do");
 		mav.addObject("joList", joList);
-		mav.setViewName("productplan/jobOrder");
+		
 		return mav;
 		
 	}
@@ -125,9 +132,8 @@ public class ProductPlanController {
 	
 	//작업지시서 삭제
 	@RequestMapping("/productplan/deleteOneJo.do")
-	public ModelAndView deleteOneJo(@RequestParam("joNo") int joNo, 
+	public ModelAndView deleteOneJo(@RequestParam int joNo,
 									ModelAndView mav) {
-		
 		int result = productPlanService.deleteOneJo(joNo);
 		logger.info("result={}", result);
 		mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
