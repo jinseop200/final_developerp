@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>원재료 입출고 수정</title>
+	<title>입고 품목 수정하기</title>
 </head>
 
 <body>
@@ -15,67 +15,84 @@
 	 	  action="${pageContext.request.contextPath}/stock/rm/UpdateRm.do"
 	      method="POST">
 		
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			    <label for="productNo">품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    <input type="number" id="productNo" name="productNo" class="form-control bg-light small" placeholder="품목코드" aria-label="Search" aria-describedby="basic-addon2" >
+			<div class="form-row">
+				<div class="col-lg-20 mb-3 rowResize">
+					<label for="rmNo">로트번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="number" id="rmNo" name="rmNo"
+						class="form-control bg-light small" placeholder="수정할 로트번호 검색"
+						aria-label="Search" aria-describedby="basic-addon2"
+						readonly="readonly">
+						
+					<button class="btn btn-primary searchBtn" type="button"
+						value="rmNo">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
 			</div>
-		</div>
 		
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="accountNo">거래처등록번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" >
+			<div class="form-row">
+				<div class="col-lg-20 mb-3 rowResize">
+					<label for="rmNo">원재료번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="number" id="rmNo" name="rmNo"
+						class="form-control bg-light small" placeholder="원재료번호"
+						aria-label="Search" aria-describedby="basic-addon2"
+						readonly="readonly">
+						
+					<button class="btn btn-primary searchBtn" type="button"
+						value="rmNo">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
+			</div>
 
+			<div class="form-row">
+				<div class="col-lg-20 mb-3 rowResize">
+					<label for="storeNo">창고번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="number" id="storeNo" name="storeNo"
+						class="form-control bg-light small" placeholder="창고번호"
+						aria-label="Search" aria-describedby="basic-addon2"
+						readonly="readonly">
+						
+					<button class="btn btn-primary searchBtn" type="button"
+						value="storeNo">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" >
+
+			<div class="form-row">
+				<div class="col-lg-20 mb-3 rowResize">
+					<label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="number" id="ptNo" name="ptNo"
+						class="form-control bg-light small" placeholder="관리번호"
+						aria-label="Search" aria-describedby="basic-addon2"
+						readonly="readonly">
+						
+					<button class="btn btn-primary searchBtn" type="button"
+						value="ptNo">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="productName">품목명</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="품목명" aria-label="Search" aria-describedby="basic-addon2">
+
+			<div class="form-row">
+				<div class="col-lg-20 mb-3 rowResize">
+					<label for="quantity">입고수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="number" id="quantity" name="quantity"
+						class="form-control bg-light small" placeholder="입고수량"
+						aria-label="Search" aria-describedby="basic-addon2">
+				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="delivery">구매소요일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="delivery" name="delivery" class="form-control bg-light small" placeholder="구매소요일" aria-label="Search" aria-describedby="basic-addon2">
+
+			<div class="form-row">
+				<div class="col-md-6 mb-3">
+					<label for="recDate">입고일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="date" id="recDate" name="recDate"
+						class="form-control bg-light small" placeholder="입고일"
+						aria-label="Search" aria-describedby="basic-addon2" step="0.01"
+						style="width: 175px">
+				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="inPrice">입고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="inPrice" name="inPrice" class="form-control bg-light small" placeholder="입고단가" aria-label="Search" aria-describedby="basic-addon2">
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="outPrice">출고단가</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="outPrice" name="outPrice" class="form-control bg-light small" placeholder="출고단가" aria-label="Search" aria-describedby="basic-addon2">
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="spec">기준치</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="spec" name="spec" class="form-control bg-light small" placeholder="규격" aria-label="Search" aria-describedby="basic-addon2">
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-lg-20 mb-3 rowResize">
-			     <label for="tol">공차</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			     <input type="number" id="tol" name="tol" class="form-control bg-light small" placeholder="공차" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
-			</div>
-		</div>
-		
-		<div class="col-md-6 mb-3">
-	              <label for="datepicker">입고일자</label>&nbsp;&nbsp;&nbsp;
-			     <input type="date" id="regDate" name="regDate" class="form-control bg-light small" placeholder="입고날짜" aria-label="Search" aria-describedby="basic-addon2" step="0.01">
-        </div>
 		
 		
 		<hr class="hrSize"/>
@@ -108,7 +125,7 @@
 
 <style>
 .modal-body{
- height: 680px;
+ height: 460px;
 }
 .searchModalBody{
  height: 500px;

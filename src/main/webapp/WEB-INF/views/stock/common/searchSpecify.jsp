@@ -12,25 +12,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-     <table class="table table-bordered quality-specify-table" id="dataTable" width="100%" cellspacing="0">
-       <thead>
-         <tr>
-           <th>No</th>
-		   <c:if test="${searchType == 'accountNo'}">
-           <th>거래처번호</th>
-           <th>거래처명</th>
-           </c:if>
-           <c:if test="${searchType == 'ptNo'}">
-           <th>품목번호</th>
-           <th>품목명</th>
-           </c:if>
-         </tr>
-       </thead>
-       <tbody>
-       </tbody>
-     </table>
-     <div class="pageBar"></div>
-<%--      ${pageBar} --%>
+	<table class="table table-bordered quality-specify-table" id="dataTable" width="100%" cellspacing="0">
+		<thead>
+			<tr>
+			<th>No</th> 
+			
+			<c:if test="${searchType == 'rmNo'}">
+			<th>원재료번호</th>
+			<th>원재료명</th>
+			</c:if>
+			<c:if test="${searchType == 'storeNo'}">
+			<th>창고번호</th>
+			<th>창고명</th>
+			</c:if>
+			
+			<c:if test="${searchType == 'ptNo'}">
+			<th>품목번호</th>
+			<th>품목명</th>
+			</c:if>
+			
+			</tr>
+		</thead>
+	       
+		<tbody id="tbodyList">
+		</tbody>
+	</table>
+	
+<div class="pageBar"></div>
+
 </body>
 
 <style>
@@ -45,12 +54,33 @@
 $(()=>{
 	console.log("${searchType}");
 	morePage(0);
+	
+	//input search
+	$("#myInput").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#tbodyList tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
 });
 
 
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
+	var value2 = $(this).children().eq(2).html();
+	var trNum = $("#trNum").val();
+	console.log(trNum);
 	console.log(value);
+	
+	if(trNum != "nulla"){
+		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
+		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
+		console.log($(".table-editable tr").eq(trNum));
+		console.log("eq0",$(".table-editable tr").eq(0));
+		console.log($(".table-editable tr").eq(trNum).find("td").eq(2));
+		
+	}
+	
 	$("#${searchType}").val(value);
 	$("#mySearchModal").modal('hide');
 });
@@ -61,10 +91,10 @@ function morePage(a){
 	var searchType = "${searchType}";
 	var url_="";
 	if(a==0) {
-		url_ = "${pageContext.request.contextPath}/enrollment/searchSpecifyPage.do?searchType=${searchType}&cPage=1";
+		url_ = "${pageContext.request.contextPath}/stock/common/searchSpecifyPage.do?searchType=${searchType}&cPage=1";
 	}
 	else {
-		url_="${pageContext.request.contextPath}/enrollment/"+a;
+		url_="${pageContext.request.contextPath}/stock/common/"+a;
 	}
 	console.log("url="+url_);
 	$.ajax({
@@ -89,8 +119,12 @@ function morePage(a){
 	
 }
 
-
-
 </script>
+
+<style>
+.searchModalBody{
+	height: 350px;
+}
+</style>
 
 </html>
