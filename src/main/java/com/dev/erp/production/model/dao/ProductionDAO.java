@@ -13,5 +13,11 @@ public interface ProductionDAO {
 
 	int selectBOMNobyProductCode(String productCode);
 
+	List<Map<String, String>> selectproductList();
+
+	Map<String, String> selectBOMForm(String tdPtNo);
+
+	List<Map<String, String>> selectBOMRmListByBOMNo(int bomNo);
+
 
 }

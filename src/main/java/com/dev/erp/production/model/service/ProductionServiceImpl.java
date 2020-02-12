@@ -34,4 +34,19 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDAO.selectBOMNobyProductCode(productCode);
 	}
 
+	@Override
+	public List<Map<String, String>> selectproductList() {
+		return productionDAO.selectproductList();
+	}
+
+	@Override
+	public Map<String, String> selectBOMForm(String tdPtNo) {
+		return productionDAO.selectBOMForm(tdPtNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectBOMRmListByBOMNo(int bomNo) {
+		return productionDAO.selectBOMRmListByBOMNo(bomNo);
+	}
+
 }

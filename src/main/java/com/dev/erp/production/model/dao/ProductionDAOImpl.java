@@ -33,6 +33,21 @@ public class ProductionDAOImpl implements ProductionDAO {
 		return sqlSession.selectOne("production.selectBOMNobyProductCode",productCode);
 	}
 
+	@Override
+	public List<Map<String, String>> selectproductList() {
+		return sqlSession.selectList("production.selectproductList");
+	}
+
+	@Override
+	public Map<String, String> selectBOMForm(String tdPtNo) {
+		return sqlSession.selectOne("production.selectBOMForm",tdPtNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectBOMRmListByBOMNo(int bomNo) {
+		return sqlSession.selectList("production.selectBOMRmListByBOMNo",bomNo);
+	}
+
 	
 	
 }
