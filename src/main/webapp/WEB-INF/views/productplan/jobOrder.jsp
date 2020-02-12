@@ -17,13 +17,13 @@
            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
             <div class="input-group" style="margin:30px;" >
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="quality-insert-button">
+                <button class="btn btn-primary" type="button" id="insert-btn">
                 	  신규 등록 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="quality-update-button">
+                <button class="btn btn-primary" type="button" id="update-btn">
                 	  수정 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="quality-delete-button">
+                <button class="btn btn-primary" type="button" id="delete-btn">
                 	  삭제
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
               </div>
@@ -97,7 +97,7 @@
 
 
 //작업지시시서 등록
-$("#quality-insert-button").click(function(){
+$("#insert-btn").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/insertJobOrder.do",function(){
         $('#myModal').modal({backdrop: 'static', keyboard: false});
         $('#myModal').modal({show:true});
@@ -117,7 +117,7 @@ function oneCheckbox(a){
 }
 
 //작업지시서 수정
-$("#quality-update-button").click(function(){
+$("#update-btn").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do",function(){
         $('#myModal').modal({backdrop: 'static', keyboard: false});
         $('#myModal').modal({show:true});
@@ -125,17 +125,24 @@ $("#quality-update-button").click(function(){
         $(".controll-title").html("작업지시서 등록");
 	});
 });
-//작업지시서 삭제
-$("#quality-delete-button").click(function(){
-	if($('table input:checkbox:checked').length == 0){
-		alert("삭제할 항목을 선택해 주세요.");
-		return;
-	}
-	if(!confirm("정말 삭제하시겠습니까?")) return;
-	var a = $('table input:checkbox:checked').parent().parent().next();
-   	console.log(a,"a");
-   	a.submit();
-	
+
+/* console.log($("table input:checkbox:checked").parent().next().text());
+var joNo = $("table input:checkbox:checked").parent().next().text();
+location.href ="${pageContext.request.contextPath}/productplan/deleteOneJo.do?joNo="+joNo; */
+$(()=>{
+	//작업지시서 삭제
+	$("#delete-btn").click(function(){
+		if($('table input:checkbox:checked').length == 0){
+			alert("삭제할 항목을 선택해 주세요.");
+			return;
+		}
+		if(!confirm("정말 삭제하시겠습니까?")) return;
+	 	var a = $('table input:checkbox:checked').parent().parent().next();
+		
+	    	console.log("a="+a);
+	    	a.submit();
+		
+	});	
 });
 	
 </script>
