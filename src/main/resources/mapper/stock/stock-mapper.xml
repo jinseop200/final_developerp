@@ -8,15 +8,17 @@
 	</resultMap>
 	
 	<select id="selectRmStockList" resultMap="stockMap">
-	   SELECT RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN, SUM(RECIEVING.QUANTITY) AS RM_SUM
+	   SELECT RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN, SUM(RECIEVING.QUANTITY) AS RM_SUM, VENDOR.VENDOR_NO, VENDOR.VENDOR_NAME
 	   FROM RECIEVING LEFT JOIN RAW_MATERIAL ON RECIEVING.RM_NO = RAW_MATERIAL.RM_NO
-	   GROUP BY RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN
+                      LEFT JOIN VENDOR ON RAW_MATERIAL.ACCOUNT_NO = VENDOR.VENDOR_NO
+       GROUP BY RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN, VENDOR.VENDOR_NO, VENDOR.VENDOR_NAME
 	   ORDER BY RECIEVING.RM_NO
 	</select>
 	
 	<select id="selectRmSnrStockList" resultMap="stockMap">
-	   SELECT RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN, RECIEVING.QUANTITY, REC_DATE
+	   SELECT RECIEVING.LOT_NO, RECIEVING.RM_NO, RAW_MATERIAL.RM_NAME, RAW_MATERIAL.SPEC, RAW_MATERIAL.TOL,RECIEVING.QUALITY_YN, RECIEVING.QUANTITY, REC_DATE, VENDOR.VENDOR_NO, VENDOR.VENDOR_NAME
 	   FROM RECIEVING LEFT JOIN RAW_MATERIAL ON RECIEVING.RM_NO = RAW_MATERIAL.RM_NO
+                      LEFT JOIN VENDOR ON RAW_MATERIAL.ACCOUNT_NO = VENDOR.VENDOR_NO
 	   ORDER BY RECIEVING.REC_DATE DESC
 	</select>
 	
@@ -37,20 +39,71 @@
                       LEFT JOIN PRODUCT_TYPE  ON RECIEVING.PT_NO = PRODUCT_TYPE.PT_NO
                       
 	</select>
-	
+
+
+<!-- ========================================= INSERT UPDATE mapper ========================================= -->
+
+
+	<insert id="InsertRm">
+		insert into RECIEVING 	
+		values(
+			(SELECT SUBSTR(REPLACE(TRIM(RM_NAME),' ',''), 1, 4)  
+			 FROM RAW_MATERIAL
+			 WHERE RM_NO = #{rmNo}) || '_' || to_char(to_date(#{recDate},'yyyy-MM-dd'),'yyyyMMdd') || '_' || SEQ_LOT_NO.NEXTVAL,
+			#{rmNo},
+			#{storeNo},
+			#{ptNo},
+			#{quantity},
+			default,
+			default,
+			to_date(#{recDate},'yyyy-MM-dd'),
+			default
+		)
+	</insert>
 	
 	<update id="UpdateRm">
 		update raw_material
-		set account_no = #{accountNo},
-			pt_no = #{ptNo},
-			rm_name = #{productName},
-			delivery = #{delivery},
-			inprice = #{inPrice},
-			outprice = #{outPrice},
-			spec = #{spec},
-			tol = #{tol}
+		set #{rmNo},
+			#{storeNo},
+			#{ptNo},
+			#{quantity},
+			default,
+			default,
+			to_date(#{recDate},'yyyy-MM-dd')
 		where rm_no = #{productNo}
 	</update>
+	
+	
+	
+<!-- ========================================= searchSpecify mapper ========================================= -->
+	
+	<select id="selectRawmaterialAll" resultType="map">
+		select rm_no as "content2", rm_name as "content" from raw_material order by rm_no
+	</select>
+
+	<select id="selectAllRawmaterialNo" resultType="_int">
+		select count(*) from raw_material
+	</select>
+	
+	
+	<select id="selectStorageAll" resultType="map">
+		select store_no as "content2", store_name as "content" from storage order by store_no
+	</select>
+	
+	<select id="selectAllCountByStorageNo" resultType="_int">
+		select count(*) from storage
+	</select>
+	
+	
+	<select id="selectProductTypeAll" resultType="map">
+		select pt_no as "content2", type as "content" from product_type order by pt_no
+	</select>
+	
+	<select id="selectAllCountByProductNo" resultType="_int">
+		select count(*) from product_type
+	</select>
+	
+<!-- ========================================= searchSpecify mapper END ========================================= -->	
 	
 	
 </mapper>
