@@ -46,4 +46,5 @@
 	<update id="updateProfileImage">
 		update employee set profileimage=#{profileImage} where email=#{email}
 	</update>
+	
 </mapper>

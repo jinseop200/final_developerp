@@ -5,7 +5,7 @@
 <mapper namespace="document">
 
 	<select id="selectDocList" resultMap="selectDoc">
-		select D.* from document D left join doc_line L on D.doc_no=L.doc_no where L.prev_writer=#{empName} or L.next_writer=#{empName} order by D.reg_date asc nulls first,D.doc_title asc
+		select D.* from document D left join doc_line L on D.doc_no=L.doc_no where L.prev_writer=#{empName} order by D.reg_date asc nulls first,D.doc_title asc
 	</select>
 	<resultMap id="selectDoc" type="document"></resultMap>
 	<select id="selectDocTypeAll" resultType="map">

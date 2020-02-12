@@ -73,17 +73,21 @@ public class DocumentController {
 			docLast=docLastapproval;
 			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
 			DocumentLine documentLine = new DocumentLine(0,0,typeNo,empName,docLast,"Y");
+			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLast,null,"Y");
 			result = documentService.insertDocument(document);
 			int result2 = documentService.insertDocumentLine(documentLine);
+			int result3 = documentService.insertDocumentLine(documentLine1);
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2==""&&docLastapproval3=="") {
 			docLast=docLastapproval1;
 			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
+			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,null,"Y");
 			result = documentService.insertDocument(document);
 			int result1 = documentService.insertDocumentLine(documentLine0);
 			int result2 = documentService.insertDocumentLine(documentLine1);
+			int result3 = documentService.insertDocumentLine(documentLine2);
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3=="") {
 			docLast=docLastapproval2;
@@ -91,10 +95,12 @@ public class DocumentController {
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
+			DocumentLine documentLine3 = new DocumentLine(0,0,typeNo,docLastapproval2,null,"Y");
 			result = documentService.insertDocument(document);
 			int result2 = documentService.insertDocumentLine(documentLine0);
 			int result3 = documentService.insertDocumentLine(documentLine1);
 			int result4 = documentService.insertDocumentLine(documentLine2);
+			int result5 = documentService.insertDocumentLine(documentLine3);
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3!="") {
 			docLast=docLastapproval3;
@@ -103,11 +109,13 @@ public class DocumentController {
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
 			DocumentLine documentLine3 = new DocumentLine(0,0,typeNo,docLastapproval2,docLastapproval3,"Y");
+			DocumentLine documentLine4 = new DocumentLine(0,0,typeNo,docLastapproval3,null,"Y");
 			result = documentService.insertDocument(document);
 			int result2 = documentService.insertDocumentLine(documentLine0);
 			int result3 = documentService.insertDocumentLine(documentLine1);
 			int result4 = documentService.insertDocumentLine(documentLine2);
 			int result5 = documentService.insertDocumentLine(documentLine3);
+			int result6 = documentService.insertDocumentLine(documentLine4);
 		}
 		logger.debug("docLast={}",docLast);
 		
@@ -181,7 +189,7 @@ public class DocumentController {
 		mav.addObject("docLine",docLine);
 		mav.addObject("prevWriter",prevWriter);
 		mav.addObject("nextWriter",nextWriter);
-		mav.setViewName("document/documentDetailView");
+		mav.setViewName("document/documentDetailView2");
 		
 		return mav;
 	}
@@ -196,13 +204,14 @@ public class DocumentController {
 		Document document = new Document();
 		document = documentService.documentDetailView(docNo);
 		logger.debug("document={}",document);
+		logger.debug("submitApprove={}",submitApprove);
 		if(submitApprove ==1) {
 			result1 = documentService.approveDocument(param);
 			if(document.getDocLastapproval().equals(empName)) {
 				int result = documentService.updateDocument(docNo);
 			}
 		}else {
-			result2 = documentService.refuseDocument(param);
+			result2=1;
 			if(document.getDocLastapproval().equals(empName)) {
 				int result = documentService.notUpdateDocument(docNo);
 			}

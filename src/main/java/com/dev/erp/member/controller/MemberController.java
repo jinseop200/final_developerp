@@ -116,7 +116,6 @@ public class MemberController {
 			Map<String, String> jobOne = memberService.selectOneJob(email);
 			String msg="";
 			String loc="/";
-			
 			//로그인분기처리
 			if(m ==null) {
 				msg="존재하지 않는 이메일입니다.";
@@ -129,6 +128,7 @@ public class MemberController {
 					mav.addObject("memberLoggedIn", m);
 					mav.addObject("dept_title",deptOne);
 					mav.addObject("job_name", jobOne);
+					
 					loc="/main/main.do";
 					
 				}else {

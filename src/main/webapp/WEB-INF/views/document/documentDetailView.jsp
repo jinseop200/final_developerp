@@ -26,12 +26,12 @@
                 <div class="form-row nextApproval">
                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <c:forEach items="${docLine}" var="d" varStatus="vs">
-                        	<c:if test="${d.returnYn=='Y'}">
-                        	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border-bottom:2px solid red" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2">
+                        	<c:if test="${d.returnYn=='Y' && d.nextWriter!=null}">
+                        	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border:1px solid red" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2">
                     		&nbsp;&nbsp;&nbsp;&nbsp;
                         	</c:if>
-                        	<c:if test="${d.returnYn=='N'}">
-                        	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border-bottom:2px solid green" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2">
+                        	<c:if test="${d.returnYn=='N' && d.nextWriter!=null}">
+                        	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border:2px solid #00c500" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2">
                     		&nbsp;&nbsp;&nbsp;&nbsp;
                         	</c:if>
                     	</c:forEach>

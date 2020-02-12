@@ -95,7 +95,7 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <textarea class="form-control quality-comment" required name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control document-comment" required name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
 				<div class="modal-footer">
@@ -111,9 +111,7 @@
 .col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
 	width:350px !important;
 }
-.modal-body{
-}
-.controll-modal-body{
+.controll-modal-body.document{
   width: 60%;
 }
 #insert-container {
@@ -130,7 +128,7 @@
     display:inline;
     width: 60%;
 }
-.quality-comment {
+.document-comment {
 	width:200%;
 }
 #insert-container .btn-primary{
@@ -203,11 +201,12 @@
 	  
 	  $(".searchDocument").click(function(){
 	    	var title = $(this).siblings().html();
-	    	$("#searchModalTitle").html(title);
 	    	 $('.searchModalBody').load("${pageContext.request.contextPath}/document/documentSelectList.do",function(){
 	 	        $('#searchDocument').modal({backdrop: 'static', keyboard: false});
 	 	        $('#searchDocument').modal({show:true});
 	 	        $(".modal-backdrop.in").css('opacity', 0.4);
+	 	       	$(".search-title").html("");
+	 	        $(".search-title").html("회원리스트");
 	 		});
 	            
 	    });

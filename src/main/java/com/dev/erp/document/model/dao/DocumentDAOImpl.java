@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import com.dev.erp.document.model.vo.DocumentLine;
 public class DocumentDAOImpl implements DocumentDAO {
 
 	@Autowired
-	SqlSession sqlSession;
+	SqlSessionTemplate sqlSession;
 
 	@Override
 	public List<Document> selectDocList(String empName) {
