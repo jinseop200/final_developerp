@@ -18,7 +18,15 @@
 		
 	</resultMap>
 	<insert id="insertJobOrder">
-		insert into 
+		insert into job_order
+		values( #{enrollDate},1,1,1,
+				#{customer},
+				#{dueDate},
+				#{manager},
+				#{productName},
+				#{quantity},
+				#{orderContent}
+				)
 	
 	</insert>
 	<delete id="deleteOneJo">
