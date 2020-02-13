@@ -159,7 +159,7 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">DETAIL</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 입출고/재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고/재고관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 재고관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
               </div>
@@ -550,6 +550,9 @@
 			        <div class="modal-body controll-modal-body-messageList">
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-primary messageListModal-end">닫기</button>
+			      </div>
 			        
 			        </div>
 			    </div>
@@ -569,6 +572,26 @@
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        
+			        
+			        </div>
+			    </div>
+			</div>
+             <!-- detail message Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="detailMessage">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title-detailMessage">쪽지보기</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body-detailMessage">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-primary detail">닫기</button>
+			      </div>
 			        </div>
 			    </div>
 			</div>
