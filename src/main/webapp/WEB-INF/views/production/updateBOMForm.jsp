@@ -51,37 +51,12 @@
 				            <td class="pt-3-half pCode tdPtCode" contenteditable="true">${b.RM_NO}</td>
 				            <td class="pt-3-half pName" contenteditable="false">${b.RM_NAME}</td>
 				            <td class="pt-3-half pCount" contenteditable="true">${b.QUANTITY}</td>
-				            <!-- <td class="pt-3-half">
-				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-				                    aria-hidden="true"></i></a></span>
-				              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-				                    aria-hidden="true"></i></a></span>
-				            </td> -->
 				            <td>
 				              <span class="table-remove"><button type="button"
 				                  class="btn btn-danger btn-rounded btn-sm my-0 removeBtn">Remove</button></span>
 				            </td>
 				          </tr>
 				          </c:forEach>
-				          <!-- This is our clonable table line
-				          <tr>
-				            <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
-				            <td class="pt-3-half" contenteditable="true">45</td>
-				            <td class="pt-3-half" contenteditable="true">Insectus</td>
-				            <td class="pt-3-half" contenteditable="true">USA</td>
-				            <td class="pt-3-half" contenteditable="true">San Francisco</td>
-				            <td class="pt-3-half">
-				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-				                    aria-hidden="true"></i></a></span>
-				              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-				                    aria-hidden="true"></i></a></span>
-				            </td>
-				            <td>
-				              <span class="table-remove"><button type="button"
-				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-				            </td>
-				          </tr>
-				          -->
 				        </tbody>
 				      </table>
 				    </div>
@@ -186,14 +161,16 @@
 <%--onload start--%>
 $(()=>{	
 	
-	var removeCode = [];
-	var changeCode = [];
+ 	var removeCode = [];
+/*	var changeCode = [];
 	var previous; //이전값1 저장
 	var after; //변경후 값비교할 변수
 	var bfPcode; // 변경전 최초값 저장
  	var count = 0; //변경시 count++
 	
 	 $(".pCode").on('focus', function () { 
+		 var trNum = $(this).closest('tr').prevAll().length;
+		 console.log("trNum2", trNum);
 		 previous = $(this).text(); 
 	 	 console.log("focus",previous);
 	 }).on("DOMSubtreeModified", function(){
@@ -208,11 +185,19 @@ $(()=>{
 			  }
 			  console.log("bfPcode",bfPcode);
 		  }
-	 });
+	 }); */
 	 
-	 $(".pCode").change(function() {
-	     console.log("inside change event");
-	});
+	 var beforeArr = [];
+	 var beforeLength = $(".pCode").length;
+	 
+	 console.log($(".pCode").length);
+	 
+	 for(var i=0; i<beforeLength; i++){
+		 beforeArr.push($(".pCode").eq(i).text());
+		 console.log("beforeArr", beforeArr);
+	 }
+	 
+	 
 	 
 	
 	$(".searchModal-end").click(function(){
@@ -248,7 +233,7 @@ $(()=>{
 		 
 	   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-	   $tableID.find('table').append(newTr);
+	   $tableID.find('table tbody').append(newTr);
 		
 	    var trNum = $("#frmSubmit tr").length;
 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
@@ -340,22 +325,32 @@ $(()=>{
 	 	
 	 	var productCode = $("#productCode").val();
 	 	
+	 	var afterArr = [];
+	 	var afterLength = $(".pCode").length;
+	 	
 	 	for(var i=0;i<pName.length;i++) {
 	 		pNames.push(pName.eq(i).text());
 	 		pNos.push(pNo.eq(i).text());
 	 		pCounts.push(pCount.eq(i).text());
 	 		pCodes.push(pCode.eq(i).text());
 	 	}
+	 	
+		 for(var i=0; i<beforeLength; i++){
+			 afterArr.push($(".pCode").eq(i).text());
+			 console.log("afterArr",afterArr);
+		 }	 	
+	 	
 	 	var data_ = {"pNos":pNos,
 	 				 "pCodes":pCodes,
 	 				 "pNames":pNames,
 	 				 "pCounts":pCounts,
 	 				 "productCode":productCode,
+	 				 "beforeArr":beforeArr,
 	 				 "removeCode":removeCode
 	 				 };
 	 	console.log(data_);
 	 	console.log("removeCode",removeCode);
- 	  	$.ajax({
+  	  	$.ajax({
 	  		url: "${pageContext.request.contextPath}/production/updateBOM.do",
 	  		data: data_,
 	  		type : 'POST', 
@@ -367,7 +362,7 @@ $(()=>{
 	  		error : (jqxhr, textStatus, errorThrown)=>{
 	  			console.log(jqxhr, textStatus, errorThrown);
 	  		}
-	  	});
+	  	}); 
 	 })
 	 
 	
@@ -534,7 +529,8 @@ function addProductValidate(){
 $(document).off('dblclick').on('dblclick','.tdPtCode',function(){
 	$("#searchModalTitle").html('품목코드 검색');
 	var searchType = "rawMaterial";
-	var clickedTd = $(this);
+	var clickedTd = $(this).parent().index();
+	//var clickedTd = $(this).parent().rowIndex;
 	var trNum = $(this).closest('tr').prevAll().length;
 	
 	trNum += 1;

@@ -185,28 +185,41 @@ public class ProductionController {
 						 @RequestParam(value="pCodes[]", required=false) List<String> pCodeList,
 						 @RequestParam(value="pNames[]", required=false) List<String> pNameList,
 					 	 @RequestParam(value="pCounts[]", required=false) List<String> pCountList,
-					 	@RequestParam(value="productCode", required=false) String productCode,
+					 	 @RequestParam(value="productCode", required=false) String productCode,
+					 	 @RequestParam(value="beforeArr[]", required=false) List<String> beforeArrList,
+					 	 @RequestParam(value="removeCode[]", required=false) List<String> removeCodeList,
 										 ModelAndView mav) {
-		
-		
-		Map<String, String> map = new HashMap<>();
-		map.put("productCode", productCode);
-		logger.info("map@controller={}",map);
-		int result = productionService.insertBOM(productCode); 
-		
-		int bomNo = productionService.selectBOMNobyProductCode(productCode);
-		
-		logger.info("bomNo@Conteroller={}",bomNo);
-		
-		
 		logger.info("productCode@Controller={}",productCode);
 		logger.info("pNoList@Controller={}",pNoList);
 		logger.info("pCodeList@Controller={}",pCodeList);
 		logger.info("pNameList@Controller={}",pNameList);
 		logger.info("pCountList@Controller={}",pCountList);
-		logger.info("pNoListSize@Controller={}",pNoList.get(0));
-		logger.info("pNoListSize@Controller={}",pNoList.get(1));
-		int toTalSize = pNoList.size();
+		logger.info("beforeArrList@Controller={}",beforeArrList);
+		logger.info("removeCodeList@Controller={}",removeCodeList);
+		
+		
+		//제품코드로 BOM NO 가져오기
+		Map<String, String> map = new HashMap<>();
+		map.put("productCode", productCode);
+		logger.info("map@controller={}",map);
+		int bomNo = productionService.selectBOMNobyProductCode(productCode);
+		logger.info("bomNo@Conteroller={}",bomNo);
+		
+		//delete
+		if(removeCodeList != null) {
+			logger.info("delete started");
+			List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> deleteMap = new HashMap<String, Object>();
+			deleteMap.put("bomNo", bomNo);
+			for(int i=0; i<removeCodeList.size();i++) {
+				Map<String,Object> temp = new HashMap<>();
+				temp.put("removeCode", removeCodeList.get(i));
+				deleteList.add(temp);
+			}
+			deleteMap.put("deleteList", deleteList);
+			int delete = productionService.deleteBOMRm(deleteMap);
+		}
+		
 		
 		List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
 
@@ -214,17 +227,33 @@ public class ProductionController {
 		paramMap.put("productCode", productCode);
 		paramMap.put("bomNo", bomNo);
 		
+		if(beforeArrList.size() < pCodeList.size()) {
+			int repeat = pCodeList.size() - beforeArrList.size();
+			logger.info("repeat@controller={}",repeat);
+			for(int i=0;i<repeat;i++) {
+				beforeArrList.add("0");
+			}
+		}
+		
 		for(int i=0; i<pCodeList.size();i++) {
 			Map<String,Object> temp = new HashMap<>();
 			temp.put("pCodeList", pCodeList.get(i));
 			temp.put("pNoList", pNoList.get(i));
 			temp.put("pCountList", pCountList.get(i));
+			temp.put("beforeArrList", beforeArrList.get(i));
 			
 			BOMList.add(temp);
 		}
+		
+//		for(int i=0; i<beforeArrList.size();i++) {
+//			temp.put("beforeArrList", beforeArrList.get(i));
+//			
+//			BOMList.add(temp);
+//		}
+		
 		paramMap.put("BOMList", BOMList);
-		logger.info("1232134BOM={}",paramMap);
-		int result2 = productionService.insertBOMlist(paramMap);
+		logger.info("paramMap@Controller={}",paramMap);
+		int result2 = productionService.updateBOMRm(paramMap);
 		
 
 		

@@ -25,4 +25,10 @@ public interface ProductionService {
 
 	List<Map<String, String>> selectBOMRmListByBOMNo(int bomNo);
 
+
+	int deleteBOMRm(Map<String, Object> deleteMap);
+
+
+	int updateBOMRm(Map<String, Object> paramMap);
+
 }

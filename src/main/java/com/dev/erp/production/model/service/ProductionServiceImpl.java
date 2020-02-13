@@ -49,4 +49,14 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDAO.selectBOMRmListByBOMNo(bomNo);
 	}
 
+	@Override
+	public int deleteBOMRm(Map<String, Object> deleteMap) {
+		return productionDAO.deleteBOMRm(deleteMap);
+	}
+
+	@Override
+	public int updateBOMRm(Map<String, Object> paramMap) {
+		return productionDAO.updateBOMRm(paramMap);
+	}
+
 }

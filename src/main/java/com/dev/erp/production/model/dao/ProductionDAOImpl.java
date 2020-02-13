@@ -48,6 +48,16 @@ public class ProductionDAOImpl implements ProductionDAO {
 		return sqlSession.selectList("production.selectBOMRmListByBOMNo",bomNo);
 	}
 
+	@Override
+	public int deleteBOMRm(Map<String, Object> deleteMap) {
+		return sqlSession.delete("production.deleteBOMRm",deleteMap);
+	}
+
+	@Override
+	public int updateBOMRm(Map<String, Object> paramMap) {
+		return sqlSession.insert("production.updateBOMRm",paramMap);
+	}
+
 	
 	
 }

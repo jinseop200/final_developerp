@@ -70,4 +70,46 @@
 	<resultMap type="map" id="BOMRmMap">
 	</resultMap>
 	
+	<delete id="deleteBOMRm" parameterType="java.util.Map">
+	    DELETE FROM bom_rm
+	    <where>
+	    <foreach collection="deleteList" item="item" open="" close="" separator="OR">
+	        (rm_no = #{item.removeCode})
+	    </foreach>
+	    </where>
+	</delete>
+	
+	<insert id="updateBOMRm" parameterType="java.util.Map" >
+        MERGE INTO bom_rm R1
+            USING (
+                <foreach  collection="BOMList" item="item" open="" close="" separator="union">
+                    SELECT #{item.pCodeList} AS pCodeList
+                         , #{item.pCountList} AS pCountList
+                         , #{bomNo} AS bomNo
+                     FROM SYS.DUAL
+                </foreach>
+            ) T1
+                ON (R1.rm_no = T1.pCodeList
+                	AND R1.bom_no = T1.bomNo)
+            WHEN MATCHED THEN
+                UPDATE 
+                <set>
+                      R1.quantity = T1.pCountList
+                </set>
+            WHEN NOT MATCHED THEN
+                INSERT 
+                <trim prefix="(" suffix=")" suffixOverrides="," > 
+                      bom_no
+                    , rm_no
+                    , quantity
+                </trim>
+                <trim  prefix="values (" suffix=")" suffixOverrides=",">
+                      T1.bomNo
+                    , T1.pCodeList
+                    , T1.pCountList
+                </trim>
+	</insert>
+
+
+	
 </mapper>
