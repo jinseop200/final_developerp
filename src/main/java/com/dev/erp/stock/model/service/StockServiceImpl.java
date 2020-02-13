@@ -52,7 +52,11 @@ public class StockServiceImpl implements StockService {
 		
 		return stockDAO.UpdateRm(rawMaterial);
 	}
-	
+	@Override
+	public int DeleteRm(Map<String, String> rawMaterial) {
+		
+		return stockDAO.DeleteRm(rawMaterial);
+	}
 	
 	
 
@@ -85,6 +89,18 @@ public class StockServiceImpl implements StockService {
 	public int selectAllCountByProductNo() {
 		return stockDAO.selectAllCountByProductNo();
 	}
+
+	@Override
+	public List<Map<String, String>> selectRecievingtypeAll(int cPage, int numPerPage) {
+		return stockDAO.selectRecievingtypeAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRecievingCountByLotNo() {
+		return stockDAO.selectRecievingCountByLotNo();
+	}
+
+	
 
 
 	

@@ -21,6 +21,7 @@
 			<th>원재료번호</th>
 			<th>원재료명</th>
 			</c:if>
+			
 			<c:if test="${searchType == 'storeNo'}">
 			<th>창고번호</th>
 			<th>창고명</th>
@@ -29,6 +30,11 @@
 			<c:if test="${searchType == 'ptNo'}">
 			<th>품목번호</th>
 			<th>품목명</th>
+			</c:if>
+			
+			<c:if test="${searchType == 'lotNo'}">
+			<th>로트번호</th>
+			<th>입고날짜</th>
 			</c:if>
 			
 			</tr>
@@ -68,6 +74,8 @@ $(()=>{
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	var value2 = $(this).children().eq(2).html();
+	var value3 = $(this).children().eq(3).html();
+	
 	var trNum = $("#trNum").val();
 	console.log(trNum);
 	console.log(value);
@@ -75,13 +83,16 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	if(trNum != "nulla"){
 		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
 		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
+		$(".table-editable tr").eq(trNum).find("td").eq(3).text(value3);
+		
 		console.log($(".table-editable tr").eq(trNum));
 		console.log("eq0",$(".table-editable tr").eq(0));
 		console.log($(".table-editable tr").eq(trNum).find("td").eq(2));
-		
 	}
 	
-	$("#${searchType}").val(value);
+	$("#${searchType}").val(value); // 로트번호
+	$("#recDate").val(value2); // 입고일
+	$("#quantity").val(value3); // 입고수량
 	$("#mySearchModal").modal('hide');
 });
 
@@ -105,8 +116,11 @@ function morePage(a){
 			$(".quality-specify-table tbody").children().remove();
 			for(var i in speclist ) {
 				let p = speclist[i];
-				console.log(p);	
-				$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><tr>");
+				console.log(p);		
+				$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"
+														+p.content2+"</td><td>"
+														+p.content+"</td><td style='display:none;'>"
+														+p.content3+"</td></tr>");
 			}
 			$(".pageBar").html(data.pageBar);
 			$("span.page-link").attr('onclick',"morePage(this.id)");

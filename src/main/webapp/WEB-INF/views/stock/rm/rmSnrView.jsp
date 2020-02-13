@@ -20,6 +20,7 @@
 </select>
 <!-- ============================ 원재료 입출고 관리 부분 ==================================== -->
 	<h1 class="h3 mb-2 text-gray-800">원재료 입출고 관리</h1>
+	
 	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
 		<div class="input-group" style="margin:30px;">
 		
@@ -32,8 +33,8 @@
 					  입고 품목 수정하기 
 				</button> &nbsp;&nbsp;&nbsp;&nbsp;
 				
-				<button class="btn btn-primary" type="button" id="rmSnrSearch_button">
-					  입고 품목 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
+				<button class="btn btn-primary" type="button" id="rmSnrDelete_button">
+					  입고 품목 삭제하기 &nbsp;&nbsp;&nbsp;
 				</button> 
 			</div>
 		</div>
@@ -123,15 +124,15 @@
 			});
 		});
 		
-		$("#rmSnrSearch_button").click(function(){
-		    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSnrSearch.do",function(){
-		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
-		        $('#rmModal').modal({show:true});
-		        $(".modal-backdrop.in").css('opacity', 0.4);
-		        $(".controll-title").html("");
-		        $(".controll-title").html("원재고 입출고 상세 검색");
-		    });
-		});
+		$("#rmSnrDelete_button").click(function(){
+			 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSnrDelete.do",function(){
+			        $('#rmModal').modal({backdrop: 'static', keyboard: false});
+			        $('#rmModal').modal({show:true});
+			        $(".modal-backdrop.in").css('opacity', 0.4);
+			        $(".controll-title").html("");
+			        $(".controll-title").html("원재료 입고 정보 삭제");
+				});
+			});
 	</script>
 
 

@@ -31,6 +31,12 @@ public interface StockService {
 
 	int selectAllCountByProductNo();
 
+	List<Map<String, String>> selectRecievingtypeAll(int cPage, int numPerPage);
+
+	int selectRecievingCountByLotNo();
+
+	int DeleteRm(Map<String, String> recieving);
+
 
 
 }
