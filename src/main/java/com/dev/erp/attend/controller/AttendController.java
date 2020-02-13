@@ -120,4 +120,10 @@ public class AttendController {
 		
 		return mav;
 	}
+	@RequestMapping("/attend/test.do")
+	public ModelAndView test(ModelAndView mav) {
+		mav.setViewName("gw/test");
+		
+		return mav;
+	}
 }

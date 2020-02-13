@@ -96,15 +96,15 @@ function earlyleave(email){
 				<tr>
 					<td>부서명<span>*</span></td>
 					<td>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.deptCode}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dept_title.DEPT_TITLE} 
 <!-- 						<input class="form-control input-text" type="text" -->
 <!-- 						name="dept_code" id="dept_code" value=${memberLoggedIn.deptCode} readonly/> -->
 					</td>
 				</tr>
 				<tr>					
-					<td>직책명<span>*</span></td>
+					<td>직급<span>*</span></td>
 					<td>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberLoggedIn.jobCode}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${job_name.JOB_NAME}
 <!-- 						<input class="form-control input-text" type="text" -->
 <!-- 						name="job_code" id="job_code" value=${memberLoggedIn.jobCode} readonly/> -->
 					</td>
