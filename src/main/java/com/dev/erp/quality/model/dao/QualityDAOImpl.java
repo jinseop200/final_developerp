@@ -108,6 +108,71 @@ public class QualityDAOImpl implements QualityDAO {
 		return sqlSession.selectOne("quality.selectStoreNoByStoreName",storeName);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectRPercentByQualityY",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectRPercentByQualityN",param);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectPPercentByQualityY",param);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectPPercentByQualityN(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectPPercentByQualityN",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountAllByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectCountAllByInsectionY",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCountQNByInsectionY(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectCountQNByInsectionY",param);
+	}
+
+	@Override
+	public List<Map<String, String>> searchProuctNamePtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.searchProuctNamePtNo",ptNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromPD(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectMeasurmentFromPD",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromRM(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectMeasurmentFromRM",param);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByRmNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectSpecByRmNo",ptNo);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByPtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectSpecByPtNo",ptNo);
+	}
 	
 	
 }

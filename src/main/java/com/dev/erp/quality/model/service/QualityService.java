@@ -37,5 +37,27 @@ public interface QualityService {
 
 	String selectStoreNoByStoreName(String storeName);
 
+	List<Map<String, String>> selectRPercentByQualityY(Map<String, String> param);
+
+	List<Map<String, String>> selectRPercentByQualityN(Map<String, String> param);
+
+	List<Map<String, String>> selectPPercentByQualityY(Map<String, String> param);
+
+	List<Map<String, String>> selectPPercentByQualityN(Map<String, String> param);
+
+	List<Map<String, String>> selectCountAllByInsectionY(Map<String, String> param);
+
+	List<Map<String, String>> selectCountQNByInsectionY(Map<String, String> param);
+
+	List<Map<String, String>> searchProuctNamePtNo(String ptNo);
+
+	List<Map<String, String>> selectMeasurmentFromRM(Map<String,String> param);
+
+	List<Map<String, String>> selectMeasurmentFromPD(Map<String,String> param);
+
+	Map<String,String> selectSpecByRmNo(String ptNo);
+
+	Map<String,String> selectSpecByPtNo(String ptNo);
+
 
 }
