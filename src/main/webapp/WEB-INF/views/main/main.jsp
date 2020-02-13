@@ -116,7 +116,6 @@
 
   });
     function here(date){
-    	alert(date);
     	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/schedule.do?date="+date,function(){
  	        $('#scheduleModal').modal({backdrop: 'static', keyboard: false});
  	        $('#scheduleModal').modal({show:true});
