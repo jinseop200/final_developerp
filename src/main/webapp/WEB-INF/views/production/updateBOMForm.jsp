@@ -59,7 +59,7 @@
 				            </td> -->
 				            <td>
 				              <span class="table-remove"><button type="button"
-				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+				                  class="btn btn-danger btn-rounded btn-sm my-0 removeBtn">Remove</button></span>
 				            </td>
 				          </tr>
 				          </c:forEach>
@@ -93,7 +93,7 @@
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
                 </div>
              </form>
-	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >수정</button> 
+	              <button type="button" id="updateBOM" class="btn btn-primary updateBOM" >수정</button> 
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
            </div>
            
@@ -186,6 +186,35 @@
 <%--onload start--%>
 $(()=>{	
 	
+	var removeCode = [];
+	var changeCode = [];
+	var previous; //이전값1 저장
+	var after; //변경후 값비교할 변수
+	var bfPcode; // 변경전 최초값 저장
+ 	var count = 0; //변경시 count++
+	
+	 $(".pCode").on('focus', function () { 
+		 previous = $(this).text(); 
+	 	 console.log("focus",previous);
+	 }).on("DOMSubtreeModified", function(){
+		  after = $(this).text();
+		  console.log("after",after);
+		  if((after !="") && (after != null) && (previous != after)){
+			  count += 1;
+			  console.log(count);
+			  if(count == 1){
+				  bfPcode = previous;
+				  console.log("bfPcode",bfPcode);
+			  }
+			  console.log("bfPcode",bfPcode);
+		  }
+	 });
+	 
+	 $(".pCode").change(function() {
+	     console.log("inside change event");
+	});
+	 
+	
 	$(".searchModal-end").click(function(){
     	$('#mySearchModal').modal("hide");
     });
@@ -221,14 +250,17 @@ $(()=>{
 
 	   $tableID.find('table').append(newTr);
 		
-	   var trNum = $("#frmSubmit tr").length;
+	    var trNum = $("#frmSubmit tr").length;
 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
 		for(var i=firstNum;i<=trNum;i++){
 			$(".pNo").eq(i).text(i+1);
-		}
+		} 
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
+	 	removeCode.push($(this).parent().parent().children().eq(1).text());
+	 	console.log(removeCode);
+	 	
 	   $(this).parents('tr').detach();
 	   
 	   var trNum = $("#frmSubmit tr").length;
@@ -291,60 +323,64 @@ $(()=>{
 	 });
 	 <%--editable table script end--%>
 	
+	 
+	//수정하기 button submit
+	 $("#updateBOM").off("click").on('click', function() {
+	 	var pNo = $(".pNo");
+	 	var pNos = [];
+
+	 	var pCode = $(".pCode");
+	 	var pCodes = [];
+	 	
+	 	var pName = $(".pName");
+	 	var pNames = [];
+	 	
+	 	var pCount = $(".pCount");
+	 	var pCounts = [];
+	 	
+	 	var productCode = $("#productCode").val();
+	 	
+	 	for(var i=0;i<pName.length;i++) {
+	 		pNames.push(pName.eq(i).text());
+	 		pNos.push(pNo.eq(i).text());
+	 		pCounts.push(pCount.eq(i).text());
+	 		pCodes.push(pCode.eq(i).text());
+	 	}
+	 	var data_ = {"pNos":pNos,
+	 				 "pCodes":pCodes,
+	 				 "pNames":pNames,
+	 				 "pCounts":pCounts,
+	 				 "productCode":productCode,
+	 				 "removeCode":removeCode
+	 				 };
+	 	console.log(data_);
+	 	console.log("removeCode",removeCode);
+ 	  	$.ajax({
+	  		url: "${pageContext.request.contextPath}/production/updateBOM.do",
+	  		data: data_,
+	  		type : 'POST', 
+//	  		contentType : "application; charset=utf-8",
+	  		dataType: "json",
+	  		success: data => {
+	  			console.log(data);
+	  		},
+	  		error : (jqxhr, textStatus, errorThrown)=>{
+	  			console.log(jqxhr, textStatus, errorThrown);
+	  		}
+	  	});
+	 })
+	 
 	
+	/*  $(".removeBtn").click(function(){
+		 var removeCode = $(this).parent().parent().parent().eq(1);
+		 console.log(removeCode.val());
+		 
+	 }) */
+	 
 })
 <%--onload end--%>
 
-//button submit
-$(document).on('click','#FrmBtn',function(){
-	//$("#frmSubmit").submit();
-	//var BOMTbody = $("#frmSubmit tr").text();
-// 	var BOMTbody = new Array();
-// 	BOMTbody = $("#frmSubmit tr");
-// 	console.log("BOMTbody2", $("#frmSubmit tr").text());
-// 	console.log(BOMTbody);
-	
-	var pNo = $(".pNo");
-	var pNos = [];
 
-	var pCode = $(".pCode");
-	var pCodes = [];
-	
-	var pName = $(".pName");
-	var pNames = [];
-	
-	var pCount = $(".pCount");
-	var pCounts = [];
-	
-	var productCode = $("#productCode").val();
-	
-	for(var i=0;i<pName.length;i++) {
-		pNames.push(pName.eq(i).text());
-		pNos.push(pNo.eq(i).text());
-		pCounts.push(pCount.eq(i).text());
-		pCodes.push(pCode.eq(i).text());
-	}
-	var data_ = {"pNos":pNos,
-				 "pCodes":pCodes,
-				 "pNames":pNames,
-				 "pCounts":pCounts,
-				 "productCode":productCode
-				 };
-	console.log(data_);
- 	$.ajax({
- 		url: "${pageContext.request.contextPath}/production/addBOM.do",
- 		data: data_,
- 		type : 'POST', 
-// 		contentType : "application; charset=utf-8",
- 		dataType: "json",
- 		success: data => {
- 			console.log(data);
- 		},
- 		error : (jqxhr, textStatus, errorThrown)=>{
- 			console.log(jqxhr, textStatus, errorThrown);
- 		}
- 	});
-})
 
 $(function() {
     //폼닫기
@@ -495,15 +531,13 @@ function addProductValidate(){
   }  
   
 
-$(document).on('dblclick','.tdPtCode',function(){
+$(document).off('dblclick').on('dblclick','.tdPtCode',function(){
 	$("#searchModalTitle").html('품목코드 검색');
 	var searchType = "rawMaterial";
 	var clickedTd = $(this);
 	var trNum = $(this).closest('tr').prevAll().length;
 	
-	if(trNum==0){
-		trNum = 1;
-	}
+	trNum += 1;
 	
 	console.log("this", clickedTd);
 	console.log("trNum", trNum);

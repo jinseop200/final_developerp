@@ -282,60 +282,64 @@ $(()=>{
 	 <%--editable table script end--%>
 	
 	
+	 
+	 $("#FrmBtn").off("click").on('click', function() {
+		//button submit
+		//$(document).off('click').on('click','#FrmBtn',function(){
+			//$("#frmSubmit").submit();
+			//var BOMTbody = $("#frmSubmit tr").text();
+//		 	var BOMTbody = new Array();
+//		 	BOMTbody = $("#frmSubmit tr");
+//		 	console.log("BOMTbody2", $("#frmSubmit tr").text());
+//		 	console.log(BOMTbody);
+			
+			var pNo = $(".pNo");
+			var pNos = [];
+
+			var pCode = $(".pCode");
+			var pCodes = [];
+			
+			var pName = $(".pName");
+			var pNames = [];
+			
+			var pCount = $(".pCount");
+			var pCounts = [];
+			
+			var productCode = $("#productCode").val();
+			
+			for(var i=0;i<pName.length;i++) {
+				pNames.push(pName.eq(i).text());
+				pNos.push(pNo.eq(i).text());
+				pCounts.push(pCount.eq(i).text());
+				pCodes.push(pCode.eq(i).text());
+			}
+			var data_ = {"pNos":pNos,
+						 "pCodes":pCodes,
+						 "pNames":pNames,
+						 "pCounts":pCounts,
+						 "productCode":productCode
+						 };
+			console.log(data_);
+		 	$.ajax({
+		 		url: "${pageContext.request.contextPath}/production/addBOM.do",
+		 		data: data_,
+		 		async: false,
+		 		type : 'POST', 
+//		 		contentType : "application; charset=utf-8",
+		 		dataType: "json",
+		 		success: data => {
+		 			console.log(data);
+		 		},
+		 		error : (jqxhr, textStatus, errorThrown)=>{
+		 			console.log(jqxhr, textStatus, errorThrown);
+		 		}
+		 	});
+		})
+	 
 })
 <%--onload end--%>
 
-//button submit
-$(document).off('click').on('click','#FrmBtn',function(){
-	//$("#frmSubmit").submit();
-	//var BOMTbody = $("#frmSubmit tr").text();
-// 	var BOMTbody = new Array();
-// 	BOMTbody = $("#frmSubmit tr");
-// 	console.log("BOMTbody2", $("#frmSubmit tr").text());
-// 	console.log(BOMTbody);
-	
-	var pNo = $(".pNo");
-	var pNos = [];
 
-	var pCode = $(".pCode");
-	var pCodes = [];
-	
-	var pName = $(".pName");
-	var pNames = [];
-	
-	var pCount = $(".pCount");
-	var pCounts = [];
-	
-	var productCode = $("#productCode").val();
-	
-	for(var i=0;i<pName.length;i++) {
-		pNames.push(pName.eq(i).text());
-		pNos.push(pNo.eq(i).text());
-		pCounts.push(pCount.eq(i).text());
-		pCodes.push(pCode.eq(i).text());
-	}
-	var data_ = {"pNos":pNos,
-				 "pCodes":pCodes,
-				 "pNames":pNames,
-				 "pCounts":pCounts,
-				 "productCode":productCode
-				 };
-	console.log(data_);
- 	$.ajax({
- 		url: "${pageContext.request.contextPath}/production/addBOM.do",
- 		data: data_,
- 		async: false,
- 		type : 'POST', 
-// 		contentType : "application; charset=utf-8",
- 		dataType: "json",
- 		success: data => {
- 			console.log(data);
- 		},
- 		error : (jqxhr, textStatus, errorThrown)=>{
- 			console.log(jqxhr, textStatus, errorThrown);
- 		}
- 	});
-})
 
 $(function() {
     //폼닫기
