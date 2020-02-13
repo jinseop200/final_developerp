@@ -92,7 +92,7 @@
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
                 <a class="collapse-item" href="cards.html">게시판</a>
-                <a class="collapse-item" href="cards.html">시설물 예약</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do?">시설물 예약</a>
               </div>
             </div>
           </li>
@@ -143,7 +143,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">DETAIL</h6>
                    <a class="collapse-item" href="buttons.html">주별 생산 계획</a>
-                  <a class="collapse-item" href="cards.html">원재료 구매 계획</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/purchasePlan.do">원재료 구매 계획</a>
                   <a class="collapse-item" href="cards.html">생산률 조회</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/jobOrder.do">작업 지시서</a>
                 </div>
@@ -351,60 +351,15 @@
                 </li>
 
                 <!-- Nav Item - Messages -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                  <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-envelope fa-fw"></i>
+                <li class="nav-item dropdown no-arrow mx-1 message">
+                  <span class="nav-link dropdown-toggle message" id="messagesDropdown" >
+                    <i class="fas fa-envelope fa-fw" style="cursor:pointer;"></i>
                     <!-- Counter - Messages -->
                     <span class="badge badge-danger badge-counter">7</span>
-                  </a>
-                  <!-- Dropdown - Messages -->
-                  <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                    <h6 class="dropdown-header">
-                      Message Center
-                    </h6>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                        <div class="status-indicator bg-success"></div>
-                      </div>
-                      <div class="font-weight-bold">
-                        <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                        <div class="status-indicator"></div>
-                      </div>
-                      <div>
-                        <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                        <div class="status-indicator bg-warning"></div>
-                      </div>
-                      <div>
-                        <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                        <div class="status-indicator bg-success"></div>
-                      </div>
-                      <div>
-                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                  </div>
+                  </span>
                 </li>
+
+
 
                   <!-- Nav Item - Messenger -->
                   <li class="nav-item dropdown no-arrow mx-1">
@@ -582,6 +537,58 @@
 			    </div>
 			</div>
 			
+             <!-- message Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="messageList">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title-messageList">쪽지함</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body-messageList">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
+			        
+			        </div>
+			    </div>
+			</div>
+			
+             <!-- insert message Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="insertMessage">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title-insertMessage">새쪽지</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body-insertMessage">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
+			        
+			        </div>
+			    </div>
+			</div>
+			
+						<%--documentLastApproval modal --%>
+			<div class="modal" tabindex="-1" role="dialog" id="searhMessageList">
+			  <div class="modal-dialog" role="document">
+			      <div class="modal-content">
+			      <div class="modal-header">
+			          <h5 class="modal-title control-title-searhMessageList" id="searhMessageList"> </h5>
+			      </div>
+			      <div class="modal-body controll-modal-body-searhMessageList">
+			      </div>
+			      <div class="modal-footer">
+			          <button type="button" class="btn btn-primary searchModal-end">닫기</button>
+			      </div>
+			      </div>
+			  </div>
+			</div>
+			
 			<script>
 			$(function(){
 				$(".mypage_image").click(function (e){
@@ -616,6 +623,19 @@
 			    });
 					$("#updateInfo").modal();			        
 			};
+			
+				
+			$(".nav-link.dropdown-toggle.message").on("click",function(){
+					$('.controll-modal-body-messageList').load("${pageContext.request.contextPath}/message/messageList.do?empName=${memberLoggedIn.empName}",function(){
+				        $('#messageList').modal({backdrop: 'static', keyboard: false});
+				        $('#messageList').modal({show:true});
+				        $(".modal-backdrop.in").css('opacity', 0.4);
+				        
+				    });
+				
+			})
+				
+			
 			  </script>
   
 

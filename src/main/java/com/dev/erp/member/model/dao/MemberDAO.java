@@ -28,4 +28,5 @@ public interface MemberDAO {
 
 	int updateProfileImage(Member member);
 
+
 }

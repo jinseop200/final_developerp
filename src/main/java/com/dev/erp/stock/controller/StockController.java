@@ -1,15 +1,22 @@
 package com.dev.erp.stock.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.util.Utils;
 import com.dev.erp.stock.model.service.StockService;
 
 @Controller
@@ -34,23 +41,18 @@ public class StockController {
 		return mav;
 	}
 	
-	@RequestMapping("/stock/rm/modalRmInsert.do")
-	public ModelAndView modalRmInsert(ModelAndView mav) {
-		
-		mav.setViewName("/stock/rm/modalRmInsert");
-		
-		return mav;
-	}
-	
 	@RequestMapping("/stock/rm/modalRmSearch.do")
-	public ModelAndView modalRmSearch(ModelAndView mav) {
+	public ModelAndView modalRmInsert(ModelAndView mav) {
 		
 		mav.setViewName("/stock/rm/modalRmSearch");
 		
 		return mav;
 	}
+
+
 	
 	// ========================================= 원재료 입출고관리 파트 =========================================
+	
 	@RequestMapping("/stock/rm/rmSnrView.do")
 	public ModelAndView selectRmSnrStockList(ModelAndView mav) {
 		
@@ -65,9 +67,81 @@ public class StockController {
 	}
 	
 	
+
+	@RequestMapping("/stock/rm/modalRmSnrSearch.do")
+	public ModelAndView modalRmSnrSearch(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrSearch");
+		
+		return mav;
+	}
+	@RequestMapping("/stock/rm/modalRmSnrInsert.do")
+	public ModelAndView modalRmSnrInsert(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrInsert");
+		
+		return mav;
+	}
+	@RequestMapping("/stock/rm/modalRmSnrUpdate.do")
+	public ModelAndView modalRmSnrUpdate(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrUpdate");
+		
+		return mav;
+	}
 	
+	// rmNo storeNo ptNo quantity recDate
+	@RequestMapping("/stock/rm/InsertRm.do")
+	public ModelAndView InsertRm(@RequestParam String rmNo,
+									@RequestParam String storeNo,
+									@RequestParam String ptNo,
+									@RequestParam String quantity,
+									@RequestParam String recDate,
+									ModelAndView mav) {
+
+		Map<String, String> recieving = new HashMap<>();
+		recieving.put("rmNo", rmNo);
+		recieving.put("storeNo",storeNo);
+		recieving.put("ptNo", ptNo);
+		recieving.put("quantity", quantity);
+		recieving.put("recDate", recDate);
+		
+		logger.info("rawMaterial@controller={}",recieving);
+		
+		int result = stockservice.InsertRm(recieving); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/stock/rm/rmSnrView.do");
+		
+		return mav;
+	}
 	
-	
+	@RequestMapping("/stock/rm/UpdateRm.do")
+	public ModelAndView UpdateRm(@RequestParam String rmNo,
+									@RequestParam String storeNo,
+									@RequestParam String ptNo,
+									@RequestParam String quantity,
+									@RequestParam String recDate,
+									ModelAndView mav) {
+
+		Map<String, String> recieving = new HashMap<>();
+		recieving.put("rmNo", rmNo);
+		recieving.put("storeNo",storeNo);
+		recieving.put("ptNo", ptNo);
+		recieving.put("quantity", quantity);
+		recieving.put("recDate", recDate);
+		
+		logger.info("rawMaterial@controller={}",recieving);
+		
+		int result = stockservice.UpdateRm(recieving); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/stock/rm/rmSnrView.do");
+		
+		return mav;
+	}
 	
 	
 	
@@ -136,6 +210,53 @@ public class StockController {
 		return mav;
 	}
 	
+	
+	
+	// ========================================= searchSpecify Controller =========================================
+
+	@RequestMapping("/stock/common/searchSpecify.do")
+	public ModelAndView searchSpecify(ModelAndView mav, @RequestParam("searchType") String searchType) {
+		
+		mav.addObject("searchType",searchType);
+		mav.setViewName("/stock/common/searchSpecify");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/stock/common/searchSpecifyPage.do")
+	@ResponseBody
+	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType, @RequestParam(defaultValue="1") int cPage, HttpServletResponse rexsponse) {
+		logger.info("SEARCHTYPE@CONTROLLER={}",searchType);
+		List<Map<String,String>> list = new ArrayList<>();
+		final int numPerPage = 5;
+		int totalContents = 0;
+		switch(searchType) {
+		case "rmNo" :  
+			list =  stockservice.selectRawmaterialAll(cPage,numPerPage); 
+			totalContents = stockservice.selectAllRawmaterialNo();
+			break;
+		case "storeNo" : 
+			list = stockservice.selectStorageAll(cPage,numPerPage);  
+			totalContents = stockservice.selectAllCountByStorageNo(); 
+			break;
+		case "ptNo" :  
+			list =  stockservice.selectProductTypeAll(cPage,numPerPage); 
+			totalContents = stockservice.selectAllCountByProductNo();
+			break;
+
+		}
+		String url = "searchSpecifyPage.do?searchType="+searchType;
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("numPerPage",numPerPage);
+		map.put("cPage",cPage);
+		map.put("totalContents",totalContents);
+		map.put("searchType",searchType);
+		map.put("speclist",list);
+		map.put("pageBar", pageBar);
+		return map;
+	}
 	
 	
 	

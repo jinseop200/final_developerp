@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import com.dev.erp.document.model.vo.DocumentLine;
 public class DocumentDAOImpl implements DocumentDAO {
 
 	@Autowired
-	SqlSession sqlSession;
+	SqlSessionTemplate sqlSession;
 
 	@Override
 	public List<Document> selectDocList(String empName) {
@@ -53,14 +53,45 @@ public class DocumentDAOImpl implements DocumentDAO {
 		return sqlSession.selectOne("document.documentDetailView",docNo);
 	}
 
+
 	@Override
-	public int approveDocument(int docNo) {
-		return sqlSession.update("document.approveDocument",docNo);
+	public List<DocumentLine> documentLineView(int docNo) {
+		return sqlSession.selectList("document.documentLineView",docNo);
 	}
 
 	@Override
-	public int refuseDocument(int docNo) {
-		return sqlSession.update("document.refuseDocument",docNo);
+	public int approveDocument(Map<String, Object> param) {
+		return sqlSession.update("document.approveDocument",param);
+	}
+
+	@Override
+	public int refuseDocument(Map<String, Object> param) {
+		return sqlSession.update("document.refuseDocument",param);
+	}
+
+	@Override
+	public DocumentLine documentPrevWriter(Map<String, Object> map) {
+		return sqlSession.selectOne("document.documentPrevWriter",map);
+	}
+
+	@Override
+	public DocumentLine documentNextWriter(Map<String, Object> map) {
+		return sqlSession.selectOne("document.documentNextWriter",map);
+	}
+
+	@Override
+	public int updateDocument(int docNo) {
+		return sqlSession.update("document.updateDocument",docNo);
+	}
+
+	@Override
+	public int notUpdateDocument(int docNo) {
+		return sqlSession.update("document.notUpdateDocument",docNo);
+	}
+
+	@Override
+	public DocumentLine selectDocumentLine(Map<String, Object> map2) {
+		return sqlSession.selectOne("document.selectDocumentLine",map2);
 	}
 
 }

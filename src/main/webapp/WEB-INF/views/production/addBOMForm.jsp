@@ -11,20 +11,17 @@
 <body>
       <!-- search-container start -->
       <div id="search-container">
-          <form class="needs-validation"
-           action="${pageContext.request.contextPath}/enrollment/updateProduct.do"
-           method="POST">
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="productInfo">생산품목 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <label for="productInfo">생산품목 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  					     <input type="text" id="productInfo" name="productInfo" class="form-control bg-light small" placeholder="생산품목" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <label for="ptAmount">생산수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptAmount" name="ptAmount" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2">
+					     <br />
+					     <label for="productCode">생산품목코드 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 					     <input type="text" id="productCode" name="productCode" class="form-control bg-light small" placeholder="생산품목코드" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
 				<!-- Editable table -->
 				<div class="card">
-				  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
 				  <div class="card-body">
 				    <div id="table" class="table-editable">
 				      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
@@ -35,21 +32,17 @@
 				            <th class="text-center">No</th>
 				            <th class="text-center">품목코드</th>
 				            <th class="text-center">품목명</th>
-				            <th class="text-center">규격명</th>
-				            <th class="text-center">단위</th>
 				            <th class="text-center">수량</th>
 				            <!-- <th class="text-center">Sort</th> -->
 				            <th class="text-center">Remove</th>
 				          </tr>
 				        </thead>
-				        <tbody>
+				        <tbody class="BOMTbody">
 				          <tr>
-				            <td class="pt-3-half" contenteditable="true"></td>
-				            <td class="pt-3-half tdPtCode" contenteditable="true"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="false"></td>
-				            <td class="pt-3-half" contenteditable="true"></td>
+				            <td class="pt-3-half pNo" contenteditable="false"></td>
+				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
+				            <td class="pt-3-half pName" contenteditable="false"></td>
+				            <td class="pt-3-half pCount" contenteditable="true"></td>
 				            <!-- <td class="pt-3-half">
 				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
 				                    aria-hidden="true"></i></a></span>
@@ -89,10 +82,9 @@
 				
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" >수정</button> 
-	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
                 </div>
-             </form>
+	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button> 
+	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
            </div>
            
       </div>
@@ -168,7 +160,7 @@
 .scResize{
 	height: 110px;
 }
-#edTable {
+/* #edTable {
     counter-reset: rowNumber;
 }
 
@@ -177,7 +169,7 @@
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
-}
+} */
 </style>
 <script>    
 
@@ -192,6 +184,10 @@ $(()=>{
     	$('#updateProductNo').modal("hide");
     });
 	
+	var trNum = $(".BOMTbody tr").length;
+	for(var i=1;i<=trNum;i++){
+		$(".pNo").text(i);
+	}
 	
 	 <%--editable table script--%>
 	 const $tableID = $('#table');
@@ -200,32 +196,37 @@ $(()=>{
 	
 	 const newTr = `
 	<tr class="hide">
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half tdPtCode" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
-	  <td class="pt-3-half" contenteditable="true"></td>
+	  <td class="pt-3-half pNo" contenteditable="false"></td>
+      <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
+      <td class="pt-3-half pName" contenteditable="false"></td>
+      <td class="pt-3-half pCount" contenteditable="true"></td>
 	  <td>
 	    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
 	  </td>
 	</tr>`;
 
 	 $('.table-add').on('click', 'i', () => {
-
+		 
 	   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-	   if ($tableID.find('tbody tr').length === 0) {
-
-	     $('tbody').append(newTr);
-	   }
-
 	   $tableID.find('table').append(newTr);
+		
+	   var trNum = $("#frmSubmit tr").length;
+	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
+		for(var i=firstNum;i<=trNum;i++){
+			$(".pNo").eq(i).text(i+1);
+		}
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
-
 	   $(this).parents('tr').detach();
+	   
+	   var trNum = $("#frmSubmit tr").length;
+	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
+		for(var i=firstNum;i<=trNum;i++){
+			$(".pNo").eq(i).text(i+1);
+		}
+	   
 	 });
 
 	 $tableID.on('click', '.table-up', function () {
@@ -284,6 +285,57 @@ $(()=>{
 })
 <%--onload end--%>
 
+//button submit
+$(document).off('click').on('click','#FrmBtn',function(){
+	//$("#frmSubmit").submit();
+	//var BOMTbody = $("#frmSubmit tr").text();
+// 	var BOMTbody = new Array();
+// 	BOMTbody = $("#frmSubmit tr");
+// 	console.log("BOMTbody2", $("#frmSubmit tr").text());
+// 	console.log(BOMTbody);
+	
+	var pNo = $(".pNo");
+	var pNos = [];
+
+	var pCode = $(".pCode");
+	var pCodes = [];
+	
+	var pName = $(".pName");
+	var pNames = [];
+	
+	var pCount = $(".pCount");
+	var pCounts = [];
+	
+	var productCode = $("#productCode").val();
+	
+	for(var i=0;i<pName.length;i++) {
+		pNames.push(pName.eq(i).text());
+		pNos.push(pNo.eq(i).text());
+		pCounts.push(pCount.eq(i).text());
+		pCodes.push(pCode.eq(i).text());
+	}
+	var data_ = {"pNos":pNos,
+				 "pCodes":pCodes,
+				 "pNames":pNames,
+				 "pCounts":pCounts,
+				 "productCode":productCode
+				 };
+	console.log(data_);
+ 	$.ajax({
+ 		url: "${pageContext.request.contextPath}/production/addBOM.do",
+ 		data: data_,
+ 		async: false,
+ 		type : 'POST', 
+// 		contentType : "application; charset=utf-8",
+ 		dataType: "json",
+ 		success: data => {
+ 			console.log(data);
+ 		},
+ 		error : (jqxhr, textStatus, errorThrown)=>{
+ 			console.log(jqxhr, textStatus, errorThrown);
+ 		}
+ 	});
+})
 
 $(function() {
     //폼닫기

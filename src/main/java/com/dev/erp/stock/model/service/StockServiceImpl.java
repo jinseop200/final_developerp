@@ -39,5 +39,54 @@ public class StockServiceImpl implements StockService {
 	}
 
 	
+	
+	
+	@Override
+	public int InsertRm(Map<String, String> rawMaterial) {
+		
+		return stockDAO.InsertRm(rawMaterial);
+	}
+
+	@Override
+	public int UpdateRm(Map<String, String> rawMaterial) {
+		
+		return stockDAO.UpdateRm(rawMaterial);
+	}
+	
+	
+	
+
+	@Override
+	public List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage) {
+		return stockDAO.selectRawmaterialAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllRawmaterialNo() {
+		return stockDAO.selectAllRawmaterialNo();
+	}
+
+	@Override
+	public List<Map<String, String>> selectStorageAll(int cPage, int numPerPage) {
+		return stockDAO.selectStorageAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllCountByStorageNo() {
+		return stockDAO.selectAllCountByStorageNo();
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductTypeAll(int cPage, int numPerPage) {
+		return stockDAO.selectProductTypeAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllCountByProductNo() {
+		return stockDAO.selectAllCountByProductNo();
+	}
+
+
+	
 
 }

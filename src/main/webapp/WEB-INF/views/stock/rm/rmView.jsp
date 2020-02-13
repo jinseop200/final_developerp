@@ -15,8 +15,8 @@
 
 <select name="jump" onchange="location.href=this.value">
 <option>선택</option>
-<option value="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</option>
 <option value="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</option>
+<option value="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</option>
 </select>
 <!-- ============================ 원재료 재고관리 부분 ==================================== -->
 	<h1 class="h3 mb-2 text-gray-800">원재료 재고 관리</h1>
@@ -46,7 +46,9 @@
 			    <tr>
 			     <th>원재료번호</th>
 			     <th>원재료이름</th>
-			     <th>총 수량</th>
+			     <th>거래처번호</th>
+			     <th>거래처이름</th>
+			     <th>보유 수량</th>
 			    </tr>
 			  </thead>
 			  
@@ -56,6 +58,8 @@
 			        <tr>
 			          <td>${rm.RM_NO}</td>
 			          <td>${rm.RM_NAME}</td>    
+			          <td>${rm.VENDOR_NO}</td>    
+			          <td>${rm.VENDOR_NAME}</td>    			          
 			          <td>${rm.RM_SUM}</td>
 			        </tr>
 		        </c:forEach>

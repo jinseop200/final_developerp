@@ -3,6 +3,7 @@ package com.dev.erp.stock.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,62 @@ public class StockDAOImpl implements StockDAO {
 		return sqlsession.selectList("stock.selectStorageStockList");
 	}
 
+	
+	
+	
+	@Override
+	public int UpdateRm(Map<String, String> rawMaterial) {
+		return sqlsession.update("stock.UpdateRm", rawMaterial);
+	}
+
+	@Override
+	public int InsertRm(Map<String, String> rawMaterial) {
+		
+		return sqlsession.insert("stock.InsertRm", rawMaterial);
+	}
+	
+	
+	
+
+	@Override
+	public List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("stock.selectRawmaterialAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllRawmaterialNo() {
+		return sqlsession.selectOne("stock.selectAllRawmaterialNo");
+	}
+
+	@Override
+	public List<Map<String, String>> selectStorageAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("stock.selectStorageAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllCountByStorageNo() {
+		return sqlsession.selectOne("stock.selectAllCountByStorageNo");
+
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductTypeAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("stock.selectProductTypeAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllCountByProductNo() {
+		return sqlsession.selectOne("stock.selectAllCountByProductNo");
+	}
+
+	
+	
+	
+	
+	
 	
 
 }

@@ -35,11 +35,12 @@
 </div>
 <div class="card-body">
   <div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <table class="table table-bordered" id="dataTableBOMList" width="100%" cellspacing="0">
       <thead>
         <tr>
           <th>품목코드</th>
           <th>품목명</th>
+          <th>품목구분</th>
           <th>원재료개수</th>
           <th>BOM등록</th>
           <th>조회</th>
@@ -50,8 +51,14 @@
 	        <tr class="getTr">
 	          <td><a href="#" >${p.PL_NO}</a></td>
 	          <td>${p.PRODUCT_NAME}</td>
+	          <td>${p.PT_TYPE}</td>
 	          <td></td>
+	          <c:if test="${p.PT_TYPE eq '완제품'}">
 	          <td class="tdBOMAddAlign"><button class="btn btn-primary BOMAddBtn" type="button">BOM등록</button></td>
+			  </c:if>
+			  <c:if test="${p.PT_TYPE eq '원재료'}">
+	          <td class="tdBOMAddAlign"></td>
+			  </c:if>
 	          <td></td>
 	        </tr>
         </c:forEach>
@@ -91,7 +98,11 @@
 <%--onload start--%>
 $(()=>{
 	
-	
+	$("#dataTableBOMList").DataTable({
+		// 3번째 항목을 오름 차순 
+		// order : [ [ 열 번호, 정렬 순서 ], ... ]
+		order: [ [ 2, "asc" ] ]
+	});
 	
 })
 <%--onload end--%>
@@ -110,18 +121,49 @@ $(".BOMAddBtn").click(function(){
 	var tdPtNo = td.eq(0).text();
 	var tdPtName = td.eq(1).text();
 	
-	$('#updateVendor').modal('show');
+	//BOM 동록인지 수정인지 판별 Ajax
+	$.ajax({
+ 		url: "${pageContext.request.contextPath}/production/selectBOMForm.do",
+ 		data: {tdPtNo : tdPtNo},
+ 		contentType : "application; charset=utf-8",
+ 		dataType: "json",
+ 		success: data => {
+ 			console.log(data);
+ 			console.log(data.isUsable);
+ 			if(data.isUsable == true){
+ 				$('.controll-modal-body3').load("${pageContext.request.contextPath}/production/addBOMForm.do",function(){
+ 			        $('#BOMAddModal').modal({backdrop: 'static', keyboard: false});
+ 			        $('#BOMAddModal').modal({show:true});
+ 			        $(".modal-backdrop.in").css('opacity', 0.4);
+ 			        
+ 			        $(".controll-title").html("");
+ 			        $(".controll-title").html("BOM 등록");
+ 			        $("#productCode").val(tdPtNo);
+ 			        $("#productInfo").val(tdPtName);
+ 			    });
+ 			} //end of if
+ 			else{
+ 				$('.controll-modal-body3').load("${pageContext.request.contextPath}/production/updateBOMForm.do?tdPtNo="+data.tdPtNo,function(){
+ 			        $('#BOMAddModal').modal({backdrop: 'static', keyboard: false});
+ 			        $('#BOMAddModal').modal({show:true});
+ 			        $(".modal-backdrop.in").css('opacity', 0.4);
+ 			        
+ 			        $(".controll-title").html("");
+ 			        $(".controll-title").html("BOM 수정");
+ 			        $("#productCode").val(tdPtNo);
+ 			        $("#productInfo").val(tdPtName);
+ 			    });
+ 			} //end of if
+ 			
+ 			
+ 		},
+ 		error : (jqxhr, textStatus, errorThrown)=>{
+ 			console.log(jqxhr, textStatus, errorThrown);
+ 		}
+ 	});
 	
-	$('.controll-modal-body3').load("${pageContext.request.contextPath}/production/addBOMForm.do",function(){
-        $('#BOMAddModal').modal({backdrop: 'static', keyboard: false});
-        $('#BOMAddModal').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        
-        $(".controll-title").html("");
-        $(".controll-title").html("BOM 등록");
-        $("#productInfo").val(tdPtNo+" "+tdPtName);
-        
-    });
+	
+	
     
 });
 

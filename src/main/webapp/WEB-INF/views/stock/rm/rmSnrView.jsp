@@ -15,8 +15,8 @@
 
 <select name="jump" onchange="location.href=this.value">
 <option>선택</option>
-<option value="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</option>
 <option value="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</option>
+<option value="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</option>
 </select>
 <!-- ============================ 원재료 입출고 관리 부분 ==================================== -->
 	<h1 class="h3 mb-2 text-gray-800">원재료 입출고 관리</h1>
@@ -24,9 +24,14 @@
 		<div class="input-group" style="margin:30px;">
 		
 			<div class="input-group-append">
+				<button class="btn btn-primary" type="button" id="rmSnrInsert_button">
+					  신규 입고 등록하기 
+				</button> &nbsp;&nbsp;&nbsp;&nbsp;
+				
 				<button class="btn btn-primary" type="button" id="rmSnrUpdate_button">
 					  입고 품목 수정하기 
 				</button> &nbsp;&nbsp;&nbsp;&nbsp;
+				
 				<button class="btn btn-primary" type="button" id="rmSnrSearch_button">
 					  입고 품목 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
 				</button> 
@@ -48,8 +53,11 @@
 			  <thead>
 			    <tr>
 			     <th>입고 날짜</th>
+			     <th>로트 번호</th>
 			     <th>원재료번호</th>
 			     <th>원재료이름</th>
+			     <th>거래처번호</th>
+			     <th>거래처이름</th>
 			     <th>입고 수량</th>
 			    </tr>
 			  </thead>
@@ -59,8 +67,11 @@
 		      	<c:forEach items="${rmSnrList}" var="rmSnr" varStatus="vs">
 			        <tr>
 			          <td>${rmSnr.REC_DATE}</td>
+			          <td>${rmSnr.LOT_NO}</td>
 			          <td>${rmSnr.RM_NO}</td>
-			          <td>${rmSnr.RM_NAME}</td>    
+			          <td>${rmSnr.RM_NAME}</td> 
+			          <td>${rmSnr.VENDOR_NO}</td>    
+			          <td>${rmSnr.VENDOR_NAME}</td>   
 			          <td>${rmSnr.QUANTITY}</td>
 			        </tr>
 		        </c:forEach>
@@ -91,13 +102,24 @@
 	
 	  
 	<script>
+	
+		$("#rmSnrInsert_button").click(function(){
+		 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSnrInsert.do",function(){
+		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
+		        $('#rmModal').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+		        $(".controll-title").html("");
+		        $(".controll-title").html("신규 입고 등록하기");
+			});
+		});
+		
 		$("#rmSnrUpdate_button").click(function(){
 		 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSnrUpdate.do",function(){
 		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
 		        $('#rmModal').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 		        $(".controll-title").html("");
-		        $(".controll-title").html("원재료 입출고 수정하기");
+		        $(".controll-title").html("원재료 입고 정보 수정");
 			});
 		});
 		
@@ -107,7 +129,7 @@
 		        $('#rmModal').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 		        $(".controll-title").html("");
-		        $(".controll-title").html("원재고 입출고 상세 검색하기");
+		        $(".controll-title").html("원재고 입출고 상세 검색");
 		    });
 		});
 	</script>

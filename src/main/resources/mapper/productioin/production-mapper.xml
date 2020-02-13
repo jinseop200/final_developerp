@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="production">
+
+	<select id="selectproductList" resultMap="productMap">
+		select * from
+		(
+		    select pl_no, vendor_no, pt_no, product_name, null as delivery, inprice, outprice, spec, tol, reg_date,
+		    case pt_no when 1 then '원재료'
+		                   when 3 then '완제품'
+		                   end as pt_type
+		    from product_list
+		    union all
+		    select rm_no, account_no, pt_no, rm_name, delivery, inprice, outprice, spec, tol, reg_date,
+		    case pt_no when 1 then '원재료'
+		                   when 3 then '완제품'
+		                   end
+		    from raw_material
+		)
+		order by pt_no desc, pl_no asc
+	</select>
+	<resultMap type="map" id="productMap">
+	</resultMap>
+
+	<select id="selectRawMaterialList" resultMap="rawmaterialMap">
+		select * from raw_material order by rm_no
+	</select>
+	<resultMap type="map" id="rawmaterialMap">
+	</resultMap>
+
+	<insert id="insertBOM">
+		insert into bom values(
+			seq_bom.nextval,
+			#{productCode},
+			default
+		)
+	</insert>
+	
+	<select id="selectBOMNobyProductCode" resultType="_int">
+		select bom_no from bom where pl_no = #{productCode}
+	</select>
+	
+	<insert id="insertBOMlist" parameterType="java.util.Map">
+	 <if test="BOMList.size != 0">
+		<foreach collection="BOMList" item="item" separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+	   		   into bom_rm(bom_no, rm_no, quantity) 
+        	   VALUES 
+	   		   (
+	   		   #{bomNo},
+               #{item.pCodeList},
+               #{item.pCountList}
+               )
+        </foreach>
+     </if>
+	</insert>
+	
+	<select id="selectBOMForm" resultMap="BOMMap">
+		select * from bom where pl_no = #{tdPtNo}
+	</select>
+	<resultMap type="map" id="BOMMap">
+	</resultMap>
+	
+	<select id="selectBOMRmListByBOMNo" resultMap="BOMRmMap">
+		select br.bom_no, br.rm_no, br.quantity, rm.rm_name 
+		from bom_rm br join raw_material rm on br.rm_no = rm.rm_no
+		where bom_no = #{bomNo}
+	</select>
+	<resultMap type="map" id="BOMRmMap">
+	</resultMap>
+	
+</mapper>

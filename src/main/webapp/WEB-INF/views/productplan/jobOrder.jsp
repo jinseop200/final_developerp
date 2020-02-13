@@ -1,32 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
  <!-- Custom styles for this page -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+		
 <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">작업 지시서</h1>
-           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
+           <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
             <div class="input-group" style="margin:30px;" >
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="quality-insert-button">
+                <button class="btn btn-primary" type="button" id="insert-btn">
                 	  신규 등록 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="quality-update-button">
+                <button class="btn btn-primary" type="button" id="update-btn">
                 	  수정 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="quality-delete-button">
+                <button class="btn btn-primary" type="button" id="delete-btn">
                 	  삭제
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                <button class="btn btn-primary" type="button" id="quality-search-button">
-                	  부적합 상세 검색하기&nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
-                </button> 
               </div>
             </div>
-          </form>
+          </div>
           <br />
 
           <!-- DataTales Example -->
@@ -39,6 +41,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                      <th></th>
                       <th>작업지시번호</th>
                       <th>납품처</th>
                       <th>납기일</th>
@@ -47,97 +50,20 @@
                       <th>지시수량</th>
                     </tr>
                   </thead>
-                 
                   <tbody>
+                  	<c:forEach items="${joList }" var="jo" varStatus="vs">
                     <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
+                      <td>
+						<input type="checkbox" name="chkbox" id="chkbox" onclick="oneCheckbox(this);"/>
+                      </td>
+                      <td>${jo.joNo}</td>
+                      <td>${jo.customer }</td>
+                      <td>${jo.dueDate }</td>
+                      <td>${jo.manager }</td>
+                      <td>${jo.productName }</td>
+                      <td>${jo.orderQuantity}</td>
                     </tr>
-                    <tr>
-                      <td>Garrett Winters</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>63</td>
-                      <td>2011/07/25</td>
-                      <td>$170,750</td>
-                    </tr>
-                    <tr>
-                      <td>Ashton Cox</td>
-                      <td>Junior Technical Author</td>
-                      <td>San Francisco</td>
-                      <td>66</td>
-                      <td>2009/01/12</td>
-                      <td>$86,000</td>
-                    </tr>
-                    <tr>
-                      <td>Cedric Kelly</td>
-                      <td>Senior Javascript Developer</td>
-                      <td>Edinburgh</td>
-                      <td>22</td>
-                      <td>2012/03/29</td>
-                      <td>$433,060</td>
-                    </tr>
-                    <tr>
-                      <td>Airi Satou</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>33</td>
-                      <td>2008/11/28</td>
-                      <td>$162,700</td>
-                    </tr>
-                    <tr>
-                      <td>Brielle Williamson</td>
-                      <td>Integration Specialist</td>
-                      <td>New York</td>
-                      <td>61</td>
-                      <td>2012/12/02</td>
-                      <td>$372,000</td>
-                    </tr>
-                    <tr>
-                      <td>Herrod Chandler</td>
-                      <td>Sales Assistant</td>
-                      <td>San Francisco</td>
-                      <td>59</td>
-                      <td>2012/08/06</td>
-                      <td>$137,500</td>
-                    </tr>
-                    <tr>
-                      <td>Rhona Davidson</td>
-                      <td>Integration Specialist</td>
-                      <td>Tokyo</td>
-                      <td>55</td>
-                      <td>2010/10/14</td>
-                      <td>$327,900</td>
-                    </tr>
-                    <tr>
-                      <td>Colleen Hurst</td>
-                      <td>Javascript Developer</td>
-                      <td>San Francisco</td>
-                      <td>39</td>
-                      <td>2009/09/15</td>
-                      <td>$205,500</td>
-                    </tr>
-                    <tr>
-                      <td>Sonya Frost</td>
-                      <td>Software Engineer</td>
-                      <td>Edinburgh</td>
-                      <td>23</td>
-                      <td>2008/12/13</td>
-                      <td>$103,600</td>
-                    </tr>
-                    <tr>
-                      <td>Jena Gaines</td>
-                      <td>Office Manager</td>
-                      <td>London</td>
-                      <td>30</td>
-                      <td>2008/12/19</td>
-                      <td>$90,560</td>
-                    </tr>
-                    
+                  	</c:forEach>
                   </tbody>
                 </table>
               </div>
@@ -145,7 +71,7 @@
           </div>
           
   <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="joModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -162,39 +88,64 @@
     </div>
 </div>
   
-  <script>
-  $("#quality-search-button").click(function(){
-      $('.controll-modal-body').load("${pageContext.request.contextPath}/quality/qualitySearch.do",function(){
-          $('#myModal').modal({backdrop: 'static', keyboard: false});
-          $('#myModal').modal({show:true});
-          $(".modal-backdrop.in").css('opacity', 0.4);
-          
-          $(".controll-title").html("");
-          $(".controll-title").html("부적합 상세조회");
-          
-      });
-  });
-  $("#quality-insert-button").click(function(){
-	  $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/insertJobOrder.do",function(){
-          $('#myModal').modal({backdrop: 'static', keyboard: false});
-          $('#myModal').modal({show:true});
-          $(".modal-backdrop.in").css('opacity', 0.4);
-          $(".controll-title").html("작업지시서 등록");
-  	});
-  });
-  </script>
-  <style>
-  #myModal{
-  	z-index: 1060;
-  }
-  </style>
+<script>
 
 
-  <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+//작업지시시서 등록
+$("#insert-btn").click(function(){
+ $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/insertJobOrder.do",function(){
+        $('#joModal').modal({backdrop: 'static', keyboard: false});
+        $('#joModal').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("작업지시서 등록");
+	});
+});
 
-  <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
+//체크박스 하나만 선택
+function oneCheckbox(a){
+    var obj = document.getElementsByName("chkbox");
+        for(var i=0; i<obj.length; i++){
+            if(obj[i] != a){
+            obj[i].checked = false;
+        }
+    }
+}
+
+//작업지시서 수정
+$("#update-btn").click(function(){
+ $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do",function(){
+        $('#joModal').modal({backdrop: 'static', keyboard: false});
+        $('#joModal').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("작업지시서 등록");
+	});
+});
+
+ 
+//작업지시서 삭제
+$("#delete-btn").click(function(){
+	if($('table input:checkbox:checked').length == 0){
+		alert("삭제할 항목을 선택해 주세요.");
+		return;
+	}
+		
+	if(!confirm("정말 삭제하시겠습니까?")) return;
+	var joNo = $("table input:checkbox:checked").parent().next().text();
+	location.href ="${pageContext.request.contextPath}/productplan/deleteOneJo.do?joNo="+joNo;
+});
+	
+</script>
+<style>
+#myModal{
+	z-index: 1060;
+}
+</style>
+<!-- Page level plugins -->
+<script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

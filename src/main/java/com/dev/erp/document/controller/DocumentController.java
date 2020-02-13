@@ -54,7 +54,9 @@ public class DocumentController {
 	@PostMapping("/document/enrollDocument.do")
 	public ModelAndView enrollDocument(ModelAndView mav, @RequestParam("documentDate")Date documentDate,
 										@RequestParam("documentTitle") String documentTitle, @RequestParam("docLastapproval") String docLastapproval,
-										@RequestParam("documentMiddle") String documentMiddle, @RequestParam("documentType") String documentType,
+										@RequestParam("docLastapproval1") String docLastapproval1, @RequestParam("docLastapproval2") String docLastapproval2,
+										@RequestParam("docLastapproval3") String docLastapproval3,
+										@RequestParam("documentType") String documentType,
 										@RequestParam("documentContent") String documentContent, @RequestParam("empName") String empName) {
 		int typeNo = 0;
 		if(documentType.equals("기본")) {
@@ -64,12 +66,62 @@ public class DocumentController {
 		}else if(documentType.equals("지출결의서")) {
 			typeNo=2;
 		}
-		Document document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLastapproval,documentContent,documentDate);
-		DocumentLine documentLine = new DocumentLine(0,0,typeNo,documentMiddle,docLastapproval,"N");
+		String docLast="";
+		int result=0;
+		Document document = new Document();
+		if(docLastapproval!=""&&docLastapproval1=="" &&docLastapproval2=="" &&docLastapproval3=="") {
+			docLast=docLastapproval;
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			DocumentLine documentLine = new DocumentLine(0,0,typeNo,empName,docLast,"Y");
+			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLast,null,"Y");
+			result = documentService.insertDocument(document);
+			int result2 = documentService.insertDocumentLine(documentLine);
+			int result3 = documentService.insertDocumentLine(documentLine1);
+		}
+		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2==""&&docLastapproval3=="") {
+			docLast=docLastapproval1;
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
+			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
+			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,null,"Y");
+			result = documentService.insertDocument(document);
+			int result1 = documentService.insertDocumentLine(documentLine0);
+			int result2 = documentService.insertDocumentLine(documentLine1);
+			int result3 = documentService.insertDocumentLine(documentLine2);
+		}
+		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3=="") {
+			docLast=docLastapproval2;
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
+			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
+			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
+			DocumentLine documentLine3 = new DocumentLine(0,0,typeNo,docLastapproval2,null,"Y");
+			result = documentService.insertDocument(document);
+			int result2 = documentService.insertDocumentLine(documentLine0);
+			int result3 = documentService.insertDocumentLine(documentLine1);
+			int result4 = documentService.insertDocumentLine(documentLine2);
+			int result5 = documentService.insertDocumentLine(documentLine3);
+		}
+		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3!="") {
+			docLast=docLastapproval3;
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
+			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
+			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
+			DocumentLine documentLine3 = new DocumentLine(0,0,typeNo,docLastapproval2,docLastapproval3,"Y");
+			DocumentLine documentLine4 = new DocumentLine(0,0,typeNo,docLastapproval3,null,"Y");
+			result = documentService.insertDocument(document);
+			int result2 = documentService.insertDocumentLine(documentLine0);
+			int result3 = documentService.insertDocumentLine(documentLine1);
+			int result4 = documentService.insertDocumentLine(documentLine2);
+			int result5 = documentService.insertDocumentLine(documentLine3);
+			int result6 = documentService.insertDocumentLine(documentLine4);
+		}
+		logger.debug("docLast={}",docLast);
+		
 		String msg="";
 		String loc="/";
-		int result = documentService.insertDocument(document);
-		int result2 = documentService.insertDocumentLine(documentLine);
+		
 		if(result>0) {
 			msg="전송되었습니다.";
 			loc="/document/documentView.do?empName="+empName;
@@ -108,24 +160,61 @@ public class DocumentController {
 		return map;
 	}
 	@RequestMapping("/document/documentDetailView.do")
-	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("docNo") int docNo) {
+	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("docNo") int docNo,@RequestParam("empName")String empName) {
 		
 		Document document = new Document();
+		List<DocumentLine> docLine = new ArrayList<>();
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> map2 = new HashMap<>();
+		map.put("docNo",docNo);
+		map.put("empName",empName);
+		DocumentLine prevWriter = new DocumentLine();
+		DocumentLine nextWriter = new DocumentLine();
 		document = documentService.documentDetailView(docNo);
+		docLine = documentService.documentLineView(docNo);
+		map2.put("docNo", docNo);
+		map2.put("firstDoc", document.getDocWriter());
+		DocumentLine documentLine1 = new DocumentLine();
+		documentLine1=documentService.selectDocumentLine(map2);
+		if(document.getDocWriter().equals(empName) || documentLine1.getNextWriter().equals(empName)) {
+			prevWriter.setReturnYn("N");
+			nextWriter.setNextWriter("next");
+		}else {
+			nextWriter=documentService.documentNextWriter(map);
+			map.put("prevWriter", nextWriter.getPrevWriter());
+			prevWriter=documentService.documentPrevWriter(map);
+		}
+		logger.debug("docLine={}",docLine);
 		mav.addObject("list",document);
-		mav.setViewName("document/documentDetailView");
+		mav.addObject("docLine",docLine);
+		mav.addObject("prevWriter",prevWriter);
+		mav.addObject("nextWriter",nextWriter);
+		mav.setViewName("document/documentDetailView2");
 		
 		return mav;
 	}
 	@RequestMapping("/document/updateDocument.do")
-	public ModelAndView updateDocumnet(ModelAndView mav, @RequestParam("docNo") int docNo, @RequestParam("empName") String empName, 
+	public ModelAndView updateDocument(ModelAndView mav, @RequestParam("docNo") int docNo, @RequestParam("empName") String empName, 
 										@RequestParam("submitApprove") int submitApprove) {
 		int result1=0;
 		int result2=0;
+		Map<String,Object> param = new HashMap<>();
+		param.put("docNo",docNo);
+		param.put("empName",empName);
+		Document document = new Document();
+		document = documentService.documentDetailView(docNo);
+		logger.debug("document={}",document);
+		logger.debug("submitApprove={}",submitApprove);
 		if(submitApprove ==1) {
-			result1 = documentService.approveDocument(docNo);
+			result1 = documentService.approveDocument(param);
+			if(document.getDocLastapproval().equals(empName)) {
+				int result = documentService.updateDocument(docNo);
+			}
 		}else {
-			result2 = documentService.refuseDocument(docNo);
+			result2=1;
+			if(document.getDocLastapproval().equals(empName)) {
+				int result = documentService.notUpdateDocument(docNo);
+			}
 		}
 		String msg="";
 		String loc="/document/documentView.do?empName="+empName;

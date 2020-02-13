@@ -22,9 +22,22 @@ public interface DocumentService {
 
 	Document documentDetailView(int docNo);
 
-	int approveDocument(int docNo);
+	int approveDocument(Map<String, Object> param);
 
-	int refuseDocument(int docNo);
+	int refuseDocument(Map<String, Object> param);
+
+	List<DocumentLine> documentLineView(int docNo);
+
+	DocumentLine documentPrevWriter(Map<String, Object> map);
+	
+	DocumentLine documentNextWriter(Map<String, Object> map);
+
+	int updateDocument(int docNo);
+
+	int notUpdateDocument(int docNo);
+
+	DocumentLine selectDocumentLine(Map<String, Object> map2);
+
 
 
 }

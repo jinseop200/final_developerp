@@ -32,9 +32,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                	<c:forEach items="${docList }" var="l">
+                	<c:forEach items="${docList }" var="l" varStatus="vs">
 	                    <tr class="getTr">
-	                      <td>${l.docNo }</td>
+	                      <td id="${l.docNo}">${vs.count}</td>
 	                      <td>${l.regDate }</td>
 	                      <td>${l.docTitle }</td>
 	                      <td>${l.docType }</td>
@@ -71,8 +71,8 @@
 </div>
 
   <!-- detailView Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="documentDetailView">
-    <div class="modal-dialog" role="document">
+<div class="modal modal-center" tabindex="-1" role="dialog" id="documentDetailView">
+    <div class="modal-dialog modal-center" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title controll-title"></h5>
@@ -80,7 +80,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body controll-modal-body document">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
@@ -95,7 +95,6 @@
           <h5 class="modal-title search-title" id="searchModalTitle"> </h5>
       </div>
       <div class="modal-body searchModalBody">
-          <p>Modal body text goes here.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-primary searchModal-end">닫기</button>
@@ -110,8 +109,8 @@ $(()=>{
 		var tr = $(this).parent().parent();
 		var td = tr.children();
 		
-		var tdDocNo = td.eq(0).text();
-		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?docNo="+tdDocNo,function(){
+		var tdDocNo = td.eq(0).attr("id");
+		$('.controll-modal-body').load("${pageContext.request.contextPath}/document/documentDetailView.do?empName=${memberLoggedIn.empName}&docNo="+tdDocNo,function(){
 	        $('#documentDetailView').modal({backdrop: 'static', keyboard: false});
 	        $('#documentDetailView').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
