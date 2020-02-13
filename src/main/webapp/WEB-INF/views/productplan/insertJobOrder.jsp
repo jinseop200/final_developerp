@@ -111,11 +111,7 @@
     </div>
     
    	<!-- Modal -->
-<<<<<<< HEAD
-	<div class="modal" tabindex="-1" role="dialog" id="jo-searchModal">
-=======
 	<div class="modal" tabindex="-1" role="dialog" id="searchDetailsModal">
->>>>>>> feature/민병준_생산계획
 	    <div class="modal-dialog" role="document">
 	        <div class="modal-content">
 	        <div class="modal-header">
@@ -124,11 +120,7 @@
 	            <span aria-hidden="true">&times;</span>
 	            </button>
 	        </div>
-<<<<<<< HEAD
-	        <div class="modal-body searchBody">
-=======
 	        <div class="modal-body sd-modal-body">
->>>>>>> feature/민병준_생산계획
 	            <!-- <p>Modal body text goes here.</p> -->
 	        </div>
 	        </div>
@@ -169,15 +161,6 @@
 		$("#cancel-btn").click(function(){
 			$("#joModal").modal('hide');
 		});
-		
-		
-		$("#sc-btn").click(function(){
-			 $('.searchBody').load("${pageContext.request.contextPath}/productplan/searchCustomer.do",function(){
-			        $('#searchCustomer').modal({backdrop: 'static', keyboard: false});
-			        $('#searchCustomer').modal({show:true});
-			        $(".modal-backdrop.in").css('opacity', 0.4);
-			        $("sc-title").html("납품처 검색");
-				});
 		
 		//각 요소 조회 버튼 이벤트핸들러
 		$(".searchSpec").click(function(){

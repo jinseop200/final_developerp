@@ -6,38 +6,42 @@
 
 	<!-- 작업지시서 쿼리문 -->
 	<select id="selectJobOrder" resultMap="joMap" >
-		select * from job_order order by jo_no desc
+		select jo_no,
+			   customer,
+			   to_char(due_date, 'YYYY-MM-DD') as "dueDate",
+			   manager,
+			   product_name,
+			   order_quantity,
+			   order_content
+		from job_order order by jo_no desc
 	</select>
 	<resultMap type="map" id="joMap" >
 		<id column="jo_no" property="joNo" ></id>
 		<result column="customer" property="customer"></result>
-		<result column="due_date" property="dueDate"></result>
+		<result column="dueDate" property="dueDate"></result>
 		<result column="manager" property="manager"></result>
 		<result column="product_name" property="productName"></result>
 		<result column="order_quantity" property="orderQuantity"></result>
+		<result column="order_content" property="orderContent"></result>
 		
 	</resultMap>
+	<select id="selectJoTotalContents" resultType="_int">
+		select count(*) from job_order
+	</select>
 	
 	<insert id="insertJobOrder">
 		insert into job_order
-<<<<<<< HEAD
-		values( #{enrollDate},1,1,1,
+		values( #{joNo},1,1,default,
 				#{customer},
-				#{dueDate},
+				to_date(#{dueDate}, 'yyyy/MM/dd'),
 				#{manager},
 				#{productName},
 				#{quantity},
 				#{orderContent}
 				)
-=======
-		values( 
-		
-			  )
->>>>>>> feature/민병준_생산계획
-	
 	</insert>
 	<!-- 작업지시서 세부사항 조회 쿼리문 -->
-	<select id="selectCustomer" resultType="map">
+	<select id="selectCustomer" resultType="Map">
 		select vendor_name as "content1",
 			   incharge as "content2"
 		from vendor
@@ -46,7 +50,7 @@
 	<select id="selectTotalContentByCtmr" resultType="_int">
 		select count(*) from vendor where vendor_type = 2
 	</select>
-	<select id="selectProductName" resultType="map">
+	<select id="selectProductName" resultType="Map">
 		select pl_no as "content1",
 			   product_name as "content2" 
 		from product_list
@@ -56,13 +60,37 @@
 	</select>
 	<!-- end -->
 	
+	<select id="selectOneJo" resultMap="joMap">
+		select jo_no,
+			   customer,
+			   to_char(due_date, 'YYYY-MM-DD') as "dueDate",
+			   manager,
+			   product_name,
+			   order_quantity,
+			   order_content
+		from job_order 
+		where jo_no = #{joNo}
+		order by jo_no desc 
+	</select>
+	
+	<update id="updateJobOrder">
+		update job_order
+		set 
+			due_date = to_date(#{dueDate}, 'yy/MM/dd'),
+			customer = #{customer},
+			manager = #{manager},
+			product_name = #{productName},
+			order_quantity = #{quantity},
+			order_content = #{orderContent}
+		where jo_no = #{joNo} 
+	</update>
 	<delete id="deleteOneJo">
 		delete from job_order
 		where jo_no = #{joNo}
 	</delete>
 	
 	<!-- 원재료 구매계획 쿼리문 -->
-	<select id="selectEndProduct" resultType="map">
+	<select id="selectEndProduct" resultType="Map">
 		select pl_no, product_name from product_list
 	</select>
 	<select id="selectTotalContentByEp" resultType="_int">

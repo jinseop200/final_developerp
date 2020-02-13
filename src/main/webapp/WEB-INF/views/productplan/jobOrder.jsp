@@ -20,9 +20,7 @@
                 <button class="btn btn-primary" type="button" id="insert-btn">
                 	  신규 등록 
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" type="button" id="update-btn">
-                	  수정 
-                </button> &nbsp;&nbsp;&nbsp;&nbsp;
+             
                 <button class="btn btn-primary" type="button" id="delete-btn">
                 	  삭제
                 </button> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,7 +36,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered jo-table" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th></th>
@@ -56,7 +54,7 @@
                       <td>
 						<input type="checkbox" name="chkbox" id="chkbox" onclick="oneCheckbox(this);"/>
                       </td>
-                      <td>${jo.joNo}</td>
+                      <td><a href="#">${jo.joNo}</a></td>
                       <td>${jo.customer }</td>
                       <td>${jo.dueDate }</td>
                       <td>${jo.manager }</td>
@@ -112,16 +110,17 @@ function oneCheckbox(a){
 }
 
 //작업지시서 수정
-$("#update-btn").click(function(){
- $('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do",function(){
+$(".jo-table tbody a").click(function(){
+	var joNo = $(this).html();
+	console.log("joNo="+joNo);
+ 	$('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do?joNo="+joNo,function(){
         $('#jodal').modal({backdrop: 'static', keyboard: false});
         $('#joModal').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
-        $(".controll-title").html("작업지시서 등록");
+        $(".controll-title").html("작업지시서 수정");
 	});
 });
 
- 
 //작업지시서 삭제
 $("#delete-btn").click(function(){
 	if($('table input:checkbox:checked').length == 0){
@@ -133,7 +132,7 @@ $("#delete-btn").click(function(){
 	var joNo = $("table input:checkbox:checked").parent().next().text();
 	location.href ="${pageContext.request.contextPath}/productplan/deleteOneJo.do?joNo="+joNo;
 });
-	
+
 </script>
 <style>
 #myModal{

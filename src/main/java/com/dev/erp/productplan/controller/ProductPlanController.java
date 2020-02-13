@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,8 +90,6 @@ public class ProductPlanController {
 		
 		return mav;
 	}
-<<<<<<< HEAD
-=======
 	//작업지시서 등록 입력폼 - 세부사항 검색
 	@RequestMapping("/productplan/searchDetails.do")
 	public ModelAndView searchDetails(@RequestParam String searchType,
@@ -141,61 +137,89 @@ public class ProductPlanController {
 		
 		return mav;
 	}
->>>>>>> feature/민병준_생산계획
 	
 	//작업지시서 신규등록
 	@RequestMapping("/productplan/insertJobOrderEnd.do")
-	public ModelAndView insertJobOrder(@RequestParam String enrollDate,
+	public ModelAndView insertJobOrder(@RequestParam(value="enrollDate") String enrollDate,
 									   @RequestParam String dueDate,
 									   @RequestParam String customer,
 									   @RequestParam String manager,
 									   @RequestParam String productName,
 									   @RequestParam String quantity,
 									   @RequestParam String orderContent,
-<<<<<<< HEAD
-									   
-=======
->>>>>>> feature/민병준_생산계획
 									   ModelAndView mav) {
 		
+		int joTotalContents = 0;
+		joTotalContents = productPlanService.selectJoTotalContents();
+		//작업지시번호 포맷변경
+		String str = String.join("", enrollDate.split("-"));
 		Map<String, String> joList = new HashMap<>();
-		joList.put("enrollDate", enrollDate);
+		joList.put("joNo", str+"-"+(joTotalContents+1));
 		joList.put("dueDate", dueDate);
 		joList.put("customer", customer);
 		joList.put("manager", manager);
 		joList.put("productName", productName);
 		joList.put("quantity", quantity);
-<<<<<<< HEAD
-		joList.put("orderContent",orderContent);
-		
-		logger.info("joList@controller={}", joList);
-		int result = productPlanService.insertJobOrder(joList);
-		mav.addObject("msg", result>0?"등록 성공!":"등록 실패!");
-		mav.addObject("loc", "/productplan/jobOrder.do");
-=======
 		joList.put("orderContent", orderContent);
 		
 		logger.info("joList@controller={}", joList);
+		
 		int result = productPlanService.insertJobOrder(joList);
 		mav.addObject("msg",result>0?"작업지시서 신규등록 성공!":"작업지시서 신규등록 실패!");
 		mav.addObject("loc","/productplan/jobOrder.do");
->>>>>>> feature/민병준_생산계획
-		mav.addObject("joList", joList);
+		mav.setViewName("common/msg");
 		
 		return mav;
 		
 	}
-	//작업지시서 수정
+	//작업지시서 수정 폼
 	@RequestMapping("/productplan/updateJobOrder.do")
-	public ModelAndView updateJobOrderForm(ModelAndView mav) {
+	public ModelAndView updateJobOrder(ModelAndView mav,
+										   @RequestParam(value="joNo") String joNo) {
 		
+		Map<String, String> load = productPlanService.selectOneJo(joNo);
+		String str = load.get("joNo");
+		String year = str.substring(0,4);
+		String month = str.substring(4,6);
+		String date = str.substring(6,8);
+		String str2 = String.format("%s-%s-%s",year,month,date);
+		
+		mav.addObject("enrollDate", str2);
+		mav.addObject("load", load);
+		mav.addObject("joNo",joNo);
 		mav.setViewName("productplan/updateJobOrder");
+		return mav;
+	}
+	//작업 지시서 수정완료
+	@RequestMapping("/productplan/updateJobOrderEnd.do")
+	public ModelAndView updateJobOrderEnd(ModelAndView mav,
+										  @RequestParam (value="joNo") String joNo,
+										  @RequestParam String dueDate,
+										  @RequestParam String customer,
+										  @RequestParam String manager,
+										  @RequestParam String productName,
+										  @RequestParam String quantity,
+										  @RequestParam String orderContent
+										  ) {
+		Map<String, String> update = new HashMap<>();
+		update.put("joNo", joNo);
+		update.put("dueDate", dueDate);
+		update.put("customer", customer);
+		update.put("manager", manager);
+		update.put("productName", productName);
+		update.put("quantity", quantity);
+		update.put("orderContent", orderContent);
+		logger.info("update@@="+update);
+		int result = productPlanService.updateJobOrderEnd(update);
+		mav.addObject("msg", result>0?"작업지시서 수정 성공!":"작업지서서 수정 실패!");
+		mav.addObject("loc", "/productplan/jobOrder.do");
+		mav.setViewName("common/msg");
 		return mav;
 	}
 	
 	//작업지시서 삭제
 	@RequestMapping("/productplan/deleteOneJo.do")
-	public ModelAndView deleteOneJo(@RequestParam int joNo,
+	public ModelAndView deleteOneJo(@RequestParam(value="joNo") String joNo,
 									ModelAndView mav) {
 		int result = productPlanService.deleteOneJo(joNo);
 		logger.info("result={}", result);

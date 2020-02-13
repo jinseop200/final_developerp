@@ -9,7 +9,7 @@ public interface ProductPlanDAO {
 
 	List<Map<String, String>> selectJobOrder();
 
-	int deleteOneJo(int joNo);
+	int deleteOneJo(String joNo);
 
 	List<Map<String, String>> selectEndProduct(int cPage, int numPerPage);
 
@@ -22,5 +22,11 @@ public interface ProductPlanDAO {
 	List<Map<String, String>> selectProductName(int cPage, int numPerPage);
 
 	int selectTotalContentsByPn();
+
+	int selectJoTotalContents();
+
+	Map<String, String> selectOneJo(String joNo);
+
+	int updateJobOrderEnd(Map<String, String> update);
 
 }

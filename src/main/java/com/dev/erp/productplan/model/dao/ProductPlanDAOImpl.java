@@ -25,7 +25,7 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	}
 
 	@Override
-	public int deleteOneJo(int joNo) {
+	public int deleteOneJo(String joNo) {
 		return sqlSession.delete("productplan.deleteOneJo", joNo);
 	}
 
@@ -61,5 +61,20 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	@Override
 	public int selectTotalContentsByPn() {
 		return sqlSession.selectOne("productplan.selectTotalContentByPn");
+	}
+
+	@Override
+	public int selectJoTotalContents() {
+		return sqlSession.selectOne("productplan.selectJoTotalContents");
+	}
+
+	@Override
+	public Map<String, String> selectOneJo(String joNo) {
+		return sqlSession.selectOne("productplan.selectOneJo", joNo);
+	}
+
+	@Override
+	public int updateJobOrderEnd(Map<String, String> update) {
+		return sqlSession.update("productplan.updateJobOrder",update);
 	}
 }
