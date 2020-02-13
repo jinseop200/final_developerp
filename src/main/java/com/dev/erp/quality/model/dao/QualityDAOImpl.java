@@ -144,6 +144,35 @@ public class QualityDAOImpl implements QualityDAO {
 		return sqlSession.selectList("quality.selectCountQNByInsectionY",param);
 	}
 
+	@Override
+	public List<Map<String, String>> searchProuctNamePtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.searchProuctNamePtNo",ptNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromPD(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectMeasurmentFromPD",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromRM(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectMeasurmentFromRM",param);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByRmNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectSpecByRmNo",ptNo);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByPtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectSpecByPtNo",ptNo);
+	}
 	
 	
 }

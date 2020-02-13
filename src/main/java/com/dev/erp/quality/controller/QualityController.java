@@ -1,6 +1,10 @@
 package com.dev.erp.quality.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.quality.model.service.QualityService;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 @Controller
 public class QualityController {
@@ -311,5 +316,92 @@ public class QualityController {
 		return mav;
 	}
 	
+	@RequestMapping("/quality/xbarGraphByProduct.do")
+	public ModelAndView xbarGraphByProduct(ModelAndView mav) {
+		
+		Calendar date = new GregorianCalendar().getInstance();
+		Calendar beforeMonth  = new GregorianCalendar().getInstance();
+		beforeMonth.add(Calendar.MONTH, -1);
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+		String today = fmt.format(date.getTime());
+		String monthAgo = fmt.format(beforeMonth.getTime());
+		mav.addObject("today",today);
+		mav.addObject("monthAgo",monthAgo);
+		
+		
+		List<Map<String,String>> ptType = qualityService.selectProductTypeAll();
+		mav.addObject("ptType",ptType);
+		mav.setViewName("quality/xbarGraphByProduct");
+		return mav;
+	}
+	
+	@RequestMapping("/quality/searchProuctNamePtNo.do")
+	@ResponseBody
+	public void searchProuctNamePtNo(@RequestParam("ptNo") String ptNo, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		response.setContentType("text/html;charset=UTF-8");
+		
+		List<Map<String,String>> pList = new ArrayList<>();
+		
+		pList = qualityService.searchProuctNamePtNo(ptNo);
+		
+		
+		new Gson().toJson(pList,response.getWriter());
+	}
+	
+	@RequestMapping("/quality/searchXBarFrmEnd.do")
+	@ResponseBody
+	public void searchXBarFrmEnd(@RequestParam(value="startDate", required=false) String startDate,
+									@RequestParam(value="endDate", required=false) String endDate,
+									@RequestParam("ptType") String ptType,
+									@RequestParam("ptNo") String ptNo,
+									HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		Map<String,String> param = new HashMap<>();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		param.put("ptNo", ptNo);
+		Map<String,String> spec = new HashMap<>();
+		List<Map<String,String>> data = new ArrayList<>();
+		if(ptType.equals("1")) {
+			data = qualityService.selectMeasurmentFromRM(param);
+			spec = qualityService.selectSpecByRmNo(ptNo);
+		}
+		else {
+			data = qualityService.selectMeasurmentFromPD(param);
+			spec = qualityService.selectSpecByPtNo(ptNo);
+		}
+		
+		double spec_ = Double.parseDouble(String.valueOf(spec.get("SPEC")));
+		double tol_ = Double.parseDouble(String.valueOf(spec.get("TOL")));
+		
+		double ucl_ = spec_ + (spec_*tol_);
+		double lcl_ = spec_ - (spec_*tol_);
+		
+		List<Map<String,String>> ucl = new ArrayList<>();
+		List<Map<String,String>> lcl = new ArrayList<>();
+		for(int i=0;i<data.size();i++) {
+			Map<String,String> temp = new HashMap<>();
+			String date = ((Map<String,String>)data.get(i)).get("x");
+			temp.put("x", date);
+			temp.put("y", String.valueOf(ucl_));
+			ucl.add(temp);
+			temp = new HashMap<>();
+			temp.put("x", date);
+			temp.put("y", String.valueOf(lcl_));
+			lcl.add(temp);
+		}
+		
+		
+		Map <String,Object> xbarMap = new HashMap<>();
+		xbarMap.put("UCL", ucl);
+		xbarMap.put("LCL", lcl);
+		xbarMap.put("DATA", data);
+		
+//		data = qualityService
+		
+		new Gson().toJson(xbarMap,response.getWriter());
+		
+	}
 	
 }

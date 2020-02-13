@@ -144,6 +144,36 @@ public class QualityServiceImpl implements QualityService {
 		return qualityDAO.selectCountQNByInsectionY(param);
 	}
 
+	@Override
+	public List<Map<String, String>> searchProuctNamePtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.searchProuctNamePtNo(ptNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromRM(Map<String,String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectMeasurmentFromRM(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMeasurmentFromPD(Map<String,String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectMeasurmentFromPD(param);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByRmNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectSpecByRmNo(ptNo);
+	}
+
+	@Override
+	public Map<String,String> selectSpecByPtNo(String ptNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectSpecByPtNo(ptNo);
+	}
+
 
 
 }

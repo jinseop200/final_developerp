@@ -154,5 +154,35 @@
 		group by rm_no ) order by 1
 	</select>
 	
+	<select id="searchProuctNamePtNo" resultType="map">
+		select * from (
+		select pl_no, product_name, pt_no from product_list
+		union
+		select rm_no, rm_name, pt_no from raw_material) where pt_no = #{ptNo}
+	</select>
+	
+	
+	<select id="selectMeasurmentFromPD" resultType="map">
+		select to_char(production,'yyyy-MM-dd') as "x", measurement as "y" from production
+		where pl_no = #{ptNo}
+		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+			and production between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
+		</if>
+		order by 1
+	</select>
+	<select id="selectMeasurmentFromRM" resultType="map">
+		select to_char(rec_date,'yyyy-MM-dd') as "x", measurement as "y" from recieving
+		where rm_no = #{ptNo}
+		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+			and rec_date between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
+		</if>
+		order by 1
+	</select>	
+	<select id="selectSpecByPtNo" resultType="map">
+		select spec, tol from product_list where pl_no = #{ptNo}
+	</select>
+	<select id="selectSpecByRmNo" resultType="map">
+		select spec, tol from raw_material where rm_no = #{ptNo}
+	</select>
 	
 </mapper>
