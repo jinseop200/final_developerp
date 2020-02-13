@@ -3,16 +3,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <fmt:requestEncoding value="utf-8"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%String content = (String)request.getAttribute("content");
 Date now = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 System.out.println("현재시간  : " +sdf.format(now)); 
 %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-<!DOCTYPE html>
-<html>
-<head>
+
 <meta charset='utf-8' />
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <link href='${pageContext.request.contextPath}/resources/js/calendar/core/main.css' rel='stylesheet' />
@@ -144,11 +142,7 @@ cursor:pointer;}
   }
 
 </style>
-</head>
-<body>
 
-  <div id='calendar'></div>
+  <div id='calendar' ></div>
 
-</body>
-</html>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
