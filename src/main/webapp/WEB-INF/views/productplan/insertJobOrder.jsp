@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>부적합 정보 입력하기</title>
+<title>작업지시자 등록 입력창-modal</title>
 
 
 <style>
@@ -54,8 +54,9 @@
 <body>
 	<!-- search-container start -->
     <div id="insert-container">
-        <form class="needs-validation" 
-        	  action="${pageContext.request.contextPath }/productplan/insertJobOrderddd.do"
+        <form class="needs-validation"
+        	  id="insertJoFrm"
+        	  action="${pageContext.request.contextPath }/productplan/insertJobOrderEnd.do"
         	  method="POST" >	
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
@@ -71,7 +72,7 @@
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
 	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button" id="sc-btn" data-toggle="modal" data-target="#exampleModal">
+	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
@@ -79,48 +80,39 @@
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">담당자 </label>&emsp;&emsp;
-	                <input type="text" id="manager" name="manager" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
+	                <input type="text" id="manager" name="manager" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" readonly>
+	                
 	            </div>
 	        </div>
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="type">제품명 </label>&emsp;&emsp;
 	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
+	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시수량 </label>&emsp;
-	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
+	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2">
 	            </div>
 	        </div>
 	        
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시 내용</label><br />
-	                <textarea class="form-control quality-comment" cols="100" rows="5" aria-label="With textarea"></textarea>	
+	                <textarea class="form-control quality-comment" name="orderContent" cols="100" rows="5" aria-label="With textarea" placeholder="내용을 입력하세요."></textarea>	
 	            </div>
 	        </div>
-	        <div class="form-row">
-	        	<div class="col-md-6 mb-3">
-	        	</div>
-	            <div class="col-md-6 mb-3">
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">취소</button>
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">등록</button>
-	            </div>
+	        <div class="modal-footer">
+	           <button id="enrollBtn" class="btn btn-primary" type="submit">등록</button>
+	           <button id="cancelBtn" class="btn btn-primary" type="button" data-dismiss="modal">취소</button>
 	        </div>
      	</form>
     </div>
     
    	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="searchCustomer">
+	<div class="modal" tabindex="-1" role="dialog" id="searchDetailsModal">
 	    <div class="modal-dialog" role="document">
 	        <div class="modal-content">
 	        <div class="modal-header">
@@ -129,7 +121,7 @@
 	            <span aria-hidden="true">&times;</span>
 	            </button>
 	        </div>
-	        <div class="modal-body controll-modal-body " id="sc-body">
+	        <div class="modal-body sd-modal-body">
 	            <!-- <p>Modal body text goes here.</p> -->
 	        </div>
 	        </div>
@@ -164,18 +156,34 @@
 		//From의 초기값을 오늘 날짜로 설정
 		$('.datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 		
-		$(".examplModal-close").click(function(){
-			$("#exampleModal").modal('hide');
+		
+		//각 요소 조회 버튼 이벤트핸들러
+		$(".searchSpec").click(function(){
+			var title = $(this).siblings().html();
+			console.log("title="+title);
+			$("#sc-title").html(title);
+			var searchType = $(this).val();
+			console.log("searchType="+searchType);
+			
+			$('.sd-modal-body').load("${pageContext.request.contextPath}/productplan/searchDetails.do?searchType="+searchType,function(){
+		        $('#searchDetailsModal').modal({backdrop: 'static', keyboard: false});
+		        $('#searchDetailsModal').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+			});
 		});
 		
-		$("#sc-btn").click(function(){
-			 $('#sc-body').load("${pageContext.request.contextPath}/productplan/searchCustomer.do",function(){
-			        $('#searchCustomer').modal({backdrop: 'static', keyboard: false});
-			        $('#searchCustomer').modal({show:true});
-			        $(".modal-backdrop.in").css('opacity', 0.4);
-			        $("sc-title").html("납품처 검색");
-				});
-			});
+		$("#enrollBtn").click(function(){
+			if(!confirm("등록하시겠습니까?")) return;
+			$("#insertJoFrm").submit();
+		});
+				
+				
+		$(".cancelBtn").click(function(){
+			$("#joModal").modal('hide');
+		});
+		
+		
+		
 				
 	});
 	</script>

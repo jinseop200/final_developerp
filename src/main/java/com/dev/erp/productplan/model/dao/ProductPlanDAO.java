@@ -15,4 +15,12 @@ public interface ProductPlanDAO {
 
 	int selectTotalContentsByEp();
 
+	List<Map<String, String>> selectCustomer(int cPage, int numPerPage);
+
+	int selectTotalContentsByCtmr();
+
+	List<Map<String, String>> selectProductName(int cPage, int numPerPage);
+
+	int selectTotalContentsByPn();
+
 }

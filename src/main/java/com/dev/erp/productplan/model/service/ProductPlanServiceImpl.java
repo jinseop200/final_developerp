@@ -39,4 +39,24 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.selectTotalContentsByEp();
 	}
 
+	@Override
+	public List<Map<String, String>> selectCustomer(int cPage, int numPerPage) {
+		return productPlanDAO.selectCustomer(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectTotalContentsByCtmr() {
+		return productPlanDAO.selectTotalContentsByCtmr();
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductName(int cPage, int numPerPage) {
+		return productPlanDAO.selectProductName(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectTotalContentsByPn() {
+		return productPlanDAO.selectTotalContentsByPn();
+	}
+
 }
