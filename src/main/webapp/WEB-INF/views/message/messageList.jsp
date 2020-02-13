@@ -60,12 +60,15 @@
 <script>
 $(()=>{
 	messagePage(0);
+	
 });
 
 
 $(".message-list-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
+	var messageValue= $(this).attr("id");
 	console.log(value);
+	console.log(messageValue);
 	var docApproval = $("[name=docLastapproval]").val();
 	var docApproval1 = $("[name=docLastapproval1]").val();
 	var docApproval2 = $("[name=docLastapproval2]").val();
@@ -85,6 +88,7 @@ $(".message-list-table tbody").on('dblclick','tr',function(){
 
 
 function messagePage(a){
+	$(".meHide").hide();
 	console.log("a==="+a);
 	var url_="";
 	var empName="${memberLoggedIn.empName}";
@@ -113,7 +117,7 @@ function messagePage(a){
 				}
 				console.log(m);	
 				if(m.sender == empName || m.reciever == empName){
-					$(".message-list-table tbody").append("<tr><td>"+m.meNo+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					$(".message-list-table tbody").append("<tr id='"+m.meNo+"'><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
 				}else if(m==null && (m.sender!=empName || m.reciever!=empName)){
 					$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
 				}
@@ -128,6 +132,7 @@ function messagePage(a){
 	});
 	
 }
+
 $("#message-insert-button").click(function(){
  $('.controll-modal-body-insertMessage').load("${pageContext.request.contextPath}/message/insertMessageForm.do",function(){
         $('#insertMessage').modal({backdrop: 'static', keyboard: false});
