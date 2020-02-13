@@ -25,7 +25,7 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 	}
 
 	@Override
-	public int deleteOneJo(int joNo) {
+	public int deleteOneJo(String joNo) {
 		return productPlanDAO.deleteOneJo(joNo);
 	}
 
@@ -57,6 +57,21 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 	@Override
 	public int selectTotalContentsByPn() {
 		return productPlanDAO.selectTotalContentsByPn();
+	}
+
+	@Override
+	public int selectJoTotalContents() {
+		return productPlanDAO.selectJoTotalContents();
+	}
+
+	@Override
+	public Map<String, String> selectOneJo(String joNo) {
+		return productPlanDAO.selectOneJo(joNo);
+	}
+
+	@Override
+	public int updateJobOrderEnd(Map<String, String> update) {
+		return productPlanDAO.updateJobOrderEnd(update);
 	}
 
 }

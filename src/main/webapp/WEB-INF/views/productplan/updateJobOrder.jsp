@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>부적합 정보 입력하기</title>
+<title>작업지시자 수정 입력창-modal body</title>
 
 
 <style>
@@ -38,15 +38,13 @@
 #insert-container .btn-primary{
     background-color:#777;
     border-color: #777;
+    float:right;
+    margin-right: 5px;
 
 }
 #insert-container .btn-primary:hover{
     background-color:#777;
     border-color: #777;
-}
-#insert-container #FrmBtn{
-    float:right;
-    margin-right: 5px;
 }
 
 </style>
@@ -54,24 +52,25 @@
 <body>
 	<!-- search-container start -->
     <div id="insert-container">
-        <form class="needs-validation" 
-        	  action="${pageContext.request.contextPath }/productplan/insertJobOrderddd.do"
+        <form class="needs-validation"
+        	  id="updateJoFrm"
+        	  action="${pageContext.request.contextPath }/productplan/updateJobOrderEnd.do?joNo=${joNo }"
         	  method="POST" >	
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	            <label for="datepicker">발생일자</label>&emsp;
-	            <input type="text" id="enrollDate" name="enrollDate" class="form-control datepicker">
+	            <input type="text" id="enrollDate" name="enrollDate" class="form-control enrollDate" value="${enrollDate}" readonly>
 	            </div>
 	            <div class="col-md-6 mb-3">
 	            <label for="datepicker">납기일자</label>&emsp;
-	            <input type="text" id="dueDate" name="dueDate" class="form-control datepicker">
+	            <input type="text" id="dueDate" name="dueDate" class="form-control dueDate" value="${load.dueDate }">
 	            </div>
 	        </div>        
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
-	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button" id="ctmList" data-toggle="modal" data-target="#exampleModal">
+	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.customer }">
+	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
@@ -79,75 +78,52 @@
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">담당자 </label>&emsp;&emsp;
-	                <input type="text" id="manager" name="manager" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
+	                <input type="text" id="manager" name="manager" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" value="${load.manager }"readonly>
+	                
 	            </div>
 	        </div>
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="type">제품명 </label>&emsp;&emsp;
-	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
+	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.productName }">
+	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시수량 </label>&emsp;
-	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button">
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
+	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" value="${load.orderQuantity }">
 	            </div>
 	        </div>
 	        
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시 내용</label><br />
-	                <textarea class="form-control quality-comment" cols="100" rows="5" aria-label="With textarea"></textarea>	
+	                <textarea class="form-control quality-comment" name="orderContent" cols="100" rows="5" aria-label="With textarea" placeholder="내용을 입력하세요." >${load.orderContent }</textarea>	
 	            </div>
 	        </div>
-	        <div class="form-row">
-	        	<div class="col-md-6 mb-3">
-	        	</div>
-	            <div class="col-md-6 mb-3">
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">취소</button>
-	           <button id="FrmBtn" class="btn btn-primary" type="submit">등록</button>
-	            </div>
+	        <div class="modal-footer">
+	           <button id="enrollBtn" class="btn btn-primary" type="submit">수정</button>
+	           <button id="cancelBtn" class="btn btn-primary" type="button" data-dismiss="modal">취소</button>
 	        </div>
      	</form>
     </div>
     
-    <!-- Modal -->
-	<!-- 납품처 리스트 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-center" role="document">
-	    <div class="modal-content ctm">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">납품처 검색</h5>
-	        <button type="button" class="close examplModal-close" aria-label="hidden">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <form>
-	          <div class="form-group">
-	            <label for="recipient-name" class="col-form-label">Recipient:</label>
-	            <input type="text" class="form-control" id="recipient-name">
-	          </div>
-	          <div class="form-group">
-	            <label for="message-text" class="col-form-label">Message:</label>
-	            <textarea class="form-control" id="message-text"></textarea>
-	          </div>
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary examplModal-close">Close</button>
-	        <button type="button" class="btn btn-primary">Send message</button>
-	      </div>
+   	<!-- Modal -->
+	<div class="modal" tabindex="-1" role="dialog" id="searchDetailsModal">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	        <div class="modal-header">
+	            <h5 class="modal-title controll-title" id="sc-title"></h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>
+	        <div class="modal-body sd-modal-body">
+	            <!-- <p>Modal body text goes here.</p> -->
+	        </div>
+	        </div>
 	    </div>
-	  </div>
 	</div>
 
 
@@ -174,13 +150,43 @@
 		});
 		
 		//input을 datepicker로 선언
-		$(".datepicker").datepicker();           
+		/* $(".enrollDate").datepicker(); */           
+		$(".dueDate").datepicker();           
 		//From의 초기값을 오늘 날짜로 설정
-		$('.datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+		/* $('.enrollDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후) */
+		/* $('.dueDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후) */
 		
-		$(".examplModal-close").click(function(){
-			$("#exampleModal").modal('hide');
+		//신규등록 취소버튼
+		$("#cancel-btn").click(function(){
+			$("#joModal").modal('hide');
 		});
+		
+		//각 요소 조회 버튼 이벤트핸들러
+		$(".searchSpec").click(function(){
+			var title = $(this).siblings().html();
+			console.log("title="+title);
+			$("#sc-title").html(title);
+			var searchType = $(this).val();
+			console.log("searchType="+searchType);
+			
+			$('.sd-modal-body').load("${pageContext.request.contextPath}/productplan/searchDetails.do?searchType="+searchType,function(){
+		        $('#searchDetailsModal').modal({backdrop: 'static', keyboard: false});
+		        $('#searchDetailsModal').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+			});
+		});
+		
+		$("#enrollBtn").click(function(){
+			if(!confirm("수정하시겠습니까?")) return;
+			$("#updateJoFrm").submit();
+		});
+				
+				
+		$(".cancelBtn").click(function(){
+			$("#joModal").modal('hide');
+		});
+		
+		
 		
 				
 	});
