@@ -47,7 +47,10 @@ public class StockDAOImpl implements StockDAO {
 		
 		return sqlsession.insert("stock.InsertRm", rawMaterial);
 	}
-	
+	@Override
+	public int DeleteRm(Map<String, String> rawMaterial) {
+		return sqlsession.delete("stock.DeleteRm", rawMaterial);
+	}
 	
 	
 
@@ -84,6 +87,19 @@ public class StockDAOImpl implements StockDAO {
 	public int selectAllCountByProductNo() {
 		return sqlsession.selectOne("stock.selectAllCountByProductNo");
 	}
+
+	@Override
+	public List<Map<String, String>> selectRecievingtypeAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("stock.selectRecievingtypeAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectRecievingCountByLotNo() {
+		return sqlsession.selectOne("stock.selectRecievingCountByLotNo");
+	}
+
+	
 
 	
 	

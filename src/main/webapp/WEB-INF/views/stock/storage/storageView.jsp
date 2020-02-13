@@ -14,19 +14,6 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">창고별 재고관리</h1>
 
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
-	<div class="input-group" style="margin:30px;">
-		<div class="input-group-append">
-			<button class="btn btn-primary" type="button" id="storageUpdate_button">
-				  재고 수정하기 
-			</button> &nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn btn-primary" type="button" id="storageSearch_button">
-				  재고 상세 검색하기 &nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
-			</button> 
-		</div>
-	</div>
-</form>
-
 <br />
 
 <!-- DataTales Example -->

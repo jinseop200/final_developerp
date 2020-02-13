@@ -34,6 +34,12 @@ public interface StockDAO {
 
 	int selectAllCountByProductNo();
 
+	List<Map<String, String>> selectRecievingtypeAll(int cPage, int numPerPage);
+
+	int selectRecievingCountByLotNo();
+
+	int DeleteRm(Map<String, String> rawMaterial);
+
 
 
 }

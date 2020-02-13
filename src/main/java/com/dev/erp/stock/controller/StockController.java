@@ -89,20 +89,23 @@ public class StockController {
 		
 		return mav;
 	}
+	@RequestMapping("/stock/rm/modalRmSnrDelete.do")
+	public ModelAndView modalRmSnrDelete(ModelAndView mav) {
+		
+		mav.setViewName("/stock/rm/modalRmSnrDelete");
+		
+		return mav;
+	}
 	
 	// rmNo storeNo ptNo quantity recDate
 	@RequestMapping("/stock/rm/InsertRm.do")
 	public ModelAndView InsertRm(@RequestParam String rmNo,
-									@RequestParam String storeNo,
-									@RequestParam String ptNo,
 									@RequestParam String quantity,
 									@RequestParam String recDate,
 									ModelAndView mav) {
 
 		Map<String, String> recieving = new HashMap<>();
 		recieving.put("rmNo", rmNo);
-		recieving.put("storeNo",storeNo);
-		recieving.put("ptNo", ptNo);
 		recieving.put("quantity", quantity);
 		recieving.put("recDate", recDate);
 		
@@ -118,23 +121,41 @@ public class StockController {
 	}
 	
 	@RequestMapping("/stock/rm/UpdateRm.do")
-	public ModelAndView UpdateRm(@RequestParam String rmNo,
-									@RequestParam String storeNo,
-									@RequestParam String ptNo,
+	public ModelAndView UpdateRm(@RequestParam String lotNo,
 									@RequestParam String quantity,
 									@RequestParam String recDate,
 									ModelAndView mav) {
 
 		Map<String, String> recieving = new HashMap<>();
-		recieving.put("rmNo", rmNo);
-		recieving.put("storeNo",storeNo);
-		recieving.put("ptNo", ptNo);
+		recieving.put("lotNo", lotNo);
 		recieving.put("quantity", quantity);
 		recieving.put("recDate", recDate);
 		
 		logger.info("rawMaterial@controller={}",recieving);
 		
 		int result = stockservice.UpdateRm(recieving); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/stock/rm/rmSnrView.do");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/stock/rm/DeleteRm.do")
+	public ModelAndView DeleteRm(@RequestParam String lotNo,
+									@RequestParam String quantity,
+									@RequestParam String recDate,
+									ModelAndView mav) {
+
+		Map<String, String> recieving = new HashMap<>();
+		recieving.put("lotNo", lotNo);
+		recieving.put("quantity", quantity);
+		recieving.put("recDate", recDate);
+		
+		logger.info("rawMaterial@controller={}",recieving);
+		
+		int result = stockservice.DeleteRm(recieving); 
 		
 		logger.info("result@Controller={}",result);
 		
@@ -242,6 +263,11 @@ public class StockController {
 		case "ptNo" :  
 			list =  stockservice.selectProductTypeAll(cPage,numPerPage); 
 			totalContents = stockservice.selectAllCountByProductNo();
+			break;
+		
+		case "lotNo" :  
+			list =  stockservice.selectRecievingtypeAll(cPage,numPerPage); 
+			totalContents = stockservice.selectRecievingCountByLotNo();
 			break;
 
 		}

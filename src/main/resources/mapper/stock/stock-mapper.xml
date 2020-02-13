@@ -51,8 +51,8 @@
 			 FROM RAW_MATERIAL
 			 WHERE RM_NO = #{rmNo}) || '_' || to_char(to_date(#{recDate},'yyyy-MM-dd'),'yyyyMMdd') || '_' || SEQ_LOT_NO.NEXTVAL,
 			#{rmNo},
-			#{storeNo},
-			#{ptNo},
+			default,
+			default,
 			#{quantity},
 			default,
 			default,
@@ -62,17 +62,16 @@
 	</insert>
 	
 	<update id="UpdateRm">
-		update raw_material
-		set #{rmNo},
-			#{storeNo},
-			#{ptNo},
-			#{quantity},
-			default,
-			default,
-			to_date(#{recDate},'yyyy-MM-dd')
-		where rm_no = #{productNo}
+		update RECIEVING
+		set QUANTITY = #{quantity},
+			REC_DATE = to_date(#{recDate},'yyyy-MM-dd')
+		where LOT_NO = #{lotNo}
 	</update>
 	
+	<delete id="DeleteRm">
+		DELETE FROM RECIEVING
+		where LOT_NO = #{lotNo}
+	</delete>
 	
 	
 <!-- ========================================= searchSpecify mapper ========================================= -->
@@ -101,6 +100,16 @@
 	
 	<select id="selectAllCountByProductNo" resultType="_int">
 		select count(*) from product_type
+	</select>
+	
+	<select id="selectRecievingtypeAll" resultType="map">
+		select lot_no as "content2", TO_CHAR(REC_DATE,'YYYY-MM-DD') as "content" , QUANTITY as "content3"
+		from recieving 
+		order by lot_no
+	</select>
+	
+	<select id="selectRecievingCountByLotNo" resultType="_int">
+		select count(*) from recieving
 	</select>
 	
 <!-- ========================================= searchSpecify mapper END ========================================= -->	
