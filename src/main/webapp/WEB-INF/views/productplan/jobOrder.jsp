@@ -80,7 +80,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body jo-modal-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
@@ -93,7 +93,7 @@
 
 //작업지시시서 등록
 $("#insert-btn").click(function(){
- $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/insertJobOrder.do",function(){
+ $('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/insertJobOrder.do",function(){
         $('#joModal').modal({backdrop: 'static', keyboard: false});
         $('#joModal').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
@@ -113,8 +113,8 @@ function oneCheckbox(a){
 
 //작업지시서 수정
 $("#update-btn").click(function(){
- $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do",function(){
-        $('#joModal').modal({backdrop: 'static', keyboard: false});
+ $('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do",function(){
+        $('#jodal').modal({backdrop: 'static', keyboard: false});
         $('#joModal').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         $(".controll-title").html("작업지시서 등록");

@@ -40,4 +40,26 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int selectTotalContentsByEp() {
 		return sqlSession.selectOne("productplan.selectTotalContentByEp");
 	}
+
+	@Override
+	public List<Map<String, String>> selectCustomer(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("productplan.selectCustomer", null, rowBounds);
+	}
+
+	@Override
+	public int selectTotalContentsByCtmr() {
+		return sqlSession.selectOne("productplan.selectTotalContentByCtmr");
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductName(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("productplan.selectProductName", null, rowBounds);
+	}
+
+	@Override
+	public int selectTotalContentsByPn() {
+		return sqlSession.selectOne("productplan.selectTotalContentByPn");
+	}
 }

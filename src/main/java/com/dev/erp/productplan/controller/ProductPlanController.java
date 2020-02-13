@@ -1,5 +1,6 @@
 package com.dev.erp.productplan.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +84,7 @@ public class ProductPlanController {
 		
 		return mav;
 	}
-	//작업지시서 등록 폼
+	//작업지시서 등록 전체 폼
 	@RequestMapping("/productplan/insertJobOrder.do")
 	public ModelAndView insertJobOrderForm(ModelAndView mav) {
 		
@@ -91,6 +92,56 @@ public class ProductPlanController {
 		
 		return mav;
 	}
+<<<<<<< HEAD
+=======
+	//작업지시서 등록 입력폼 - 세부사항 검색
+	@RequestMapping("/productplan/searchDetails.do")
+	public ModelAndView searchDetails(@RequestParam String searchType,
+									  ModelAndView mav) {
+		
+		mav.addObject("searchType", searchType);
+		mav.setViewName("productplan/searchDetails");
+		
+		return mav;
+	}
+	
+	//작업지시서 등록 입력폼 - 세부사항 검색 - modal바디
+	@RequestMapping("/productplan/searchDetailsPage.do")
+	@ResponseBody
+	public ModelAndView searchDetailsPage(ModelAndView mav,
+										  @RequestParam String searchType,
+										  @RequestParam(defaultValue="1") int cPage,
+										  HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
+		final int numPerPage = 5;
+		int totalContents = 0;
+		List<Map<String, String>> list  = new ArrayList<>();
+		switch(searchType) {
+		case "customer":
+			list = productPlanService.selectCustomer(cPage,numPerPage);
+			totalContents = productPlanService.selectTotalContentsByCtmr();
+			break;
+			
+		case "productName":
+			list = productPlanService.selectProductName(cPage,numPerPage);
+			totalContents = productPlanService.selectTotalContentsByPn();
+			break;
+		}
+		
+		logger.info("searchType={}", searchType);
+		String url = "searchDetailsPage.do?searchType="+searchType;
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+		
+		mav.addObject("detailsList", list);
+		mav.addObject("cPage", cPage);
+		mav.addObject("pageBar", pageBar);
+		mav.setViewName("jsonView");
+		
+			
+		
+		return mav;
+	}
+>>>>>>> feature/민병준_생산계획
 	
 	//작업지시서 신규등록
 	@RequestMapping("/productplan/insertJobOrderEnd.do")
@@ -101,7 +152,10 @@ public class ProductPlanController {
 									   @RequestParam String productName,
 									   @RequestParam String quantity,
 									   @RequestParam String orderContent,
+<<<<<<< HEAD
 									   
+=======
+>>>>>>> feature/민병준_생산계획
 									   ModelAndView mav) {
 		
 		Map<String, String> joList = new HashMap<>();
@@ -111,12 +165,21 @@ public class ProductPlanController {
 		joList.put("manager", manager);
 		joList.put("productName", productName);
 		joList.put("quantity", quantity);
+<<<<<<< HEAD
 		joList.put("orderContent",orderContent);
 		
 		logger.info("joList@controller={}", joList);
 		int result = productPlanService.insertJobOrder(joList);
 		mav.addObject("msg", result>0?"등록 성공!":"등록 실패!");
 		mav.addObject("loc", "/productplan/jobOrder.do");
+=======
+		joList.put("orderContent", orderContent);
+		
+		logger.info("joList@controller={}", joList);
+		int result = productPlanService.insertJobOrder(joList);
+		mav.addObject("msg",result>0?"작업지시서 신규등록 성공!":"작업지시서 신규등록 실패!");
+		mav.addObject("loc","/productplan/jobOrder.do");
+>>>>>>> feature/민병준_생산계획
 		mav.addObject("joList", joList);
 		
 		return mav;
