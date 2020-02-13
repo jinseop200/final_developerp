@@ -179,4 +179,56 @@ public class ProductionController {
 	}
 	
 	
+	@RequestMapping(value="/production/updateBOM.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object updateBOM(@RequestParam(value="pNos[]", required=false) List<String> pNoList,
+						 @RequestParam(value="pCodes[]", required=false) List<String> pCodeList,
+						 @RequestParam(value="pNames[]", required=false) List<String> pNameList,
+					 	 @RequestParam(value="pCounts[]", required=false) List<String> pCountList,
+					 	@RequestParam(value="productCode", required=false) String productCode,
+										 ModelAndView mav) {
+		
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("productCode", productCode);
+		logger.info("map@controller={}",map);
+		int result = productionService.insertBOM(productCode); 
+		
+		int bomNo = productionService.selectBOMNobyProductCode(productCode);
+		
+		logger.info("bomNo@Conteroller={}",bomNo);
+		
+		
+		logger.info("productCode@Controller={}",productCode);
+		logger.info("pNoList@Controller={}",pNoList);
+		logger.info("pCodeList@Controller={}",pCodeList);
+		logger.info("pNameList@Controller={}",pNameList);
+		logger.info("pCountList@Controller={}",pCountList);
+		logger.info("pNoListSize@Controller={}",pNoList.get(0));
+		logger.info("pNoListSize@Controller={}",pNoList.get(1));
+		int toTalSize = pNoList.size();
+		
+		List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("productCode", productCode);
+		paramMap.put("bomNo", bomNo);
+		
+		for(int i=0; i<pCodeList.size();i++) {
+			Map<String,Object> temp = new HashMap<>();
+			temp.put("pCodeList", pCodeList.get(i));
+			temp.put("pNoList", pNoList.get(i));
+			temp.put("pCountList", pCountList.get(i));
+			
+			BOMList.add(temp);
+		}
+		paramMap.put("BOMList", BOMList);
+		logger.info("1232134BOM={}",paramMap);
+		int result2 = productionService.insertBOMlist(paramMap);
+		
+
+		
+		return paramMap;
+	}
+	
 }
