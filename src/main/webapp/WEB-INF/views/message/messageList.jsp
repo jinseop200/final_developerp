@@ -4,40 +4,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<body>
-<div class="form-row" id="msgTypeRadioBtns">
-	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="messageGroupExample1" name="messageRadios" value="3" checked>
-	  <label class="form-check-label" for="messageGroupExample1">전체</label>&nbsp;&nbsp;&nbsp;
-	</div>
-	
-	<!-- Group of material radios - option 2 -->
-	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="messageGroupExample2" name="messageRadios" value="2">
-	  <label class="form-check-label" for="messageGroupExample2">미확인</label>&nbsp;&nbsp;&nbsp;
-	</div>
-	
-	<!-- Group of material radios - option 3 -->
-	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="messageGroupExample3" name="messageRadios" value="1">
-	  <label class="form-check-label" for="materialGroupExample3">확인</label>
-	</div>
-	<div  class="form-check" style="padding-left:222px;">
-	  <input type="radio" class="form-check-input" id="messageGroupExample4" name="messageRadios" value="4">
-	  <label class="form-check-label" for="materialGroupExample4">보낸쪽지함</label>
-	
-	</div>
-</div>
-<div style="text-align:right; padding-top:5px">
-	<button class="btn btn-primary" type="button" id="message-insert-button">신규 </button>
-</div>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <table class="table table-bordered message-list-table" id="dataTable" width="100%" cellspacing="0">
+<link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<%-- nav bar tap start --%>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <span class="nav-link active" id="messageAll" >전체</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link" id="messageConfirm" >확인</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link" id="messageNoConfirm" >미확인</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
+  </li>
+  <li class="nav-item" style="padding-left:140px; ">
+    <span class="nav-link" id="message-insert-button">신규</span>
+  </li>
+</ul>
+<%-- nav bar tap end --%>
+     <table class="table table-bordered message-list-table" style="text-align:center;" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
-           <th>No</th>
+           <th style="padding:12px 14px;">No</th>
            <th>제목</th>
-           <th>보낸사람</th>
+           <th class="messageShow">보낸사람</th>
+           <th class="messageHide">받는사람</th>
            <th>보낸날짜</th>
            <th>상태</th>
          </tr>
@@ -47,12 +41,24 @@
      </table>
      <div class="pageBar"></div>
 <%--      ${pageBar} --%>
-</body>
 
 <style>
 .message-list-table tbody tr:hover td{
-	cursor : auto;
+	cursor : pointer;
 	background-color:#ccc;
+}
+.message-list-table tbody tr td{
+	text-align:center;
+}
+.modal-content{
+	width:550px;
+	height:665px; 
+}
+.nav-link{
+	cursor:pointer;
+}
+.pageBar{
+	cursor:pointer;
 }
 
 </style>
@@ -60,6 +66,7 @@
 <script>
 $(()=>{
 	messagePage(0);
+	$(".messageHide").hide();
 	
 });
 
@@ -69,36 +76,43 @@ $(".message-list-table tbody").on('dblclick','tr',function(){
 	var messageValue= $(this).attr("id");
 	console.log(value);
 	console.log(messageValue);
-	var docApproval = $("[name=docLastapproval]").val();
-	var docApproval1 = $("[name=docLastapproval1]").val();
-	var docApproval2 = $("[name=docLastapproval2]").val();
-	var docApproval3 = $("[name=docLastapproval3]").val();
-	if( docApproval==""){
-		$("[name=docLastapproval]").val(value);
-		
-	}else if(docApproval1==""){
-		$("[name=docLastapproval1]").val(value);
-	}else if(docApproval2==""){
-		$("[name=docLastapproval2]").val(value);
-	}else if(docApproval3==""){
-		$("[name=docLastapproval3]").val(value);
-	}
-	$("#searchDocument").modal('hide');
+	$('.controll-modal-body-detailMessage').load("${pageContext.request.contextPath}/message/detailMessageForm.do?meNo="+messageValue,function(){
+        $('#detailMessage').modal({backdrop: 'static', keyboard: false});
+        $('#detailMessage').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $('#messageList').modal("hide");
+	});
 });
 
+$("#message-insert-button").on('click',function(){
+	 $('.controll-modal-body-insertMessage').load("${pageContext.request.contextPath}/message/insertMessageForm.do",function(){
+	        $('#insertMessage').modal({backdrop: 'static', keyboard: false});
+	        $('#insertMessage').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+        $('#messageList').modal("hide");
+		});
+	});
 
+$(".messageListModal-end").click(function(){
+	$('#messageList').modal("hide");
+}); 
+
+$("#messageAll").on('click',function(){
+	$(".nav-link").removeClass("active");
+	$("#messageAll").addClass("active");
+	messagePage(0);
+});
 function messagePage(a){
-	$(".meHide").hide();
 	console.log("a==="+a);
 	var url_="";
 	var empName="${memberLoggedIn.empName}";
+	
 	if(a==0) {
 		url_ = "${pageContext.request.contextPath}/message/messageListPage.do?cPage=1&empName=${memberLoggedIn.empName}";
 	}
 	else {
 		url_="${pageContext.request.contextPath}/message/"+a;
 	}
-	
 	
 	$.ajax({
 		url : url_,
@@ -107,6 +121,7 @@ function messagePage(a){
 			var list = data.list;
 			console.log(empName);
 			$(".message-list-table tbody").children().remove();
+
 			for(var i in list ) {
 				let m = list[i];
 				var readYn ="";
@@ -116,34 +131,183 @@ function messagePage(a){
 					readYn="미확인";
 				}
 				console.log(m);	
-				if(m.sender == empName || m.reciever == empName){
-					$(".message-list-table tbody").append("<tr id='"+m.meNo+"'><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
-				}else if(m==null && (m.sender!=empName || m.reciever!=empName)){
-					$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
-				}
-			}
+					if(m==null ){
+						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
+					}else{
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					}
+				
+				}			
+				
 			$(".pageBar").html(data.pageBar);
 			$("span.page-link").attr('onclick',"messagePage(this.id)");
 		},
 		error:(x,s,e)=>{
 			console.log("ajax요청실패",x,s,e);
 		}
-		
 	});
-	
 }
 
-$("#message-insert-button").click(function(){
- $('.controll-modal-body-insertMessage').load("${pageContext.request.contextPath}/message/insertMessageForm.do",function(){
-        $('#insertMessage').modal({backdrop: 'static', keyboard: false});
-        $('#insertMessage').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-	});
+$("#messageConfirm").on('click',function(){
+	$(".nav-link").removeClass("active");
+	$("#messageConfirm").addClass("active");
+	messageConfirmPage(0);
 });
+
+function messageConfirmPage(a){
+	console.log("a==="+a);
+	var url_="";
+	var empName="${memberLoggedIn.empName}";
+	
+	if(a==0) {
+		url_ = "${pageContext.request.contextPath}/message/messageConfirmPage.do?cPage=1&empName=${memberLoggedIn.empName}";
+	}
+	else {
+		url_="${pageContext.request.contextPath}/message/"+a;
+	}
+	
+	$.ajax({
+		url : url_,
+		dataType : "json",
+		success : data => {
+			var list = data.list;
+			console.log(empName);
+			$(".message-list-table tbody").children().remove();
+
+			for(var i in list ) {
+				let m = list[i];
+				var readYn ="";
+				if(m.readYn=="y"){
+					readYn="확인";
+				}else{
+					readYn="미확인";
+				}
+				console.log(m);	
+					if(m==null ){
+						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
+					}else{
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					}
+				
+				}			
+				
+			$(".pageBar").html(data.pageBar);
+			$("span.page-link").attr('onclick',"messageConfirmPage(this.id)");
+		},
+		error:(x,s,e)=>{
+			console.log("ajax요청실패",x,s,e);
+		}
+	});
+}
+$("#messageNoConfirm").on('click',function(){
+
+	confirm=2;
+	$(".nav-link").removeClass("active");
+	$("#messageNoConfirm").addClass("active");
+	messageNoConfirmPage(0);
+})
+function messageNoConfirmPage(a){
+	console.log("a==="+a);
+	var url_="";
+	var empName="${memberLoggedIn.empName}";
+	
+	if(a==0) {
+		url_ = "${pageContext.request.contextPath}/message/messageNoConfirmPage.do?cPage=1&empName=${memberLoggedIn.empName}";
+	}
+	else {
+		url_="${pageContext.request.contextPath}/message/"+a;
+	}
+	
+	$.ajax({
+		url : url_,
+		dataType : "json",
+		success : data => {
+			var list = data.list;
+			console.log(empName);
+			$(".message-list-table tbody").children().remove();
+
+			for(var i in list ) {
+				let m = list[i];
+				var readYn ="";
+				if(m.readYn=="y"){
+					readYn="확인";
+				}else{
+					readYn="미확인";
+				}
+				console.log(m);	
+					if(m==null ){
+						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
+					}else{
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					}
+				
+				}			
+				
+			$(".pageBar").html(data.pageBar);
+			$("span.page-link").attr('onclick',"messageNoConfirmPage(this.id)");
+		},
+		error:(x,s,e)=>{
+			console.log("ajax요청실패",x,s,e);
+		}
+	});
+}
+
+$("#messageSenderForm").on('click',function(){
+	$(".nav-link").removeClass("active");
+	$("#messageSenderForm").addClass("active");
+	$(".messageHide").show();
+	$(".messageShow").hide();
+	messageSenderFormPage(0);
+})
+function messageSenderFormPage(a){
+	console.log("a==="+a);
+	var url_="";
+	var empName="${memberLoggedIn.empName}";
+	
+	if(a==0) {
+		url_ = "${pageContext.request.contextPath}/message/messageSenderFormPage.do?cPage=1&empName=${memberLoggedIn.empName}";
+	}
+	else {
+		url_="${pageContext.request.contextPath}/message/"+a;
+	}
+	
+	$.ajax({
+		url : url_,
+		dataType : "json",
+		success : data => {
+			var list = data.list;
+			$(".message-list-table tbody").children().remove();
+
+			for(var i in list ) {
+				let m = list[i];
+				var readYn ="";
+				if(m.readYn=="y"){
+					readYn="확인";
+				}else{
+					readYn="미확인";
+				}
+				console.log(m);	
+					if(m==null ){
+						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
+					}else{
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.reciever+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					}
+				
+				}			
+				
+			$(".pageBar").html(data.pageBar);
+			$("span.page-link").attr('onclick',"messageSenderFormPage(this.id)");
+		},
+		error:(x,s,e)=>{
+			console.log("ajax요청실패",x,s,e);
+		}
+	});
+}
+
+
 
 
 
 
 </script>
 
-</html>

@@ -5,8 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <title>쪽지 작성</title>
-</head>
-<body>
       <!-- search-container start -->
       <div id="insert-message-container">
           <form class="needs-validation" action="${pageContext.request.contextPath}/message/insertMessage.do" 
@@ -17,7 +15,7 @@
                 <div class="form-row" style="width:750px">
                     <div class="col-md-6 mb-3 col-md-6 mb-3">
                         <label for="insertSender">받는 사람</label>&nbsp;&nbsp;
-                        <input type="text" id="insertSender" style="width:150px;" name="insertSender" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="insertSender" style="width:290px;" name="insertSender" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
                     </div>
                     <div class="col-md-6 mb-3">
                         <button class="btn btn-primary searchDocument message" type="button">
@@ -28,18 +26,18 @@
                 <div class="form-row">
                 &nbsp;
 	                	<label for="meTitle" style="padding-top:5px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</label>&nbsp;&nbsp;&nbsp;
-	                    <input type="text" id="meTitle" name="meTitle" style="width:480px;" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="text" id="meTitle" name="meTitle" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2">
                 </div>
                 <br />
                 <div class="form-row message">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</label><br />
-                        <textarea class="form-control message-comment" required name="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control message-comment" required name="messageContent" id="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
 				<div class="modal-footer ">
-        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">전송</button>
-            		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        			<button type="button" id="FrmBtn" name="button" class="btn btn-primary submit">전송</button>
+            		<button type="button" class="btn btn-secondary insert" data-dismiss="modal">닫기</button>
         		</div>       
             </form>
       </div>
@@ -54,19 +52,18 @@
   width: 60%;
 }
 #insert-message-container {
-    width:580px;
-    height:560px;
+    height:460px;
 }
 .modal-content{
-	width:600px;
-	height:600px; 
+	width:550px;
+	height:665px; 
 }
 #formGroupExampleInput {
     width: 70%;
 }
 .form-control {
     display:inline;
-    width: 60%;
+    width: 55%;
 }
 .message-comment {
 	width:200%;
@@ -92,7 +89,7 @@
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
 .form-row.message{
-	height:330px;
+	height:388px;
 }
 
 </style>
@@ -114,11 +111,45 @@
 	    });
 	  
 	  $(".searchModal-end").click(function(){
-	    	$('#searhMessageList').modal("hide");
+	    		$('#searhMessageList').modal("hide");	
 	    }); 
+	  $(".btn-secondary.insert").click(function(){
+		  $('.controll-modal-body-messageList').load("${pageContext.request.contextPath}/message/messageList.do?empName=${memberLoggedIn.empName}",function(){
+		        $('#messageList').modal({backdrop: 'static', keyboard: false});
+		        $('#messageList').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+	    		$('#insertMessage').modal("hide");
+		        
+		    });
+	    });
 	  
+})
+$(".btn.btn-primary.submit").click(function(){
+	var empName = $("#empName").val();
+	var insertSender = $("#insertSender").val();
+	var meTitle = $("#meTitle").val();
+	var messageContent = $("#messageContent").val();
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/message/insertMessage.do",
+		data:{empName:empName,insertSender:insertSender,meTitle:meTitle,messageContent:messageContent},
+		type:'POST',
+		dataType:"json",
+		success:data=>{
+			console.log(data);
+			$('#insertMessage').modal("hide");
+			alert("전송되었습니다");
+			$('.controll-modal-body-messageList').load("${pageContext.request.contextPath}/message/messageList.do?empName=${memberLoggedIn.empName}",function(){
+		        $('#messageList').modal({backdrop: 'static', keyboard: false});
+		        $('#messageList').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+	    		$('#insertMessage').modal("hide");
+		    });
+		},
+        error : function(x,h,r, status) {
+            alert(x,h,r + " : " + status);
+        }
+	});
 })
   
 </script>
-</body>
-</html>
