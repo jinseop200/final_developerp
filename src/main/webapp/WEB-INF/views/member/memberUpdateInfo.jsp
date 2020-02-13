@@ -158,6 +158,7 @@ function regExpTest(regExp, el, msg){
 					<td></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
+				<c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
 				<tr>
 					<td>부서명&nbsp;&nbsp;</td>
 					<td>
@@ -182,6 +183,7 @@ function regExpTest(regExp, el, msg){
 					</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
+				</c:if>
 				<tr>
 					<td>전화번호&nbsp;&nbsp;</td>
 					<td>

@@ -65,4 +65,5 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("member.updateProfileImage",member);
 	}
 
+
 }

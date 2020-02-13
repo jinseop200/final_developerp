@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <body>
-     <table class="table table-bordered document-list-table" id="dataTable" width="100%" cellspacing="0">
+     <table class="table table-bordered messageSelect-list-table" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
            <th>No</th>
@@ -22,7 +22,7 @@
 </body>
 
 <style>
-.document-list-table tbody tr:hover td{
+.messageSelect-list-table tbody tr:hover td{
 	cursor : auto;
 	background-color:#ccc;
 }
@@ -31,32 +31,20 @@
 
 <script>
 $(()=>{
-	morePage(0);
+	messageSelectPage(0);
 });
 
 
-$(".document-list-table tbody").on('dblclick','tr',function(){
+$(".messageSelect-list-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	console.log(value);
-	var docApproval = $("[name=docLastapproval]").val();
-	var docApproval1 = $("[name=docLastapproval1]").val();
-	var docApproval2 = $("[name=docLastapproval2]").val();
-	var docApproval3 = $("[name=docLastapproval3]").val();
-	if( docApproval==""){
-		$("[name=docLastapproval]").val(value);
-		
-	}else if(docApproval1==""){
-		$("[name=docLastapproval1]").val(value);
-	}else if(docApproval2==""){
-		$("[name=docLastapproval2]").val(value);
-	}else if(docApproval3==""){
-		$("[name=docLastapproval3]").val(value);
-	}
-	$("#searchDocument").modal('hide');
+	var insertSender = $("[name=insertSender]").val();
+	$("[name=insertSender]").val(value);
+	$("#searhMessageList").modal('hide');
 });
 
 
-function morePage(a){
+function messageSelectPage(a){
 	console.log("a==="+a);
 	var url_="";
 	if(a==0) {
@@ -71,14 +59,14 @@ function morePage(a){
 		dataType : "json",
 		success : data => {
 			var list = data.list;
-			$(".document-list-table tbody").children().remove();
+			$(".messageSelect-list-table tbody").children().remove();
 			for(var i in list ) {
 				let p = list[i];
 				console.log(p);	
-				$(".document-list-table tbody").append("<tr><td>"+p.emp_id+"</td><td>"+p.emp_name+"</td><td>"+p.dept_title+"</td><td>"+p.job_name+"</td></tr>");
+				$(".messageSelect-list-table tbody").append("<tr><td>"+p.emp_id+"</td><td>"+p.emp_name+"</td><td>"+p.dept_title+"</td><td>"+p.job_name+"</td></tr>");
 			}
 			$(".pageBar").html(data.pageBar);
-			$("span.page-link").attr('onclick',"morePage(this.id)");
+			$("span.page-link").attr('onclick',"messageSelectPage(this.id)");
 		},
 		error:(x,s,e)=>{
 			console.log("ajax요청실패",x,s,e);

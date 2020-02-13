@@ -27,4 +27,5 @@ public interface MemberService {
 
 	int updateProfileImage(Member member);
 
+
 }
