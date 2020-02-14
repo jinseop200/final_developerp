@@ -39,6 +39,10 @@
            <th>품목번호</th>
            <th>품목명</th>
            </c:if>
+           <c:if test="${searchType == 'vendorTypes'}">
+           <th>거래처 구분코드</th>
+           <th>거래처구분명</th>
+           </c:if>
          </tr>
        </thead>
        <tbody id="tbodyList">
@@ -94,10 +98,6 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	if(trNum != "nulla"){
 		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
 		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
-		//console.log($(".table-editable tr").eq(trNum));
-		//console.log("eq0",$(".table-editable tr").eq(0));
-		//console.log($(".table-editable tr").eq(trNum).find("td").eq(2));
-		
 	}
 	
 	$("#${searchType}").val(value);

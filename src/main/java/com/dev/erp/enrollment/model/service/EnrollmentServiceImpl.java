@@ -137,6 +137,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage) {
 		return enrollmentDAO.selectRawmaterialAll(cPage, numPerPage);
 	}
+
+	@Override
+	public List<Map<String, String>> selectVendorTypeAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectVendorTypeAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllVendorType() {
+		return enrollmentDAO.selectAllVendorType();
+	}
 	
 	
 }

@@ -13,7 +13,6 @@
 <style>
 #search-container {
     width: 200%;
-    height: 210px;
 }
 #formGroupExampleInput {
     width: 70%;
@@ -103,15 +102,36 @@ $(()=>{
 		var tdVendorName = td.eq(1).text();
 		var tdIncharge = td.eq(2).text();
 		var tdVendorPhone = td.eq(3).text();
+		var tdVendorTypes = td.eq(4).text();
 		$('#updateVendor #vendorNo2').val(tdVendorNo);
 		$('#updateVendor #vendorName2').val(tdVendorName);
 		$('#updateVendor #incharge2').val(tdIncharge);
 		$('#updateVendor #vendorPhone2').val(tdVendorPhone);
-		$('#updateVendorNo #vendorCur').val(tdVendorNo);
+		$('#updateVendor #vendorCur').val(tdVendorNo);
+		$('#updateVendor #vendorTypes').val(tdVendorTypes);
 		
 		$('#updateVendor').modal('show');
 	});
-});
+	
+	//search button
+	$(".searchBtn").click(function(){
+    	var title = $(this).siblings().html();
+    	$("#searchModalTitle").html(title);
+    	var searchType = $(this).val();
+    	console.log(searchType);
+    	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
+ 	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
+ 	        $('#mySearchModal').modal({show:true});
+ 	        $(".modal-backdrop.in").css('opacity', 0.4);
+ 		});
+    });
+	
+	//search form close
+	$(".searchModal-end").click(function(){
+    	$('#mySearchModal').modal("hide");
+    });
+	
+}); //end of onload
 	
 
 <%--거래처번호 등록용 유효성검사--%>
@@ -147,13 +167,6 @@ function vendorValidate(){
         $vendorPhone.focus();
 		return false;
     }
-    if(regExpNumber.test($vendorPhone.val())){
-        alert("거래처 전화번호는 숫자만 입력가능합니다.");
-        $vendorPhone.val('');
-        $vendorPhone.focus();
-		return false;
-    }
-    
     <%--거래처번호 중복검사를 하지않았을경우--%>
 	if($vendorNoValid.val() == 0){
 		alert("거래처번호 중복 검사를 해주세요.");
@@ -243,19 +256,6 @@ function vendorValidate2(){
         $vendorPhone.focus();
 		return false;
     }
-    if(regExpNumber.test($vendorPhone.val())){
-        alert("거래처 전화번호는 숫자만 입력가능합니다.");
-        $vendorPhone.val('');
-        $vendorPhone.focus();
-		return false;
-    }
-    
-    <%--거래처번호 중복검사를 하지않았을경우--%>
-	//if($vendorNoValid.val() == 0){
-	//	alert("거래처번호 중복 검사를 해주세요.");
-	//	return false;
-	//}
-	
 	return true;
 }
 
@@ -318,6 +318,7 @@ function vendorNoUpdateValidate2(){
           <th>거래처명</th>
           <th>담당자명</th>
           <th>거래처 전화번호</th>
+          <th>거래처 분류</th>
         </tr>
       </thead>
       <tbody>
@@ -327,6 +328,7 @@ function vendorNoUpdateValidate2(){
 	          <td>${v.VENDOR_NAME}</td>
 	          <td>${v.INCHARGE}</td>
 	          <td>${v.VENDOR_PHONE}</td>
+	          <td>${v.VENDOR_TYPE}</td>
 	        </tr>
         </c:forEach>
     </tbody>
@@ -381,7 +383,16 @@ function vendorNoUpdateValidate2(){
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
 	                    <label for="rmName">거래처 전화번호</label>&nbsp;&nbsp;&nbsp;
-	                    <input type="number" id="vendorPhone" name="vendorPhone" class="form-control bg-lightsmall" placeholder="거래처 전화번호" aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="text" id="vendorPhone" name="vendorPhone" class="form-control bg-lightsmall" placeholder="거래처 전화번호" aria-label="Search" aria-describedby="basic-addon2">
+	                </div>
+                </div>
+                <div class="form-row">
+	                <div class="col-md-6 mb-3">
+	                    <label for="vendorType">거래처 분류</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                    <input type="number" id="vendorType" name="vendorType" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
+	                	<button class="btn btn-primary searchBtn" type="button" value="vendorTypes">
+						<i class="fas fa-search fa-sm"></i>
+						</button>
 	                </div>
                 </div>
                 
@@ -422,20 +433,29 @@ function vendorNoUpdateValidate2(){
                 </div>
                 <div class="form-row">
 	               <div class="col-md-6 mb-3">
-	                   <label for="vendor">거래처명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                   <label for="vendorName">거래처명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                   <input type="text" id="vendorName2" name="vendorName" class="form-control bg-light small" placeholder="거래처명" aria-label="Search" aria-describedby="basic-addon2">
 	                </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <label for="productName">담당자명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="incharge">담당자명 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" id="incharge2" name="incharge" class="form-control bg-light small" placeholder="담당자명" aria-label="Search" aria-describedby="basic-addon2">
                     </div>
                 </div>
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
-	                    <label for="rmName">거래처 전화번호</label>&nbsp;&nbsp;&nbsp;
-	                    <input type="number" id="vendorPhone2" name="vendorPhone" class="form-control bg-lightsmall" placeholder="거래처 전화번호" aria-label="Search" aria-describedby="basic-addon2">
+	                    <label for="vendorPhone">거래처 전화번호</label>&nbsp;&nbsp;&nbsp;
+	                    <input type="text" id="vendorPhone2" name="vendorPhone" class="form-control bg-lightsmall" placeholder="거래처 전화번호" aria-label="Search" aria-describedby="basic-addon2">
+	                </div>
+                </div>
+                <div class="form-row">
+	                <div class="col-md-6 mb-3">
+	                    <label for="vendorTypes">거래처 분류</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                    <input type="number" id="vendorTypes" name="vendorTypes" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
+	                	<button class="btn btn-primary searchBtn" type="button" value="vendorTypes">
+						<i class="fas fa-search fa-sm"></i>
+						</button>
 	                </div>
                 </div>
                 
@@ -491,6 +511,23 @@ function vendorNoUpdateValidate2(){
         </form>
         </div>
     </div>
+</div>
+
+<%--Search modal --%>
+<div class="modal" tabindex="-1" role="dialog" id="mySearchModal">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title search-title" id="searchModalTitle"> </h5>
+      </div>
+      <div class="modal-body searchModalBody">
+          <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary searchModal-end">끝</button>
+      </div>
+      </div>
+  </div>
 </div>
 
   <!-- Page level plugins -->

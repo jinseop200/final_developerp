@@ -171,7 +171,6 @@ $(()=>{
  	        $('#mySearchModal').modal({show:true});
  	        $(".modal-backdrop.in").css('opacity', 0.4);
  		});
-            
     });
 	
 	$(".searchModal-end").click(function(){

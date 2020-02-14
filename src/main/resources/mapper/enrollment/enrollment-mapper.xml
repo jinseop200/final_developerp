@@ -9,6 +9,7 @@
 			#{vendorName},
 			#{incharge},
 			#{vendorPhone},
+			#{vendorTypes},
 			default
 		)
 	</insert>
@@ -28,7 +29,8 @@
 		set
 		vendor_name = #{vendorName},
 		incharge = #{incharge},
-		vendor_phone = #{vendorPhone}
+		vendor_phone = #{vendorPhone},
+		vendor_type = #{vendorTypes}
 		where vendor_no = #{vendorNo}
 	</update>
 	
@@ -183,5 +185,12 @@
 		select rm_no as "content2", rm_name as "content" from raw_material order by rm_no
 	</select>
 	
+	<select id="selectVendorTypeAll" resultType="map">
+		select vt_no as "content2", vendor_kindname as "content" from vendor_kind order by vt_no
+	</select>
+	
+	<select id="selectAllVendorType" resultType="_int">
+		select count(*) from vendor_kind
+	</select>
 	
 </mapper>

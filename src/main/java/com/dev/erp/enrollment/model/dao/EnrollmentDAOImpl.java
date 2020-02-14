@@ -136,6 +136,17 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sqlsession.selectList("enrollment.selectRawmaterialAll",null,rowBounds);
 	}
+
+	@Override
+	public List<Map<String, String>> selectVendorTypeAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectVendorTypeAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllVendorType() {
+		return sqlsession.selectOne("enrollment.selectAllVendorType");
+	}
 	
 	
 }

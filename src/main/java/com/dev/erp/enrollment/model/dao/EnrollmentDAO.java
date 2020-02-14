@@ -53,4 +53,8 @@ public interface EnrollmentDAO {
 
 	List<Map<String, String>> selectRawmaterialAll(int cPage, int numPerPage);
 
+	List<Map<String, String>> selectVendorTypeAll(int cPage, int numPerPage);
+
+	int selectAllVendorType();
+
 }

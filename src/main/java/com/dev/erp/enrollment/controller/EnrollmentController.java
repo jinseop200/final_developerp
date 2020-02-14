@@ -90,6 +90,7 @@ public class EnrollmentController {
 									 @RequestParam("vendorName") String vendorName,
 							 		 @RequestParam("incharge") String incharge,
 						 		 	 @RequestParam("vendorPhone") String vendorPhone,
+						 		 	 @RequestParam("vendorTypes") String vendorTypes,
 										 ModelAndView mav) {
 		logger.info("vendorName@Controller={}",vendorName);
 		
@@ -98,6 +99,7 @@ public class EnrollmentController {
 		vendor.put("vendorName", vendorName);
 		vendor.put("incharge", incharge);
 		vendor.put("vendorPhone", vendorPhone);
+		vendor.put("vendorTypes", vendorTypes);
 		vendor.put("regDate", null);
 		
 		logger.info("vendor@controller={}",vendor);
@@ -327,14 +329,10 @@ public class EnrollmentController {
 			list =  enrollmentservice.selectRawmaterialAll(cPage,numPerPage); 
 			totalContents = enrollmentservice.selectAllRawmaterial();
 			break;
-//		case "qualityNo" : 
-//			list = enrollmentservice.selectQualityColumn("quality_no", cPage,numPerPage);  
-//			totalContents = enrollmentservice.selectAllCountForQuality();
-//			break;
-//		case "type" :  
-//			list = enrollmentservice.selectProductTypeAll(); 
-			
-//			break;
+		case "vendorTypes" :  
+			list =  enrollmentservice.selectVendorTypeAll(cPage,numPerPage); 
+			totalContents = enrollmentservice.selectAllVendorType();
+			break;
 		}
 		String url = "searchSpecifyPage.do?searchType="+searchType;
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
