@@ -18,6 +18,8 @@ public class Schedule {
 	private String title;
 	private String content;
 	private String startScheduleTime;
+	private String startTime;
 	private String endScheduleTime;
+	private String endTime;
 	private char endTimeYN;
 }
