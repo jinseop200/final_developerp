@@ -74,4 +74,9 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.updateJobOrderEnd(update);
 	}
 
+	@Override
+	public List<Map<String, String>> eachAmountByProduct(String productNo) {
+		return productPlanDAO.eachAmountByProduct(productNo);
+	}
+
 }

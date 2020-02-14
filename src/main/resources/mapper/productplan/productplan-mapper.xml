@@ -4,6 +4,31 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productplan">
 
+
+	<!-- 구매계획 쿼리문 -->
+	<select id="eachAmount" resultType="Map">
+		select pl.product_name as "productName",
+		        B.bom_no as "bomNo",
+		        RM.rm_name as "rmName",
+		        br.quantity as "requiredQ",
+		        R.quantity as "rmStock" 
+		from product_list PL 
+		        join bom B on PL.pl_no = B.pl_no
+		        join bom_rm BR on B.bom_no = BR.bom_no
+		        join receiving R on BR.rm_no = R.rm_no
+		        join raw_material RM on R.rm_no = RM.rm_no  
+        where PL.pl_no = #{productNo}
+	</select>
+	<!-- <resultMap type="map" id="eaMap" >
+		<result column="pl.product_name" property="productName" />
+		<result column="B.bom_no" property="bomNo"></result>
+		<result column="br.rm_no" property="rmNo"></result>
+		<result column="br.quantity" property="requireQ"></result>
+		<result column="R.quantity" property="rmStock"></result>
+		
+	</resultMap> -->
+	
+	
 	<!-- 작업지시서 쿼리문 -->
 	<select id="selectJobOrder" resultMap="joMap" >
 		select jo_no,

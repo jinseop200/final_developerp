@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.productplan.model.service.ProductPlanService;
+import com.google.gson.Gson;
 
 @Controller
 public class ProductPlanController {
@@ -63,6 +64,24 @@ public class ProductPlanController {
 		mav.addObject("numPerPage", numPerPage);
 		mav.addObject("pageBar", pageBar);
 		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	//제품명에 따른 그래프 ajax
+	@RequestMapping("/productplan/showChartByProduct.do")
+	@ResponseBody
+	public ModelAndView showChartByProduct(ModelAndView mav,
+										   @RequestParam String productNo,
+										   HttpServletResponse response) {
+		
+		response.setContentType("text/html;charset=UTF-8");
+		logger.info("민병준={}", productNo);
+		List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
+		mav.addObject("graphData", graphData);
+		logger.info("graphData@@={}",graphData);
+		mav.setViewName("jsonView");
+		
 		
 		return mav;
 	}

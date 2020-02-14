@@ -52,6 +52,7 @@ input[type=text]{
 	<div class="col-lg-20 mb-3 rowResize">
 		 <label for="productName">제품별 소요량-재고량 조회</label>&emsp;<br>
 	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+	     <input type="hidden" id="productNo" name="productNo" />
 	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
 		 	<i class="fas fa-search fa-sm"></i>
 		 </button>
@@ -141,6 +142,8 @@ $(".searchProduct-btn").click(function(){
 	        $(".controll-title").html("제품 조회");
 		});
 	});
+	
+
 	
 </script>	
 

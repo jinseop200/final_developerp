@@ -77,4 +77,9 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int updateJobOrderEnd(Map<String, String> update) {
 		return sqlSession.update("productplan.updateJobOrder",update);
 	}
+
+	@Override
+	public List<Map<String, String>> eachAmountByProduct(String productNo) {
+		return sqlSession.selectList("productplan.eachAmount",productNo);
+	}
 }
