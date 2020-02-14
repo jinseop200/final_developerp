@@ -59,7 +59,7 @@ public class MemberController {
 		int result =memberService.insertMember(member);
 			
 		String msg="";
-		String loc="/main/main.do";
+		String loc="/main/main.do?email="+email;
 		if(result>0) {
 			msg="회원추가성공!";
 		}
@@ -129,8 +129,7 @@ public class MemberController {
 					mav.addObject("dept_title",deptOne);
 					mav.addObject("job_name", jobOne);
 					
-					loc="/main/main.do";
-					
+					loc="/main/main.do?email="+email;
 				}else {
 					msg="비밀번호가 틀렸습니다.";
 					loc="/";
