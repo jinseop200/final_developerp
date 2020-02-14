@@ -29,4 +29,6 @@ public interface ProductPlanDAO {
 
 	int updateJobOrderEnd(Map<String, String> update);
 
+	List<Map<String, String>> eachAmountByProduct(String productNo);
+
 }
