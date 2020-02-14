@@ -145,7 +145,7 @@
 .scResize{
 	height: 110px;
 }
-/* #edTable {
+ #edTable {
     counter-reset: rowNumber;
 }
 
@@ -154,7 +154,7 @@
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
-} */
+}
 </style>
 <script>    
 
@@ -162,31 +162,6 @@
 $(()=>{	
 	
  	var removeCode = [];
-/*	var changeCode = [];
-	var previous; //이전값1 저장
-	var after; //변경후 값비교할 변수
-	var bfPcode; // 변경전 최초값 저장
- 	var count = 0; //변경시 count++
-	
-	 $(".pCode").on('focus', function () { 
-		 var trNum = $(this).closest('tr').prevAll().length;
-		 console.log("trNum2", trNum);
-		 previous = $(this).text(); 
-	 	 console.log("focus",previous);
-	 }).on("DOMSubtreeModified", function(){
-		  after = $(this).text();
-		  console.log("after",after);
-		  if((after !="") && (after != null) && (previous != after)){
-			  count += 1;
-			  console.log(count);
-			  if(count == 1){
-				  bfPcode = previous;
-				  console.log("bfPcode",bfPcode);
-			  }
-			  console.log("bfPcode",bfPcode);
-		  }
-	 }); */
-	 
 	 var beforeArr = [];
 	 var beforeLength = $(".pCode").length;
 	 
@@ -208,10 +183,10 @@ $(()=>{
     	$('#updateProductNo').modal("hide");
     });
 	
-	var trNum = $(".BOMTbody tr").length;
+/* 	var trNum = $(".BOMTbody tr").length;
 	for(var i=1;i<=trNum;i++){
 		$(".pNo").text(i);
-	}
+	} */
 	
 	 <%--editable table script--%>
 	 const $tableID = $('#table');
@@ -235,11 +210,11 @@ $(()=>{
 
 	   $tableID.find('table tbody').append(newTr);
 		
-	    var trNum = $("#frmSubmit tr").length;
-	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
+	   /*	    var trNum = $("#frmSubmit tr").length;
+ 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
 		for(var i=firstNum;i<=trNum;i++){
 			$(".pNo").eq(i).text(i+1);
-		} 
+		}  */
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
@@ -248,11 +223,11 @@ $(()=>{
 	 	
 	   $(this).parents('tr').detach();
 	   
-	   var trNum = $("#frmSubmit tr").length;
+/* 	   var trNum = $("#frmSubmit tr").length;
 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
 		for(var i=firstNum;i<=trNum;i++){
 			$(".pNo").eq(i).text(i+1);
-		}
+		} */
 	   
 	 });
 
@@ -358,6 +333,7 @@ $(()=>{
 	  		dataType: "json",
 	  		success: data => {
 	  			console.log(data);
+	  			$('#BOMAddModal').modal("hide"); //닫기 
 	  		},
 	  		error : (jqxhr, textStatus, errorThrown)=>{
 	  			console.log(jqxhr, textStatus, errorThrown);
@@ -365,12 +341,6 @@ $(()=>{
 	  	}); 
 	 })
 	 
-	
-	/*  $(".removeBtn").click(function(){
-		 var removeCode = $(this).parent().parent().parent().eq(1);
-		 console.log(removeCode.val());
-		 
-	 }) */
 	 
 })
 <%--onload end--%>

@@ -197,6 +197,9 @@ public class ProductionController {
 		logger.info("beforeArrList@Controller={}",beforeArrList);
 		logger.info("removeCodeList@Controller={}",removeCodeList);
 		
+		if(beforeArrList == null) {
+			beforeArrList = new ArrayList<>();
+		}
 		
 		//제품코드로 BOM NO 가져오기
 		Map<String, String> map = new HashMap<>();
@@ -221,43 +224,66 @@ public class ProductionController {
 		}
 		
 		
-		List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
-
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("productCode", productCode);
-		paramMap.put("bomNo", bomNo);
+		//merge into
+		if(pCodeList != null) {
 		
-		if(beforeArrList.size() < pCodeList.size()) {
-			int repeat = pCodeList.size() - beforeArrList.size();
-			logger.info("repeat@controller={}",repeat);
-			for(int i=0;i<repeat;i++) {
-				beforeArrList.add("0");
+			List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
+	
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("productCode", productCode);
+			paramMap.put("bomNo", bomNo);
+			logger.info("beforeArrList.size()@Controller={}",beforeArrList.size());
+			if((beforeArrList.size() < pCodeList.size())) {
+				int repeat = pCodeList.size() - beforeArrList.size();
+				logger.info("repeat@controller={}",repeat);
+				for(int i=0;i<repeat;i++) {
+					beforeArrList.add("0");
+				}
+			}
+			
+			for(int i=0; i<pCodeList.size();i++) {
+				Map<String,Object> temp = new HashMap<>();
+				temp.put("pCodeList", pCodeList.get(i));
+				temp.put("pNoList", pNoList.get(i));
+				temp.put("pCountList", pCountList.get(i));
+				temp.put("beforeArrList", beforeArrList.get(i));
+				
+				BOMList.add(temp);
+			}
+			
+			paramMap.put("BOMList", BOMList);
+			logger.info("paramMap@Controller={}",paramMap);
+			int result2 = productionService.updateBOMRm(paramMap);
+		}
+		
+		//not cotains = delete
+		if(pCodeList != null) {
+			for(String before : beforeArrList) {
+			    if(pCodeList.contains(before)) {
+			        System.out.println("pCodeList 에는 "+ before + " 가 있다.");
+			    }else {
+			        System.out.println("pCodeList 에는 "+ before + " 가 없다. 따라서 지울것이다.");
+			        List<String> removeThis = new ArrayList<>();
+			        removeThis.add(before);
+			        
+			        List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
+					Map<String, Object> deleteMap = new HashMap<String, Object>();
+					deleteMap.put("bomNo", bomNo);
+					for(int i=0; i<removeThis.size();i++) {
+						Map<String,Object> temp = new HashMap<>();
+						temp.put("removeCode", removeThis.get(i));
+						deleteList.add(temp);
+					}
+					deleteMap.put("deleteList", deleteList);
+					int delete = productionService.deleteBOMRm(deleteMap);
+			    }
 			}
 		}
 		
-		for(int i=0; i<pCodeList.size();i++) {
-			Map<String,Object> temp = new HashMap<>();
-			temp.put("pCodeList", pCodeList.get(i));
-			temp.put("pNoList", pNoList.get(i));
-			temp.put("pCountList", pCountList.get(i));
-			temp.put("beforeArrList", beforeArrList.get(i));
-			
-			BOMList.add(temp);
-		}
+		List<String> list = new ArrayList<>();
+		list.add("성공");
 		
-//		for(int i=0; i<beforeArrList.size();i++) {
-//			temp.put("beforeArrList", beforeArrList.get(i));
-//			
-//			BOMList.add(temp);
-//		}
-		
-		paramMap.put("BOMList", BOMList);
-		logger.info("paramMap@Controller={}",paramMap);
-		int result2 = productionService.updateBOMRm(paramMap);
-		
-
-		
-		return paramMap;
+		return list;
 	}
 	
 }

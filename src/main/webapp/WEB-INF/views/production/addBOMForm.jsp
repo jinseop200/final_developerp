@@ -160,7 +160,7 @@
 .scResize{
 	height: 110px;
 }
-/* #edTable {
+#edTable {
     counter-reset: rowNumber;
 }
 
@@ -169,7 +169,7 @@
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
-} */
+}
 </style>
 <script>    
 
@@ -184,10 +184,10 @@ $(()=>{
     	$('#updateProductNo').modal("hide");
     });
 	
-	var trNum = $(".BOMTbody tr").length;
+/* 	var trNum = $(".BOMTbody tr").length;
 	for(var i=1;i<=trNum;i++){
 		$(".pNo").text(i);
-	}
+	} */
 	
 	 <%--editable table script--%>
 	 const $tableID = $('#table');
@@ -211,21 +211,21 @@ $(()=>{
 
 	   $tableID.find('table').append(newTr);
 		
-	   var trNum = $("#frmSubmit tr").length;
+/* 	   var trNum = $("#frmSubmit tr").length;
 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
 		for(var i=firstNum;i<=trNum;i++){
 			$(".pNo").eq(i).text(i+1);
-		}
+		} */
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
 	   $(this).parents('tr').detach();
 	   
-	   var trNum = $("#frmSubmit tr").length;
+/* 	   var trNum = $("#frmSubmit tr").length;
 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
 		for(var i=firstNum;i<=trNum;i++){
 			$(".pNo").eq(i).text(i+1);
-		}
+		} */
 	   
 	 });
 
@@ -284,15 +284,6 @@ $(()=>{
 	
 	 
 	 $("#FrmBtn").off("click").on('click', function() {
-		//button submit
-		//$(document).off('click').on('click','#FrmBtn',function(){
-			//$("#frmSubmit").submit();
-			//var BOMTbody = $("#frmSubmit tr").text();
-//		 	var BOMTbody = new Array();
-//		 	BOMTbody = $("#frmSubmit tr");
-//		 	console.log("BOMTbody2", $("#frmSubmit tr").text());
-//		 	console.log(BOMTbody);
-			
 			var pNo = $(".pNo");
 			var pNos = [];
 
@@ -329,6 +320,7 @@ $(()=>{
 		 		dataType: "json",
 		 		success: data => {
 		 			console.log(data);
+		 			$('#BOMAddModal').modal("hide"); //닫기 
 		 		},
 		 		error : (jqxhr, textStatus, errorThrown)=>{
 		 			console.log(jqxhr, textStatus, errorThrown);
