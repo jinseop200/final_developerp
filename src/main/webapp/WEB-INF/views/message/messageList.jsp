@@ -20,7 +20,7 @@
   <li class="nav-item">
     <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
   </li>
-  <li class="nav-item" style="padding-left:140px; ">
+  <li class="nav-item" style="padding-left:163px; ">
     <span class="nav-link" id="message-insert-button">신규</span>
   </li>
 </ul>
@@ -28,7 +28,7 @@
      <table class="table table-bordered message-list-table" style="text-align:center;" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
-           <th style="padding:12px 14px;">No</th>
+           <th style="padding:12px 11px;">No</th>
            <th>제목</th>
            <th class="messageShow">보낸사람</th>
            <th class="messageHide">받는사람</th>
@@ -71,18 +71,16 @@ $(()=>{
 });
 
 
-$(".message-list-table tbody").on('dblclick','tr',function(){
-	var value = $(this).children().eq(1).html();
-	var messageValue= $(this).attr("id");
-	console.log(value);
-	console.log(messageValue);
-	$('.controll-modal-body-detailMessage').load("${pageContext.request.contextPath}/message/detailMessageForm.do?meNo="+messageValue,function(){
-        $('#detailMessage').modal({backdrop: 'static', keyboard: false});
-        $('#detailMessage').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        $('#messageList').modal("hide");
+	
+	$(".message-list-table tbody").on('dblclick','tr',function(){
+		var value = $(this).children().eq(1).html();
+		var messageValue= $(this).attr("id");
+			$('.controll-modal-body-detailMessage').load("${pageContext.request.contextPath}/message/detailMessageForm.do?meNo="+messageValue+"&empName=${memberLoggedIn.empName}",function(){
+		        $('#detailMessage').modal({backdrop: 'static', keyboard: false});
+		        $('#detailMessage').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+			});
 	});
-});
 
 $("#message-insert-button").on('click',function(){
 	 $('.controll-modal-body-insertMessage').load("${pageContext.request.contextPath}/message/insertMessageForm.do",function(){
@@ -98,6 +96,10 @@ $(".messageListModal-end").click(function(){
 }); 
 
 $("#messageAll").on('click',function(){
+	messageType = $(this).attr("id");
+	console.log(messageType);
+	$(".messageHide").hide();
+	$(".messageShow").show();
 	$(".nav-link").removeClass("active");
 	$("#messageAll").addClass("active");
 	messagePage(0);
@@ -149,6 +151,10 @@ function messagePage(a){
 }
 
 $("#messageConfirm").on('click',function(){
+	messageType = $(this).attr("id");
+	console.log(messageType);
+	$(".messageHide").hide();
+	$(".messageShow").show();
 	$(".nav-link").removeClass("active");
 	$("#messageConfirm").addClass("active");
 	messageConfirmPage(0);
@@ -200,8 +206,11 @@ function messageConfirmPage(a){
 	});
 }
 $("#messageNoConfirm").on('click',function(){
+	messageType = $(this).attr("id");
+	console.log(messageType);
+	$(".messageHide").hide();
+	$(".messageShow").show();
 
-	confirm=2;
 	$(".nav-link").removeClass("active");
 	$("#messageNoConfirm").addClass("active");
 	messageNoConfirmPage(0);
@@ -253,6 +262,8 @@ function messageNoConfirmPage(a){
 }
 
 $("#messageSenderForm").on('click',function(){
+	messageType = $(this).attr("id");
+	console.log(messageType);
 	$(".nav-link").removeClass("active");
 	$("#messageSenderForm").addClass("active");
 	$(".messageHide").show();

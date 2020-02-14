@@ -28,14 +28,14 @@
 	update message set read_yn='y' where me_no=#{meNo}
 </update>
 <select id="messageConfirmPage" resultType="message">
-	select * from message where reciever = #{empName} and read_yn ='y' order by me_no
+	select * from message where reciever = #{empName} and read_yn ='y' order by me_no desc
 </select>
 
 <select id="selectAllCountmessageConfirmPage" resultType="_int">
 	select count(*) from message where reciever=#{empName} and read_yn='y' 
 </select>
 <select id="messageNoConfirmPage" resultType="message">
-	select * from message where reciever = #{empName} and read_yn ='n' order by me_no
+	select * from message where reciever = #{empName} and read_yn ='n' order by me_no desc
 </select>
 
 <select id="selectAllCountmessageNoConfirmPage" resultType="_int">
@@ -43,7 +43,7 @@
 </select>
 
 <select id="messageSenderFormPage" resultType="message">
-	select * from message where sender=#{empName} order by me_no
+	select * from message where sender=#{empName} order by me_no desc
 </select>
 
 <select id="selectAllCountmessageSenderFormPage" resultType="_int">
