@@ -174,6 +174,30 @@ public class QualityServiceImpl implements QualityService {
 		return qualityDAO.selectSpecByPtNo(ptNo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRCPkInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectRCPkInfo(param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPCPkInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectPCPkInfo(param);
+	}
+
+	@Override
+	public Map<String, String> selectRStaticsInfo(String ptNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectRStaticsInfo(ptNo);
+	}
+
+	@Override
+	public Map<String, String> selectPStaticsInfo(String ptNo) {
+		// TODO Auto-generated method stub
+		return qualityDAO.selectPStaticsInfo(ptNo);
+	}
+
 
 
 }

@@ -176,7 +176,7 @@
                   <h6 class="collapse-header">DETAIL</h6>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do">부적합 현황</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/xbarGraphByProduct.do">제품별 Xbar 그래프</a>
-                  <a class="collapse-item" href="cards.html">P 관리도</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/quality/searchCPk.do">공정 계수 조회</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityInsection.do">품질 검사 관리</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath }/quality/qualityControll.do">부적합 관리</a>
                 </div>

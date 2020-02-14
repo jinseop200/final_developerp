@@ -163,7 +163,7 @@
 	
 	
 	<select id="selectMeasurmentFromPD" resultType="map">
-		select to_char(production,'yyyy-MM-dd') as "x", measurement as "y" from production
+		select to_char(production,'yyyy-MM-dd') as "label", measurement as "y" from production
 		where pl_no = #{ptNo}
 		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
 			and production between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
@@ -171,7 +171,7 @@
 		order by 1
 	</select>
 	<select id="selectMeasurmentFromRM" resultType="map">
-		select to_char(rec_date,'yyyy-MM-dd') as "x", measurement as "y" from recieving
+		select to_char(rec_date,'yyyy-MM-dd') as "label", measurement as "y" from recieving
 		where rm_no = #{ptNo}
 		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
 			and rec_date between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
@@ -183,6 +183,33 @@
 	</select>
 	<select id="selectSpecByRmNo" resultType="map">
 		select spec, tol from raw_material where rm_no = #{ptNo}
+	</select>
+	
+	<select id="selectRCPkInfo" resultType="map">
+	select (select rm_name from raw_material where rm_no = r.rm_no) AS "PRODUCT_NAME", rm_no as "PNO", measurement, count(*) AS "COUNT" from recieving r where insection_yn = 'Y' 
+	and rm_no = #{ptNo}
+	<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+		and rec_date between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
+	</if>
+	group by rm_no, measurement order by measurement
+	
+	</select>
+	
+	<select id="selectPCPkInfo" resultType="map">
+	select (select product_name from product_list where pl_no = p.pl_no) AS "PRODUCT_NAME", pl_no as "PNO", measurement, count(*) AS "COUNT" from production p where insection_yn = 'Y' 
+	and pl_no = #{ptNo}
+	<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+		and production between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
+	</if>
+	group by pl_no, measurement order by measurement
+	
+	</select>
+	
+	<select id="selectPStaticsInfo" resultType="map">
+		select trunc(stddev(measurement),2) as "STTDEV", max(measurement) as "MAX", min(measurement) as "MIN", avg(measurement) as "AVG" from production where pl_no = #{ptNo}
+	</select>
+	<select id="selectRStaticsInfo" resultType="map">
+		select trunc(stddev(measurement),2) as "STTDEV", max(measurement) as "MAX", min(measurement) as "MIN", avg(measurement) as "AVG" from recieving where rm_no = #{ptNo}
 	</select>
 	
 </mapper>
