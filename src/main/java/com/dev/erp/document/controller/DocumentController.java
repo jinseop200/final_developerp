@@ -40,6 +40,18 @@ public class DocumentController {
 		mav.setViewName("document/documentView");
 		return mav;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/document/insertDocumentForm.do")
 	public ModelAndView insertDocumentForm(ModelAndView mav) {
 		
@@ -53,9 +65,12 @@ public class DocumentController {
 	
 	@PostMapping("/document/enrollDocument.do")
 	public ModelAndView enrollDocument(ModelAndView mav, @RequestParam("documentDate")Date documentDate,
-										@RequestParam("documentTitle") String documentTitle, @RequestParam("docLastapproval") String docLastapproval,
-										@RequestParam("documentMiddle") String documentMiddle, @RequestParam("documentType") String documentType,
-										@RequestParam("documentContent") String documentContent, @RequestParam("empName") String empName) {
+														 @RequestParam("documentTitle") String documentTitle,
+														 @RequestParam("docLastapproval") String docLastapproval,
+														 @RequestParam("documentMiddle") String documentMiddle,
+														 @RequestParam("documentType") String documentType,
+														 @RequestParam("documentContent") String documentContent,
+														 @RequestParam("empName") String empName) {
 		int typeNo = 0;
 		if(documentType.equals("기본")) {
 			typeNo=0;

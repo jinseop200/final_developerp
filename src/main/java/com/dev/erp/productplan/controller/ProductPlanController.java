@@ -24,7 +24,5 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/insertJobOrder.do")
 	public void insertJobOrder() {
 		
-	}
-	
-	
+	}	
 }

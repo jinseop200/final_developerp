@@ -91,7 +91,7 @@
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
                 <a class="collapse-item" href="cards.html">쪽지함</a>
                 <a class="collapse-item" href="cards.html">메신저</a>
-                <a class="collapse-item" href="cards.html">게시판</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/board/boardList.do?">게시판</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do?">시설물 예약</a>
               </div>
             </div>

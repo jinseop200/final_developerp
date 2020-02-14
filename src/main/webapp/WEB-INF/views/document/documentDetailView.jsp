@@ -33,7 +33,7 @@
 <body>
       <!-- search-container start -->
       <div id="insert-container">
-          <form class="needs-validation" action="${pageContext.request.contextPath}/document/updateDocument.do" 
+          <form class="needs-validation" action="${pageContext.request.contextPath}/board/updateBoard.do" 
           		name="documentEnrollFrm" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
