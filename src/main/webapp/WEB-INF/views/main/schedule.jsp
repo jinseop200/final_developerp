@@ -2,37 +2,39 @@
     pageEncoding="UTF-8"%>
       <!-- search-container start -->
       <div id="insert-container">
-          <form class="needs-validation" action="${pageContext.request.contextPath}/document/enrollDocument.do" 
+          <form class="needs-validation" action="${pageContext.request.contextPath}/schedule/scheduleInsert.do" 
           		name="documentEnrollFrm" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.email}" id="email" name="email" />
           		</div>
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
-	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp;
+	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    <input type="text" id="title" name="title" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2">
 	                </div> 
                 </div>
-                <div class="form-row">
-<!--                     <div class="col-md-6 mb-3" >                   -->
-                    <label >일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="input" id="startScheduleTime" name="startScheduleTime" value='${date}' class="form-control bg-light small"readonly style="width:120px;">
-                    &nbsp;&nbsp;
-                    <input type="time" name="startTime" id="startTime" class="form-control bg-light small" style="width:120px;">
-                    &nbsp;&nbsp;~&nbsp;&nbsp;
-                    <input type="date"id="endScheduleTime" name="endScheduleTime" class="form-control bg-light small"style="width:120px;">
-                    &nbsp;&nbsp;
-                    <input type="time" id="endTime" name="endTime" class="form-control bg-light small"style="width:120px;">                    
-<!--                     </div> -->
+                <div class="form-row" style="width:550px;">
+                    <div class="col-md-6 mb-3" >                  
+                    <label >시 작 일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="date" id="startScheduleTime" name="startScheduleTime" value='${date}' class="form-control bg-light small"readonly style="width:166px;">
+                    
                 </div>   
-      
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox">
-                   
+                    <input type="time" name="startTime" id="startTime" class="form-control bg-light small" value="00:00"style="width:140px;">
+                </div>   
+                  	 <div class="form-row" style="width:550px;">
+                    <div class="col-md-6 mb-3" >                  
+                     <label >종 료 일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="date"id="endScheduleTime" name="endScheduleTime" value='${date}'class="form-control bg-light small" style="width:166px; ">
                     </div>
-                </div>
+                    <input type="time" id="endTime" name="endTime" class="form-control bg-light small"value="00:00"style="width:140px;">                    
+      </div>  
+<!--                 <div class="form-row"> -->
+<!--                     <div class="col-md-6 mb-3"> -->
+<!--                         <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!--                         <input type="checkbox" id="check"> -->
+                   
+<!--                     </div> -->
+<!--                 </div> -->
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />

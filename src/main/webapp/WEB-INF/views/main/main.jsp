@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -16,7 +18,9 @@
 <script src='${pageContext.request.contextPath}/resources/js/calendar2/daygrid/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/calendar2/timegrid/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/calendar2/list/main.js'></script>
-
+<%String content = (String)request.getAttribute("content"); 
+Date now = new Date(); 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -31,7 +35,7 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
       },
-      defaultDate: '2019-08-12',
+      defaultDate: '<%=sdf.format(now)%>',
       locale: initialLocaleCode,
       buttonIcons: true, // show the prev/next text
       weekNumbers: true,
@@ -42,57 +46,59 @@
         {
           title: 'All Day Event',
           start: '2019-08-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2019-08-07',
-          end: '2019-08-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2019-08-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2019-08-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2019-08-11',
-          end: '2019-08-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2019-08-12T10:30:00',
-          end: '2019-08-13T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2019-08-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2019-08-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2019-08-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2019-08-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2019-08-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2019-08-28'
         }
+//         ,
+//         {
+//           title: 'Long Event',
+//           start: '2019-08-07',
+//           end: '2019-08-10'
+//         },
+//         {
+//           groupId: 999,
+//           title: 'Repeating Event',
+//           start: '2019-08-09T16:00:00'
+//         },
+//         {
+//           groupId: 999,
+//           title: 'Repeating Event',
+//           start: '2019-08-16T16:00:00'
+//         },
+//         {
+//           title: 'Conference',
+//           start: '2019-08-11',
+//           end: '2019-08-13'
+//         },
+//         {
+//           title: 'Meeting',
+//           start: '2019-08-12T10:30:00',
+//           end: '2019-08-13T12:30:00'
+//         },
+//         {
+//           title: 'Lunch',
+//           start: '2019-08-12T12:00:00'
+//         },
+//         {
+//           title: 'Meeting',
+//           start: '2019-08-12T14:30:00'
+//         },
+//         {
+//           title: 'Happy Hour',
+//           start: '2019-08-12T17:30:00'
+//         },
+//         {
+//           title: 'Dinner',
+//           start: '2019-08-12T20:00:00'
+//         },
+//         {
+//           title: 'Birthday Party',
+//           start: '2019-08-13T07:00:00'
+//         },
+//         {
+//           title: 'Click for Google',
+//           url: 'http://google.com/',
+//           start: '2019-08-28'
+//         }
+        <%=content%>
       ]
     });
 
@@ -114,6 +120,54 @@
 //       }
 //     });
 
+    $(document).ready(function(){
+//  	   var bookDay = $('#date').val();
+//         var facilityNo=$('#facilityNo').val();
+    		$.ajax({
+ 				url: "${pageContext.request.contextPath}/schedule/schedulList.do?date="+'<%=sdf.format(now)%>'+"&email="+'${memberLoggedIn.email}',
+ 				dataType: "json",
+ 				success: data => {
+ 					console.log(data);
+ 					var html1="";
+ 					var html2="";
+//  					 if(data.length==0)
+//  						 html+="<tr><td colspan='3'>예약 기록이 없습니다.</td></tr>"
+ 					$.each(data,(idx, schedule)=>{
+//  						 var starttime = facility.bookStarttime.substring(0,2); 
+//  						 var starttime2 = facility.bookStarttime.substring(2,4);
+//  						 var endtime = facility.bookEndtime.substring(0,2); 
+//  						 var endtime2 = facility.bookEndtime.substring(2,4);							
+ 						 var startScheduleTime=schedule.startScheduleTime.substring(0,10);
+ 						 var endScheduleTime=schedule.endScheduleTime.substring(0,10);
+ 						 if(startScheduleTime==endScheduleTime)
+ 							 {
+ 						  startScheduleTime=schedule.startScheduleTime.substring(11,19);
+ 						  endScheduleTime=schedule.endScheduleTime.substring(11,19); 						  
+ 						 html1+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
+ 						 html1+="<td><p class='schedule-title'>"+schedule.title+'</p>'+schedule.content+"</td></tr>";
+ 						 console.log(startScheduleTime);
+ 							 }
+ 						 else{
+ 							startScheduleTime=schedule.startScheduleTime.substring(5,10);
+ 	 						  endScheduleTime=schedule.endScheduleTime.substring(5,10); 						  
+ 	 						 html2+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
+ 	 						 html2+="<td><p class='schedule-title'>"+schedule.title+'</p>'+schedule.content+"</td></tr>";
+ 	 						 console.log(startScheduleTime);
+ 						 }
+ 						 
+ 					});
+ 						$("#list").append(html2);					
+ 						$("#list").append(html1);					
+ 					},
+ 				error: (jqxhr, textStatus, errorThrown) => {
+ 					console.log("ajax요청실패!", jqxhr, textStatus, errorThrown);
+ 				}
+ 			});
+    	  });
+    
+    
+    
+    
   });
     function here(date){
     	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/schedule.do?date="+date,function(){
@@ -149,12 +203,47 @@
   }
 
   #calendar {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 10px;
+    width:45%;
+    display: inline-block;
+    float:left;
+    height: 430px;
+  }
+  .schedule-title{
+  	font-size:  20px;
+  	font-weight: bold;
   }
 .fc-day{
  cursor:pointer;}
+ #schedule-table-container{
+ 	width:48%;
+ 	height: 430px;
+ 	display: inline-block;
+ 	float:right;
+ }
+  #schedule-table-container2{
+ 	width:98%;
+ 	height: 400px;
+ 	overflow-y: scroll;
+ 	both:clear;
+ }
+ .my-schedule-container{
+ 	width:100%;
+ 	height: 440px;
+ 	
+ }
+ .float-clear{
+ 	both:clear;
+ }
+ 
+ #list tr td:first-of-type{
+ 	border-right:1px solid rgba(0,0,0,0.2);
+ }
+ .schedule-title{
+ 	margin-bottom:0;
+ }
+ 
+ 
+ 
 </style>
 <!-- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="scheduleModal">
@@ -174,6 +263,21 @@
     </div>
 </div>
 
-
-<div id='calendar'></div>
+<div class='my-schedule-container'>
+	<div id='calendar'></div>
+	<div id='schedule-table-container'>
+		<h3>오늘의 일정</h3>
+		<hr></hr>
+		<div id='schedule-table-container2'>	
+		<table class="table table-striped">
+		
+		  </thead>
+		  <tbody id="list">
+		
+		  </tbody>
+		</table>
+		</div>
+	</div>
+</div>
+<br class='float-clear'/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
