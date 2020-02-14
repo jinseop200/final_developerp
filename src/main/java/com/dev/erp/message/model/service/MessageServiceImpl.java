@@ -73,4 +73,5 @@ public class MessageServiceImpl implements MessageService {
 	public int selectAllCountmessageSenderFormPage(String empName) {
 		return messageDAO.selectAllCountmessageSenderFormPage(empName);
 	}
+
 }

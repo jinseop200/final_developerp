@@ -590,7 +590,7 @@
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        <div class="modal-footer">
-			          <button type="button" class="btn btn-primary detail">닫기</button>
+			          <button type="button" class="btn detailMessage-close">닫기</button>
 			      </div>
 			        </div>
 			    </div>
@@ -657,9 +657,20 @@
 				    });
 				
 			})
+			
+			$(".btn.detailMessage-close").click(function(){
+				$("#detailMessage").modal('hide');
+			})
 				
 			
 			  </script>
+			  <style>
+			  .detailMessage-close{
+			  	color: #fff;
+			    background-color: #2e59d9;
+			    border-color: #2653d4;
+			  }
+			  </style>
   
 
             <!-- 페이지 내용(Begin Page Content) -->

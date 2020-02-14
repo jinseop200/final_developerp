@@ -30,4 +30,5 @@ public interface MessageService {
 	List<Message> messageSenderFormPage(int cPage, int numPerPage, String empName);
 
 	int selectAllCountmessageSenderFormPage(String empName);
+
 }

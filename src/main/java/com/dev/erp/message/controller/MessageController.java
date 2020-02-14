@@ -144,11 +144,13 @@ public class MessageController {
 		return map;
 	}
 	@RequestMapping("/message/detailMessageForm.do")
-	public ModelAndView detailMessageForm(ModelAndView mav, @RequestParam("meNo") int meNo) {
+	public ModelAndView detailMessageForm(ModelAndView mav, @RequestParam("meNo") int meNo, @RequestParam("empName") String empName) {
 		
 		Message message = new Message();
 		message = messageService.detailMessage(meNo);
-		int result = messageService.updateMessage(meNo);
+		if(message.getReciever().equals(empName)) {
+			int result = messageService.updateMessage(meNo);
+		}
 		mav.addObject("message",message);
 		mav.setViewName("message/detailMessageForm");
 		return mav;
