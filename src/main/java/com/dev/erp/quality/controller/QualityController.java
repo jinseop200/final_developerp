@@ -382,12 +382,12 @@ public class QualityController {
 		List<Map<String,String>> lcl = new ArrayList<>();
 		for(int i=0;i<data.size();i++) {
 			Map<String,String> temp = new HashMap<>();
-			String date = ((Map<String,String>)data.get(i)).get("x");
-			temp.put("x", date);
+			String date = ((Map<String,String>)data.get(i)).get("label");
+			temp.put("label", date);
 			temp.put("y", String.valueOf(ucl_));
 			ucl.add(temp);
 			temp = new HashMap<>();
-			temp.put("x", date);
+			temp.put("label", date);
 			temp.put("y", String.valueOf(lcl_));
 			lcl.add(temp);
 		}
@@ -402,6 +402,62 @@ public class QualityController {
 		
 		new Gson().toJson(xbarMap,response.getWriter());
 		
+	}
+	
+	@RequestMapping("/quality/searchCPk.do")
+	public ModelAndView searchCPk(ModelAndView mav) {
+		
+		Calendar date = new GregorianCalendar().getInstance();
+		Calendar beforeMonth  = new GregorianCalendar().getInstance();
+		beforeMonth.add(Calendar.MONTH, -1);
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+		String today = fmt.format(date.getTime());
+		String monthAgo = fmt.format(beforeMonth.getTime());
+		mav.addObject("today",today);
+		mav.addObject("monthAgo",monthAgo);
+		
+		
+		List<Map<String,String>> ptType = qualityService.selectProductTypeAll();
+		mav.addObject("ptType",ptType);
+		mav.setViewName("quality/searchCPk");
+		return mav;
+		
+	}
+	
+	@RequestMapping("/quality/searchCPkEnd.do")
+	@ResponseBody
+	public void searchCPkEnd (@RequestParam(value="startDate", required=false) String startDate,
+								@RequestParam(value="endDate", required=false) String endDate,
+								@RequestParam("ptType") String ptType,
+								@RequestParam("ptNo") String ptNo,
+								HttpServletResponse response) throws JsonIOException, IOException {
+		
+		response.setContentType("text/html;charset=UTF-8");
+		Map<String,String> param = new HashMap<>();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		param.put("ptNo", ptNo);
+		
+		Map<String,String> spec = new HashMap<>();
+		Map<String,String> statics = new HashMap<>();
+		List<Map<String,String>> data = new ArrayList<>();
+		if(ptType.equals("1")) {
+			data = qualityService.selectRCPkInfo(param);
+			spec = qualityService.selectSpecByRmNo(ptNo);
+			statics = qualityService.selectRStaticsInfo(ptNo);
+		}
+		else {
+			data = qualityService.selectPCPkInfo(param);
+			spec = qualityService.selectSpecByPtNo(ptNo);
+			statics = qualityService.selectPStaticsInfo(ptNo);
+		}
+		
+		Map <String,Object> cpk = new HashMap<>();
+		cpk.put("spec", spec);
+		cpk.put("data", data);
+		cpk.put("statics", statics);
+		
+		new Gson().toJson(cpk,response.getWriter());
 	}
 	
 }

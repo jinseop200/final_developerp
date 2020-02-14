@@ -7,6 +7,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
  <!-- Custom styles for this page -->
  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 	<script src="${pageContext.request.contextPath }/resources/js/jquery.table2excel.js"></script>
+ 	<script type="text/javascript" src="libs/js-xlsx/xlsx.core.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Page Heading -->
@@ -16,6 +18,9 @@
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button" id="quality-search-button">
                 	  부적합 상세 검색하기&nbsp;&nbsp;&nbsp; <i class="fas fa-search fa-sm"></i>
+                </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn" type="button" id="export-excel-button">
+                	  <img src="${pageContext.request.contextPath }/resources/images/excel.png" alt="" style="width:40px;height:40px;"/>
                 </button> 
               </div>
             </div>
@@ -130,6 +135,16 @@ $("#quality-search-button").click(function(){
         $(".quality-controll-title").html("부적합 상세조회");
         
     });
+});
+
+$("#export-excel-button").click(function(){
+	  $("#dataTable").table2excel({
+		      // exclude CSS class
+		      exclude:".noExl",
+		      name:"Worksheet Name",
+		      filename:"SomeFile",//do not include extension
+		      fileext:".xls" // file extension
+    	});
 });
 
 	

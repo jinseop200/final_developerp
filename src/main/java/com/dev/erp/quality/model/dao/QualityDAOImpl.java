@@ -173,6 +173,30 @@ public class QualityDAOImpl implements QualityDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("quality.selectSpecByPtNo",ptNo);
 	}
+
+	@Override
+	public List<Map<String, String>> selectRCPkInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectRCPkInfo",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPCPkInfo(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("quality.selectPCPkInfo",param);
+	}
+
+	@Override
+	public Map<String, String> selectRStaticsInfo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectRStaticsInfo",ptNo);
+	}
+
+	@Override
+	public Map<String, String> selectPStaticsInfo(String ptNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("quality.selectPStaticsInfo",ptNo);
+	}
 	
 	
 }

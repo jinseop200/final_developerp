@@ -59,5 +59,13 @@ public interface QualityService {
 
 	Map<String,String> selectSpecByPtNo(String ptNo);
 
+	List<Map<String, String>> selectRCPkInfo(Map<String, String> param);
+
+	List<Map<String, String>> selectPCPkInfo(Map<String, String> param);
+
+	Map<String, String> selectRStaticsInfo(String ptNo);
+
+	Map<String, String> selectPStaticsInfo(String ptNo);
+
 
 }
