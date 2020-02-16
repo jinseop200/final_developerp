@@ -30,6 +30,7 @@
 		   <c:if test="${searchType == 'accountNo'}">
            <th>거래처번호</th>
            <th>거래처명</th>
+           <th>거래구분코드</th>
            </c:if>
            <c:if test="${searchType == 'ptNo'}">
            <th>품목번호</th>
@@ -43,6 +44,16 @@
            <th>거래처 구분코드</th>
            <th>거래처구분명</th>
            </c:if>
+           <c:if test="${searchType == 'rawMaterialDetail'}">
+           <th>품목번호</th>
+           <th>품목명</th>
+           <th>관리번호</th>
+           <th>거래처구분코드</th>
+           </c:if>
+           <c:if test="${searchType == 'storeNo'}">
+           <th>창고번호</th>
+           <th>창고이름</th>
+           </c:if>
          </tr>
        </thead>
        <tbody id="tbodyList">
@@ -51,6 +62,7 @@
      </div>
      </div>
      <input type="hidden" id="trNum" value="nulla"/>
+     <input type="hidden" id="valForSearch" value="a"/>
 </div>
      <div class="pageBar"></div>
 <%--      ${pageBar} --%>
@@ -91,15 +103,37 @@ $(()=>{
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
 	var value2 = $(this).children().eq(2).html();
+	var value3 = $(this).children().eq(3).html();
+	var value4 = $(this).children().eq(4).html();
 	var trNum = $("#trNum").val();
 	//console.log(trNum);
 	//console.log(value);
 	
 	if(trNum != "nulla"){
+		console.log("1");
 		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
 		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
 	}
+	if($("#${searchType}").attr('name') == 'accountNo'){
+		console.log("2");
+		$("#vendorType").val(value3);
+	}
+	if($("#${searchType}").attr('name') == 'rawMaterialDetail'){
+		console.log("3");
+		$("#ptNo").val(value3);
+		$("#vendorType").val(value4);
+		$("#storeNo").val(1);
+		$("#quantity").focus();
+	}
+	if($("#valForSearch").val() == "update"){
+		console.log("update COM")
+		$("#updateWarehousing #ptNo").val(value3);
+		$("#updateWarehousing #vendorType").val(value4);
+		$("#updateWarehousing #rawMaterialDetail").val(value);
+		$("#updateWarehousing #quantity").focus();
+	}
 	
+	console.log("4");
 	$("#${searchType}").val(value);
 	$("#mySearchModal").modal('hide');
 });
@@ -120,15 +154,41 @@ function morePage(a){
 		url : url_,
 		dataType : "json",
 		success : data => {
-			var speclist = data.speclist;
-			$(".quality-specify-table tbody").children().remove();
-			for(var i in speclist ) {
-				let p = speclist[i];
-				//console.log(p);	
-				$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><tr>");
+			console.log("data?=",data);
+			if(data.searchType == 'accountNo'){
+				var speclist = data.speclist;
+				$(".quality-specify-table tbody").children().remove();
+				for(var i in speclist ) {
+					let p = speclist[i];
+					//console.log(p);	
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><tr>");
+				}
+				$(".pageBar").html(data.pageBar);
+				$("span.page-link").attr('onclick',"morePage(this.id)");
 			}
-			$(".pageBar").html(data.pageBar);
-			$("span.page-link").attr('onclick',"morePage(this.id)");
+			else if(data.searchType == 'rawMaterialDetail'){
+				var speclist = data.speclist;
+				$(".quality-specify-table tbody").children().remove();
+				for(var i in speclist ) {
+					let p = speclist[i];
+					//console.log(p);	
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><tr>");
+				}
+				$(".pageBar").html(data.pageBar);
+				$("span.page-link").attr('onclick',"morePage(this.id)");
+			}
+			else{
+				var speclist = data.speclist;
+				$(".quality-specify-table tbody").children().remove();
+				for(var i in speclist ) {
+					let p = speclist[i];
+					//console.log(p);	
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><tr>");
+				}
+				$(".pageBar").html(data.pageBar);
+				$("span.page-link").attr('onclick',"morePage(this.id)");
+			}
+			
 		},
 		error:(x,s,e)=>{
 			console.log("ajax요청실패",x,s,e);

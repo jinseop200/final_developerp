@@ -57,4 +57,20 @@ public interface EnrollmentService {
 
 	int selectAllVendorType();
 
+	List<Map<String, String>> selectrawMaterialDetailAll(int cPage, int numPerPage);
+
+	int selectAllrawMaterialDetail();
+
+	List<Map<String, String>> selectStoreNoAll(int cPage, int numPerPage);
+
+	int selectAllStoreNo();
+
+	int deleteVendorByVendorNo(String vendorNo);
+
+	int deleteStorageByStNo(String stNo);
+
+	int deleteProductByProductNo(String productNo);
+
+	int deleteRawmaterialByRmNo(String rmNo);
+
 }

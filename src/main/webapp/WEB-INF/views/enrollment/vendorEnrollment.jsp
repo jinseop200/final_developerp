@@ -131,6 +131,28 @@ $(()=>{
     	$('#mySearchModal').modal("hide");
     });
 	
+	$("#delBtn").on("click",function(){
+		if(!confirm("정말 삭제하시겠습니까?"))
+			return;
+	
+		var vendorNo = $("#vendorNo2").val();
+		console.log(vendorNo);
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/enrollment/deleteVendorByVendorNo.do",
+			data: {vendorNo : vendorNo},
+		 	async: false,
+			contentType:"application/json;charset=UTF-8",
+			success: data => {
+				$('#updateVendor').modal("hide");
+				location.reload();
+			},
+			error : (x,s,e) =>{
+				console.log("ajax요청 실패!!", x, s, e);
+			}
+		})
+	});
+	
 }); //end of onload
 	
 
@@ -389,7 +411,7 @@ function vendorNoUpdateValidate2(){
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
 	                    <label for="vendorType">거래처 분류</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <input type="number" id="vendorType" name="vendorType" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="number" id="vendorTypes" name="vendorTypes" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
 	                	<button class="btn btn-primary searchBtn" type="button" value="vendorTypes">
 						<i class="fas fa-search fa-sm"></i>
 						</button>
@@ -463,6 +485,7 @@ function vendorNoUpdateValidate2(){
         </div>
         <div class="modal-footer">
         	<button type="submit" id="FrmBtn2" class="btn btn-primary" onclick="return vendorValidate2();">수정</button>
+        	<button type="button" class="btn btn-secondary" id="delBtn">삭제</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
         </form>

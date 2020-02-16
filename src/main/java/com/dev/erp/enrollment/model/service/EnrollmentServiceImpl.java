@@ -147,6 +147,46 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int selectAllVendorType() {
 		return enrollmentDAO.selectAllVendorType();
 	}
+
+	@Override
+	public List<Map<String, String>> selectrawMaterialDetailAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectrawMaterialDetailAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllrawMaterialDetail() {
+		return enrollmentDAO.selectAllrawMaterialDetail();
+	}
+
+	@Override
+	public List<Map<String, String>> selectStoreNoAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectStoreNoAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllStoreNo() {
+		return enrollmentDAO.selectAllStoreNo();
+	}
+
+	@Override
+	public int deleteVendorByVendorNo(String vendorNo) {
+		return enrollmentDAO.deleteVendorByVendorNo(vendorNo);
+	}
+
+	@Override
+	public int deleteStorageByStNo(String stNo) {
+		return enrollmentDAO.deleteStorageByStNo(stNo);
+	}
+
+	@Override
+	public int deleteProductByProductNo(String productNo) {
+		return enrollmentDAO.deleteProductByProductNo(productNo);
+	}
+
+	@Override
+	public int deleteRawmaterialByRmNo(String rmNo) {
+		return enrollmentDAO.deleteRawmaterialByRmNo(rmNo);
+	}
 	
 	
 }

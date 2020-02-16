@@ -147,6 +147,48 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int selectAllVendorType() {
 		return sqlsession.selectOne("enrollment.selectAllVendorType");
 	}
+
+	@Override
+	public List<Map<String, String>> selectrawMaterialDetailAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectrawMaterialDetailAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllrawMaterialDetail() {
+		return sqlsession.selectOne("enrollment.selectAllrawMaterialDetail");
+	}
+
+	@Override
+	public List<Map<String, String>> selectStoreNoAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectStoreNoAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllStoreNo() {
+		return sqlsession.selectOne("enrollment.selectAllStoreNo");
+	}
+
+	@Override
+	public int deleteVendorByVendorNo(String vendorNo) {
+		return sqlsession.delete("enrollment.deleteVendorByVendorNo",vendorNo);
+	}
+
+	@Override
+	public int deleteStorageByStNo(String stNo) {
+		return sqlsession.delete("enrollment.deleteStorageByStNo",stNo);
+	}
+
+	@Override
+	public int deleteProductByProductNo(String productNo) {
+		return sqlsession.delete("enrollment.deleteProductByProductNo",productNo);
+	}
+
+	@Override
+	public int deleteRawmaterialByRmNo(String rmNo) {
+		return sqlsession.delete("enrollment.deleteRawmaterialByRmNo",rmNo);
+	}
 	
 	
 }

@@ -43,50 +43,23 @@
 				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
 				            <td class="pt-3-half pName" contenteditable="false"></td>
 				            <td class="pt-3-half pCount" contenteditable="true"></td>
-				            <!-- <td class="pt-3-half">
-				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-				                    aria-hidden="true"></i></a></span>
-				              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-				                    aria-hidden="true"></i></a></span>
-				            </td> -->
 				            <td>
 				              <span class="table-remove"><button type="button"
 				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
 				            </td>
 				          </tr>
-				          <!-- This is our clonable table line
-				          <tr>
-				            <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
-				            <td class="pt-3-half" contenteditable="true">45</td>
-				            <td class="pt-3-half" contenteditable="true">Insectus</td>
-				            <td class="pt-3-half" contenteditable="true">USA</td>
-				            <td class="pt-3-half" contenteditable="true">San Francisco</td>
-				            <td class="pt-3-half">
-				              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-				                    aria-hidden="true"></i></a></span>
-				              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-				                    aria-hidden="true"></i></a></span>
-				            </td>
-				            <td>
-				              <span class="table-remove"><button type="button"
-				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-				            </td>
-				          </tr>
-				          -->
 				        </tbody>
 				      </table>
 				    </div>
 				  </div>
 				</div>
+				<br />
 				<!-- Editable table -->
-				
-				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-                </div>
-	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button> 
+	              <button type="button" id="FrmBtn" class="btn btn-primary addBOM-submit" >저장</button>
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+                </div>
            </div>
-           
       </div>
       
 <%--Search modal --%>
@@ -144,15 +117,10 @@
 	z-index:1080;
 }
 .btns{
-	padding-left: 389px;
+    padding-left: 84.8%;
 }
 .rowResize{
 	width: 100%;
-}
-.hrSize{
-    width: 549px;
-    padding: 0;
-    margin-left: -17px;
 }
 .updateModalBody{
     height: 130px;
@@ -163,7 +131,9 @@
 #edTable {
     counter-reset: rowNumber;
 }
-
+#delBtn{
+	margin-right: 5px;
+}
 #edTable tr td:first-child::before {
 	counter-increment: rowNumber;
     content: counter(rowNumber);
@@ -175,7 +145,6 @@
 
 <%--onload start--%>
 $(()=>{	
-	
 	$(".searchModal-end").click(function(){
     	$('#mySearchModal').modal("hide");
     });
@@ -183,11 +152,6 @@ $(()=>{
 	$(".mdlCloseBtn").click(function(){
     	$('#updateProductNo').modal("hide");
     });
-	
-/* 	var trNum = $(".BOMTbody tr").length;
-	for(var i=1;i<=trNum;i++){
-		$(".pNo").text(i);
-	} */
 	
 	 <%--editable table script--%>
 	 const $tableID = $('#table');
@@ -209,24 +173,21 @@ $(()=>{
 		 
 	   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-	   $tableID.find('table').append(newTr);
+	   $tableID.find('table tbody').append(newTr);
 		
-/* 	   var trNum = $("#frmSubmit tr").length;
-	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
-		for(var i=firstNum;i<=trNum;i++){
-			$(".pNo").eq(i).text(i+1);
-		} */
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
 	   $(this).parents('tr').detach();
 	   
-/* 	   var trNum = $("#frmSubmit tr").length;
-	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
-		for(var i=firstNum;i<=trNum;i++){
-			$(".pNo").eq(i).text(i+1);
-		} */
+	   var tds = $("#BOMAddModal .BOMTbody tr");
 	   
+	 	console.log("tds length?",tds.length);
+	 	
+	 	if(tds.length == 0){
+	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+ 		     $tableID.find('table tbody').append(newTr);
+	 	}
 	 });
 
 	 $tableID.on('click', '.table-up', function () {
@@ -283,7 +244,23 @@ $(()=>{
 	
 	
 	 
-	 $("#FrmBtn").off("click").on('click', function() {
+	  $("#FrmBtn").off("click").on('click', function() {
+		   var tds = $("#edTable .pNo").nextAll();
+			//console.log(tds);
+			var exit= false;
+			$(tds).each(function(){
+				if($(this).text()==""){
+					 exit = true;
+					alert("값을 입력해 주세요.");
+					$(this).focus();
+					return false;
+				}
+				else{
+					exit= false;
+				}
+			}) 
+			if(exit){ return false;}
+			
 			var pNo = $(".pNo");
 			var pNos = [];
 
@@ -321,13 +298,13 @@ $(()=>{
 		 		success: data => {
 		 			console.log(data);
 		 			$('#BOMAddModal').modal("hide"); //닫기 
+		 			location.reload();
 		 		},
 		 		error : (jqxhr, textStatus, errorThrown)=>{
 		 			console.log(jqxhr, textStatus, errorThrown);
 		 		}
 		 	});
-		})
-	 
+		}) 
 })
 <%--onload end--%>
 
@@ -340,148 +317,6 @@ $(function() {
     });
 });
   
-<%-- 품목코드 수정 중복검사 ajax--%>
-function productNoDuplicatedCheck(e){
-	var productNo = e;
-	console.log(productNo);
-	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/enrollment/productNoDuplicatedCheckForRawMaterial.do",
-		data: {productNo : productNo},
-		dataType: "json",
-	 	async: false,
-		contentType:"application/json;charset=UTF-8",
-		success: data => {
-			console.log(data);
-			if(data.isUsable == true && data.productNo != ""){
-				alert("사용가능한 품목코드 입니다.");
-				//$("#vendorNo").attr("style","border-bottom: 2px solid #00c500");
-				$("#updateProductNo #productNoCha").attr("style","border-bottom: 2px solid #00c500");
-				//$("#vendorNoValid").val(1);
-				$("#updateProductNo  #productNoUpdateValid").val(1);
-			}
-			if((data.isUsable == true || data.isUsable == false) && data.productNo == ""){
-				alert("중복확인할 품목코드를 입력해 주세요.");
-				//$("#vendorNo").val("");
-				$("#productNoCha").val("");
-				//$("#vendorNo").attr("style","border-bottom: 2px solid red");
-				$("#vendorNoCha").attr("style","border-bottom: 2px solid red");
-				//$("#vendorNoValid").val(0);
-				$("#productNoUpdateValid").val(0);
-			}
-			else if(data.isUsable == false){
-				alert("중복된 품목코드 입니다.");
-				//$("#vendorNo").val("");
-				$("#productNoCha").val("");
-				//$("#vendorNo").attr("style","border-bottom: 2px solid red");
-				$("#productNoCha").attr("style","border-bottom: 2px solid red");
-				//$("#vendorNoValid").val(0);
-				$("#productNoUpdateValid").val(0);
-				
-			}
-			
-		},
-		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
-}
-
-function productNoUpdateValidate2(){
-	var formData = $('#productNoUpdateFrm').serialize();
-	console.log(formData);
-	console.log($('#productNoCha').val());
-	
-	$.ajax({
-        cache : false,
-        url : "${pageContext.request.contextPath}/enrollment/updateProductNo.do",
-        processData: false,
-        type : 'POST', 
-        data : formData,
-        success : function(data) {
-        	$('#productNo').val($('#productNoCha').val());
-        	
-        	$('#updateProductNo').modal('hide');
-        },
-        error : function(x,h,r, status) {
-            alert(x,h,r + " : " + status);
-        }
-    }); // $.ajax */
-}  
-  
-  <%--완제품 등록 유효성검사--%>
-function addProductValidate(){
-  	var regExpNumber = /[^0-9]/g;
-  	var $productNoValid = $("#productNoValid");
-  	
-      //품목코드
-  	var $productNo = $("#productNo");
-  	if($productNo.val().trim().length == 0){
-          alert("품목코드를 입력하세요.");
-          $productNo.focus();
-  		return false;
-  	}
-      //거래처등록번호
-	var $accountNo = $("#accountNo");
-  	if($accountNo.val().trim().length == 0){
-          alert("거래처 등록번호를 입력하세요.");
-          $accountNo.focus();
-  		return false;
-  	}
-      //관리번호
-  	var $ptNo = $("#ptNo");
-  	if($ptNo.val().trim().length == 0){
-          alert("관리번호를 입력하세요.");
-          $ptNo.focus();
-  		return false;
-  	}
-  	//품목명
-  	var $productName = $("#productName");
-  	if($productName.val().trim().length == 0){
-          alert("품목명을 입력하세요.");
-          $productName.focus();
-  		return false;
-      }
-  	//구매소요일
-  	var $delivery = $("#delivery");
-  	if($delivery.val().trim().length == 0){
-          alert("구매소요일을 입력하세요.");
-          $delivery.focus();
-  		return false;
-      }
-  	//입고단가
-  	var $inPrice = $("#inPrice");
-  	if($inPrice.val().trim().length == 0){
-          alert("입고단가를 입력하세요.");
-          $inPrice.focus();
-  		return false;
-      }  
-  	//출고단가
-  	var $outPrice = $("#outPrice");
-  	if($outPrice.val().trim().length == 0){
-          alert("출고단가를 입력하세요.");
-          $outPrice.focus();
-  		return false;
-      }
- 	//기준치
-  	var $spec = $("#spec");
-  	if($spec.val().trim().length == 0){
-          alert("기준치를 입력하세요.");
-          $spec.focus();
-  		return false;
-      }
-  	//공차
-  	var $tol = $("#tol");
-  	if($tol.val().trim().length == 0){
-          alert("공차를 입력하세요.");
-          $tol.focus();
-  		return false;
-      }
-  	
-  	return true;
-  }  
-  
-
 $(document).on('dblclick','.tdPtCode',function(){
 	$("#searchModalTitle").html('품목코드 검색');
 	var searchType = "rawMaterial";

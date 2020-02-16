@@ -7,13 +7,14 @@
 	<select id="selectproductList" resultMap="productMap">
 		select * from
 		(
-		    select pl_no, vendor_no, pt_no, product_name, null as delivery, inprice, outprice, spec, tol, reg_date,
+		    select pl.pl_no, pl.vendor_no, pl.pt_no, pl.product_name, null as delivery, pl.inprice, pl.outprice, pl.spec, pl.tol, pl.reg_date, b.bom_no, sbq.cnt, sbq.sum,
 		    case pt_no when 1 then '원재료'
 		                   when 3 then '완제품'
 		                   end as pt_type
-		    from product_list
+		    from product_list pl left join bom b on pl.pl_no = b.pl_no
+            left join (select bom_no, sum(quantity) sum, count(bom_no) cnt from bom_rm br join raw_material rm on br.rm_no = rm.rm_no group by bom_no) sbq on b.bom_no = sbq.bom_no
 		    union all
-		    select rm_no, vendor_no, pt_no, rm_name, delivery, inprice, outprice, spec, tol, reg_date,
+		    select rm_no, vendor_no, pt_no, rm_name, delivery, inprice, outprice, spec, tol, reg_date, null, null, null,
 		    case pt_no when 1 then '원재료'
 		                   when 3 then '완제품'
 		                   end
@@ -110,6 +111,61 @@
                 </trim>
 	</insert>
 
+	<select id="selectReceivingList" resultMap="receivingMap">
+		select * from receiving r
+		    join raw_material rm on r.rm_no = rm.rm_no
+		    join storage s on r.store_no = s.store_no
+		    join product_type pt on rm.pt_no = pt.pt_no
+		order by lot_no
+	</select>
+	<resultMap type="map" id="receivingMap">
+	</resultMap>
 
+	<insert id="addWarehousing">
+		insert into receiving values(
+			SEQ_RECEIVING.nextval,
+			#{storeNo},
+			#{rawMaterialDetail},
+			#{ptNo},
+			#{vendorTypeCode},
+			#{quantity},
+			#{quailityYN},
+			#{insectionYN},
+			#{measurement},
+			to_date(#{regDate},'yyyy-MM-dd')
+		)
+	</insert>
+	
+	<select id="selectWarehousingByLotNo" resultMap="warehosuingMap">
+		select * from receiving where lot_no = #{tdLotNo}
+	</select>
+	<resultMap type="map" id="warehosuingMap">
+	</resultMap>
+	
+	<update id="updateWarehousing">
+		update receiving
+		set
+		store_no = #{storeNo},
+		rm_no = #{rawMaterialDetail},
+		pt_no = #{ptNo},
+		vendor_type = #{vendorTypeCode},
+		quantity = #{quantity},
+		quality_yn = #{quailityYN},
+		insection_yn = #{insectionYN},
+		measurement = #{measurement}
+		where lot_no = #{lotNo}
+	</update>
+	
+	<delete id="deleteBOMByBOMNo">
+		delete from bom where bom_no = #{bomNo}
+	</delete>
+	
+	<select id="selectRotNobyRmNo" resultType="_int">
+		select lot_no from receiving where rm_no = #{rmNo}
+	</select>
+	
+	<delete id="deleteWarehousingByRmNo">
+		delete from receiving where lot_no = #{lotNo}
+	</delete>
 	
 </mapper>

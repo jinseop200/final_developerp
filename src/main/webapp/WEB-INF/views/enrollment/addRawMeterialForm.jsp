@@ -33,11 +33,8 @@
 				</div>
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
+					     <label for="vendorTypeCode">거래처구분코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="vendorType" name="vendorTypeCode" class="form-control bg-light small" placeholder="거래처구분코드" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
 				<div class="form-row">
@@ -78,7 +75,7 @@
 				</div>
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" onclick="return addProductValidate();">등록</button> 
+	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" onclick="return addProductValidate();">등록</button>
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
                 </div>
              </form>

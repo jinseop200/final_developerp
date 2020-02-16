@@ -9,8 +9,8 @@
 			#{vendorName},
 			#{incharge},
 			#{vendorPhone},
-			#{vendorTypes},
-			default
+			default,
+			#{vendorTypes}
 		)
 	</insert>
 	
@@ -93,7 +93,8 @@
 			#{spec},
 			#{tol},
 			default,
-			#{ptNo}
+			default,
+			#{vendorTypeCode}
 		)
 	</insert>
 	
@@ -102,7 +103,7 @@
 	</select>
 	
 	<select id="selectAccountAll" resultType="map">
-		select vendor_no as "content2", vendor_name as "content" from vendor order by vendor_no
+		select vendor_no as "content2", vendor_name as "content", vendor_type as "content3" from vendor order by vendor_no
 	</select>
 	
 	<select id="selectAllCountByAccountNo" resultType="_int">
@@ -125,14 +126,15 @@
 		insert into raw_material values(
 			#{productNo},
 			#{accountNo},
-			#{ptNo},
+			default,
 			#{productName},
 			#{delivery},
 			#{inPrice},
 			#{outPrice},
 			#{spec},
 			#{tol},
-			default
+			default,
+			#{vendorTypeCode}
 		)
 	</insert>
 	
@@ -193,4 +195,35 @@
 		select count(*) from vendor_kind
 	</select>
 	
+	<select id="selectrawMaterialDetailAll" resultType="map">
+		select rm_no as "content2", rm_name as "content", pt_no as "content3", vendor_type as "content4" from raw_material order by rm_no
+	</select>
+	
+	<select id="selectAllrawMaterialDetail" resultType="_int">
+		select count(*) from raw_material
+	</select>
+	
+	<select id="selectStoreNoAll" resultType="map">
+		select store_no as "content2", store_name as "content" from storage order by store_no
+	</select>
+	
+	<select id="selectAllStoreNo" resultType="_int">
+		select count(*) from storage
+	</select>
+	
+	<delete id="deleteVendorByVendorNo">
+		delete from vendor where vendor_no = #{vendorNo}
+	</delete>
+	
+	<delete id="deleteStorageByStNo">
+		delete from storage where store_no = #{stNo}
+	</delete>
+	
+	<delete id="deleteProductByProductNo">
+		delete from product_list where pl_no = #{productNo}
+	</delete>
+	
+	<delete id="deleteRawmaterialByRmNo">
+		delete from raw_material where rm_no = #{rmNo}
+	</delete>
 </mapper>

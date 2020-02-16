@@ -41,7 +41,8 @@
           <th>품목코드</th>
           <th>품목명</th>
           <th>품목구분</th>
-          <th>원재료개수</th>
+          <th>BOM구성 품목수</th>
+          <th>총수량</th>
           <th>BOM등록</th>
           <th>조회</th>
         </tr>
@@ -52,13 +53,29 @@
 	          <td><a href="#" >${p.PL_NO}</a></td>
 	          <td>${p.PRODUCT_NAME}</td>
 	          <td>${p.PT_TYPE}</td>
+	          <c:if test="${p.CNT != null}">
+	          <td>${p.CNT}개</td>
+	          </c:if>
+	          <c:if test="${p.CNT == null}">
 	          <td></td>
-	          <c:if test="${p.PT_TYPE eq '완제품'}">
-	          <td class="tdBOMAddAlign"><button class="btn btn-primary BOMAddBtn" type="button">BOM등록</button></td>
-			  </c:if>
-			  <c:if test="${p.PT_TYPE eq '원재료'}">
-	          <td class="tdBOMAddAlign"></td>
-			  </c:if>
+	          </c:if>
+	          <c:if test="${p.SUM != null}">
+	          <td>${p.SUM}</td>
+	          </c:if>
+	          <c:if test="${p.SUM == null}">
+	          <td></td>
+	          </c:if>
+	          <c:choose>
+			         <c:when test = "${p.PT_TYPE eq '완제품' && p.CNT == null}">
+			            <td class="tdBOMAddAlign"><button class="btn btn-primary BOMAddBtn" type="button">BOM등록</button></td>
+			         </c:when>
+			         <c:when test = "${p.PT_TYPE eq '완제품' && p.CNT != null}">
+			            <td class="tdBOMAddAlign"><button class="btn btn-success BOMAddBtn" type="button">BOM수정</button></td>
+			         </c:when>
+			         <c:otherwise>
+			         	<td class="tdBOMAddAlign"></td>
+			         </c:otherwise>
+         		</c:choose>
 	          <td></td>
 	        </tr>
         </c:forEach>

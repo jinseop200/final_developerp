@@ -71,7 +71,8 @@
 				</div>
 				<hr class="hrSize"/>
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" >수정</button> 
+	              <button type="submit" id="FrmBtn" class="btn btn-primary addProduct-submit" >수정</button>
+	              <button type="button" class="btn btn-secondary" id="delBtn">삭제</button> 
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
                 </div>
              </form>
@@ -139,19 +140,11 @@
 
 
 <style>
-.modal-body{
- height: 596px;
-}
-.searchModalBody{
- height: 500px;
-}
 #searchModal {
   width: 60%;
-  height: 150px;
 }
 #search-container {
-    width: 130%;
-    height: 150px;
+    width: 100%;
 }
 .modal-content{
 	width:550px;
@@ -161,7 +154,7 @@
 }
 .form-control {
     display: inline;
-    width: 40%;
+    width: 60%;
 }
 #search-container .btn-primary{
     background-color:#777;
@@ -180,7 +173,7 @@
 	z-index:1080;
 }
 .btns{
-	padding-left: 389px;
+	    padding-left: 62%;
 }
 .rowResize{
 	width: 100%;
@@ -190,11 +183,11 @@
     padding: 0;
     margin-left: -17px;
 }
-.updateModalBody{
-    height: 130px;
+#delBtn{
+	margin-right: 5px;
 }
-.scResize{
-	height: 110px;
+#productNoCha{
+	width: 45%;
 }
 </style>
 <script>    
@@ -226,6 +219,28 @@ $(()=>{
 	$(".updateProductNoCloseBtn").click(function(){
     	$('#updateProductNo').modal("hide");
     });
+	
+	$("#delBtn").on("click",function(){
+		if(!confirm("정말 삭제하시겠습니까?"))
+			return;
+	
+		var productNo = $("#productNo").val();
+		console.log(productNo);
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/enrollment/deleteProductByProductNo.do",
+			data: {productNo : productNo},
+		 	async: false,
+			contentType:"application/json;charset=UTF-8",
+			success: data => {
+				$('#productAddModal').modal("hide");
+				location.reload();
+			},
+			error : (x,s,e) =>{
+				console.log("ajax요청 실패!!", x, s, e);
+			}
+		})
+	});
 	
 	
 })

@@ -64,6 +64,28 @@ $(()=>{
 		$('#updateStorage-Modal').modal('show');
 	});
 	
+	$("#delBtn").on("click",function(){
+		if(!confirm("정말 삭제하시겠습니까?"))
+			return;
+	
+		var stNo = $("#storageNo2").val();
+		console.log(stNo);
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/enrollment/deleteStorageByStNo.do",
+			data: {stNo : stNo},
+		 	async: false,
+			contentType:"application/json;charset=UTF-8",
+			success: data => {
+				$('#updateStorage-Modal').modal("hide");
+				location.reload();
+			},
+			error : (x,s,e) =>{
+				console.log("ajax요청 실패!!", x, s, e);
+			}
+		})
+	});
+	
 });
 
 
@@ -274,6 +296,7 @@ function storageUpdateValidate(){
         </div>
         <div class="modal-footer">
         	<button type="submit" id="FrmBtn2" class="btn btn-primary" onclick="return storageUpdateValidate();">수정</button>
+        	<button type="button" class="btn btn-secondary" id="delBtn">삭제</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
         </form>

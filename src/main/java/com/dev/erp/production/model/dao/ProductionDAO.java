@@ -23,5 +23,19 @@ public interface ProductionDAO {
 
 	int updateBOMRm(Map<String, Object> paramMap);
 
+	List<Map<String, String>> selectReceivingList();
+
+	int addWarehousing(Map<String, String> warehousing);
+
+	Map<String, Object> selectWarehousingByLotNo(String tdLotNo);
+
+	int updateWarehousing(Map<String, String> warehousing);
+
+	int deleteBOMByBOMNo(int bomNo);
+
+	int selectRotNobyRmNo(String rmNo);
+
+	int deleteWarehousingByRmNo(int lotNo);
+
 
 }

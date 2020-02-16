@@ -59,4 +59,39 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDAO.updateBOMRm(paramMap);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReceivingList() {
+		return productionDAO.selectReceivingList();
+	}
+
+	@Override
+	public int addWarehousing(Map<String, String> warehousing) {
+		return productionDAO.addWarehousing(warehousing);
+	}
+
+	@Override
+	public Map<String, Object> selectWarehousingByLotNo(String tdLotNo) {
+		return productionDAO.selectWarehousingByLotNo(tdLotNo);
+	}
+
+	@Override
+	public int updateWarehousing(Map<String, String> warehousing) {
+		return productionDAO.updateWarehousing(warehousing);
+	}
+
+	@Override
+	public int deleteBOMByBOMNo(int bomNo) {
+		return productionDAO.deleteBOMByBOMNo(bomNo);
+	}
+
+	@Override
+	public int selectRotNobyRmNo(String rmNo) {
+		return productionDAO.selectRotNobyRmNo(rmNo);
+	}
+
+	@Override
+	public int deleteWarehousingByRmNo(int lotNo) {
+		return productionDAO.deleteWarehousingByRmNo(lotNo);
+	}
+
 }

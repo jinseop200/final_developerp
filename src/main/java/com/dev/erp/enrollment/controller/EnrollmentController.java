@@ -47,6 +47,7 @@ public class EnrollmentController {
 										 @RequestParam String vendorName,
 										 @RequestParam String incharge,
 										 @RequestParam String vendorPhone,
+										 @RequestParam String vendorTypes,
 										 ModelAndView mav) {
 		logger.info("vendorName@Controller={}",vendorName);
 		
@@ -55,6 +56,7 @@ public class EnrollmentController {
 		vendor.put("vendorName", vendorName);
 		vendor.put("incharge", incharge);
 		vendor.put("vendorPhone", vendorPhone);
+		vendor.put("vendorTypes", vendorTypes);
 		vendor.put("regDate", null);
 		
 		logger.info("vendor@controller={}",vendor);
@@ -62,6 +64,20 @@ public class EnrollmentController {
 		int result = enrollmentservice.insertVendor(vendor); 
 		
 		mav.addObject("vendor", vendor);
+		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/deleteVendorByVendorNo.do")
+	public ModelAndView deleteVendorByVendorNo(@RequestParam("vendorNo") String vendorNo,
+										 ModelAndView mav) {
+		logger.info("vendorNo@Controller={}",vendorNo);
+		
+		int result = enrollmentservice.deleteVendorByVendorNo(vendorNo); 
+		logger.info("result@controller={}",result);
+		
+		mav.addObject("vendorNo",vendorNo);
 		mav.setViewName("redirect:/enrollment/vendorEnrollment.do");
 		
 		return mav;
@@ -232,6 +248,18 @@ public class EnrollmentController {
 		return mav;
 	}
 	
+	@RequestMapping("/enrollment/deleteStorageByStNo.do")
+	public ModelAndView deleteStorageByStNo(@RequestParam("stNo") String stNo,
+										 ModelAndView mav) {
+		logger.info("stNo@Controller={}",stNo);
+		
+		int result = enrollmentservice.deleteStorageByStNo(stNo); 
+		logger.info("result@controller={}",result);
+		
+		mav.addObject("stNo",stNo);
+		mav.setViewName("redirect:/enrollment/warehouseEnrollment.do");
+		return mav;
+	}
 	//===============================창고등록 end===============================
 	
 	
@@ -254,23 +282,23 @@ public class EnrollmentController {
 	@RequestMapping("/enrollment/insertProduct.do")
 	public ModelAndView insertProduct(@RequestParam String productNo,
 										 @RequestParam String accountNo,
-										 @RequestParam String ptNo,
 										 @RequestParam String productName,
 										 @RequestParam String inPrice,
 										 @RequestParam String outPrice,
 										 @RequestParam String spec,
 										 @RequestParam String tol,
+										 @RequestParam String vendorTypeCode,
 										 ModelAndView mav) {
 		
 		Map<String, String> product = new HashMap<>();
 		product.put("productNo", productNo);
 		product.put("accountNo", accountNo);
-		product.put("ptNo", ptNo);
 		product.put("productName", productName);
 		product.put("inPrice", inPrice);
 		product.put("outPrice", outPrice);
 		product.put("spec", spec);
 		product.put("tol", tol);
+		product.put("vendorTypeCode", vendorTypeCode);
 		product.put("regDate", null);
 		
 		logger.info("product@controller={}",product);
@@ -280,6 +308,34 @@ public class EnrollmentController {
 		mav.addObject("product", product);
 		mav.setViewName("redirect:/enrollment/productEnrollment.do");
 		
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/deleteProductByProductNo.do")
+	public ModelAndView deleteProductByProductNo(@RequestParam("productNo") String productNo,
+										 ModelAndView mav) {
+		logger.info("productNo@Controller={}",productNo);
+		
+		int result = enrollmentservice.deleteProductByProductNo(productNo); 
+		
+		logger.info("result@controller={}",result);
+		
+		mav.addObject("productNo",productNo);
+		mav.setViewName("redirect:/enrollment/productEnrollment.do");
+		return mav;
+	}
+	
+	@RequestMapping("/enrollment/deleteRawmaterialByRmNo.do")
+	public ModelAndView deleteRawmaterialByRmNo(@RequestParam("rmNo") String rmNo,
+										 ModelAndView mav) {
+		logger.info("rmNo@Controller={}",rmNo);
+		
+		int result = enrollmentservice.deleteRawmaterialByRmNo(rmNo); 
+		
+		logger.info("result@controller={}",result);
+		
+		mav.addObject("result",result);
+		mav.setViewName("redirect:/enrollment/productEnrollment.do");
 		return mav;
 	}
 	
@@ -332,6 +388,14 @@ public class EnrollmentController {
 		case "vendorTypes" :  
 			list =  enrollmentservice.selectVendorTypeAll(cPage,numPerPage); 
 			totalContents = enrollmentservice.selectAllVendorType();
+			break;
+		case "rawMaterialDetail" :  
+			list =  enrollmentservice.selectrawMaterialDetailAll(cPage,numPerPage); 
+			totalContents = enrollmentservice.selectAllrawMaterialDetail();
+			break;
+		case "storeNo" :  
+			list =  enrollmentservice.selectStoreNoAll(cPage,numPerPage); 
+			totalContents = enrollmentservice.selectAllStoreNo();
 			break;
 		}
 		String url = "searchSpecifyPage.do?searchType="+searchType;
@@ -418,25 +482,25 @@ public class EnrollmentController {
 	@RequestMapping("/enrollment/insertRawMaterial.do")
 	public ModelAndView insertRawMaterial(@RequestParam String productNo,
 										 @RequestParam String accountNo,
-										 @RequestParam String ptNo,
 										 @RequestParam String delivery,
 										 @RequestParam String productName,
 										 @RequestParam String inPrice,
 										 @RequestParam String outPrice,
 										 @RequestParam String spec,
 										 @RequestParam String tol,
+										 @RequestParam String vendorTypeCode,
 										 ModelAndView mav) {
 		
 		Map<String, String> rawMaterial = new HashMap<>();
 		rawMaterial.put("productNo", productNo);
 		rawMaterial.put("accountNo", accountNo);
-		rawMaterial.put("ptNo", ptNo);
 		rawMaterial.put("delivery", delivery);
 		rawMaterial.put("productName", productName);
 		rawMaterial.put("inPrice", inPrice);
 		rawMaterial.put("outPrice", outPrice);
 		rawMaterial.put("spec", spec);
 		rawMaterial.put("tol", tol);
+		rawMaterial.put("vendorTypeCode", vendorTypeCode);
 		rawMaterial.put("regDate", null);
 		
 		logger.info("rawMaterial@controller={}",rawMaterial);

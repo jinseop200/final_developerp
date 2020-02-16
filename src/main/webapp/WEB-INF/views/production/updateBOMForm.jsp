@@ -63,15 +63,14 @@
 				  </div>
 				</div>
 				<!-- Editable table -->
-				
-				<hr class="hrSize"/>
+				<br />
             	<div class="form-row col-lg-20 col-lg-push-9 btns">
-                </div>
              </form>
-	              <button type="button" id="updateBOM" class="btn btn-primary updateBOM" >수정</button> 
+	              <button type="button" id="updateBOM" class="btn btn-primary updateBOM" >수정</button>
+	              <button type="button" class="btn btn-secondary" id="delBtn">삭제</button>   
 	              <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+                </div>
            </div>
-           
       </div>
       
 <%--Search modal --%>
@@ -129,7 +128,7 @@
 	z-index:1080;
 }
 .btns{
-	padding-left: 389px;
+	padding-left: 76.6%;
 }
 .rowResize{
 	width: 100%;
@@ -148,7 +147,10 @@
  #edTable {
     counter-reset: rowNumber;
 }
-
+#delBtn{
+	margin-right: 5px;
+	margin-left: 5px;
+}
 #edTable tr td:first-child::before {
 	counter-increment: rowNumber;
     content: counter(rowNumber);
@@ -210,11 +212,6 @@ $(()=>{
 
 	   $tableID.find('table tbody').append(newTr);
 		
-	   /*	    var trNum = $("#frmSubmit tr").length;
- 	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
-		for(var i=firstNum;i<=trNum;i++){
-			$(".pNo").eq(i).text(i+1);
-		}  */
 	 });
 
 	 $tableID.on('click', '.table-remove', function () {
@@ -223,12 +220,13 @@ $(()=>{
 	 	
 	   $(this).parents('tr').detach();
 	   
-/* 	   var trNum = $("#frmSubmit tr").length;
-	   var firstNum = $("#frmSubmit tbody tr .pNo").text() * 1;
-		for(var i=firstNum;i<=trNum;i++){
-			$(".pNo").eq(i).text(i+1);
-		} */
-	   
+	   var tds = $(".BOMTbody tr");
+	 	console.log("tds length?",tds.length);
+	 	
+	 	if(tds.length == 0){
+	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+	 		 $tableID.find('table tbody').append(newTr);
+	 	}
 	 });
 
 	 $tableID.on('click', '.table-up', function () {
@@ -286,6 +284,23 @@ $(()=>{
 	 
 	//수정하기 button submit
 	 $("#updateBOM").off("click").on('click', function() {
+		 var tds = $("#edTable .pNo").nextAll();
+			console.log("tds",tds);
+			var exit= false;
+			$(tds).each(function(){
+				if($(this).text()==""){
+					 exit = true;
+					alert("값을 입력해 주세요.");
+					$(this).focus();
+					return false;
+				}
+				else{
+					exit= false;
+				}
+			}) 
+		if(exit){ return false;}
+		 
+		 
 	 	var pNo = $(".pNo");
 	 	var pNos = [];
 
@@ -325,7 +340,7 @@ $(()=>{
 	 				 };
 	 	console.log(data_);
 	 	console.log("removeCode",removeCode);
-  	  	$.ajax({
+  	  	 $.ajax({
 	  		url: "${pageContext.request.contextPath}/production/updateBOM.do",
 	  		data: data_,
 	  		type : 'POST', 
@@ -334,13 +349,36 @@ $(()=>{
 	  		success: data => {
 	  			console.log(data);
 	  			$('#BOMAddModal').modal("hide"); //닫기 
+	  			location.reload();
 	  		},
 	  		error : (jqxhr, textStatus, errorThrown)=>{
 	  			console.log(jqxhr, textStatus, errorThrown);
 	  		}
-	  	}); 
+	  	});  
 	 })
 	 
+	 
+	 $("#delBtn").on("click",function(){
+			if(!confirm("정말 삭제하시겠습니까?"))
+				return;
+		
+			var plNo = $("#productCode").val();
+			console.log(plNo);
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/production/deleteBOMByBOMNo.do",
+				data: {plNo : plNo},
+			 	async: false,
+				contentType:"application/json;charset=UTF-8",
+				success: data => {
+					$('#BOMAddModal').modal("hide");
+					location.reload();
+				},
+				error : (x,s,e) =>{
+					console.log("ajax요청 실패!!", x, s, e);
+				}
+			})
+		});
 	 
 })
 <%--onload end--%>

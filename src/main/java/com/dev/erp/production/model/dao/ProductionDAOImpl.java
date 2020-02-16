@@ -58,6 +58,42 @@ public class ProductionDAOImpl implements ProductionDAO {
 		return sqlSession.insert("production.updateBOMRm",paramMap);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReceivingList() {
+		return sqlSession.selectList("production.selectReceivingList");
+	}
+
+	@Override
+	public int addWarehousing(Map<String, String> warehousing) {
+		return sqlSession.insert("production.addWarehousing",warehousing);
+	}
+
+	@Override
+	public Map<String, Object> selectWarehousingByLotNo(String tdLotNo) {
+		return sqlSession.selectOne("production.selectWarehousingByLotNo",tdLotNo);
+	}
+
+	@Override
+	public int updateWarehousing(Map<String, String> warehousing) {
+		return sqlSession.update("production.updateWarehousing",warehousing);
+	}
+
+	@Override
+	public int deleteBOMByBOMNo(int bomNo) {
+		return sqlSession.delete("production.deleteBOMByBOMNo",bomNo);
+	}
+
+	@Override
+	public int selectRotNobyRmNo(String rmNo) {
+		return sqlSession.selectOne("production.selectRotNobyRmNo",rmNo);
+	}
+
+	@Override
+	public int deleteWarehousingByRmNo(int lotNo) {
+		return sqlSession.delete("production.deleteWarehousingByRmNo",lotNo);
+	}
+
+
 	
 	
 }
