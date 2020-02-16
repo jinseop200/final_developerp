@@ -79,4 +79,9 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.eachAmountByProduct(productNo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectFirstByPL() {
+		return productPlanDAO.selectFirstByPL();
+	}
+
 }

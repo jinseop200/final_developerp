@@ -40,91 +40,6 @@ $(()=>{
 	morePage(0);
 });
 
-
-$(".endProduct-table tbody").on('dblclick','tr',function(){
-	
-	var no = $(this).children().eq(1).html(); //선택 행 값 담기
-	var name = $(this).children().eq(2).html(); //선택 행 값 담기
-	
-	$("#productNo").val(no); //hidden(제품번호)
-	$("#productName").val(name); //input창에 뿌려주기
-	$("#searchProduct").modal('hide');
-	var productNo = $("#productNo").val();
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/productplan/showChartByProduct.do?productNo="+productNo,
-		contentType :"application/json; charset=utf-8",
-		dataType : "json",
-		success : data=>{
-			var graphData_ = data.graphData;
-			console.log(data);
-			
-			var label=[];
-			var rmStock=[];
-			var rmName=[];
-			var requiredQ = [];
-			
-			for(let i in graphData_ ) {
-				
-				var p = graphData_[i];
-				rmName = p.rmName;
-				requiredQ = Number(p.requiredQ);
-				rmStock = Number(p.rmStock);
-				
-				label.push(rmName);
-				
-				stock.push(rmStock);
-			}
-			console.log(data.graphData);
-			createGraph(label);
-		},
-		error : (x,s,e)=>{
-			console.log("ajax요청실패",x,s,e);
-		}
-	});
-	
-	function createGraph(label){
-		
-		//line
-		var ctxL = document.getElementById("lineChart").getContext('2d');
-		var myLineChart = new Chart(ctxL, {
-		type: 'line',
-		data: {
-		labels: label,
-		// ${labels}
-		datasets: [{
-		label: "소요량",
-		data: [65, 59, 80, 81, 56, 55, 100],
-		//${data}
-		backgroundColor: [
-		'rgba(105, 0, 132, .2)',
-		],
-		borderColor: [
-		'rgba(200, 99, 132, .7)',
-		],
-		borderWidth: 2
-		},
-		{
-		label: "재고량",
-		data: [100, 48, 40, 19, 86, 27, 90],
-		backgroundColor: [
-		'rgba(0, 137, 132, .2)',
-		],
-		borderColor: [
-		'rgba(0, 10, 130, .7)',
-		],
-		borderWidth: 2
-		}
-		]
-		},
-		options: {
-		responsive: true
-		}
-		});	
-	}
-});
-
-
 function morePage(a){
 	console.log("a==="+a);
 	var url_="";
@@ -158,6 +73,90 @@ function morePage(a){
 	});
 	
 }
+
+
+$(".endProduct-table tbody").on('dblclick','tr',function(){
+	
+	var no = $(this).children().eq(1).html(); //선택 행 값 담기
+	var name = $(this).children().eq(2).html(); //선택 행 값 담기
+	
+	$("#productNo").val(no); //hidden(제품번호)
+	$("#productName").val(name); //input창에 뿌려주기
+	$("#searchProduct").modal('hide');
+	var productNo = $("#productNo").val();
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/productplan/showChartByProduct.do?productNo="+productNo,
+		contentType :"application/json; charset=utf-8",
+		dataType : "json",
+		success : data=>{
+			var graphData_ = data.graphData;
+			console.log(data);
+			
+			var rmName = [];
+			var required = [];
+			var rmStock = [];
+			
+			for(let i in graphData_ ) {
+				
+				var p = graphData_[i];
+				
+				rmName.push(p.rmName);
+				required.push(p.requiredQ);
+				rmStock.push(p.rmStock);
+				
+			}
+			console.log(data.graphData);
+			createGraph(rmName, required, rmStock);
+		},
+		error : (x,s,e)=>{
+			console.log("ajax요청실패",x,s,e);
+		}
+	});
+	
+	function createGraph(rmName, required, rmStock){
+		
+		//line
+		var ctxL = document.getElementById("lineChart").getContext('2d');
+		var myLineChart = new Chart(ctxL, {
+		type: 'line',
+		data: {
+		labels: rmName,
+		// ${labels}
+		datasets: [{
+		label: "소요량",
+		data: required,
+		//${data}
+		backgroundColor: [
+		'rgba(105, 0, 132, .2)',
+		],
+		borderColor: [
+		'rgba(200, 99, 132, .7)',
+		],
+		borderWidth: 2
+		},
+		{
+		label: "재고량",
+		data: rmStock,
+		backgroundColor: [
+		'rgba(0, 137, 132, .2)',
+		],
+		borderColor: [
+		'rgba(0, 10, 130, .7)',
+		],
+		borderWidth: 2
+		}
+		]
+		},
+		options: {
+		responsive: true
+		}
+		});	
+	}
+});
+
+
+
 
 
 

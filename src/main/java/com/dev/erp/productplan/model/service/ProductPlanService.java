@@ -31,4 +31,6 @@ public interface ProductPlanService {
 
 	List<Map<String, String>> eachAmountByProduct(String productNo);
 
+	List<Map<String, String>> selectFirstByPL();
+
 }

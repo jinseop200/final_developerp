@@ -31,4 +31,6 @@ public interface ProductPlanDAO {
 
 	List<Map<String, String>> eachAmountByProduct(String productNo);
 
+	List<Map<String, String>> selectFirstByPL();
+
 }
