@@ -5,18 +5,42 @@
 <mapper namespace="productplan">
 
 
-	<!-- 구매계획 쿼리문 -->
-	<select id="eachAmount" resultType="Map">
+	<!-- 원재료 구매계획 쿼리문 -->
+	<select id="selectFirstByPL" resultType="Map">
 		select pl.product_name as "productName",
 		        B.bom_no as "bomNo",
+		        RM.rm_no as "rmNo",
 		        RM.rm_name as "rmName",
 		        br.quantity as "requiredQ",
 		        R.quantity as "rmStock" 
 		from product_list PL 
-		        join bom B on PL.pl_no = B.pl_no
-		        join bom_rm BR on B.bom_no = BR.bom_no
-		        join receiving R on BR.rm_no = R.rm_no
-		        join raw_material RM on R.rm_no = RM.rm_no  
+		        left join bom B on PL.pl_no = B.pl_no
+		        left join bom_rm BR on B.bom_no = BR.bom_no
+		        left join receiving R on BR.rm_no = R.rm_no
+		        left join raw_material RM on R.rm_no = RM.rm_no  
+        where PL.pl_no = 8
+	</select>
+	
+	<select id="selectEndProduct" resultType="Map">
+		select pl_no, product_name from product_list
+	</select>
+	
+	<select id="selectTotalContentByEp" resultType="_int">
+		select count(*) from product_list
+	</select>
+	
+	<select id="eachAmount" resultType="Map">
+		select pl.product_name as "productName",
+		        B.bom_no as "bomNo",
+		        RM.rm_no as "rmNo",
+		        RM.rm_name as "rmName",
+		        br.quantity as "requiredQ",
+		        R.quantity as "rmStock" 
+		from product_list PL 
+		        left join bom B on PL.pl_no = B.pl_no
+		        left join bom_rm BR on B.bom_no = BR.bom_no
+		        left join receiving R on BR.rm_no = R.rm_no
+		        left join raw_material RM on R.rm_no = RM.rm_no  
         where PL.pl_no = #{productNo}
 	</select>
 	<!-- <resultMap type="map" id="eaMap" >
@@ -114,13 +138,7 @@
 		where jo_no = #{joNo}
 	</delete>
 	
-	<!-- 원재료 구매계획 쿼리문 -->
-	<select id="selectEndProduct" resultType="Map">
-		select pl_no, product_name from product_list
-	</select>
-	<select id="selectTotalContentByEp" resultType="_int">
-		select count(*) from product_list
-	</select>
+	
 	
 	
 	

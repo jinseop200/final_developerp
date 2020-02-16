@@ -82,4 +82,9 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public List<Map<String, String>> eachAmountByProduct(String productNo) {
 		return sqlSession.selectList("productplan.eachAmount",productNo);
 	}
+
+	@Override
+	public List<Map<String, String>> selectFirstByPL() {
+		return sqlSession.selectList("productplan.selectFirstByPL");
+	}
 }

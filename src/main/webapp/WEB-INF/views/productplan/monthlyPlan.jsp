@@ -43,18 +43,15 @@ input[type=text]{
     width: auto;
 
 }
-#requiredAmount span {
-	color:red;
-}
 </style>
 
 		
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">원재료 구매계획</h1>
+<h1 class="h3 mb-2 text-gray-800">월별 생산계획(최근 3개월 생산량 평균)</h1>
 <div class="form-row">
 	<div class="col-lg-20 mb-3 rowResize">
 		 <label for="productName">제품별 소요량-재고량 조회</label>&emsp;<br>
-	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="갤럭시" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 	     <input type="hidden" id="productNo" name="productNo" />
 	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
 		 	<i class="fas fa-search fa-sm"></i>
@@ -88,52 +85,6 @@ input[type=text]{
 	z-index: 1060;
 }
 </style>
-	<br />
-	 <!-- DataTales Example -->
-     <div class="card shadow mb-4" style="clear:both;">
-       <div class="card-header py-3">
-         <h6 class="m-0 font-weight-bold text-primary">구매계획 조회결과</h6>
-       </div>
-       <div class="card-body">
-         <div class="table-responsive">
-           <table class="table table-bordered jo-table" id="dataTable" width="100%" cellspacing="0">
-             <thead>
-               <tr>
-                 <th>원재료코드</th>
-                 <th>원재료명</th>
-                 <th>소요량</th>
-                 <th>재고량</th>
-                 <th id="requiredAmount"><span>필요구매량</span></th>
-               </tr>
-             </thead>
-             <tbody>
-             	<c:if test="${beforeSearch eq '1' }">
-	             	<c:forEach items="${firstPL }" var="r" varStatus="vs">
-	               <tr>
-	                 <td>${r.rmNo}</td>
-	                 <td>${r.rmName}</td>
-	                 <td>${r.requiredQ }</td>
-	                 <td>${r.rmStock }</td>
-	                 <td style="<c:if test='${r.requiredQ - r.rmStock > 0 }'>color:red;</c:if>">${r.requiredQ - r.rmStock }</td>
-	               </tr>
-	             	</c:forEach>
-             	</c:if>
-             	<c:if test="${afterSearch eq '2' }">
-	             	<c:forEach items="${endProductList eq '2' }" var="r" varStatus="vs">
-	               <tr>
-	                 <td>${r.rmNo}</td>
-	                 <td>${r.rmName}</td>
-	                 <td>${r.requiredQ }</td>
-	                 <td>${r.rmStock }</td>
-	                 <td style="<c:if test='${r.requiredQ - r.rmStock > 0 }'>color:red;</c:if>">${r.requiredQ - r.rmStock }</td>
-	               </tr>
-	             	</c:forEach>
-             	</c:if>
-             </tbody>
-           </table>
-         </div>
-       </div>
-     </div>
 
 <!-- jQuery -->
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/js_mdb/jquery.min.js"></script>
@@ -144,33 +95,20 @@ input[type=text]{
 <!-- MDB core JavaScript (그래프 점)-->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/js_mdb/mdb.min.js"></script>
 <script>
-	var firstPL = ${firstPL};
-	
-	var rmName_=[];
-	var required_=[];
-	var rmStock_=[];
-	
-	for(let i in firstPL){
-		var c = firstPL[i];
-		console.log("test4="+c);
-		rmName_.push(c.rmName);
-		required_.push(c.requiredQ);
-		rmStock_.push(c.rmStock);
-		
-	console.log("민병준test="+rmName_);
-	}
-	
-	//그래프 설정
+$(()=>{
+	console.log("민병준test="+${firstPL});
+});
+<!-- 그래프 자바스크립트 -->
 	//line
 	var ctxL = document.getElementById("lineChart").getContext('2d');
 	var myLineChart = new Chart(ctxL, {
 	type: 'line',
 	data: {
-	labels: rmName_,
+	labels: ["January", "February", "March", "April", "May", "June", "July"],
 	// ${labels}
 	datasets: [{
 	label: "소요량",
-	data: required_,
+	data: [65, 59, 80, 81, 56, 55, 40],
 	//${data}
 	backgroundColor: [
 	'rgba(105, 0, 132, .2)',
@@ -182,7 +120,7 @@ input[type=text]{
 	},
 	{
 	label: "재고량",
-	data: rmStock_,
+	data: [28, 48, 40, 19, 86, 27, 90],
 	backgroundColor: [
 	'rgba(0, 137, 132, .2)',
 	],
@@ -198,7 +136,6 @@ input[type=text]{
 	}
 	});
 
-	
 //제품조회 모달
 $(".searchProduct-btn").click(function(){
 	 $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
@@ -209,7 +146,6 @@ $(".searchProduct-btn").click(function(){
 		});
 	});
 	
-//필요수량 css
 
 	
 </script>	

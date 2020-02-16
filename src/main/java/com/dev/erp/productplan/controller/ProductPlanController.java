@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.productplan.model.service.ProductPlanService;
-import com.google.gson.Gson;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 public class ProductPlanController {
@@ -28,11 +30,55 @@ public class ProductPlanController {
 	@Autowired
 	ProductPlanService productPlanService;
 	
+	// list<map> 을 json 형태로 변형.
+	@SuppressWarnings({ "unchecked" })
+	public static JSONArray convertListToJson(List<Map<String, String>> firstPL) {
+		JSONArray jsonArray = new JSONArray();
+		for (Map<String, String> map : firstPL) {
+			jsonArray.add(convertMapToJson(map));
+		}
+		return jsonArray;
+	}
+
+	// map 을 json 형태로 변형
+	@SuppressWarnings({ "unchecked" })
+	public static JSONObject convertMapToJson(Map<String, String> map) {
+
+		JSONObject json = new JSONObject();
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			// json.addProperty(key, value);
+			json.put(key, value);
+		}
+		return json;
+	}
+
+
+	
+	//============================월별생산 계획============================
+	@RequestMapping("/productplan/productionPlan.do")
+	public ModelAndView productionPlan(ModelAndView mav) {
+		
+		
+		mav.setViewName("productplan/monthlyPlan");
+		
+		return mav;
+	}
+	
 	//============================원재료 구매계획============================
+	//헤더 ->
 	@RequestMapping("/productplan/purchasePlan.do")
 	public ModelAndView purchasePlanView(ModelAndView mav) {
 		
+		
+		List<Map<String, String>> firstPL = productPlanService.selectFirstByPL();
+		JSONArray JfirstPL = convertListToJson(firstPL);
+		mav.addObject("firstPL", JfirstPL);
+		mav.addObject("beforeSearch","1");
+		logger.info("민병준={}", firstPL);
 		mav.setViewName("productplan/purchasePlan");
+		
 		return mav;
 	}
 	
@@ -63,6 +109,7 @@ public class ProductPlanController {
 		mav.addObject("cPage", cPage);
 		mav.addObject("numPerPage", numPerPage);
 		mav.addObject("pageBar", pageBar);
+		mav.addObject("AfterSearch","2");
 		mav.setViewName("jsonView");
 		
 		return mav;
