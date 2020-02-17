@@ -174,6 +174,24 @@ public class EnrollmentController {
 		return mav;
 	}
 	
+	@RequestMapping("/enrollment/checkDataAvailable")
+	@ResponseBody
+	public Map<String, Object> checkDataAvailable(@RequestParam("ckData") String ckData,
+										   ModelAndView mav) {
+		
+		Map<String, Object> map = new HashMap<>();
+		logger.info("ckData!!!!!!!!!!!!!!!!!!!={}",ckData);
+		boolean isUsable = enrollmentservice.checkDataAvailable(ckData)==null?false:true;
+		
+		map.put("isUsable", isUsable);
+		
+		logger.info("isUsable@Controller={}",isUsable);
+		
+		
+		return map;
+	}
+	
+	
 	//===============================거래처등록 end===============================
 	
 	
@@ -368,7 +386,7 @@ public class EnrollmentController {
 	@RequestMapping("/enrollment/searchSpecifyPage.do")
 	@ResponseBody
 	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType, @RequestParam(defaultValue="1") int cPage, HttpServletResponse rexsponse) {
-		
+		logger.info("searchType@controller={}",searchType);
 		List<Map<String,String>> list = new ArrayList<>();
 		final int numPerPage = 5;
 		int totalContents = 0;

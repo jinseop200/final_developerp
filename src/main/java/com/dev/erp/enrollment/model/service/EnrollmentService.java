@@ -73,4 +73,6 @@ public interface EnrollmentService {
 
 	int deleteRawmaterialByRmNo(String rmNo);
 
+	Map<String, Object> checkDataAvailable(String ckData);
+
 }

@@ -189,6 +189,11 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int deleteRawmaterialByRmNo(String rmNo) {
 		return sqlsession.delete("enrollment.deleteRawmaterialByRmNo",rmNo);
 	}
+
+	@Override
+	public Map<String, Object> checkDataAvailable(String ckData) {
+		return sqlsession.selectOne("enrollment.checkDataAvailable",ckData);
+	}
 	
 	
 }

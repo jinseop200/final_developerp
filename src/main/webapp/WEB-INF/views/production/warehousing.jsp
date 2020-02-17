@@ -139,6 +139,7 @@
 						<div class="col-lg-20 mb-3 rowResize">
 						     <label for="measurement">측정값</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						     <input type="number" id="measurement" name="measurement" class="form-control bg-light small" placeholder="측정값" aria-label="Search" aria-describedby="basic-addon2" value="0" step="0.1" >
+						     <input type="hidden" id="rmName" name="rmName" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
 						</div>
 					</div>
 				</div>
@@ -205,15 +206,15 @@
 					     <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="입고수량" aria-label="Search" aria-describedby="basic-addon2">
 					</div>
 				</div>
-				<!-- <div class="form-row">
-					<div class="col-md-6 mb-3">
+				<div class="form-row">
+					<div class="col-lg-20 mb-3 rowResize">
 						<label for="regDate">입고일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="date" id="regDate" name="regDate"
 							class="form-control bg-light small" placeholder="입고일"
 							aria-label="Search" aria-describedby="basic-addon2" step="0.01"
 							style="width: 175px">
 					</div>
-				</div> -->
+				</div>
 				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 			      	추가정보 입력
 			    </button>
@@ -373,6 +374,8 @@ $(()=>{
 				}
 				$('#updateWarehousing #measurement').val(data.MEASUREMENT);
 				$('#updateWarehousing #lotNo').val(data.LOT_NO);
+				$('#updateWarehousing #regDate').val(data.nDate);
+				
 				
 			},
 			error : (jqxhr, textStatus, errorThrown)=>{

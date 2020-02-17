@@ -123,7 +123,9 @@
 
 	<insert id="addWarehousing">
 		insert into receiving values(
-			SEQ_RECEIVING.nextval,
+			(SELECT SUBSTR(RM_NAME, 1, 2) ||  SUBSTR(RM_NAME, INSTR(RM_NAME , ' ', 1, 1)+1,  2) ||  SUBSTR(RM_NAME, INSTR(RM_NAME , ' ', 1, 2)+1,  2)
+			 FROM RAW_MATERIAL
+			 WHERE RM_NO = #{rawMaterialDetail}) || '_' || to_char(to_date(#{regDate},'yyyy-MM-dd'),'yyyyMMdd') || '_' || SEQ_LOT_NO.NEXTVAL,
 			#{storeNo},
 			#{rawMaterialDetail},
 			#{ptNo},
@@ -152,7 +154,8 @@
 		quantity = #{quantity},
 		quality_yn = #{quailityYN},
 		insection_yn = #{insectionYN},
-		measurement = #{measurement}
+		measurement = #{measurement},
+		rec_date = to_date(#{regDate},'yyyy-MM-dd')
 		where lot_no = #{lotNo}
 	</update>
 	
