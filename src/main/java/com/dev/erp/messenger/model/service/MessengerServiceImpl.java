@@ -55,8 +55,8 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
-		return messengerDAO.selectMemberList(cPage,numPerPage);
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage, String email) {
+		return messengerDAO.selectMemberList(cPage,numPerPage, email);
 	}
 
 	@Override

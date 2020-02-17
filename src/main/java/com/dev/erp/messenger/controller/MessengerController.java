@@ -118,7 +118,6 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	 * @return
 	 */
 	@MessageMapping("/lastCheck")
-	@SendTo(value={"/chat/{chatId}"})
 	public Msg lastCheck(@RequestBody Msg fromMessage){
 		logger.info("fromMessage={}",fromMessage);
 		
@@ -148,7 +147,9 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			param.put("email", email);
 			param.put("chatId", chatId);
 			recentList = messengerService.findRecentList(param);
-			sumList.add(recentList.get(0));
+			if(recentList.size()>0) {
+				sumList.add(recentList.get(0));
+			}
 		}
 		logger.info("recentList={}",recentList);
 		model.addAttribute("recentList", sumList);
@@ -166,14 +167,18 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	
 	@RequestMapping("/messenger/messengerListPage.do")
 	@ResponseBody
-	public Map<String,Object> messengerListPage(@RequestParam(defaultValue="1") int cPage,  HttpServletResponse rexsponse) {
+	public Map<String,Object> messengerListPage(@RequestParam(defaultValue="1") int cPage,  HttpServletResponse rexsponse,
+										HttpSession session, @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn) {
 		
 		
 		List<Map<String,String>> list = new ArrayList<>();
 		final int numPerPage = 7;
 		int totalContents = 0;
+		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
+				 .orElseThrow(IllegalStateException::new);
+		logger.debug("123123123123email={}",email);
 		
-		list = messengerService.selectMemberList(cPage,numPerPage);  
+		list = messengerService.selectMemberList(cPage,numPerPage, email);  
 		logger.debug("list={}",list);
 		totalContents = messengerService.selectAllCountByAccountNo(); 
 		String url = "messengerListPage.do?";

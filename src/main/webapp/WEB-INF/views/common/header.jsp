@@ -162,7 +162,7 @@
                 <h6 class="collapse-header">DETAIL</h6>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고/재고관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 재고관리</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do">창고별 재고관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0">창고별 재고관리</a>
               </div>
             </div>
           </li>
