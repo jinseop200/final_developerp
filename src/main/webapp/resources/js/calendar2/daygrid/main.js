@@ -232,7 +232,7 @@ Docs & License: https://fullcalendar.io/
             if (seg.isStart) {
                 timeText = this.getTimeText(eventRange);
                 if (timeText) {
-                    timeHtml = '<span class="fc-time">' + core.htmlEscape(timeText) + '</span>';
+                   // timeHtml = '<span class="fc-time">' + core.htmlEscape(timeText) + '</span>';
                 }
             }
             titleHtml =
@@ -893,7 +893,7 @@ Docs & License: https://fullcalendar.io/
             }
             html += '<td class="' + classes.join(' ') + '"' +
                 (isDateValid ?
-                    ' data-date="' + dateEnv.formatIso(date, { omitTime: true }) + '" onclick="here()"	' :
+                    " data-date='" + dateEnv.formatIso(date, { omitTime: true }) + "'onclick=here('" + dateEnv.formatIso(date, { omitTime: true }) +"');"+'':
                     '') +
                 '>';
             if (this.renderProps.cellWeekNumbersVisible && (date.getUTCDay() === weekCalcFirstDow)) {

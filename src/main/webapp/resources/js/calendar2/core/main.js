@@ -3370,7 +3370,7 @@ Docs & License: https://fullcalendar.io/
         attrs = attrs ? ' ' + attrsToStr(attrs) : ''; // will have a leading space
         innerHtml = innerHtml || '';
         if (!forceOff && component.opt('navLinks')) {
-            return '<a' + attrs +
+            return '<a' +' onclick="clickDate('+"'" + dateEnv.formatIso(date, { omitTime: true }) +"')"+'"'+ attrs +
                 ' data-goto="' + htmlEscape(JSON.stringify(finalOptions)) + '">' +
                 innerHtml +
                 '</a>';

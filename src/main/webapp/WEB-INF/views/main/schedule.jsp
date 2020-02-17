@@ -19,14 +19,14 @@
                     <input type="date" id="startScheduleTime" name="startScheduleTime" value='${date}' class="form-control bg-light small"readonly style="width:166px;">
                     
                 </div>   
-                    <input type="time" name="startTime" id="startTime" class="form-control bg-light small" value="00:00"style="width:140px;">
+                    <input type="time" name="startTime" id="startTime" class="form-control bg-light small" value="12:00"style="width:140px;">
                 </div>   
                   	 <div class="form-row" style="width:550px;">
                     <div class="col-md-6 mb-3" >                  
                      <label >종 료 일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="date"id="endScheduleTime" name="endScheduleTime" value='${date}'class="form-control bg-light small" style="width:166px; ">
                     </div>
-                    <input type="time" id="endTime" name="endTime" class="form-control bg-light small"value="00:00"style="width:140px;">                    
+                    <input type="time" id="endTime" name="endTime" class="form-control bg-light small"value="12:00"style="width:140px;">                    
       </div>  
 <!--                 <div class="form-row"> -->
 <!--                     <div class="col-md-6 mb-3"> -->
@@ -93,4 +93,38 @@
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
 
+
 </style>
+<script>
+$('#endScheduleTime').change(function(){ 
+	startScheduleTime=$('#startScheduleTime').val();
+	endScheduleTime=$('#endScheduleTime').val();
+	if(startScheduleTime>endScheduleTime){
+		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+		$('#endScheduleTime').val(startScheduleTime);
+	}
+	
+});
+$('#endTime').change(function(){ 
+	startScheduleTime=$('#startScheduleTime').val();
+	endScheduleTime=$('#endScheduleTime').val();
+	startTime=$('#startTime').val();
+	endTime=$('#endTime').val();
+	if(startScheduleTime==endScheduleTime&&startTime>endTime){
+		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+		$('#endTime').val(startTime);
+	}
+	
+});
+$('#startTime').change(function(){ 
+	startScheduleTime=$('#startScheduleTime').val();
+	endScheduleTime=$('#endScheduleTime').val();
+	startTime=$('#startTime').val();
+	endTime=$('#endTime').val();
+	if(startScheduleTime==endScheduleTime&&startTime>endTime){
+		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+		$('#startTime').val(endTime);
+	}
+	
+});
+</script>

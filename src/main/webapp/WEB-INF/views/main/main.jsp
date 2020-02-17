@@ -29,7 +29,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+      plugins: [ 'interaction', 'dayGrid', ],
       header: {
         left: 'prev,next ',
         center: 'title',
@@ -47,57 +47,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
           title: 'All Day Event',
           start: '2019-08-01'
         }
-//         ,
-//         {
-//           title: 'Long Event',
-//           start: '2019-08-07',
-//           end: '2019-08-10'
-//         },
-//         {
-//           groupId: 999,
-//           title: 'Repeating Event',
-//           start: '2019-08-09T16:00:00'
-//         },
-//         {
-//           groupId: 999,
-//           title: 'Repeating Event',
-//           start: '2019-08-16T16:00:00'
-//         },
-//         {
-//           title: 'Conference',
-//           start: '2019-08-11',
-//           end: '2019-08-13'
-//         },
-//         {
-//           title: 'Meeting',
-//           start: '2019-08-12T10:30:00',
-//           end: '2019-08-13T12:30:00'
-//         },
-//         {
-//           title: 'Lunch',
-//           start: '2019-08-12T12:00:00'
-//         },
-//         {
-//           title: 'Meeting',
-//           start: '2019-08-12T14:30:00'
-//         },
-//         {
-//           title: 'Happy Hour',
-//           start: '2019-08-12T17:30:00'
-//         },
-//         {
-//           title: 'Dinner',
-//           start: '2019-08-12T20:00:00'
-//         },
-//         {
-//           title: 'Birthday Party',
-//           start: '2019-08-13T07:00:00'
-//         },
-//         {
-//           title: 'Click for Google',
-//           url: 'http://google.com/',
-//           start: '2019-08-28'
-//         }
+
         <%=content%>
       ]
     });
@@ -121,8 +71,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
 //     });
 
     $(document).ready(function(){
-//  	   var bookDay = $('#date').val();
-//         var facilityNo=$('#facilityNo').val();
     		$.ajax({
  				url: "${pageContext.request.contextPath}/schedule/schedulList.do?date="+'<%=sdf.format(now)%>'+"&email="+'${memberLoggedIn.email}',
  				dataType: "json",
@@ -130,8 +78,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
  					console.log(data);
  					var html1="";
  					var html2="";
-//  					 if(data.length==0)
-//  						 html+="<tr><td colspan='3'>예약 기록이 없습니다.</td></tr>"
+ 					 if(data.length==0)
+ 						 html+="<tr><td colspan='3'>예약 기록이 없습니다.</td></tr>"
  					$.each(data,(idx, schedule)=>{
 //  						 var starttime = facility.bookStarttime.substring(0,2); 
 //  						 var starttime2 = facility.bookStarttime.substring(2,4);
@@ -141,15 +89,15 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
  						 var endScheduleTime=schedule.endScheduleTime.substring(0,10);
  						 if(startScheduleTime==endScheduleTime)
  							 {
- 						  startScheduleTime=schedule.startScheduleTime.substring(11,19);
- 						  endScheduleTime=schedule.endScheduleTime.substring(11,19); 						  
+ 						  startScheduleTime=schedule.startScheduleTime.substring(11,16);
+ 						  endScheduleTime=schedule.endScheduleTime.substring(11,16); 						  
  						 html1+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
  						 html1+="<td><p class='schedule-title'>"+schedule.title+'</p>'+schedule.content+"</td></tr>";
  						 console.log(startScheduleTime);
  							 }
  						 else{
- 							startScheduleTime=schedule.startScheduleTime.substring(5,10);
- 	 						  endScheduleTime=schedule.endScheduleTime.substring(5,10); 						  
+ 							startScheduleTime=schedule.startScheduleTime.substring(5,16);
+ 	 						  endScheduleTime=schedule.endScheduleTime.substring(5,16); 						  
  	 						 html2+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
  	 						 html2+="<td><p class='schedule-title'>"+schedule.title+'</p>'+schedule.content+"</td></tr>";
  	 						 console.log(startScheduleTime);
@@ -178,9 +126,21 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
  	        $(".controll-title").html("개인일정관리");
  		});
     };
-
+function clickDate(date){
+	 event.stopPropagation();
+	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/scheduleManage.do?date="+date,function(){
+	        $('#scheduleManageModal').modal({backdrop: 'static', keyboard: false});
+	        $('#scheduleManageModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("");
+	        $(".controll-title").html(date+" 일정관리");
+		});
+};
 </script>
 <style>
+
+.fc-right button{
+display:none;}
 	.fc-content{
 	background-color:white;
 	border-color: white;}
@@ -263,6 +223,24 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
     </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="scheduleManageModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body controll-modal-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+
 <div class='my-schedule-container'>
 	<div id='calendar'></div>
 	<div id='schedule-table-container'>
@@ -271,7 +249,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
 		<div id='schedule-table-container2'>	
 		<table class="table table-striped">
 		
-		  </thead>
+		 
 		  <tbody id="list">
 		
 		  </tbody>

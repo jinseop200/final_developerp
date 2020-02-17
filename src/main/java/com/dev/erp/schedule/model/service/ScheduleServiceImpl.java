@@ -27,4 +27,9 @@ public List<Schedule> getSchedule(String email) {
 public List<Schedule> scheduleList(Map<String, Object> map) {
 	return scheduleDAO.scheduleList(map);
 }
+
+@Override
+public int scheduleDelete(Schedule schedule) {
+	return scheduleDAO.scheduleDelete(schedule);
+}
 }
