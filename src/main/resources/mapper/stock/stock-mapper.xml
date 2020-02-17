@@ -50,14 +50,15 @@
 			(SELECT SUBSTR(RM_NAME, 1, 2) ||  SUBSTR(RM_NAME, INSTR(RM_NAME , ' ', 1, 1)+1,  2) ||  SUBSTR(RM_NAME, INSTR(RM_NAME , ' ', 1, 2)+1,  2)
 			 FROM RAW_MATERIAL
 			 WHERE RM_NO = #{rmNo}) || '_' || to_char(to_date(#{recDate},'yyyy-MM-dd'),'yyyyMMdd') || '_' || SEQ_LOT_NO.NEXTVAL,
+			default,		
 			#{rmNo},
 			default,
 			default,
 			#{quantity},
 			default,
 			default,
-			to_date(#{recDate},'yyyy-MM-dd'),
-			default
+			default,			
+			to_date(#{recDate},'yyyy-MM-dd')
 		)
 	</insert>
 	

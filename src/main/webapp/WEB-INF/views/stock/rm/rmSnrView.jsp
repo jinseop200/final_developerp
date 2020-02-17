@@ -11,13 +11,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   
-<!-- Page Heading -->
 
-<select name="jump" onchange="location.href=this.value">
-<option>선택</option>
-<option value="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</option>
-<option value="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</option>
-</select>
+
 <!-- ============================ 원재료 입출고 관리 부분 ==================================== -->
 	<h1 class="h3 mb-2 text-gray-800">원재료 입출고 관리</h1>
 	
@@ -43,11 +38,23 @@
 	<br />
 	
 	<!-- DataTales Example -->
+	
 	<div class="card shadow mb-4" style="clear:both;">
 		<div class="card-header py-3">
 		<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
 	</div>
 	  
+	<%-- nav bar tap start --%>
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link active" href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</a>
+	  </li>
+	</ul>
+	<%-- nav bar tap end --%>
+	
 	  <div class="card-body">
 	    <div class="table-responsive">
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
