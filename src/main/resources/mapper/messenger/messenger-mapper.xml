@@ -32,24 +32,24 @@
 		           count(*) over(partition by A.chatid,A.email) cnt,
 		           rank() over(partition by A.chatid order by time desc) rank 
 		    from chatlog A left join chatroom B
-		        on A.chatid = B.chatid and A.email = B.email
-		    where time > (select lastcheck from chatroom C where C.chatid = A.chatid and email = #{email}) 
-		    order by time desc)A
-		where rank = 1
-		union all 
-		select *
-		from (
-		    select chatno,
-		           A.chatid, 
-		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email, 
-		           msg, 
-		           time,
-		           0 cnt,
-		           rank() over(partition by A.chatid order by time desc) rank 
-		    from chatlog A left join chatroom B
-			        on A.chatid = B.chatid and A.email = B.email where A.email=#{email}
-			order by time desc)A
-		where rank = 1 and time <![CDATA[ <= ]]> (select lastcheck from chatroom C where C.chatid = A.chatid and email = #{email}) 
+		        on A.chatid = B.chatid and A.email = B.email) where chatid=#{chatId} order by chatno desc
+<!-- 		    where time > (select lastcheck from chatroom C where C.chatid = A.chatid and email = #{email})  -->
+<!-- 		    order by time desc)A -->
+<!-- 		where rank = 1 -->
+<!-- 		union all  -->
+<!-- 		select * -->
+<!-- 		from ( -->
+<!-- 		    select chatno, -->
+<!-- 		           A.chatid,  -->
+<!-- 		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email,  -->
+<!-- 		           msg,  -->
+<!-- 		           time, -->
+<!-- 		           0 cnt, -->
+<!-- 		           rank() over(partition by A.chatid order by time desc) rank  -->
+<!-- 		    from chatlog A left join chatroom B -->
+<!-- 			        on A.chatid = B.chatid and A.email = B.email where A.email=#{email} -->
+<!-- 			order by time desc)A -->
+<!-- 		where rank = 1 and time <![CDATA[ <= ]]> (select lastcheck from chatroom C where C.chatid = A.chatid and email = #{email})  -->
 	</select>
 	
 	<update id="updateLastCheck">

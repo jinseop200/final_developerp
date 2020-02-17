@@ -98,7 +98,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	}
 	
 	@MessageMapping("/chat/{chatId}")
-	@SendTo(value={"/chat/{chatId}","/chat/{email}"})
+	@SendTo(value={"/chat/{chatId}"})
 	public Msg sendEcho(Msg fromMessage, 
 						@DestinationVariable String chatId, 
 						@Header("simpSessionId") String sessionId){
@@ -148,9 +148,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			param.put("email", email);
 			param.put("chatId", chatId);
 			recentList = messengerService.findRecentList(param);
-			for(int j=0; j<recentList.size(); j++) {
-				sumList.add(recentList.get(j));
-			}
+			sumList.add(recentList.get(0));
 		}
 		logger.info("recentList={}",recentList);
 		model.addAttribute("recentList", sumList);
