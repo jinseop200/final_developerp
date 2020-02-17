@@ -66,14 +66,15 @@
 		WHERE CHATID = #{chatId}
 	</update>
 	
-	<select id="selectMemberList" resultType="map">
-		select E.emp_id as "emp_id",E.emp_name as "emp_name" ,d.dept_title as "dept_title",J.job_name as "job_name" ,C.chatid as "chat_id"
-		, E.email as "email" from employee E 
+	<select id="selectMemberList" resultMap="selectMessengerList">
+		 select E.emp_id as "emp_id",E.emp_name as "emp_name" ,d.dept_title as "dept_title",J.job_name as "job_name", 
+		 E.email as "email", (select C.chatid from chatroom C join chatroom R on C.chatid=R.chatid where C.email = #{email} and R.email=E.email and rownum=1) as "chat_id"
+ 		from employee E 
 		left join department D on E.dept_code = D.dept_id 
 		left join job J on E.job_code=J.job_code 
-		left join chatroom C on E.email=C.email
 		order by E.emp_id
 	</select>
+	<resultMap id="selectMessengerList" type="map"></resultMap>
 	
 	<select id="selectAllCountByAccountNo" resultType="_int">
 		select count(*) from employee

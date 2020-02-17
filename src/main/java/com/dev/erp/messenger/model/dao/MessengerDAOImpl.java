@@ -48,9 +48,9 @@ public class MessengerDAOImpl implements MessengerDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage, String email) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
-		return sqlSession.selectList("messenger.selectMemberList",null,rowBounds);
+		return sqlSession.selectList("messenger.selectMemberList",email,rowBounds);
 	}
 
 	@Override

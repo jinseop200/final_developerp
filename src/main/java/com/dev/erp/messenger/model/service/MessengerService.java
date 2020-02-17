@@ -22,7 +22,7 @@ public interface MessengerService {
 
 	int updateLastCheck(Msg fromMessage);
 
-	List<Map<String, String>> selectMemberList(int cPage, int numPerPage);
+	List<Map<String, String>> selectMemberList(int cPage, int numPerPage, String email);
 
 	int selectAllCountByAccountNo();
 
