@@ -320,12 +320,10 @@ $(function() {
 $(document).on('dblclick','.tdPtCode',function(){
 	$("#searchModalTitle").html('품목코드 검색');
 	var searchType = "rawMaterial";
-	var clickedTd = $(this);
+	var clickedTd = $(this).parent().index();
 	var trNum = $(this).closest('tr').prevAll().length;
 	
-	if(trNum==0){
-		trNum = 1;
-	}
+	trNum += 1;
 	
 	console.log("this", clickedTd);
 	console.log("trNum", trNum);

@@ -11,7 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <%-- nav bar tap start --%>
-<ul class="nav nav-tabs">
+<!-- <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#">전체</a>
   </li>
@@ -24,7 +24,7 @@
   <li class="nav-item">
     <a class="nav-link" href="#">원재료</a>
   </li>
-</ul>
+</ul> -->
 <%-- nav bar tap end --%>
 
 
