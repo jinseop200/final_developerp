@@ -11,8 +11,9 @@ public interface StockDAO {
 
 	List<Map<String, String>> selectProductStockList();
 
-	List<Map<String, String>> selectStorageStockList();
+	List<Map<String, String>> selectStorageStockList(String storeNo);
 
+	List<Map<String, String>> allStorageStockList();
 	
 	
 	
@@ -39,6 +40,7 @@ public interface StockDAO {
 	int selectRecievingCountByLotNo();
 
 	int DeleteRm(Map<String, String> rawMaterial);
+
 
 
 

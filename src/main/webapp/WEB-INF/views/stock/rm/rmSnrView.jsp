@@ -55,7 +55,7 @@
 	</ul>
 	<%-- nav bar tap end --%>
 	
-	  <div class="card-body">
+	  <div class="card-body" style='font-size: 14px'>
 	    <div class="table-responsive">
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			  <thead>

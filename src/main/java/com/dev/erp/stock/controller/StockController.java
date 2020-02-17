@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -203,9 +205,17 @@ public class StockController {
 	
 	// ========================================= 창고별 재고 관리 =========================================
 	@RequestMapping("/stock/storage/storageView.do")
-	public ModelAndView selectStorageStockList(ModelAndView mav) {
+	public ModelAndView selectStorageStockList(ModelAndView mav, @RequestParam("storeNo") String storeNo) {
+	
 		
-		List<Map<String, String>> storageList = stockservice.selectStorageStockList();
+		System.out.println("storeNo 뭐가찍히나요????" + storeNo);
+		
+		List<Map<String, String>> storageList;
+		
+		if(storeNo.equals("0"))
+			storageList = stockservice.allStorageStockList();
+		else
+			storageList = stockservice.selectStorageStockList(storeNo);
 		
 		logger.info("storageList@Controller={}", storageList);
 		
@@ -215,25 +225,10 @@ public class StockController {
 		return mav;
 	}
 	
-	@RequestMapping("/stock/storage/modalStorageInsert.do")
-	public ModelAndView modalStorageInsert(ModelAndView mav) {
-		
-		mav.setViewName("/stock/storage/modalStorageInsert");
-		
-		return mav;
-	}
-	
-	@RequestMapping("/stock/storage/modalStorageSearch.do")
-	public ModelAndView modalStorageSearch(ModelAndView mav) {
-		
-		mav.setViewName("/stock/storage/modalStorageSearch");
-		
-		return mav;
-	}
-	
 	
 	
 	// ========================================= searchSpecify Controller =========================================
+	
 
 	@RequestMapping("/stock/common/searchSpecify.do")
 	public ModelAndView searchSpecify(ModelAndView mav, @RequestParam("searchType") String searchType) {

@@ -21,7 +21,30 @@
 	<div class="card-header py-3">
 	<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
 </div>
-  
+
+  <%-- nav bar tap start --%>
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0">전체창고</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=1">1번창고 : 입고창고</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=2">2번창고 : 자재창고</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=3">3번창고 : 제품창고</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=4">4번창고 : 생산창고</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=5">5번창고 : 부적합창고</a>
+	  </li>
+	</ul>
+	<%-- nav bar tap end --%>
+	
   <div class="card-body">
     <div class="table-responsive">
 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
