@@ -187,6 +187,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int deleteRawmaterialByRmNo(String rmNo) {
 		return enrollmentDAO.deleteRawmaterialByRmNo(rmNo);
 	}
+
+	@Override
+	public Map<String, Object> checkDataAvailable(String ckData) {
+		return enrollmentDAO.checkDataAvailable(ckData);
+	}
 	
 	
 }

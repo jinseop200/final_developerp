@@ -153,6 +153,31 @@ $(()=>{
 		})
 	});
 	
+	$("#addVendor-Modal #vendorTypes").change(function() {
+		var ckData = $(this).val();
+		console.log("data=???",ckData);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/enrollment/checkDataAvailable",
+			data: {ckData : ckData},
+			async: false,
+			contentType: "application/json;charset=UTF-8",
+			success: data => {
+				console.log(data.isUsable);
+				if(data.isUsable == false){
+					$(this).val("");
+					alert("존재하지 않는 거래처코드입니다. 다시 확인해주세요.");
+				}
+				else{
+				}
+				
+			},
+			error: (x,s,e) => {
+				console.log("ajax요청 실패!!", x, s, e);
+			}
+		})
+	});
+	
+	
 }); //end of onload
 	
 

@@ -73,4 +73,6 @@ public interface EnrollmentDAO {
 
 	int deleteRawmaterialByRmNo(String rmNo);
 
+	Map<String, Object> checkDataAvailable(String ckData);
+
 }

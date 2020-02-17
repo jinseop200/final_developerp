@@ -291,6 +291,7 @@ public class ProductionController {
 									 @RequestParam("insectionYN") String insectionYN,
 									 @RequestParam("measurement") String measurement,
 									 @RequestParam("regDate") String regDate,
+									 @RequestParam("rmName") String rmName,
 										 ModelAndView mav) {
 		
 		Map<String, String> warehousing = new HashMap<>();
@@ -303,6 +304,7 @@ public class ProductionController {
 		warehousing.put("insectionYN", insectionYN);
 		warehousing.put("measurement", measurement);
 		warehousing.put("regDate", regDate);
+		warehousing.put("rmName", rmName);
 		
 		logger.info("warehousing@controller={}",warehousing);
 		
@@ -323,6 +325,11 @@ public class ProductionController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("tdLotNo", tdLotNo);
 		map = productionService.selectWarehousingByLotNo(tdLotNo);
+		
+		//날짜형식 수정
+		String nDate = map.get("REC_DATE").toString().substring(0,10);
+		map.put("nDate", nDate);
+		
 		logger.info("map@Controller={}",map);
 		
 		return map;
@@ -338,6 +345,7 @@ public class ProductionController {
 									 @RequestParam("insectionYN") String insectionYN,
 									 @RequestParam("measurement") String measurement,
 									 @RequestParam("lotNo") String lotNo,
+									 @RequestParam("regDate") String regDate,
 										 ModelAndView mav) {
 		
 		Map<String, String> warehousing = new HashMap<>();
@@ -350,6 +358,7 @@ public class ProductionController {
 		warehousing.put("insectionYN", insectionYN);
 		warehousing.put("measurement", measurement);
 		warehousing.put("lotNo", lotNo);
+		warehousing.put("regDate", regDate);
 		
 		logger.info("warehousing@controller={}",warehousing);
 		

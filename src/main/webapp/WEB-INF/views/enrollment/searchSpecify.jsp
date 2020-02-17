@@ -123,6 +123,7 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 		$("#ptNo").val(value3);
 		$("#vendorType").val(value4);
 		$("#storeNo").val(1);
+		$("#rmName").val(value2);
 		$("#quantity").focus();
 	}
 	if($("#valForSearch").val() == "update"){

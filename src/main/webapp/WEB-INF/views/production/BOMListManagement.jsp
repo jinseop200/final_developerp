@@ -44,7 +44,6 @@
           <th>BOM구성 품목수</th>
           <th>총수량</th>
           <th>BOM등록</th>
-          <th>조회</th>
         </tr>
       </thead>
 	  <tbody>
@@ -76,7 +75,6 @@
 			         	<td class="tdBOMAddAlign"></td>
 			         </c:otherwise>
          		</c:choose>
-	          <td></td>
 	        </tr>
         </c:forEach>
     </tbody>

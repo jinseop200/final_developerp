@@ -226,4 +226,11 @@
 	<delete id="deleteRawmaterialByRmNo">
 		delete from raw_material where rm_no = #{rmNo}
 	</delete>
+	
+	<select id="checkDataAvailable" resultMap="vendorTypeMap">
+		select * from vendor_kind where vt_no = #{ckData}
+	</select>
+	<resultMap type="map" id="vendorTypeMap">
+	</resultMap>
+	
 </mapper>
