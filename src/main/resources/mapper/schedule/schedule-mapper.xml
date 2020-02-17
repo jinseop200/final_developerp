@@ -13,4 +13,8 @@ select * from schedule where email=#{email}
 <select id="scheduleList" resultType="Schedule">
   select * from schedule where email=#{email} and to_date(start_scheduletime,'yyyy-mm-dd')<![CDATA[<]]>=to_date(to_date(#{date},'yyyy-mm-dd'),'yyyy-mm-dd') and to_date(end_scheduletime,'yyyy-mm-dd')>=to_date(to_date(#{date},'yyyy-mm-dd'),'yyyy-mm-dd')
 </select>
+
+<delete id="scheduleDelete">
+delete schedule where content=#{content} and title=#{title} and to_date(#{startScheduleTime},'YYYY-MM-DD HH24:MI:SS')=start_ScheduleTime and to_date(#{endScheduleTime},'YYYY-MM-DD HH24:MI:SS')=end_ScheduleTime
+</delete>
 </mapper>

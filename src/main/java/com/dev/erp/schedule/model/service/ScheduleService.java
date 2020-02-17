@@ -13,4 +13,6 @@ public interface ScheduleService {
 
 	List<Schedule> scheduleList(Map<String, Object> map);
 
+	int scheduleDelete(Schedule schedule);
+
 }
