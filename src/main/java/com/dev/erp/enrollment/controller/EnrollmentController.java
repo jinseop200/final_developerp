@@ -415,6 +415,10 @@ public class EnrollmentController {
 			list =  enrollmentservice.selectStoreNoAll(cPage,numPerPage); 
 			totalContents = enrollmentservice.selectAllStoreNo();
 			break;
+		case "showJobOrder" :  
+			list =  enrollmentservice.selectJobOrderAll(cPage,numPerPage); 
+			totalContents = enrollmentservice.selectAllJobOrder();
+			break;
 		}
 		String url = "searchSpecifyPage.do?searchType="+searchType;
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);

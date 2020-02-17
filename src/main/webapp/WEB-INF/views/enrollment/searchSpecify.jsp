@@ -54,6 +54,14 @@
            <th>창고번호</th>
            <th>창고이름</th>
            </c:if>
+           <c:if test="${searchType == 'showJobOrder'}">
+           <th>작업지시번호</th>
+           <th>납품처</th>
+           <th>납기일</th>
+           <th>담당자</th>
+           <th>제품명</th>
+           <th>지시수량</th>
+           </c:if>
          </tr>
        </thead>
        <tbody id="tbodyList">
@@ -105,6 +113,8 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value2 = $(this).children().eq(2).html();
 	var value3 = $(this).children().eq(3).html();
 	var value4 = $(this).children().eq(4).html();
+	var value5 = $(this).children().eq(5).html();
+	var value6 = $(this).children().eq(6).html();
 	var trNum = $("#trNum").val();
 	//console.log(trNum);
 	//console.log(value);
@@ -125,6 +135,12 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 		$("#storeNo").val(1);
 		$("#rmName").val(value2);
 		$("#quantity").focus();
+	}
+	if($("#${searchType}").attr('name') == 'showJobOrder'){
+		console.log("4");
+		$("#${searchType}").val(value);
+		$("#addReleasing-Modal #rProduct").val(value5);
+		$("#addReleasing-Modal #rQuantity").val(value6);
 	}
 	if($("#valForSearch").val() == "update"){
 		console.log("update COM")
@@ -174,6 +190,17 @@ function morePage(a){
 					let p = speclist[i];
 					//console.log(p);	
 					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><tr>");
+				}
+				$(".pageBar").html(data.pageBar);
+				$("span.page-link").attr('onclick',"morePage(this.id)");
+			}
+			else if(data.searchType == 'showJobOrder'){
+				var speclist = data.speclist;
+				$(".quality-specify-table tbody").children().remove();
+				for(var i in speclist ) {
+					let p = speclist[i];
+					//console.log(p);	
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><td>"+p.content5+"</td><td>"+p.content6+"</td><tr>");
 				}
 				$(".pageBar").html(data.pageBar);
 				$("span.page-link").attr('onclick',"morePage(this.id)");

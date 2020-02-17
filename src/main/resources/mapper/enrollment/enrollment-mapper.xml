@@ -232,5 +232,19 @@
 	</select>
 	<resultMap type="map" id="vendorTypeMap">
 	</resultMap>
+
+	<select id="selectJobOrderAll" resultType="map">
+		select jo_no as "content2"
+			   ,customer as "content"
+			   ,due_date as "content3"
+			   ,manager as "content4"
+			   ,product_name as "content5"
+			   ,order_quantity as "content6"
+   		from job_order order by jo_no
+	</select>
+	
+	<select id="selectAllJobOrder" resultType="_int">
+		select count(*) from job_order
+	</select>
 	
 </mapper>

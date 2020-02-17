@@ -194,6 +194,17 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public Map<String, Object> checkDataAvailable(String ckData) {
 		return sqlsession.selectOne("enrollment.checkDataAvailable",ckData);
 	}
+
+	@Override
+	public List<Map<String, String>> selectJobOrderAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectJobOrderAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllJobOrder() {
+		return sqlsession.selectOne("enrollment.selectAllJobOrder");
+	}
 	
 	
 }

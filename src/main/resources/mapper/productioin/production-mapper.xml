@@ -111,7 +111,7 @@
                 </trim>
 	</insert>
 
-	<select id="selectReceivingList" resultMap="receivingMap">
+	<!-- <select id="selectReceivingList" resultMap="receivingMap">
 		select * from receiving r
 		    join raw_material rm on r.rm_no = rm.rm_no
 		    join storage s on r.store_no = s.store_no
@@ -157,7 +157,7 @@
 		measurement = #{measurement},
 		rec_date = to_date(#{regDate},'yyyy-MM-dd')
 		where lot_no = #{lotNo}
-	</update>
+	</update> -->
 	
 	<delete id="deleteBOMByBOMNo">
 		delete from bom where bom_no = #{bomNo}
@@ -170,5 +170,35 @@
 	<delete id="deleteWarehousingByRmNo">
 		delete from receiving where lot_no = #{lotNo}
 	</delete>
+	
+	<select id="selectReleaseList" resultMap="releaseMap">
+		select * from release order by lot_no
+	</select>
+	<resultMap type="map" id="releaseMap">
+	</resultMap>
+	
+	<select id="checkBOMExist" resultMap="BOMChkMap">
+		 select * from bom b join product_list pl on b.pl_no = pl.pl_no
+                                   join bom_rm br on br.bom_no = b.bom_no
+                                   join raw_material rm on rm.rm_no = br.rm_no
+ 		where product_name = #{chkBOM}
+	</select>
+	<resultMap type="map" id="BOMChkMap">
+	</resultMap>
+	
+	<select id="quantityCheck" resultMap="QuantityChkMap">
+		select a.rm_no,a.rm_name, (nvl(r.quantity,0)-a.required) quanchk
+		 from (select rm_no, sum(quantity) quantity from receiving
+		group by rm_no) r right join 
+		 (select rm.rm_no,rm.rm_name, sum(br.quantity)*#{rQuantity} required
+		 from bom b join product_list pl on b.pl_no = pl.pl_no
+		                                   join bom_rm br on br.bom_no = b.bom_no
+		                                   join raw_material rm on rm.rm_no = br.rm_no
+		                                   where product_name = #{chkBOM}
+		                                   group by rm.rm_no, rm.rm_name, pl.product_name
+		) a on r.rm_no = a.rm_no
+	</select>
+	<resultMap type="map" id="QuantityChkMap">
+	</resultMap>
 	
 </mapper>

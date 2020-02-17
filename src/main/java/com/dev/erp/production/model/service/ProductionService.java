@@ -52,4 +52,16 @@ public interface ProductionService {
 
 	int deleteWarehousingByRmNo(int lotNo);
 
+
+	List<Map<String, String>> selectReleaseList();
+
+
+	List<Map<String, String>> checkBOMExist(String chkBOM);
+
+
+	List<Map<String, String>> quantityCheck(Map<String, Object> map);
+
+
+	int addRelease(Map<String, String> addMap);
+
 }
