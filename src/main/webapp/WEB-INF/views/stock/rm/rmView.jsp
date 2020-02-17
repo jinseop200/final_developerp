@@ -45,8 +45,8 @@
 	<%-- nav bar tap end --%>
 	
 	  <div class="card-body">
-	    <div class="table-responsive">
-			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	    <div class="table-responsive" >
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
 			  <thead>
 			    <tr>
 			     <th>원재료번호</th>

@@ -11,7 +11,9 @@ public interface StockService {
 
 	List<Map<String, String>> selectProductStockList();
 
-	List<Map<String, String>> selectStorageStockList();
+	List<Map<String, String>> selectStorageStockList(String storeNo);
+	
+	List<Map<String, String>> allStorageStockList();
 
 	int UpdateRm(Map<String, String> rawMaterial);
 
@@ -36,6 +38,7 @@ public interface StockService {
 	int selectRecievingCountByLotNo();
 
 	int DeleteRm(Map<String, String> recieving);
+
 
 
 

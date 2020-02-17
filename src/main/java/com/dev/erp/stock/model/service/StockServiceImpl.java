@@ -33,9 +33,15 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectStorageStockList() {
+	public List<Map<String, String>> selectStorageStockList(String storeNo) {
 		
-		return stockDAO.selectStorageStockList();
+		return stockDAO.selectStorageStockList(storeNo);
+	}
+	
+	@Override
+	public List<Map<String, String>> allStorageStockList() {
+		
+		return stockDAO.allStorageStockList();
 	}
 
 	
@@ -99,6 +105,9 @@ public class StockServiceImpl implements StockService {
 	public int selectRecievingCountByLotNo() {
 		return stockDAO.selectRecievingCountByLotNo();
 	}
+
+	
+
 
 	
 
