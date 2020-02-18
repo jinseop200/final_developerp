@@ -15,4 +15,6 @@ public interface ScheduleDAO {
 
 	int scheduleDelete(Schedule schedule);
 
+	int scheduleUpdate(Schedule schedule);
+
 }

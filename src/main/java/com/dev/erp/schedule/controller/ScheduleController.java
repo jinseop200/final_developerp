@@ -91,12 +91,6 @@ public class ScheduleController {
 //		mav.setViewName("main/scheduleManage");
 //		return mav;
 //	}
-	@RequestMapping("schedule/scheduleModify.do")
-	public ModelAndView scheduleModify(ModelAndView mav) {
-		
-		mav.setViewName("main/scheduleModify");
-		return mav;
-	}
 	@RequestMapping("schedule/scheduleDelete.do")
 	public ModelAndView scheduleDelete(ModelAndView mav,Schedule schedule,@SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn)
 	{
@@ -113,7 +107,46 @@ public class ScheduleController {
 	}
 	
 	
-	
+	@RequestMapping("schedule/scheduleModify.do")
+	public ModelAndView scheduleModify(ModelAndView mav,Schedule schedule,String []title1,String []content1) {
+		System.out.println("Fsadfasd"+schedule);
+		String title="";
+		String content="";
+		for(int i=0;i<title1.length;i++)
+		{
+			title+=title1[i];
+			title+=" ";
+		}
+		for(int i=0;i<content1.length;i++)
+		{
+			content+=content1[i];
+			content+=" ";
+		}
+		schedule.setStartTime(schedule.getStartTime().substring(0, 5));
+		schedule.setEndTime(schedule.getEndTime().substring(0,5));
+		schedule.setContent(content);
+		schedule.setTitle(title);
+		System.out.println(title);
+		System.out.println("dfdfdf"+content);
+		mav.addObject("schedule",schedule);
+		mav.setViewName("main/scheduleModify");
+		return mav;
+	}
+	@RequestMapping("schedule/scheduleUpdate.do")
+	public ModelAndView scheduleUpdate(ModelAndView mav,Schedule schedule1,Schedule schedule) {
+		String date=schedule.getEndScheduleTime()+" "+schedule.getEndTime();
+		schedule.setEndScheduleTime(date);
+		date=schedule.getStartScheduleTime()+" "+schedule.getStartTime();
+		schedule.setStartScheduleTime(date);
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaa"+schedule);
+		System.out.println("bbbbbbbbbbbb"+schedule1);
+		int result =scheduleService.scheduleUpdate(schedule);
+		mav.addObject("loc", "/main/main.do?email="+schedule.getEmail());
+		
+		mav.addObject("msg", result>0?"수정 성공!":"수정 실패!");
+		mav.setViewName("common/msg");
+		return mav;
+	}
 	
 	
 }

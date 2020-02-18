@@ -15,4 +15,6 @@ public interface ScheduleService {
 
 	int scheduleDelete(Schedule schedule);
 
+	int scheduleUpdate(Schedule schedule);
+
 }

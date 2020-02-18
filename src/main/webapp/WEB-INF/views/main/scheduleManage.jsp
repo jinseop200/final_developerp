@@ -24,14 +24,26 @@
               </div>
            
           
+  <div class="modal" tabindex="-1" role="dialog" id="scheduleModifyModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body controll-modal-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        	
+        </div>
+    </div>
+</div>
   
 <script>
 
 $("#scheduleListTable tbody").on('click','input:button',function(){
-	console.log($(this).parent().siblings().eq(1).text());
-	console.log($(this).parent().siblings().eq(2).text());
-	console.log("zzzzzzzzzz",$(this).parent().siblings().eq(1).children("#startScheduleTime").val());
-	console.log("dddddddddd",$(this).parent().siblings().eq(1).children("#endScheduleTime").val());
 	var startScheduleTime=$(this).parent().siblings().eq(1).children("#startScheduleTime").val();
 	var endScheduleTime=$(this).parent().siblings().eq(1).children("#endScheduleTime").val();
 	var title=$(this).parent().siblings().eq(1).text();
@@ -39,13 +51,38 @@ $("#scheduleListTable tbody").on('click','input:button',function(){
 	location.href = "${pageContext.request.contextPath}/schedule/scheduleDelete.do?title="+title+"&startScheduleTime="+startScheduleTime+"&endScheduleTime="+endScheduleTime+"&content="+content;
 	
 });
-function Delete(){
-	var title = $(this).siblings().html();
-// 	var a=$(this).closest('tr').nextAll().eq(1).html();
-	console.log($(this).parents().siblings());
+
+$("#scheduleListTable tbody").on('click','button',function(){
+	var startScheduleTime=$(this).parent().siblings().eq(1).children("#startScheduleTime").val();
+	var endScheduleTime=$(this).parent().siblings().eq(1).children("#endScheduleTime").val();
+	var scheduleNo=$(this).parent().siblings().eq(1).children("#scheduleNo").val();
+	var endTime=endScheduleTime.substring(11,19);
+	var startTime=startScheduleTime.substring(11,19);
+	endScheduleTime=endScheduleTime.substring(0,10);
+	console.log(startScheduleTime.substring(0,10));
+	startScheduleTime=startScheduleTime.substring(0,10);
+	var title=$(this).parent().siblings().eq(1).text();
+	var content=$(this).parent().siblings().eq(2).text();
+	var title1=title.split(' ');
+	var content1=content.split(' ');
 	console.log(title);
-	
-}
+	content=$.escapeSelector(content);
+	console.log(startScheduleTime);
+	console.log(endScheduleTime);
+	console.log(endTime);
+	console.log(startTime);
+	console.log(title);
+	console.log(content);
+	console.log(scheduleNo);
+	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/scheduleModify.do?title1="+title1+"&content1="+content1+"&scheduleNo="+scheduleNo+"&startScheduleTime="+startScheduleTime+"&endScheduleTime="+endScheduleTime+"&startTime="+startTime+"&endTime="+endTime,function(){
+	        $('#scheduleModifyModal').modal({backdrop: 'static', keyboard: false});
+	        $('#scheduleModifyModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("");
+	        $(".controll-title").html("일정 수정");
+		});
+});
+
 $(document).ready(function(){
 	$.ajax({
 			url: "${pageContext.request.contextPath}/schedule/scheduleManageList.do?date=${date}&email=${memberLoggedIn.email}",
@@ -55,7 +92,7 @@ $(document).ready(function(){
 				var html1="";
 				var html2="";
 				 if(data.length==0)
-					 html1+="<tr><td colspan='3'>등록된 일정이 없습니다.</td></tr>"
+					 html1+="<tr><td colspan='5'>등록된 일정이 없습니다.</td></tr>"
 				$.each(data,(idx, schedule)=>{
 //					 var starttime = facility.bookStarttime.substring(0,2); 
 //					 var starttime2 = facility.bookStarttime.substring(2,4);
@@ -73,7 +110,8 @@ $(document).ready(function(){
 					 html2+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
 					 html2+="<td>"+schedule.title;
 					  html2+='<input type="text" id="startScheduleTime" value="'+schedule.startScheduleTime+'" hidden>';
-					  html2+='<input type="text" id="endScheduleTime" value="'+schedule.endScheduleTime+'" hidden></td>';
+					  html2+='<input type="text" id="endScheduleTime" value="'+schedule.endScheduleTime+'" hidden>';
+					  html2+='<input type="text" id="scheduleNo" value="'+schedule.scheduleNo+'" hidden></td>';
 					 html2+="<td>"+schedule.content+"</td>";
 					 html2+='<td><button type="submit" id="Modify" name="submit" class="btn btn-primary">수정</button></td>';
 					 html2+='<td><input type="button" id="Delete" name="submit" class="btn btn-primary"  value="삭제"/></td></tr>';
@@ -85,7 +123,8 @@ $(document).ready(function(){
 						  html1+='<tr><td>'+startScheduleTime+" ~ "+endScheduleTime+'</td>';
 							 html1+="<td>"+schedule.title;
 							  html1+='<input type="text" id="startScheduleTime" value="'+schedule.startScheduleTime+'" hidden>';
-							  html1+='<input type="text" id="endScheduleTime" value="'+schedule.endScheduleTime+'" hidden></td>';
+							  html1+='<input type="text" id="endScheduleTime" value="'+schedule.scheduleNo+'" hidden>';
+							  html1+='<input type="text" id="scheduleNo" value="'+schedule.endScheduleTime+'" hidden></td>';
 							 html1+="<td>"+schedule.content+"</td>";
 							 html1+='<td><button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">수정</button></td>';
 							 html1+='<td><input type="button" id="Delete" name="submit" class="btn btn-primary"   value="삭제"/></td></tr>';
