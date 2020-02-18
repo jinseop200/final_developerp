@@ -1,9 +1,12 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%int i=0; %>
+<%Date now = new Date(); 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
  <!-- Custom styles for this page -->
@@ -12,72 +15,43 @@
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <!-- Page Heading -->
-          
-          <ul class="navbar-nav mr-auto">	  
-		      	  <!-- 데모메뉴 DropDown변경 -->
-				  <!--https://getbootstrap.com/docs/4.1/components/navbar/#supported-content-->
-				  <li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						게시판
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="boardList" var="b">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardCategoryList.do?boardNo=${b.boardNo}" >${b.boardName}</a>
-						
-						</c:forEach>
-					</div>
-				  </li>
-			      
-			    </ul>
+
+			     <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="type">게시판 </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <tr>
+						<td>
+							<select name="boardType" id="boardType" required>
+								<option value="" selected disabled >타입</option>
+									<c:forEach items="${board}" var="b">
+										<option value="${b.boardNo}">${b.boardName}</option>
+									</c:forEach>
+							</select>
+						</td>
+					</tr>
+                    </div>
+                </div>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4" style="clear:both;">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
-              	<ul class="nav nav-tabs">
-              	
-  <li class="nav-item">
-    <a class="nav-link active" href="#">전체</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">진행중</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">완료</a>
-  </li>
-</ul>
-            
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered quality-table" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered board-list-table" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>                    
                       <th>No</th>
                       <th>제목</th>
                       <th>작성자</th>
-                      <th>진행상태</th>
-                      <th>작성일자</th>
                       <th>내용</th>
+                      <th>작성일자</th>
+                      <th>타입</th>
+                      <th>보기</th>
                     </tr>
                   </thead>
-                  <tbody>
-               	<c:forEach items="${boardlist }" var="l" varStatus = "vs">
-                	<tr class = "getBo">
-                	<td id ="${l.categoryNo}">${vs.count}</td> 
-	                      <td>${l.categoryTitle}</td>
-	                      <td>${l.categoryWriter }</td>
-	                      <c:if test="${l.categoryStatus=='y' }">
-	                     	 <td>진행중</td>
-	                      </c:if>
-	                      <c:if test="${l.categoryStatus=='n' }">
-	                     	 <td>완료됨</td>
-	                      </c:if>
-	                      <td>${l.categoryDate}</td>
-	                     
-	                      <td><a href="#">보기</a></td>
-	                    </tr>
-                  	</c:forEach>
+                  <tbody >
                   </tbody>
                 </table>
               </div>
@@ -145,9 +119,11 @@
 /* $(".btn-primary").click(function(){
 var boardNo= $(this).closest("tr").children().eq(0).html(); */
 $(()=>{
-	$(".getBo td a").click(function(){
+	function detailBoard(){
+		console.log("!23123124124214");
 		var tr = $(this).parent().parent();
 		var td = tr.children();
+		console.log(tr);
 		
 		var tdCategoryNo = td.eq(0).attr("id");
 		console.log(tdCategoryNo);
@@ -159,8 +135,24 @@ $(()=>{
 	        $(".controll-title").html("상세보기");
 		});
 		
-	})
-})
+	};
+	$.ajax({
+		url:"${pageContext.request.contextPath}/board/boardAllList.do",
+		dataType:"json",
+		success:data=>{
+			console.log(data);
+			$(".board-list-table tbody").children().remove();
+			var list = data.list;
+			for(var i in list){
+				let p = list[i];
+				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard();>보기</a></td></tr>");
+			}
+		},
+		error : (jqxhr, textStatus, errorThrown)=>{
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+});
 $("#board-insert-button").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/board/insertBoardForm.do",function(){
         $('#boardAddModal').modal({backdrop: 'static', keyboard: false});
@@ -169,6 +161,33 @@ $("#board-insert-button").click(function(){
         $(".controll-title").html("");
         $(".controll-title").html("게시판 작성");
 	});
+});
+
+$("#boardType").change(function(){
+	var boardNo = $("#boardType").val();
+	console.log(boardNo);
+	if(boardNo==0) {
+		url_ = "${pageContext.request.contextPath}/board/boardAllList.do";
+	}
+	else {
+		url_="${pageContext.request.contextPath}/board/boardClubList.do?boardNo="+boardNo;
+	}
+		$.ajax({
+			url:url_,
+			dataType:"json",
+			success:data=>{
+				console.log(data);
+				var list = data.list;
+				$(".board-list-table tbody").children().remove();
+				for(var i in list){
+					let p = list[i];
+					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard();>보기</a></td></tr>");
+				}
+			},
+			error : (jqxhr, textStatus, errorThrown)=>{
+				console.log(jqxhr, textStatus, errorThrown);
+			}
+		});
 });
 	
 

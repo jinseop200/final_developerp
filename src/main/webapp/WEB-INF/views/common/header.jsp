@@ -92,7 +92,7 @@
                 <h6 class="collapse-header">Detail</h6>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}">문서결재</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
-                <a class="collapse-item" href="cards.html">게시판</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/board/boardList.do">게시판</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do?">시설물 예약</a>
               </div>
             </div>
