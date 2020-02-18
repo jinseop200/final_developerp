@@ -118,24 +118,27 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
     
   });
     function here(date){
-    	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/schedule.do?date="+date,function(){
+    	 event.stopPropagation();
+    	 $('.control-modal-body').load("${pageContext.request.contextPath}/schedule/schedule.do?date="+date,function(){
  	        $('#scheduleModal').modal({backdrop: 'static', keyboard: false});
  	        $('#scheduleModal').modal({show:true});
  	        $(".modal-backdrop.in").css('opacity', 0.4);
- 	        $(".controll-title").html("");
- 	        $(".controll-title").html("개인일정관리");
+ 	        $(".control-title").html("");
+ 	        $(".control-title").html("개인일정관리");
  		});
     };
+
 function clickDate(date){
 	 event.stopPropagation();
-	 $('.controll-modal-body').load("${pageContext.request.contextPath}/schedule/scheduleManage.do?date="+date,function(){
+	 $('.scheduleManage-modal-body').load("${pageContext.request.contextPath}/schedule/scheduleManage.do?date="+date,function(){
 	        $('#scheduleManageModal').modal({backdrop: 'static', keyboard: false});
 	        $('#scheduleManageModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
-	        $(".controll-title").html("");
-	        $(".controll-title").html(date+" 일정관리");
+	        $(".scheduleManage-title").html("");
+	        $(".scheduleManage-title").html(date+" 일정관리");
 		});
 };
+
 </script>
 <style>
 
@@ -201,7 +204,8 @@ display:none;}
  .schedule-title{
  	margin-bottom:0;
  }
- 
+ .fc-more-cell div{
+ text-align:center;}
  
  
 </style>
@@ -210,12 +214,12 @@ display:none;}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title controll-title"></h5>
+            <h5 class="modal-title control-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body control-modal-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
@@ -227,12 +231,12 @@ display:none;}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title controll-title"></h5>
+            <h5 class="scheduleManage-title scheduleManage-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body scheduleManage-modal-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         

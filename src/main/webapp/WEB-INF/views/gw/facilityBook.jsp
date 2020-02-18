@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-6 mb-3" id="btn">
                         <label for="storeNo">장소&nbsp;&nbsp;&nbsp;&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" id="facilityLocation" name="facilityLocation" class="form-control bg-light small"value=${facility.facilityLocation} aria-label="Search" aria-describedby="basic-addon2" readonly>
+                        <input type="text" id="facilityLocation" name="facilityLocation" class="form-control bg-light small"value='${facility.facilityLocation}' aria-label="Search" aria-describedby="basic-addon2" readonly>
                         
                     </div>
                 </div>

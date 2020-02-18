@@ -54,7 +54,7 @@
 .col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
 	width:350px !important;
 }
-.controll-modal-body.document{
+.control-modal-body.document{
   width: 60%;
 }
 #insert-container {
@@ -127,4 +127,6 @@ $('#startTime').change(function(){
 	}
 	
 });
+
+
 </script>

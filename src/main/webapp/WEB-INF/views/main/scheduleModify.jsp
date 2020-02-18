@@ -3,7 +3,7 @@
  <!-- search-container start -->
       <div id="insert-container">
           <form class="needs-validation" action="${pageContext.request.contextPath}/schedule/scheduleUpdate.do?" 
-          		name="documentEnrollFrm" method="post">
+          		name="documentEnrollFrm2" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.email}" id="email" name="email" />
           		<input type="hidden" value="${schedule.scheduleNo}" id="scheduleNo" name="scheduleNo" />
@@ -11,23 +11,23 @@
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
 	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <input type="text" id="title" name="title" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2" value='${schedule.title}'>
+	                    <input type="text" id="title" name="title" class="form-control bg-light small" required aria-label="Search" aria-describedby="basic-addon2" value='${schedule.title}' readonly>
 	                </div> 
                 </div>
                 <div class="form-row" style="width:550px;">
                     <div class="col-md-6 mb-3" >                  
                     <label >시 작 일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="date" id="startScheduleTime" name="startScheduleTime" value='${schedule.startScheduleTime}' class="form-control bg-light small"readonly style="width:166px;">
+                    <input type="date" id="startScheduleTime2" name="startScheduleTime" value='${schedule.startScheduleTime}' class="form-control bg-light small"readonly style="width:166px;">
                     
                 </div>   
-                    <input type="time" name="startTime" id="startTime" class="form-control bg-light small" value='${schedule.startTime}'style="width:140px;">
+                    <input type="time" name="startTime" id="startTime2" class="form-control bg-light small" value='${schedule.startTime}'style="width:140px;"readonly>
                 </div>   
                   	 <div class="form-row" style="width:550px;">
                     <div class="col-md-6 mb-3" >                  
                      <label >종 료 일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="date"id="endScheduleTime" name="endScheduleTime" value='${schedule.endScheduleTime}'class="form-control bg-light small" style="width:166px; ">
+                    <input type="date"id="endScheduleTime2" name="endScheduleTime" value='${schedule.endScheduleTime}'class="form-control bg-light small" readonly style="width:166px; ">
                     </div>
-                    <input type="time" id="endTime" name="endTime" class="form-control bg-light small"value='${schedule.endTime}'style="width:140px;">                    
+                    <input type="time" id="endTime2" name="endTime" class="form-control bg-light small"value='${schedule.endTime}' readonly style="width:140px;">                    
       </div>  
 <!--                 <div class="form-row"> -->
 <!--                     <div class="col-md-6 mb-3"> -->
@@ -55,7 +55,7 @@
 .col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
 	width:350px !important;
 }
-.controll-modal-body.document{
+.modify-modal-body.document{
   width: 60%;
 }
 #insert-container {
@@ -97,35 +97,39 @@
 
 </style>
 <script>
-$('#endScheduleTime').change(function(){ 
-	startScheduleTime=$('#startScheduleTime').val();
-	endScheduleTime=$('#endScheduleTime').val();
-	if(startScheduleTime>endScheduleTime){
-		alert("해당 날짜는 일정 등록이 불가능 합니다.");
-		$('#endScheduleTime').val(startScheduleTime);
-	}
+
+// $('#endScheduleTime2').change(function(){ 
+// 	startScheduleTime=$('#startScheduleTime2').val();
+// 	endScheduleTime=$('#endScheduleTime2').val();
+// 	if(startScheduleTime>endScheduleTime){
+// 		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+// 		$('#endScheduleTime2').val(startScheduleTime);
+// 	}
 	
-});
-$('#endTime').change(function(){ 
-	startScheduleTime=$('#startScheduleTime').val();
-	endScheduleTime=$('#endScheduleTime').val();
-	startTime=$('#startTime').val();
-	endTime=$('#endTime').val();
-	if(startScheduleTime==endScheduleTime&&startTime>endTime){
-		alert("해당 날짜는 일정 등록이 불가능 합니다.");
-		$('#endTime').val(startTime);
-	}
+// });
+// $('#endTime2').change(function(){ 
+// 	alert("fdsfsdf");
+// 	startScheduleTime=$('#startScheduleTime2').val();
+// 	endScheduleTime=$('#endScheduleTime2').val();
+// 	startTime=$('#startTime2').val();
+// 	endTime=$('#endTime2').val();
+// 	if(startScheduleTime==endScheduleTime&&startTime>endTime){
+// 		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+// 		$('#endTime2').val(startTime);
+// 	} 
 	
-});
-$('#startTime').change(function(){ 
-	startScheduleTime=$('#startScheduleTime').val();
-	endScheduleTime=$('#endScheduleTime').val();
-	startTime=$('#startTime').val();
-	endTime=$('#endTime').val();
-	if(startScheduleTime==endScheduleTime&&startTime>endTime){
-		alert("해당 날짜는 일정 등록이 불가능 합니다.");
-		$('#startTime').val(endTime);
-	}
 	
-});
-</script>
+// });
+// $('#startTime2').change(function(){ 
+// 	startScheduleTime=$('#startScheduleTime2').val();
+// 	endScheduleTime=$('#endScheduleTime2').val();
+// 	startTime=$('#startTime2').val();
+// 	endTime=$('#endTime2').val();
+// 	if(startScheduleTime==endScheduleTime&&startTime>endTime){
+// 		alert("해당 날짜는 일정 등록이 불가능 합니다.");
+// 		$('#startTime2').val(endTime);
+// 	}
+	
+// });
+
+</script> 

@@ -32,6 +32,7 @@ public class FacilityController {
 //		List<Map<String,String>> list = new ArrayList<>();
 		List<Facility> list=new ArrayList<>();
 		list=facilityService.selectAll();
+		System.out.println("sdafaa"+list);
 		mav.addObject("list",list);
 		mav.setViewName("gw/facility");
 		return mav;
