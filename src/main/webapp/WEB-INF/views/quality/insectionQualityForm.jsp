@@ -43,7 +43,7 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="spec">기 준 값 &nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span id="spec">${insectionContent.SPEC}</span>&nbsp;±&nbsp;<span id="tol">${insectionContent.TOL}</span>
+                        <span id="spec">${insectionContent.SPEC}</span>&nbsp;±&nbsp;<span id="tol">${insectionContent.TOL}</span>%
 <%--                         <input type="Number" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="spec" value="${insectionContent.SPEC}" readOnly>± --%>
 <%--                         <input type="number" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="spec" value="${insectionContent.TOL}" readOnly> --%>
                     </div>
