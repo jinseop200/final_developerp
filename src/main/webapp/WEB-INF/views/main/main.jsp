@@ -79,7 +79,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); %>
  					var html1="";
  					var html2="";
  					 if(data.length==0)
- 						 html+="<tr><td colspan='3'>예약 기록이 없습니다.</td></tr>"
+ 						 html1+="<tr><td colspan='3'>예약 기록이 없습니다.</td></tr>";
  					$.each(data,(idx, schedule)=>{
 //  						 var starttime = facility.bookStarttime.substring(0,2); 
 //  						 var starttime2 = facility.bookStarttime.substring(2,4);
