@@ -46,6 +46,15 @@ input[type=text]{
 #requiredAmount span {
 	color:red;
 }
+#myModal{
+	z-index: 1060;
+}
+
+.jo-table tbody tr:hover td{
+	cursor : auto;
+	background-color:#ccc;
+}
+
 </style>
 
 		
@@ -66,8 +75,8 @@ input[type=text]{
   <canvas id="lineChart"></canvas>
 </div>
  
-  <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="searchProduct">
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="purchasePlan-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -76,18 +85,17 @@ input[type=text]{
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body epl-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
-        
+        <div class="modal-body insertPP-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
         </div>
     </div>
 </div>
-<style>
-#myModal{
-	z-index: 1060;
-}
-</style>
+
+
 	<br />
 	 <!-- DataTales Example -->
      <div class="card shadow mb-4" style="clear:both;">
@@ -201,15 +209,29 @@ input[type=text]{
 	
 //제품조회 모달
 $(".searchProduct-btn").click(function(){
-	 $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
-	        $('#searchProduct').modal({backdrop: 'static', keyboard: false});
-	        $('#searchProduct').modal({show:true});
+	 $(".epl-body").css('display','block');
+	 $(".insertPP-body").css('display','none');
+	 
+	 $('.epl-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
+	        $('#purchasePlan-modal').modal({backdrop: 'static', keyboard: false});
+	        $('#purchasePlan-modal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("제품 조회");
 		});
 	});
 	
-//필요수량 css
+//필요수량 구매계획 모달
+$(".jo-table tbody").on('dblclick', 'tr', function(){
+	$(".insertPP-body").css('display','block');
+	$(".epl-body").css('display','none');
+	
+	$(".insertPP-body").load("${pageContext.request.contextPath}/productplan/purchaseRequest.do",function(){
+        $('#purchasePlan-modal').modal({backdrop: 'static', keyboard: false});
+        $('#purchasePlan-modal').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("구매계획 등록");
+	});
+});
 
 	
 </script>	

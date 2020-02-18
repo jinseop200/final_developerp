@@ -9,16 +9,17 @@
 	<select id="selectFirstByPL" resultType="Map">
 		select pl.product_name as "productName",
 		        B.bom_no as "bomNo",
-		        RM.rm_no as "rmNo",
+		        rm.rm_no as "rmNo",
 		        RM.rm_name as "rmName",
 		        br.quantity as "requiredQ",
-		        R.quantity as "rmStock" 
+		        sum(R.quantity) as "rmStock" 
 		from product_list PL 
-		        left join bom B on PL.pl_no = B.pl_no
-		        left join bom_rm BR on B.bom_no = BR.bom_no
+		        join bom B on PL.pl_no = B.pl_no
+		        join bom_rm BR on B.bom_no = BR.bom_no
 		        left join receiving R on BR.rm_no = R.rm_no
-		        left join raw_material RM on R.rm_no = RM.rm_no  
-        where PL.pl_no = 8
+		        join raw_material RM on R.rm_no = RM.rm_no  
+		where PL.pl_no = 8
+		group by rm.rm_no, pl.product_name, B.bom_no, RM.rm_name, br.quantity
 	</select>
 	
 	<select id="selectEndProduct" resultType="Map">
@@ -32,16 +33,17 @@
 	<select id="eachAmount" resultType="Map">
 		select pl.product_name as "productName",
 		        B.bom_no as "bomNo",
-		        RM.rm_no as "rmNo",
+		        rm.rm_no as "rmNo",
 		        RM.rm_name as "rmName",
 		        br.quantity as "requiredQ",
-		        R.quantity as "rmStock" 
+		        sum(R.quantity) as "rmStock" 
 		from product_list PL 
-		        left join bom B on PL.pl_no = B.pl_no
-		        left join bom_rm BR on B.bom_no = BR.bom_no
+		        join bom B on PL.pl_no = B.pl_no
+		        join bom_rm BR on B.bom_no = BR.bom_no
 		        left join receiving R on BR.rm_no = R.rm_no
-		        left join raw_material RM on R.rm_no = RM.rm_no  
+		        join raw_material RM on R.rm_no = RM.rm_no  
         where PL.pl_no = #{productNo}
+        group by rm.rm_no, pl.product_name, B.bom_no, RM.rm_name, br.quantity
 	</select>
 	<!-- <resultMap type="map" id="eaMap" >
 		<result column="pl.product_name" property="productName" />

@@ -82,7 +82,9 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 	
 	$("#productNo").val(no); //hidden(제품번호)
 	$("#productName").val(name); //input창에 뿌려주기
-	$("#searchProduct").modal('hide');
+	
+	$("#purchasePlan-modal").modal('hide');
+	
 	var productNo = $("#productNo").val();
 	
 	$.ajax({

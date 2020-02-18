@@ -30,6 +30,7 @@ public class ProductPlanController {
 	@Autowired
 	ProductPlanService productPlanService;
 	
+	//============================ List<map> to JSON 변환 메소드(2)============================
 	// list<map> 을 json 형태로 변형.
 	@SuppressWarnings({ "unchecked" })
 	public static JSONArray convertListToJson(List<Map<String, String>> firstPL) {
@@ -129,12 +130,17 @@ public class ProductPlanController {
 		logger.info("graphData@@={}",graphData);
 		mav.setViewName("jsonView");
 		
-		
 		return mav;
 	}
 	
-	
-	
+	//필요수량에 대한 구매계획 등록창
+	@RequestMapping("/productplan/purchaseRequest.do")
+	public ModelAndView insertPurchasePlanForm(ModelAndView mav) {
+		
+		mav.setViewName("productplan/purchaseRequest");
+		
+		return mav;
+	}
 	
 	//============================작업지시서============================
 	//작업지시서 조회
