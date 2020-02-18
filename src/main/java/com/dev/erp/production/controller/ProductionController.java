@@ -399,6 +399,7 @@ public class ProductionController {
 		map.put("chkBOM", chkBOM);
 		map.put("rQuantity", rQuantity);
 		
+		//bom존재하는지 확인
 		List<Map<String, String>> lMap = productionService.checkBOMExist(chkBOM);
 		logger.info("lMap@Controller={}",lMap);
 		
@@ -406,14 +407,34 @@ public class ProductionController {
 		//값존재시 true 사용가능, 값없을시 false 사용불가
 		boolean isUsable = lMap.size()==0?false:true;
 		map.put("isUsable", isUsable);
-		logger.info("isUsable@Controller={}",isUsable);
 		
+		
+		
+		//Map<String, String> isUsableMap = new HashMap<>();
+		//isUsableMap.put("isUsable", String.valueOf(isUsable));
+		
+		logger.info("isUsable@Controller={}",isUsable);
+		//lMap.add(isUsableMap);
+		
+		logger.info("lMap@Controller={}",lMap);
+
+		/*
 		//필요수량이 모자란것들(QUANCHK < 0) 담을 nList 생성
 		List<Map<String, String>> nList = new ArrayList<>();
 		System.out.println("초기 nList 사이즈="+nList.size());
 		if(isUsable == true) {
 			List<Map<String, String>> list = productionService.quantityCheck(map);
 			logger.info("list@controller={}",list);
+			
+			//bom 구성 품목수 != receiving 테이블과 일치하는 품목개수가 다를경우, 중복되는값 추출
+			int bomCount = lMap.size(); //BOM구성 품목수
+			logger.info("bomCount@controller={}",bomCount);
+			int quanchkSize = list.size(); //리시빙 테이블에서 수량체크후 구성 품목수
+			logger.info("quanchkSize@controller={}",quanchkSize);
+			
+			for(int i=0; i<lMap.size(); i++) {
+				lMap.get(i).get("RM_NO");
+			}
 			
 			for(int i = 0; i < list.size(); i++) {
 				Map<String, String> tempMap = new HashMap<>();
@@ -438,9 +459,9 @@ public class ProductionController {
 			}
 			
 		}
-		logger.info("nList@Controller={}",nList);
+		logger.info("nList@Controller={}",nList);*/
 		
-		return nList;
+		return lMap;
 	}
 	
 	
