@@ -8,14 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardClub;
 
 	@Repository
 	public class BoardDAOImpl implements BoardDAO {
 
 		@Autowired
 		SqlSessionTemplate sqlSession;
-
-
 
 		@Override
 		public int insertBoardCategory(BoardCategory boardCategory) {
@@ -42,5 +41,8 @@ import com.dev.erp.board.model.vo.BoardCategory;
 			return sqlSession.selectOne("board.boardCategoryView",categoryNo);
 		}
 
-
+		/*@Override
+		public List<BoardClub> selectBoardClubList(int boardNo) {
+			return sqlSession.selectList("board.selectBoardClubList",boardNo);
+		}	*/
 }
