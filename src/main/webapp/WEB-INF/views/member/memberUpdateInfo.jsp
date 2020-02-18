@@ -135,7 +135,7 @@ function regExpTest(regExp, el, msg){
 					<td>이메일주소&nbsp;&nbsp;</td>
 					<td>
 						<input class="form-control input-text" type="email"
-						name="email" id="email" value="${memberLoggedIn.email }" readonly />
+						name="email" id="email" value="${memberLoggedIn.email }"  />
 					</td>
 				</tr>
 				<tr>

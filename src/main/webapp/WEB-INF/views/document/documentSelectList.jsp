@@ -23,7 +23,7 @@
 
 <style>
 .document-list-table tbody tr:hover td{
-	cursor : auto;
+	cursor : pointer;
 	background-color:#ccc;
 }
 
@@ -57,7 +57,7 @@ $(".document-list-table tbody").on('dblclick','tr',function(){
 
 
 function morePage(a){
-	console.log("a==="+a);
+	var empName = "${memberLoggedIn.empName}";
 	var url_="";
 	if(a==0) {
 		url_ = "${pageContext.request.contextPath}/document/documentListPage.do?cPage=1";
@@ -75,7 +75,7 @@ function morePage(a){
 			for(var i in list ) {
 				let p = list[i];
 				console.log(p);	
-				$(".document-list-table tbody").append("<tr><td>"+p.emp_id+"</td><td>"+p.emp_name+"</td><td>"+p.dept_title+"</td><td>"+p.job_name+"</td></tr>");
+					$(".document-list-table tbody").append("<tr><td>"+p.emp_id+"</td><td>"+p.emp_name+"</td><td>"+p.dept_title+"</td><td>"+p.job_name+"</td></tr>");
 			}
 			$(".pageBar").html(data.pageBar);
 			$("span.page-link").attr('onclick',"morePage(this.id)");

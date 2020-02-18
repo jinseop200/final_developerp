@@ -29,10 +29,11 @@
 		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email, 
 		           msg, 
 		           time,
-		           count(*) over(partition by A.chatid,A.email) cnt,
+		           (select count(*) from chatlog where chatid=#{chatId} and email!=#{email} and time!='0') cnt,
+		           (select emp_name from employee where email=#{email}) empname,
 		           rank() over(partition by A.chatid order by time desc) rank 
 		    from chatlog A left join chatroom B
-		        on A.chatid = B.chatid and A.email = B.email) where chatid=#{chatId} order by chatno desc
+		        on A.chatid = B.chatid and A.email = B.email) where chatid=#{chatId} order by time desc
 <!-- 		    where time > (select lastcheck from chatroom C where C.chatid = A.chatid and email = #{email})  -->
 <!-- 		    order by time desc)A -->
 <!-- 		where rank = 1 -->
@@ -55,6 +56,10 @@
 	<update id="updateLastCheck">
 		UPDATE CHATROOM SET LASTCHECK =  #{time}
 		WHERE CHATID = #{chatId} AND email = #{email}
+	</update>
+	<update id="updateLastCheckLog">
+		UPDATE CHATLOG SET TIME =  #{time}
+		WHERE CHATID = #{chatId} AND email != #{email}
 	</update>
 	
 	<insert id="insertChatLog">
@@ -81,7 +86,20 @@
 	</select>
 	
 	<select id="findChatIdList" resultType="map">
-		select * from chatroom where email=#{email}
+		select * from chatroom C left join employee E on C.email = E.email where C.email=#{email} order by lastcheck desc
+	</select>
+	<select id="messengerCount" resultType="_int">
+		select cnt
+		from (
+		    select chatno,
+		           A.chatid, 
+		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email, 
+		           msg, 
+		           time,
+		           (select count(*) from chatlog where chatid=#{chatId} and email!=#{email} and time!='0') cnt,
+		           rank() over(partition by A.chatid order by time desc) rank 
+		    from chatlog A left join chatroom B
+		        on A.chatid = B.chatid and A.email = B.email) where chatid=#{chatId} group by cnt order by cnt desc
 	</select>
 	
 	

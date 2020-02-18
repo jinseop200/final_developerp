@@ -98,7 +98,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	}
 	
 	@MessageMapping("/chat/{chatId}")
-	@SendTo(value={"/chat/{chatId}"})
+	@SendTo(value={"/chat/{chatId}","/chat/{email}"})
 	public Msg sendEcho(Msg fromMessage, 
 						@DestinationVariable String chatId, 
 						@Header("simpSessionId") String sessionId){
@@ -118,6 +118,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	 * @return
 	 */
 	@MessageMapping("/lastCheck")
+	@SendTo(value={"/chat/{chatId}"})
 	public Msg lastCheck(@RequestBody Msg fromMessage){
 		logger.info("fromMessage={}",fromMessage);
 		
@@ -139,6 +140,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
 															 .orElseThrow(IllegalStateException::new);
 		List<Map<String,String>> chatIdList = messengerService.findChatIdList(email);
+		logger.debug("chatIdList={}",chatIdList);
 		List<Map<String, String>> recentList =new ArrayList<>();
 		List<Map<String, String>> sumList =new ArrayList<>();
 		for(int i=0; i<chatIdList.size(); i++) {
@@ -146,6 +148,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			Map<String,String> param = new HashMap<>();
 			param.put("email", email);
 			param.put("chatId", chatId);
+			logger.debug("chatId={}",chatId);
 			recentList = messengerService.findRecentList(param);
 			if(recentList.size()>0) {
 				sumList.add(recentList.get(0));
@@ -157,8 +160,14 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 	}
 	
 	@GetMapping("/messenger/{chatId}/messengerChat.do")
-	public String messengerChat(@PathVariable("chatId") String chatId, Model model){
+	public String messengerChat(@PathVariable("chatId") String chatId, Model model, HttpSession session, 
+			  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn){
+		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
+				 .orElseThrow(IllegalStateException::new);
 		List<Msg> chatList = messengerService.findChatListByChatId(chatId);
+		Msg fromMessage = new Msg(0,chatId,email,"",0, null);
+		int result = messengerService.updateLastCheckLog(fromMessage);
+		
 		model.addAttribute("chatList", chatList);
 		
 		logger.info("chatList={}",chatList);
@@ -176,7 +185,6 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 		int totalContents = 0;
 		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
 				 .orElseThrow(IllegalStateException::new);
-		logger.debug("123123123123email={}",email);
 		
 		list = messengerService.selectMemberList(cPage,numPerPage, email);  
 		logger.debug("list={}",list);
@@ -209,6 +217,33 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 		messengerService.insertChatRoom(list);
 		Map<String,Object> map = new HashMap<>();
 		map.put("chatId",chatId);
+		return map;
+	}
+	@RequestMapping("/messenger/messengerCount.do")
+	@ResponseBody
+	public Map<String,Integer> messengerCount(HttpSession session, 
+			  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn){
+		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
+						 .orElseThrow(IllegalStateException::new);
+		List<Map<String,String>> chatIdList = messengerService.findChatIdList(email);
+		logger.debug("chatIdList={}",chatIdList);
+		List<Integer> recentList =new ArrayList<>();
+		int messengerCount=0;
+		for(int i=0; i<chatIdList.size(); i++) {
+			String chatId = ((Map<String,String>)chatIdList.get(i)).get("CHATID");
+			Map<String,String> param = new HashMap<>();
+			param.put("email", email);
+			param.put("chatId", chatId);
+			logger.debug("chatId={}",chatId);
+			recentList = messengerService.messengerCount(param);
+			logger.debug("recentList={}",recentList);
+			for(int j=0; j<recentList.size(); j++) {
+				messengerCount += (Integer)recentList.get(j);
+			}
+		}
+		logger.info("messengerCount={}",messengerCount);
+		Map<String,Integer> map = new HashMap<>();
+		map.put("messengerCount",messengerCount);
 		return map;
 	}
 	

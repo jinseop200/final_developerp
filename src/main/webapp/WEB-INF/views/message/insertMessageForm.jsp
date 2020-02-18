@@ -48,26 +48,16 @@
 .col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
 	width:350px !important;
 }
-.controll-modal-body.document{
-  width: 60%;
-}
 #insert-message-container {
-    height:460px;
-}
-.modal-content{
-	width:550px;
-	height:665px; 
+    height:500px;
 }
 #formGroupExampleInput {
     width: 70%;
 }
-.form-control {
-    display:inline;
-    width: 55%;
-}
-.message-comment {
+.form-control.message-comment {
 	width:200%;
 	height:90% !important;
+	display:inline;
 }
 
 #insert-container .btn-primary{
@@ -89,7 +79,7 @@
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
 .form-row.message{
-	height:388px;
+	height:331px;
 }
 
 </style>

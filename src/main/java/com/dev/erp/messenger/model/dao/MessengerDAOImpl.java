@@ -67,5 +67,15 @@ public class MessengerDAOImpl implements MessengerDAO {
 	public List<Map<String, String>> findChatIdList(String email) {
 		return sqlSession.selectList("messenger.findChatIdList", email);
 	}
+
+	@Override
+	public int updateLastCheckLog(Msg fromMessage) {
+		return sqlSession.update("messenger.updateLastCheckLog", fromMessage);	
+	}
+
+	@Override
+	public List<Integer> messengerCount(Map<String, String> param) {
+		return sqlSession.selectList("messenger.messengerCount", param);
+	}
 	
 }
