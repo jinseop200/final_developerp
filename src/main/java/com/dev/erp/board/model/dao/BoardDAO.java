@@ -1,25 +1,30 @@
 package com.dev.erp.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
-import com.dev.erp.board.model.vo.BoardClub;
 
 public interface BoardDAO {
 
+	
 	int insertBoardCategory(BoardCategory boardCategory);
 
-	List<BoardCategory> selectBoardCategoryList();
+	List<Map<String, Object>> selectBoardCategoryList();
 
 	Board seletOneBoard(int boardNo);
 
-	List<Board> selectBoardType();
 
 
 	BoardCategory boardCategoryView(int categoryNo);
 
-	/*List<BoardClub> selectBoardClubList(int boardNo);*/
+	List<Map<String,Object>> selectBoardClubList(int boardNo);
+
+	List<Board> selectBoardList();
+
+	List<Map<String,Object>> selectBoardAllList();
+
 
 	
 

@@ -1,6 +1,7 @@
 package com.dev.erp.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
-import com.dev.erp.board.model.vo.BoardClub;
 
 	@Repository
 	public class BoardDAOImpl implements BoardDAO {
 
 		@Autowired
 		SqlSessionTemplate sqlSession;
+		
+
 
 		@Override
 		public int insertBoardCategory(BoardCategory boardCategory) {
@@ -22,7 +24,7 @@ import com.dev.erp.board.model.vo.BoardClub;
 		}
 
 		@Override
-		public List<BoardCategory> selectBoardCategoryList() {
+		public List<Map<String, Object>> selectBoardCategoryList() {
 			return sqlSession.selectList("board.selectBoardCategoryList");
 		}
 
@@ -31,18 +33,26 @@ import com.dev.erp.board.model.vo.BoardClub;
 			return sqlSession.selectOne("board.seletOneBoard",boardNo);
 		}
 
-		@Override
-		public List<Board> selectBoardType() {
-			return sqlSession.selectList("board.selectBoardType");
-		}
-
+		
 		@Override
 		public BoardCategory boardCategoryView(int categoryNo) {
 			return sqlSession.selectOne("board.boardCategoryView",categoryNo);
 		}
 
-		/*@Override
-		public List<BoardClub> selectBoardClubList(int boardNo) {
+
+		@Override
+		public List<Map<String,Object>> selectBoardClubList(int boardNo) {
 			return sqlSession.selectList("board.selectBoardClubList",boardNo);
-		}	*/
+		}
+
+		@Override
+		public List<Board> selectBoardList() {
+			return sqlSession.selectList("board.selectBoardList");
+		}
+
+		@Override
+		public List<Map<String,Object>> selectBoardAllList() {
+			return sqlSession.selectList("board.selectBoardAllList");
+		}
+
 }
