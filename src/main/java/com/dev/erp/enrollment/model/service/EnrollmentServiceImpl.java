@@ -192,6 +192,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public Map<String, Object> checkDataAvailable(String ckData) {
 		return enrollmentDAO.checkDataAvailable(ckData);
 	}
+
+	@Override
+	public List<Map<String, String>> selectJobOrderAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectJobOrderAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllJobOrder() {
+		return enrollmentDAO.selectAllJobOrder();
+	}
 	
 	
 }

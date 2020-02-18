@@ -21,28 +21,23 @@
       <thead>
         <tr>
           <th>로트번호</th>
-          <th>창고명</th>
+          <th>입고창고명</th>
           <th>품목구분</th>
           <th>품목명</th>
-          <th>출고수량</th>
-          <th>출고날짜</th>
-          <th>검사여부</th>
-          <th>부적합여부</th>
+          <th>수량</th>
+          <th>입고날짜</th>
           <th>작업지시서</th>
         </tr>
       </thead>
 	  <tbody>
-      	<c:forEach items="${releaseList}" var="r" varStatus="vs">
+      	<c:forEach items="${receivingList}" var="r" varStatus="vs">
 	        <tr class="getTr">
 	          <td><a href="#" >${r.LOT_NO}</a></td>
 	          <td>${r.STORE_NAME}</td>
-	          <td>${r.RM_NO}</td>
-	          <td>${r.PT_NO}</td>
-	          <td>${r.VENDOR_TYPE}</td>
+	          <td>${r.TYPE}</td>
+	          <td>${r.RM_NAME}</td>
 	          <td>${r.QUANTITY}</td>
-	          <td>${r.QUALITY_YN}</td>
-	          <td>${r.INSECTION_YN}</td>
-	          <td>${r.REG_DATE}</td>
+	          <td>${r.REC_DATE}</td>
 	          <td><button class="btn btn-primary BOMAddBtn" type="button">작업지시서 보기</button></td>
 	        </tr>
         </c:forEach>
@@ -53,17 +48,17 @@
 </div>
 
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#addReleasing-Modal">생산불출 등록</button>
+<button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#addWarehosing-Modal">입고 등록</button>
 
-<!-- 생산불출 등록 Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="addReleasing-Modal">
+<!-- 입고 등록 Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="addWarehosing-Modal">
     <div class="modal-dialog modal-lg" id="resizeModal" role="document">
         <div class="modal-content">
         <form class="needs-validation"
-         action="${pageContext.request.contextPath}/production/addReleasing"
+         action="${pageContext.request.contextPath}/production/addWarehousing.do"
          method="POST">
         <div class="modal-header">
-            <h5 class="modal-title">생산불출 등록</h5>
+            <h5 class="modal-title">입고 등록</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -73,41 +68,91 @@
       <div id="search-container">
                 <div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="showJobOrder">작업지시서 번호 조회</label>&nbsp;&nbsp;
-					     <input type="text" id="showJobOrder" name="showJobOrder" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2">
-					     <button class="btn btn-primary searchBtn" type="button" value="showJobOrder">
+					     <label for="rawMaterial">원재료번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="rawMaterialDetail" name="rawMaterialDetail" class="form-control bg-light small" placeholder="원재료번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					     <button class="btn btn-primary searchBtn" type="button" value="rawMaterialDetail">
 						 <i class="fas fa-search fa-sm"></i>
 						 </button>
 					</div>
 				</div>
                 <div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rProduct">생산불출 품목</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="text" id="rProduct" name="rProduct" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
-                <div class="form-row">
+				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rQuantity">불출수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="rQuantity" name="rQuantity" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					     <label for="vendorTypeCode">거래처구분코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="vendorType" name="vendorTypeCode" class="form-control bg-light small" placeholder="거래처구분코드" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
-				<div class="col-lg-20 mb-3 rowResize">
-					     <label for="searchBOM">BOM 검색</label>&nbsp;&nbsp;
-					     <button class="btn btn-primary" id="BOMSrcBtn" type="button" value="showJobOrder">
+				<div class="form-row">
+					<div class="col-lg-20 mb-3 rowResize">
+					     <label for="storeNo">창고번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="storeNo" name="storeNo" class="form-control bg-light small" placeholder="창고번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					     <button class="btn btn-primary searchBtn" type="button" value="storeNo">
 						 <i class="fas fa-search fa-sm"></i>
 						 </button>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-lg-20 mb-3 rowResize">
+					     <label for="quantity">입고수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="입고수량" aria-label="Search" aria-describedby="basic-addon2">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-lg-20 mb-3 rowResize">
+						<label for="regDate">입고일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="date" id="regDate" name="regDate"
+							class="form-control bg-light small" placeholder="입고일"
+							aria-label="Search" aria-describedby="basic-addon2" step="0.01"
+							style="width: 175px">
+					</div>
+				</div>
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			      	추가정보 입력
+			    </button>
+			    <br />
+			    <br />
+				<div class="collapse" id="collapseExample">
+					<div class="form-row">
+						<div class="col-lg-20 mb-3 rowResize">
+						     <label for=quailityYN>부적합여부</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 <select class="custom-select" name='quailityYN'>
+								  <option selected value="N">N</option>
+								  <option value="Y">Y</option>
+							 </select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-lg-20 mb-3 rowResize">
+						     <label for="insectionYN">검사여부</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 <select class="custom-select" name='insectionYN'>
+								  <option selected value="N">N</option>
+								  <option value="Y">Y</option>
+							 </select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-lg-20 mb-3 rowResize">
+						     <label for="measurement">측정값</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						     <input type="number" id="measurement" name="measurement" class="form-control bg-light small" placeholder="측정값" aria-label="Search" aria-describedby="basic-addon2" value="0" step="0.1" >
+						     <input type="hidden" id="rmName" name="rmName" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
+						</div>
 					</div>
 				</div>
       </div>
+        </div>
         <div class="modal-footer">
         	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return storageAddValidate();">저장</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
-        </div>
         </form>
         </div>
     </div>
+</div>
 
 <!-- 입고 등록 수정 Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="updateWarehousing">
@@ -267,9 +312,6 @@
 .custom-select{
 	width: 60%;
 }
-#mySearchModal .modal-content{
-	width: 950px;
-}
 </style>
 <script>
 <%--onload start--%>
@@ -367,27 +409,6 @@ $(()=>{
 			}
 		})
 	});
-	
-	$("#BOMSrcBtn").on("click", function(){
-		var chkBOM = $("#rProduct").val().trim()
-		var rQuantity = $("#rQuantity").val().trim()
-		console.log("chkBOM값은?",chkBOM);
-		
-		 $.ajax({
-			url:"${pageContext.request.contextPath}/production/checkBOMExist",
-			data:{chkBOM:chkBOM,
-				  rQuantity:rQuantity},
-			async: false,
-			success: data => {
-				console.log(data);
-			},
-			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
-			}
-		})
-	}); //end of ajax
-	
-	
 })
 <%--onload end--%>
 
