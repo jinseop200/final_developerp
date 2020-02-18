@@ -50,7 +50,7 @@
 	    <a class="nav-link active" href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 관리</a>
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 조회</a>
 	  </li>
 	</ul>
 	<%-- nav bar tap end --%>

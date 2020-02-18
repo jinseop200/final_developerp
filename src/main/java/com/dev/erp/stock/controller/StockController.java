@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -13,13 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.stock.model.service.StockService;
+import com.google.gson.Gson;
 
 @Controller
 public class StockController {
@@ -172,7 +171,7 @@ public class StockController {
 	
 	
 	
-	// ========================================= 제품입고/반품관리 =========================================
+	// ========================================= 완제품 관리 =========================================
 	@RequestMapping("/stock/product/productView.do")
 	public ModelAndView selectProductStockList(ModelAndView mav) {
 		
@@ -182,6 +181,21 @@ public class StockController {
 		
 		mav.addObject("productList",productList);
 		mav.setViewName("/stock/product/productView");
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping("/stock/product/productTotalView.do")
+	public ModelAndView selectProductStockTotalList(ModelAndView mav) {
+		
+		List<Map<String, String>> productTotalList = stockservice.selectProductStockTotalList();
+		
+		String json = new Gson().toJson(productTotalList);
+		
+		mav.addObject("productTotalList",productTotalList);
+		mav.addObject("productTotalList2",json);  // 요놈부터  원재료 가져오는것부터 시작
+		mav.setViewName("/stock/product/productTotalView");
 		
 		return mav;
 		
@@ -207,19 +221,21 @@ public class StockController {
 	@RequestMapping("/stock/storage/storageView.do")
 	public ModelAndView selectStorageStockList(ModelAndView mav, @RequestParam("storeNo") String storeNo) {
 	
-		
-		System.out.println("storeNo 뭐가찍히나요????" + storeNo);
-		
+		List<Map<String, String>> storageStockList;
 		List<Map<String, String>> storageList;
 		
 		if(storeNo.equals("0"))
-			storageList = stockservice.allStorageStockList();
+			storageStockList = stockservice.allStorageStockList();
 		else
-			storageList = stockservice.selectStorageStockList(storeNo);
+			storageStockList = stockservice.selectStorageStockList(storeNo);
 		
-		logger.info("storageList@Controller={}", storageList);
+		storageList = stockservice.storageList();
 		
-		mav.addObject("storageList",storageList);
+		
+		logger.info("storageList@Controller={}", storageStockList);
+		
+		mav.addObject("storageStockList", storageStockList);
+		mav.addObject("storageList", storageList);
 		mav.setViewName("/stock/storage/storageView");
 		
 		return mav;

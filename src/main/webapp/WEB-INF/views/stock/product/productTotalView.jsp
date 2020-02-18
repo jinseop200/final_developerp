@@ -11,68 +11,59 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">완제품 생산조회</h1>
 
-<!-- ============================ 원재료 재고관리 부분 ==================================== -->
-	<h1 class="h3 mb-2 text-gray-800">원재료 재고 관리</h1>
-	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
-		<div class="input-group" style="margin:30px;">
-		</div>
-	</form>
-	
-	<br />
-	
-	<!-- DataTales Example -->
-	<div class="card shadow mb-4" style="clear:both;">
-		<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
-	</div>
-	
-	<%-- nav bar tap start --%>
+
+<br />
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4" style="clear:both;">
+	<div class="card-header py-3">
+	<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
+</div>
+
+<%-- nav bar tap start --%>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do">원재료 입출고 관리</a>
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 생산 조회</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" href="${pageContext.request.contextPath }/stock/rm/rmView.do">원재료 재고 조회</a>
+	    <a class="nav-link active" href="${pageContext.request.contextPath }/stock/product/productTotalView.do">완제품 재고 조회</a>
 	  </li>
 	</ul>
-	<%-- nav bar tap end --%>
-	
-	  <div id="chart"></div>
-	
-	  <div class="card-body">
-	    <div class="table-responsive" >
-			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
-			  <thead>
-			    <tr>
-			     <th>원재료번호</th>
-			     <th>원재료이름</th>
-			     <th>거래처번호</th>
-			     <th>거래처이름</th>
-			     <th>보유 수량</th>
-			    </tr>
-			  </thead>
-			  
-			  
-			  <tbody>
-		      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
-			        <tr>
-			          <td>${rm.RM_NO}</td>
-			          <td>${rm.RM_NAME}</td>    
-			          <td>${rm.VENDOR_NO}</td>    
-			          <td>${rm.VENDOR_NAME}</td>    			          
-			          <td>${rm.RM_SUM}</td>
-			        </tr>
-		        </c:forEach>
-			  </tbody>
-			  
-			</table>
-	    </div>
-	  </div>
-	</div>
-	          
-	
-	<!-- ================================================================== 그래프 Start -->
+<%-- nav bar tap end --%>
+  
+  <%-- 막대그래프 추가 --%>
+  <div id="chart"></div>
+  
+  <div class="card-body">
+    <div class="table-responsive">
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		  <thead>
+		    <tr>
+		     <th>제품이름</th>
+		     <th>총 수량</th>
+		    </tr>
+		  </thead>
+		  
+		  
+		  <tbody>
+	      	<c:forEach items="${productTotalList}" var="productTotal" varStatus="vs">
+		        <tr>
+		          <td>${productTotal.PRODUCT_NAME}</td>
+		          <td>${productTotal.TOTAL}</td>      
+		        </tr>
+	        </c:forEach>
+		  </tbody>
+		  
+		</table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================== 그래프 Start -->
 
 
 <style>
@@ -214,7 +205,7 @@ var chartjson = {
   "ytitle": "Marks",
   "ymax": 100,
   "ykey": 'TOTAL',
-  "xkey": "RM_NAME",
+  "xkey": "PRODUCT_NAME",
   "prefix": "개"
 }
 
@@ -283,45 +274,62 @@ barchart.appendChild(legendrow);
 chart.appendChild(barchart);
 document.getElementById('chart').innerHTML = chart.outerHTML;
 </script>
-<!-- ==================================================================  그래프 End -->  
-	          
-	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="rmModal">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-		        <div class="modal-header">
-		            <h5 class="modal-title controll-title"></h5>
-		            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		            <span aria-hidden="true">&times;</span>
-		            </button>
-		        </div>
-		        <div class="modal-body controll-modal-body">
-		            <!-- <p>Modal body text goes here.</p> -->
-		        </div>
+<!-- ==================================================================  그래프 End -->       
+          
+          
+          
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="productModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+	        <div class="modal-header">
+	            <h5 class="modal-title controll-title"></h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	            </button>
 	        </div>
-	    </div>
-	</div>
-	
-	  
-	<script>
-		
-		$("#rmSearch_button").click(function(){
-		    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSearch.do",function(){
-		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
-		        $('#rmModal').modal({show:true});
-		        $(".modal-backdrop.in").css('opacity', 0.4);
-		        $(".controll-title").html("");
-		        $(".controll-title").html("원재료 재고 상세 검색하기");
-		    });
-		});
-	</script>
+	        <div class="modal-body controll-modal-body">
+	            <!-- <p>Modal body text goes here.</p> -->
+	        </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+  
+<script>
+
+	$("#productUpdate_button").click(function(){
+	 $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmInsert.do",function(){
+	        $('#productModal').modal({backdrop: 'static', keyboard: false});
+	        $('#productModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("");
+	        $(".controll-title").html("재고 수정하기");
+		});
+	});
+	
+	$("#productSearch_button").click(function(){
+	    $('.controll-modal-body').load("${pageContext.request.contextPath}/stock/rm/modalRmSearch.do",function(){
+	        $('#productModal').modal({backdrop: 'static', keyboard: false});
+	        $('#productModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("");
+	        $(".controll-title").html("재고 상세 검색하기");
+	    });
+	});
+</script>
 
 <style>
-#rmModal{
+#productModal{
 	z-index: 1060;
 }
+
 </style>
+
+
 
 <!-- Page level plugins -->
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>

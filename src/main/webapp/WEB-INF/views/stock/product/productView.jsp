@@ -12,7 +12,7 @@
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">완제품 재고관리</h1>
+<h1 class="h3 mb-2 text-gray-800">완제품 생산 조회</h1>
 
 
 <br />
@@ -22,6 +22,17 @@
 	<div class="card-header py-3">
 	<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
 </div>
+
+<%-- nav bar tap start --%>
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link active" href="${pageContext.request.contextPath }/stock/product/productView.do">완제품 생산 조회</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/product/productTotalView.do">완제품 재고 조회</a>
+	  </li>
+	</ul>
+<%-- nav bar tap end --%>
   
   <div class="card-body">
     <div class="table-responsive">
@@ -51,7 +62,7 @@
     </div>
   </div>
 </div>
-          
+
           
 <!-- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="productModal">
@@ -69,6 +80,9 @@
         </div>
     </div>
 </div>
+
+
+
 
   
 <script>
@@ -97,7 +111,10 @@
 #productModal{
 	z-index: 1060;
 }
+
 </style>
+
+
 
 <!-- Page level plugins -->
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>

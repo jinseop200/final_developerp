@@ -27,22 +27,33 @@
 	  <li class="nav-item">
 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0">전체창고</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=1">1번창고 : 입고창고</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=2">2번창고 : 자재창고</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=3">3번창고 : 제품창고</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=4">4번창고 : 생산창고</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=5">5번창고 : 부적합창고</a>
-	  </li>
+	  
+	  <c:forEach items="${storageList}" var="storageList" varStatus="vs">
+		  <li class="nav-item">
+		    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=${storageList.STORE_NO}">${storageList.STORE_NO}: ${storageList.STORE_NAME}</a>
+		  </li>
+	  </c:forEach>
+	  
+	  
+	  
+<!-- 	  <li class="nav-item"> -->
+<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=1">[1] 입고창고</a> --%>
+<!-- 	  </li> -->
+<!-- 	  <li class="nav-item"> -->
+<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=2">[2] 자재창고</a> --%>
+<!-- 	  </li> -->
+<!-- 	  <li class="nav-item"> -->
+<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=3">[3] 제품창고</a> --%>
+<!-- 	  </li> -->
+<!-- 	  <li class="nav-item"> -->
+<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=4">[4] 생산창고</a> --%>
+<!-- 	  </li> -->
+<!-- 	  <li class="nav-item"> -->
+<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=5">[5] 부적합창고</a> --%>
+<!-- 	  </li> -->
 	</ul>
+	
+	
 	<%-- nav bar tap end --%>
 	
   <div class="card-body">
@@ -61,14 +72,14 @@
 		  
 		  
 		  <tbody>
-	      	<c:forEach items="${storageList}" var="storageList" varStatus="vs">
+	      	<c:forEach items="${storageStockList}" var="storageStockList" varStatus="vs">
 		        <tr>
-		          <td>${storageList.STORE_NO}</td>
-		          <td>${storageList.STORE_NAME}</td>
-		          <td>${storageList.LOT_NO}</td>
-		          <td>${storageList.TYPE}</td>
-		          <td>${storageList.STORED_ITEM_NAME}</td>
-		          <td>${storageList.QUANTITY}</td>      
+		          <td>${storageStockList.STORE_NO}</td>
+		          <td>${storageStockList.STORE_NAME}</td>
+		          <td>${storageStockList.LOT_NO}</td>
+		          <td>${storageStockList.TYPE}</td>
+		          <td>${storageStockList.STORED_ITEM_NAME}</td>
+		          <td>${storageStockList.QUANTITY}</td>      
 		        </tr>
 	        </c:forEach>
 		  </tbody>
@@ -95,6 +106,9 @@
         </div>
     </div>
 </div>
+
+
+
 
   
 <script>
