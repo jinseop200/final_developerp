@@ -155,5 +155,15 @@ public class MessageController {
 		mav.setViewName("message/detailMessageForm");
 		return mav;
 	}
+	@RequestMapping("/message/messageCount.do")
+	@ResponseBody
+	public Map<String,Integer> messageCount(@RequestParam("empName") String empName) {
+		
+		int messageCount = messageService.selectAllCountmessageNoConfirmPage(empName);
+		Map<String, Integer> map = new HashMap<>();
+		logger.debug("messageCOunt={}",messageCount);
+		map.put("messageCount", messageCount);
+		return map;
+	}
 }
 

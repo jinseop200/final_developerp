@@ -56,8 +56,9 @@ public class DocumentController {
 										@RequestParam("documentTitle") String documentTitle, @RequestParam("docLastapproval") String docLastapproval,
 										@RequestParam("docLastapproval1") String docLastapproval1, @RequestParam("docLastapproval2") String docLastapproval2,
 										@RequestParam("docLastapproval3") String docLastapproval3,
-										@RequestParam("documentType") String documentType,
+										@RequestParam("documentType") String documentType, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
 										@RequestParam("documentContent") String documentContent, @RequestParam("empName") String empName) {
+		logger.debug("startDate={}",startDate);
 		int typeNo = 0;
 		if(documentType.equals("기본")) {
 			typeNo=0;
@@ -66,12 +67,16 @@ public class DocumentController {
 		}else if(documentType.equals("지출결의서")) {
 			typeNo=2;
 		}
+		if(endDate==null || startDate==null) {
+			startDate = "null";
+			endDate = "null";
+		}
 		String docLast="";
 		int result=0;
 		Document document = new Document();
 		if(docLastapproval!=""&&docLastapproval1=="" &&docLastapproval2=="" &&docLastapproval3=="") {
 			docLast=docLastapproval;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
 			DocumentLine documentLine = new DocumentLine(0,0,typeNo,empName,docLast,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLast,null,"Y");
 			result = documentService.insertDocument(document);
@@ -80,7 +85,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2==""&&docLastapproval3=="") {
 			docLast=docLastapproval1;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,null,"Y");
@@ -91,7 +96,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3=="") {
 			docLast=docLastapproval2;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
@@ -104,7 +109,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3!="") {
 			docLast=docLastapproval3;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");

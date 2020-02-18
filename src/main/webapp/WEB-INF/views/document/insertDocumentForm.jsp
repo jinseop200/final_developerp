@@ -89,9 +89,19 @@
 							</select>
 						</td>
 					</tr>
-					
                     </div>
                 </div>
+                <div class="form-row click documentType">
+                    <div class="col-md-6 mb-3 ">
+						<label for="startDate">시작일자</label>&nbsp;&nbsp;&nbsp;
+					    <input type="date" name="startDate" class="form-control document startDate">
+                    </div>
+                    <div class="col-md-6 mb-3 ">
+					    <label for="endDate">종료일자</label>&nbsp;&nbsp;&nbsp;
+					    <input type="date" name="endDate" class="form-control document endDate">	
+                    </div>
+                </div>
+                
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
@@ -108,6 +118,7 @@
 
 
 <style>
+
 .col-md-6 .mb-3 .col-md-6 .mb-3 .mb-4{
 	width:350px !important;
 }
@@ -155,6 +166,8 @@
 
 
   $(()=>{
+	  $(".click.documentType").hide();
+	  
 	  var date = new Date();
 	  var yyyy = date.getFullYear();
 	  var mm = date.getMonth()+1 > 9 ? date.getMonth()+1 : '0' + date.getMonth()+1;
@@ -215,6 +228,14 @@
 	    	$('#searchDocument').modal("hide");
 	    }); 
 	  
+	  $("#documentType").change(function(){
+		 var documentType= $("#documentType").val();
+		 if(documentType=="휴가신청서"){
+			 $(".click.documentType").show();
+		 }else{
+			 $(".click.documentType").hide();
+		 }
+	  })
 })
   
 </script>

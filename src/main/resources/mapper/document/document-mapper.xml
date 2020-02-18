@@ -13,7 +13,7 @@
 	</select> 
 	<insert id="insertDocument">
 		insert into document values(seq_doc_no.nextval,#{typeNo},#{docType},#{docTitle},#{docStatus},
-									#{docWriter},#{docLastapproval},#{docContent},#{regDate})
+									#{docWriter},#{docLastapproval},#{docContent},#{regDate},#{startDate},#{endDate})
 	</insert>
 	
 	<insert id="insertDocumentLine">
