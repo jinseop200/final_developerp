@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dev.erp.board.model.dao.BoardDAO;
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardClub;
 
 
 @Service
@@ -42,6 +43,12 @@ public class BoardServiceImpl implements BoardService {
 	public BoardCategory boardCategoryView(int categoryNo) {
 		return boardDAO.boardCategoryView(categoryNo);
 	}
+
+
+
+
+
+	
 
 
 }

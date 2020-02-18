@@ -16,9 +16,18 @@
 			   #{categoryDate})
 		</insert>
 		
-			<select id="selectBoardCategoryList" resultType="boardCategory">
-		select * from board_category order by category_no 
-			</select>	
+		<insert id="insertBoardClub">
+		insert into board_club
+		values(seq_club_no.nextval,
+			   #{boardNo},	
+			   #{clubDate}, 
+			   #{clubWriter}, 
+			   #{clubName},
+			   #{clubTitle},
+			   #{clubWhere})
+			   #{clubComment},
+		</insert>
+		 
 			
 			<select id="seletOneBoard" resultType="board">
 				select * from board where board_no = #{boardNo}
@@ -29,8 +38,16 @@
 			</select>
 			
 			<select id="boardCategoryView" resultType="boardCategory">
-		select * from board_category where category_no = #{categoryNo}
-	</select>
+				select * from board_category where category_no = #{categoryNo}
+			</select>
+			
+			<select id="selectBoardCategoryList" resultType="boardCategory">
+				select * from board_category order by category_no 
+			</select>	
+			
+			<select id="selectBoardClubList" resultType="boardClub">
+				select * from board_club where board_no = #{boardNo} 
+			</select>	 
 	
 	
 </mapper>

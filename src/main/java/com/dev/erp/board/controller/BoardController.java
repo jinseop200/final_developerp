@@ -15,8 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dev.erp.board.model.service.BoardService;
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
-import com.dev.erp.document.model.vo.Document;
-import com.dev.erp.document.model.vo.DocumentLine;
+import com.dev.erp.board.model.vo.BoardClub;
 
 @Controller
 public class BoardController {
@@ -30,6 +29,32 @@ public class BoardController {
 	public ModelAndView selectBoardList(ModelAndView mav)
 	{
 		List<BoardCategory> boardCategoryList= new ArrayList<>();
+		List<Board> boardList= new ArrayList<>();
+		
+		boardList = boardService.selectBoardType();
+		boardCategoryList = boardService.selectBoardCategoryList();	
+		
+	
+		mav.addObject("boardlist",boardCategoryList);
+		mav.addObject("board",boardList);
+		mav.setViewName("board/boardList");
+		return mav;
+	}
+	@RequestMapping("/board/boardCategoryList.do")
+	public ModelAndView selectBoardClubList(ModelAndView mav, @RequestParam("boardNo") int boardNo)
+	{
+		List<BoardClub> boardClubList= new ArrayList<>();
+		boardClubList = boardService.selectBoardClubList(boardNo);	
+	
+		mav.addObject("boardClubInsert",boardClubList);
+		mav.addObject("board",boardNo);
+		mav.setViewName("board/boardClubInsert");
+		return mav;
+	}
+/*	@RequestMapping("/board/boardNoticeInsert.do")
+	public ModelAndView selectBoardNoticeInsert(ModelAndView mav)
+	{
+		List<BoardCategory> boardCategoryList= new ArrayList<>();
 		Board board = new Board();
 		for(int i=0; i<boardCategoryList.size(); i++) {
 			board=boardService.seletOneBoard(boardCategoryList.get(i).getBoardNo());
@@ -40,7 +65,7 @@ public class BoardController {
 		mav.addObject("board",board);
 		mav.setViewName("board/boardList");
 		return mav;
-	}
+	}*/
 	@RequestMapping("/board/insertBoardForm.do")
 	public ModelAndView insertBoardForm(ModelAndView mav) {
 		List<Board> board = new ArrayList<>();
