@@ -187,16 +187,11 @@
 	</resultMap>
 	
 	<select id="quantityCheck" resultMap="QuantityChkMap">
-		select a.rm_no,a.rm_name, (nvl(r.quantity,0)-a.required) quanchk
-		 from (select rm_no, sum(quantity) quantity from receiving
-		group by rm_no) r right join 
-		 (select rm.rm_no,rm.rm_name, sum(br.quantity)*#{rQuantity} required
-		 from bom b join product_list pl on b.pl_no = pl.pl_no
+		select rm.rm_no,rm.rm_name, br.quantity*#{rQuantity} required
+		from bom b join product_list pl on b.pl_no = pl.pl_no
 		                                   join bom_rm br on br.bom_no = b.bom_no
 		                                   join raw_material rm on rm.rm_no = br.rm_no
 		                                   where product_name = #{chkBOM}
-		                                   group by rm.rm_no, rm.rm_name, pl.product_name
-		) a on r.rm_no = a.rm_no
 	</select>
 	<resultMap type="map" id="QuantityChkMap">
 	</resultMap>
