@@ -98,7 +98,7 @@ input[type=text]{
 $(()=>{
 	console.log("민병준test="+${firstPL});
 });
-<!-- 그래프 자바스크립트 -->
+	//그래프 자바스크립트
 	//line
 	var ctxL = document.getElementById("lineChart").getContext('2d');
 	var myLineChart = new Chart(ctxL, {
