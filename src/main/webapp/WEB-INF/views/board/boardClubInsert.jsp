@@ -21,10 +21,9 @@
 						게시판
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="boardList" var="b">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardCategoryList.do?boardNo=${b.boardNo}" >${b.boardName}</a>
-						
-						</c:forEach>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">사내게시판</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardClubInsert.do">공지사항게시판</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardNoticeInsert.do">동아리게시판</a>
 					</div>
 				  </li>
 			      
@@ -54,28 +53,26 @@
                   <thead>
                     <tr>                    
                       <th>No</th>
-                      <th>제목</th>
+                      <th>일자</th>
                       <th>작성자</th>
-                      <th>진행상태</th>
-                      <th>작성일자</th>
+                      <th>동아리명</th>
+                      <th>제목</th>
+                      <th>장소</th>
                       <th>내용</th>
                     </tr>
                   </thead>
                   <tbody>
-               	<c:forEach items="${boardlist }" var="l" varStatus = "vs">
+               	<c:forEach items="${boardclub }" var="l" varStatus = "vs">
                 	<tr class = "getBo">
-                	<td id ="${l.categoryNo}">${vs.count}</td> 
-	                      <td>${l.categoryTitle}</td>
-	                      <td>${l.categoryWriter }</td>
-	                      <c:if test="${l.categoryStatus=='y' }">
-	                     	 <td>진행중</td>
-	                      </c:if>
-	                      <c:if test="${l.categoryStatus=='n' }">
-	                     	 <td>완료됨</td>
-	                      </c:if>
-	                      <td>${l.categoryDate}</td>
-	                     
+                	<td id ="${l.clubNo}">${vs.count}</td> 
+	                      <td>${l.clubDate}</td>
+	                      <td>${l.clubWriter }</td>
+	                      <td>${l.clubName }</td> 
+	                      <td>${l.clubTitle}</td>
+						  <td>${l.categoryWhere}</td>			      
 	                      <td><a href="#">보기</a></td>
+	        
+	                    
 	                    </tr>
                   	</c:forEach>
                   </tbody>
@@ -104,7 +101,7 @@
 </div>
 
  <!-- detailView Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="boardDetailView">
+<div class="modal" tabindex="-1" role="dialog" id="boardClubDetailView">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -113,7 +110,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body boardDetailView">
+        <div class="modal-body controll-modal-body boardClubDetailView">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         <div class="modal-footer">
@@ -149,11 +146,11 @@ $(()=>{
 		var tr = $(this).parent().parent();
 		var td = tr.children();
 		
-		var tdCategoryNo = td.eq(0).attr("id");
-		console.log(tdCategoryNo);
-		$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+tdCategoryNo,function(){
-	        $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
-	        $('#boardDetailView').modal({show:true});
+		var tdClubNo = td.eq(0).attr("id");
+		console.log(tdClubNo);
+		$('.controll-modal-body.boardClubDetailView').load("${pageContext.request.contextPath}/board/boardClubDetailView.do?clubNo="+tdClubNo,function(){
+	        $('#boardClubDetailView').modal({backdrop: 'static', keyboard: false});
+	        $('#boardClubDetailView').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $(".controll-title").html("");
 	        $(".controll-title").html("상세보기");
@@ -174,7 +171,7 @@ $("#board-insert-button").click(function(){
 
 </script>
 <style>
-#myModal{
+#myModal{a
 	z-index: 1060;
 }
 

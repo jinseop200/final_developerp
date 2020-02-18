@@ -12,7 +12,7 @@ table.table th, table.table td {text-align: center;}
 .message-list-table tbody tr td{
 	text-align:center;
 }
-.modal-content{
+.modal-content.messenger{
 	width:550px;
 	height:665px; 
 }
@@ -29,17 +29,7 @@ table.table th, table.table td {text-align: center;}
     display:inline;
 }
 </style>
-<div class="form-row" style="width:750px">
-                    <div class="col-md-6 mb-3 col-md-6 mb-3">
-                        <label for="insertSender">검색</label>&nbsp;&nbsp;
-                        <input type="text" id="insertSender" style="width:290px;" name="insertSender" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <button class="btn btn-primary messenger" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
+
 <table class="table">
   <thead>
     <tr>
@@ -84,6 +74,12 @@ table.table th, table.table td {text-align: center;}
 			      </div>
 			      <div class="modal-body controll-modal-body-messengerChat">
 			      </div>
+			      <div class="input-group mb-3" style="width:510px; margin:0 auto; " >
+					  <input type="text" id="message" class="form-control" placeholder="Message" style="color: black;">
+					  <div class="input-group-append" style="padding: 0px;">
+					    <button id="sendBtn" class="btn btn-outline-secondary" type="button">Send</button>
+					  </div>
+					</div>
 			      <div class="modal-footer">
 			          <button type="button" class="btn btn-primary messengerChat-end">닫기</button>
 			      </div>
@@ -105,16 +101,31 @@ $(()=>{
 	});
 	$(".messengerChat-end").click(function(){
 		$("#messengerChat").modal('hide');
+		$("#searhMessengerList").modal('hide');
+		$('.controll-modal-body-messengerList').load("${pageContext.request.contextPath}/messenger/messengerList.do",function(){
+	        $('#messengerList').modal({backdrop: 'static', keyboard: false});
+	        $('#messengerList').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        
+	    });
 	})
 	$(".searhMessengerList-end").click(function(){
 		$("#searhMessengerList").modal('hide');
+	});
+	
+	$(".btn.messengerList-end").click(function(){
+		$("#messengerList").modal('hide');
+		$("#searhMessengerList").modal('hide');
+		$("#messengerChat").modal('hide');
+		location.reload();
 	})
+	
 	
 });
 
 
+
 function goChat(chatId){
-	console.log(chatId);
 	$('.controll-modal-body-messengerChat').load("${pageContext.request.contextPath}/messenger/"+chatId+"/messengerChat.do/",function(){
         $('#messengerChat').modal({backdrop: 'static', keyboard: false});
         $('#messengerChat').modal({show:true});
@@ -123,14 +134,6 @@ function goChat(chatId){
         $(".control-title-messengerChat").html("채팅방");
 	});
 };
-function lastCheck() {
-    let data = {
-        chatId : "${chatId}",
-        email : "${memberLoggedIn.email}",
-        time : new Date().getTime()
-    }
-    stompClient.send('<c:url value="/lastCheck" />', {}, JSON.stringify(data));
-}
 
 
 </script>

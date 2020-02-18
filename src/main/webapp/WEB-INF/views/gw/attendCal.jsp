@@ -129,20 +129,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
 a.fc-day-number{
 cursor:pointer;}
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
+/*   body {*/
+/*     margin: 40px 10px; */
+/*     padding: 0; */
+/*     font-family: Arial, Helvetica Neue, Helvetica, sans-serif; */
+/*     font-size: 14px; */
+/*   } */
+
+body .calendar-container #calendar{
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+font-size: 14px;
+}
 
   #calendar {
     max-width: 900px;
     margin: 0 auto;
   }
+  .calendar-caontainer{
+/*   font-family: Arial, Helvetica Neue, Helvetica, sans-serif !important; */
+/*   font-size: 14px !important; */
+  width:100%;}
 
 </style>
-
+<div class="calendar-container">
   <div id='calendar' ></div>
-
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

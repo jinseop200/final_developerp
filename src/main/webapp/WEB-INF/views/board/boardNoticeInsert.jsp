@@ -21,10 +21,9 @@
 						게시판
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<c:forEach items="boardList" var="b">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardCategoryList.do?boardNo=${b.boardNo}" >${b.boardName}</a>
-						
-						</c:forEach>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">사내게시판</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardClubInsert.do">프로젝트게시판</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardNoticeInsert.do">동아리게시판</a>
 					</div>
 				  </li>
 			      
@@ -54,28 +53,27 @@
                   <thead>
                     <tr>                    
                       <th>No</th>
-                      <th>제목</th>
+                      <th>일자</th>
                       <th>작성자</th>
-                      <th>진행상태</th>
-                      <th>작성일자</th>
+                      <th>제목</th>
+                      <th>계획시작일</th>
+                      <th>계획종료일</th>
+                      <th>실제완료일</th>
                       <th>내용</th>
                     </tr>
                   </thead>
                   <tbody>
-               	<c:forEach items="${boardlist }" var="l" varStatus = "vs">
+               	<c:forEach items="${boardnotice }" var="l" varStatus = "vs">
                 	<tr class = "getBo">
-                	<td id ="${l.categoryNo}">${vs.count}</td> 
-	                      <td>${l.categoryTitle}</td>
-	                      <td>${l.categoryWriter }</td>
-	                      <c:if test="${l.categoryStatus=='y' }">
-	                     	 <td>진행중</td>
-	                      </c:if>
-	                      <c:if test="${l.categoryStatus=='n' }">
-	                     	 <td>완료됨</td>
-	                      </c:if>
-	                      <td>${l.categoryDate}</td>
-	                     
-	                      <td><a href="#">보기</a></td>
+                	<td id ="${l.noticeNo}">${vs.count}</td> 
+	                      <td>${l.noticeDate}</td>
+	                      <td>${l.noticeWriter }</td>
+	                      <td>${l.noticeTitle}</td>
+	                      <td>${l.noticePlanStart }</td>
+	                      <td>${l.noticePlanEnd }</td>
+	                      <td>${l.noticeActualEnd }</td> 
+	                      <td><a href="#">보기</a></td>			      
+	                    
 	                    </tr>
                   	</c:forEach>
                   </tbody>

@@ -34,4 +34,9 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	public int scheduleDelete(Schedule schedule) {
 		return sqlSession.delete("schedule.scheduleDelete",schedule);
 	}
+
+	@Override
+	public int scheduleUpdate(Schedule schedule) {
+		return sqlSession.update("schedule.scheduleUpdate",schedule);
+	}
 }

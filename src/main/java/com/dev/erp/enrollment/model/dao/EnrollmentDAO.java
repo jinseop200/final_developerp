@@ -75,4 +75,8 @@ public interface EnrollmentDAO {
 
 	Map<String, Object> checkDataAvailable(String ckData);
 
+	List<Map<String, String>> selectJobOrderAll(int cPage, int numPerPage);
+
+	int selectAllJobOrder();
+
 }

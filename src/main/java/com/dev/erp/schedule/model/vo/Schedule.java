@@ -14,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Schedule {
+	private int scheduleNo;
 	private String email;
 	private String title;
 	private String content;

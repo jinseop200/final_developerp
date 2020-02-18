@@ -32,4 +32,9 @@ public List<Schedule> scheduleList(Map<String, Object> map) {
 public int scheduleDelete(Schedule schedule) {
 	return scheduleDAO.scheduleDelete(schedule);
 }
+
+@Override
+public int scheduleUpdate(Schedule schedule) {
+	return scheduleDAO.scheduleUpdate(schedule);
+}
 }

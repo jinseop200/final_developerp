@@ -356,7 +356,7 @@
                   <span class="nav-link dropdown-toggle message" id="messagesDropdown" >
                     <i class="fas fa-envelope fa-fw" style="cursor:pointer;"></i>
                     <!-- Counter - Messages -->
-                    <span class="badge badge-danger badge-counter">7</span>
+                    <span class="badge badge-danger badge-counter message"></span>
                   </span>
                 </li>
 
@@ -367,7 +367,7 @@
                       <span class="nav-link dropdown-toggle messenger "id="messagesDropdown">
                         <i class="fas fa-fw fa-comment"></i>
                         <!-- Counter - Messages -->
-                        <span class="badge badge-danger badge-counter">7</span>
+                        <span class="badge badge-danger badge-counter messenger"></span>
                       </span>
                       <!-- Dropdown - Messages -->
                       <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
@@ -471,12 +471,20 @@
             #profileImage{
             display:none;
             }
+            .modal-content.updatePassword{
+            	width:500px;
+            	height:215px;
+            }
+            .modal-content.updateInfo{
+            	width:500px;
+            	height:100%;
+            }
             </style>
             
              <!-- 비밀번호변경 Modal -->
 			<div class="modal" tabindex="-1" role="dialog" id="updatePassword">
 			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
+			        <div class="modal-content updatePassword">
 			        <div class="modal-header">
 			            <h5 class="modal-title controll-title-updatePassword">비밀번호 변경</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -494,7 +502,7 @@
              <!-- 이름변경 Modal -->
 			<div class="modal" tabindex="-1" role="dialog" id=updateInfo>
 			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
+			        <div class="modal-content updateInfo">
 			        <div class="modal-header">
 			            <h5 class="modal-title controll-title-updateInfo">내정보 변경</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -512,7 +520,7 @@
              <!-- message Modal -->
 			<div class="modal" tabindex="-1" role="dialog" id="messageList">
 			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
+			        <div class="modal-content messeage">
 			        <div class="modal-header">
 			            <h5 class="modal-title controll-title-messageList">쪽지함</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -533,7 +541,7 @@
              <!-- insert message Modal -->
 			<div class="modal" tabindex="-1" role="dialog" id="insertMessage">
 			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
+			        <div class="modal-content messeage">
 			        <div class="modal-header">
 			            <h5 class="modal-title controll-title-insertMessage">새쪽지</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -551,7 +559,7 @@
              <!-- detail message Modal -->
 			<div class="modal" tabindex="-1" role="dialog" id="detailMessage">
 			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
+			        <div class="modal-content messeage">
 			        <div class="modal-header">
 			            <h5 class="modal-title controll-title-detailMessage">쪽지보기</h5>
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -570,9 +578,16 @@
 						<%--messenger modal --%>
 			<div class="modal" tabindex="-1" role="dialog" id="messengerList">
 			  <div class="modal-dialog" role="document">
-			      <div class="modal-content">
+			      <div class="modal-content messenger">
 			      <div class="modal-header">
 			          <h5 class="modal-title control-title-messengerList" id="messengerList">Messenger </h5>
+			          <div class="form-row" >
+	                    <div class="col-md-6">
+	                        <button class="btn btn-primary messenger" type="button">
+	                            <i class="fas fa-search fa-sm"></i>
+	                        </button>
+	                    </div>
+                  </div>
 			      </div>
 			      <div class="modal-body controll-modal-body-messengerList">
 			      </div>
@@ -586,7 +601,7 @@
 						<%--documentLastApproval modal --%>
 			<div class="modal" tabindex="-1" role="dialog" id="searhMessageList">
 			  <div class="modal-dialog" role="document">
-			      <div class="modal-content">
+			      <div class="modal-content messenger">
 			      <div class="modal-header">
 			          <h5 class="modal-title control-title-searhMessageList" id="searhMessageList"> </h5>
 			      </div>
@@ -659,11 +674,25 @@
 				
 			});
 			
-			$(".btn.messengerList-end").click(function(){
-				$("#messengerList").modal('hide');
+		
+			$(()=>{
+				$.ajax({
+					url:"${pageContext.request.contextPath}/message/messageCount.do?empName=${memberLoggedIn.empName}",
+					dataType:"json",
+					success:data=>{
+						console.log(data);
+						$(".badge-counter.message").html(data.messageCount);
+					}
+				})
+				$.ajax({
+					url:"${pageContext.request.contextPath}/messenger/messengerCount.do",
+					dataType:"json",
+					success:data=>{
+						console.log(data);
+						$(".badge-counter.messenger").html(data.messengerCount);
+					}
+				})
 			})
-			
-				
 			
 			  </script>
 			  <style>

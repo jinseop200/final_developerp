@@ -80,7 +80,13 @@ function password_validate(){
 
 </script>
 <style>
-
+.modal-footer.updatePassword{
+	padding:0;
+	padding-top:10px;
+}
+.controll-modal-body-updatePassword{
+	padding-bottom:0;
+}
 </style>
 <body>
 
@@ -125,7 +131,7 @@ function password_validate(){
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 			</table>
-			<div class="modal-footer">
+			<div class="modal-footer updatePassword">
         	<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">변경</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         	</div>

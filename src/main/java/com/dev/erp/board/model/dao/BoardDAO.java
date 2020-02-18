@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardClub;
 
 public interface BoardDAO {
 
@@ -17,6 +18,12 @@ public interface BoardDAO {
 
 
 	BoardCategory boardCategoryView(int categoryNo);
+
+	/*List<BoardClub> selectBoardClubList(int boardNo);*/
+
+	
+
+
 
 	
 

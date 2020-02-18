@@ -74,4 +74,14 @@ public class MessengerServiceImpl implements MessengerService {
 		return messengerDAO.findChatIdList(email);
 	}
 
+	@Override
+	public int updateLastCheckLog(Msg fromMessage) {
+		return messengerDAO.updateLastCheckLog(fromMessage);
+	}
+
+	@Override
+	public List<Integer> messengerCount(Map<String, String> param) {
+		return messengerDAO.messengerCount(param);
+	}
+
 }

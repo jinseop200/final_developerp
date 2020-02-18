@@ -28,4 +28,8 @@ public interface MessengerService {
 
 	List<Map<String, String>> findChatIdList(String email);
 
+	int updateLastCheckLog(Msg fromMessage);
+
+	List<Integer> messengerCount(Map<String, String> param);
+
 }

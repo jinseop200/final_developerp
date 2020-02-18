@@ -4,17 +4,21 @@ import java.util.List;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardClub;
 
 
 
 
 public interface BoardService {
 
-	List<BoardCategory> selectBoardCategoryList();
 	Board seletOneBoard(int boardNo);
-	List<Board> selectBoardType();
-	int insertBoardCategory(BoardCategory boardCategory);
 	BoardCategory boardCategoryView(int categoryNo);
+	int insertBoardCategory(BoardCategory boardCategory);
+	List<Board> selectBoardType();
+
+	List<BoardCategory> selectBoardCategoryList();
+	
+	
 	
 
 

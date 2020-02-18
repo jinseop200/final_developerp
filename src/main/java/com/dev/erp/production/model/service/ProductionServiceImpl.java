@@ -94,4 +94,24 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDAO.deleteWarehousingByRmNo(lotNo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReleaseList() {
+		return productionDAO.selectReleaseList();
+	}
+
+	@Override
+	public List<Map<String, String>> checkBOMExist(String chkBOM) {
+		return productionDAO.checkBOMExist(chkBOM);
+	}
+
+	@Override
+	public List<Map<String, String>> quantityCheck(Map<String, Object> map) {
+		return productionDAO.quantityCheck(map);
+	}
+
+	@Override
+	public int addRelease(Map<String, String> addMap) {
+		return productionDAO.addRelease(addMap);
+	}
+
 }

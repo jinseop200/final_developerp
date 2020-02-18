@@ -23,5 +23,7 @@ public class Document {
 	private String docLastapproval;
 	private String docContent;
 	private Date regDate;
+	private String startDate;
+	private String endDate;
 }
 

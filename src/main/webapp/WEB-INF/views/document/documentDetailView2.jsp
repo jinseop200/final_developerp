@@ -87,13 +87,19 @@ border:1px solid #ccc;
 		    													<tr>
 			    													<td style="width:75px; text-align:center;">성명</td>
 			    													<td style="width:320px; text-align:center; color:black;">${memberLoggedIn.empName}</td>
-			    													<td style="width:85px; text-align:center;">작성일자</td>
-			    													<td style="width:320px; text-align:center; color:black;">${list.regDate }</td>
+		    														<c:if test="${list.docType=='휴가신청서'}">
+				    													<td style="width:85px; text-align:center;">휴가기간</td>
+				    													<td style="width:320px; text-align:center; color:black; font-size:14px;">${list.startDate}~${list.endDate}</td>
+		    														</c:if>
+		    														<c:if test="${list.docType!='휴가신청서'}">
+				    													<td style="width:85px; text-align:center;">작성일자</td>
+				    													<td style="width:320px; text-align:center; color:black;">${list.regDate }</td>
+		    														</c:if>
 		    													</tr>
 		    													<tr>
 		    														<td colspan="4" style="text-align:center; color:gray;">
 		    															아래의 사유로 "${list.docType}"을 제출하오니 허락하여 주시기 바랍니다.
-		    															<br>
+		    															<br>	
 		    															<br />
 		    															<div style="text-align:left; color:black;">
 		    																${list.docContent}
@@ -259,7 +265,6 @@ border:1px solid #ccc;
 }
 
 
-출처: https://dgkim5360.tistory.com/entry/Bootstrap-modal-custom-size-and-location [개발새발로그]
 </style>
 <script>
 	$(()=>{

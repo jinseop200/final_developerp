@@ -1,8 +1,6 @@
 package com.dev.erp.production.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +45,11 @@ public class ProductionController {
 	@RequestMapping("/production/warehousing.do")
 	public ModelAndView warehousing(ModelAndView mav) {
 		
-		List<Map<String, String>> receivingList  = productionService.selectReceivingList();
+		List<Map<String, String>> releaseList  = productionService.selectReleaseList();
 		
-		logger.info("receivingList@Controller={}",receivingList);
+		logger.info("releaseList@Controller={}",releaseList);
 		
-		mav.addObject("receivingList",receivingList);
+		mav.addObject("releaseList",releaseList);
 		mav.setViewName("production/warehousing");
 		return mav;
 	}
@@ -280,111 +278,192 @@ public class ProductionController {
 	}
 	
 	
-	//===============warehousing=======================
-	@RequestMapping("/production/addWarehousing.do")
-	public ModelAndView addWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
-									 @RequestParam("ptNo") String ptNo,
-									 @RequestParam("vendorTypeCode") String vendorTypeCode,
-									 @RequestParam("storeNo") String storeNo,
-									 @RequestParam("quantity") String quantity,
-									 @RequestParam("quailityYN") String quailityYN,
-									 @RequestParam("insectionYN") String insectionYN,
-									 @RequestParam("measurement") String measurement,
-									 @RequestParam("regDate") String regDate,
-									 @RequestParam("rmName") String rmName,
-										 ModelAndView mav) {
-		
-		Map<String, String> warehousing = new HashMap<>();
-		warehousing.put("rawMaterialDetail", rawMaterialDetail);
-		warehousing.put("ptNo", ptNo);
-		warehousing.put("vendorTypeCode", vendorTypeCode);
-		warehousing.put("storeNo", storeNo);
-		warehousing.put("quantity", quantity);
-		warehousing.put("quailityYN", quailityYN);
-		warehousing.put("insectionYN", insectionYN);
-		warehousing.put("measurement", measurement);
-		warehousing.put("regDate", regDate);
-		warehousing.put("rmName", rmName);
-		
-		logger.info("warehousing@controller={}",warehousing);
-		
-		int result = productionService.addWarehousing(warehousing); 
-		
-		mav.addObject("warehousing", warehousing);
-		mav.setViewName("redirect:/production/warehousing.do");
-		
-		return mav;
-	}
+	//==============================warehosing start======================================
+//	@RequestMapping("/production/addWarehousing.do")
+//	public ModelAndView addWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
+//									 @RequestParam("ptNo") String ptNo,
+//									 @RequestParam("vendorTypeCode") String vendorTypeCode,
+//									 @RequestParam("storeNo") String storeNo,
+//									 @RequestParam("quantity") String quantity,
+//									 @RequestParam("quailityYN") String quailityYN,
+//									 @RequestParam("insectionYN") String insectionYN,
+//									 @RequestParam("measurement") String measurement,
+//									 @RequestParam("regDate") String regDate,
+//									 @RequestParam("rmName") String rmName,
+//										 ModelAndView mav) {
+//		
+//		Map<String, String> warehousing = new HashMap<>();
+//		warehousing.put("rawMaterialDetail", rawMaterialDetail);
+//		warehousing.put("ptNo", ptNo);
+//		warehousing.put("vendorTypeCode", vendorTypeCode);
+//		warehousing.put("storeNo", storeNo);
+//		warehousing.put("quantity", quantity);
+//		warehousing.put("quailityYN", quailityYN);
+//		warehousing.put("insectionYN", insectionYN);
+//		warehousing.put("measurement", measurement);
+//		warehousing.put("regDate", regDate);
+//		warehousing.put("rmName", rmName);
+//		
+//		logger.info("warehousing@controller={}",warehousing);
+//		
+//		int result = productionService.addWarehousing(warehousing); 
+//		
+//		mav.addObject("warehousing", warehousing);
+//		mav.setViewName("redirect:/production/warehousing.do");
+//		
+//		return mav;
+//	}
+//	
+//	@RequestMapping("/production/selectWarehousingByLotNo.do")
+//	@ResponseBody
+//	public Map<String, Object> selectWarehousingByLotNo(@RequestParam("tdLotNo") String tdLotNo) {
+//		
+//		logger.info("tdLotNo@Controller={}",tdLotNo);
+//		
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("tdLotNo", tdLotNo);
+//		map = productionService.selectWarehousingByLotNo(tdLotNo);
+//		
+//		//날짜형식 수정
+//		String nDate = map.get("REC_DATE").toString().substring(0,10);
+//		map.put("nDate", nDate);
+//		
+//		logger.info("map@Controller={}",map);
+//		
+//		return map;
+//	}
+//	
+//	@RequestMapping("/production/updateWarehousing.do")
+//	public ModelAndView updateWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
+//									 @RequestParam("ptNo") String ptNo,
+//									 @RequestParam("vendorTypeCode") String vendorTypeCode,
+//									 @RequestParam("storeNo") String storeNo,
+//									 @RequestParam("quantity") String quantity,
+//									 @RequestParam("quailityYN") String quailityYN,
+//									 @RequestParam("insectionYN") String insectionYN,
+//									 @RequestParam("measurement") String measurement,
+//									 @RequestParam("lotNo") String lotNo,
+//									 @RequestParam("regDate") String regDate,
+//										 ModelAndView mav) {
+//		
+//		Map<String, String> warehousing = new HashMap<>();
+//		warehousing.put("rawMaterialDetail", rawMaterialDetail);
+//		warehousing.put("ptNo", ptNo);
+//		warehousing.put("vendorTypeCode", vendorTypeCode);
+//		warehousing.put("storeNo", storeNo);
+//		warehousing.put("quantity", quantity);
+//		warehousing.put("quailityYN", quailityYN);
+//		warehousing.put("insectionYN", insectionYN);
+//		warehousing.put("measurement", measurement);
+//		warehousing.put("lotNo", lotNo);
+//		warehousing.put("regDate", regDate);
+//		
+//		logger.info("warehousing@controller={}",warehousing);
+//		
+//		int result = productionService.updateWarehousing(warehousing); 
+//		
+//		mav.addObject("warehousing", warehousing);
+//		mav.setViewName("redirect:/production/warehousing.do");
+//		
+//		return mav;
+//	}
+//	
+//	@RequestMapping("/production/deleteWarehousingByRmNo.do")
+//	public ModelAndView deleteWarehousingByRmNo(@RequestParam("rmNo") String rmNo,
+//										 ModelAndView mav) {
+//		logger.info("rmNo@Controller={}",rmNo);
+//		
+//		Integer.parseInt(rmNo);
+//		
+//		int lotNo = productionService.selectRotNobyRmNo(rmNo);
+//		logger.info("lotNo@Controller={}",lotNo);
+//		int result = productionService.deleteWarehousingByRmNo(lotNo); 
+//		
+//		logger.info("result@controller={}",result);
+//		
+//		mav.addObject("result",result);
+//		mav.setViewName("redirect:/production/BOMListManagement.do");
+//		return mav;
+//	}
+	//end
 	
-	@RequestMapping("/production/selectWarehousingByLotNo.do")
+	//==============================releasing start======================================
+	@RequestMapping("/production/checkBOMExist")
 	@ResponseBody
-	public Map<String, Object> selectWarehousingByLotNo(@RequestParam("tdLotNo") String tdLotNo) {
+	public List<Map<String, String>> checkBOMExist(@RequestParam("chkBOM") String chkBOM,
+											 @RequestParam("rQuantity") String rQuantity) {
 		
-		logger.info("tdLotNo@Controller={}",tdLotNo);
+		logger.info("chkBOM@Controller={}",chkBOM);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("tdLotNo", tdLotNo);
-		map = productionService.selectWarehousingByLotNo(tdLotNo);
+		map.put("chkBOM", chkBOM);
+		map.put("rQuantity", rQuantity);
 		
-		//날짜형식 수정
-		String nDate = map.get("REC_DATE").toString().substring(0,10);
-		map.put("nDate", nDate);
+		//bom존재하는지 확인
+		List<Map<String, String>> lMap = productionService.checkBOMExist(chkBOM);
+		logger.info("lMap@Controller={}",lMap);
 		
-		logger.info("map@Controller={}",map);
 		
-		return map;
+		//값존재시 true 사용가능, 값없을시 false 사용불가
+		boolean isUsable = lMap.size()==0?false:true;
+		map.put("isUsable", isUsable);
+		
+		
+		
+		//Map<String, String> isUsableMap = new HashMap<>();
+		//isUsableMap.put("isUsable", String.valueOf(isUsable));
+		
+		logger.info("isUsable@Controller={}",isUsable);
+		//lMap.add(isUsableMap);
+		
+		logger.info("lMap@Controller={}",lMap);
+
+		/*
+		//필요수량이 모자란것들(QUANCHK < 0) 담을 nList 생성
+		List<Map<String, String>> nList = new ArrayList<>();
+		System.out.println("초기 nList 사이즈="+nList.size());
+		if(isUsable == true) {
+			List<Map<String, String>> list = productionService.quantityCheck(map);
+			logger.info("list@controller={}",list);
+			
+			//bom 구성 품목수 != receiving 테이블과 일치하는 품목개수가 다를경우, 중복되는값 추출
+			int bomCount = lMap.size(); //BOM구성 품목수
+			logger.info("bomCount@controller={}",bomCount);
+			int quanchkSize = list.size(); //리시빙 테이블에서 수량체크후 구성 품목수
+			logger.info("quanchkSize@controller={}",quanchkSize);
+			
+			for(int i=0; i<lMap.size(); i++) {
+				lMap.get(i).get("RM_NO");
+			}
+			
+			for(int i = 0; i < list.size(); i++) {
+				Map<String, String> tempMap = new HashMap<>();
+				//System.out.println(Integer.parseInt(String.valueOf(list.get(i).get("QUANCHK"))));
+				if((Integer.parseInt(String.valueOf(list.get(i).get("QUANCHK"))))<0) {
+					tempMap.put("RM_NO", String.valueOf(list.get(i).get("RM_NO")));
+					tempMap.put("QUANCHK", String.valueOf(list.get(i).get("QUANCHK")));
+					tempMap.put("RM_NAME", String.valueOf(list.get(i).get("RM_NAME")));
+					nList.add(tempMap);
+				}
+			}
+			System.out.println("ifIsusable true실행후 nList 사이즈="+nList.size());
+			
+			if(nList.size() == 0) {
+				for(int i = 0; i < list.size(); i++) {
+					logger.info("마지막 release에 추가하기");
+					System.out.println(list.get(i));
+					Map<String, String> addMap = list.get(i);
+					int result = productionService.addRelease(addMap);
+					
+				}
+			}
+			
+		}
+		logger.info("nList@Controller={}",nList);*/
+		
+		return lMap;
 	}
 	
-	@RequestMapping("/production/updateWarehousing.do")
-	public ModelAndView updateWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
-									 @RequestParam("ptNo") String ptNo,
-									 @RequestParam("vendorTypeCode") String vendorTypeCode,
-									 @RequestParam("storeNo") String storeNo,
-									 @RequestParam("quantity") String quantity,
-									 @RequestParam("quailityYN") String quailityYN,
-									 @RequestParam("insectionYN") String insectionYN,
-									 @RequestParam("measurement") String measurement,
-									 @RequestParam("lotNo") String lotNo,
-									 @RequestParam("regDate") String regDate,
-										 ModelAndView mav) {
-		
-		Map<String, String> warehousing = new HashMap<>();
-		warehousing.put("rawMaterialDetail", rawMaterialDetail);
-		warehousing.put("ptNo", ptNo);
-		warehousing.put("vendorTypeCode", vendorTypeCode);
-		warehousing.put("storeNo", storeNo);
-		warehousing.put("quantity", quantity);
-		warehousing.put("quailityYN", quailityYN);
-		warehousing.put("insectionYN", insectionYN);
-		warehousing.put("measurement", measurement);
-		warehousing.put("lotNo", lotNo);
-		warehousing.put("regDate", regDate);
-		
-		logger.info("warehousing@controller={}",warehousing);
-		
-		int result = productionService.updateWarehousing(warehousing); 
-		
-		mav.addObject("warehousing", warehousing);
-		mav.setViewName("redirect:/production/warehousing.do");
-		
-		return mav;
-	}
 	
-	@RequestMapping("/production/deleteWarehousingByRmNo.do")
-	public ModelAndView deleteWarehousingByRmNo(@RequestParam("rmNo") String rmNo,
-										 ModelAndView mav) {
-		logger.info("rmNo@Controller={}",rmNo);
-		
-		Integer.parseInt(rmNo);
-		
-		int lotNo = productionService.selectRotNobyRmNo(rmNo);
-		logger.info("lotNo@Controller={}",lotNo);
-		int result = productionService.deleteWarehousingByRmNo(lotNo); 
-		
-		logger.info("result@controller={}",result);
-		
-		mav.addObject("result",result);
-		mav.setViewName("redirect:/production/BOMListManagement.do");
-		return mav;
-	}
+	
 }
