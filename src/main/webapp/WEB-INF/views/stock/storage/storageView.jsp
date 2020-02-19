@@ -22,9 +22,6 @@
 	<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
 </div>
 
-<%-- 막대그래프 추가 --%>
- <div id="chart"></div>
-
   <%-- nav bar tap start --%>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
@@ -37,24 +34,10 @@
 		  </li>
 	  </c:forEach>
 	  
-	  
-	  
-<!-- 	  <li class="nav-item"> -->
-<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=1">[1] 입고창고</a> --%>
-<!-- 	  </li> -->
-<!-- 	  <li class="nav-item"> -->
-<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=2">[2] 자재창고</a> --%>
-<!-- 	  </li> -->
-<!-- 	  <li class="nav-item"> -->
-<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=3">[3] 제품창고</a> --%>
-<!-- 	  </li> -->
-<!-- 	  <li class="nav-item"> -->
-<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=4">[4] 생산창고</a> --%>
-<!-- 	  </li> -->
-<!-- 	  <li class="nav-item"> -->
-<%-- 	    <a class="nav-link" href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=5">[5] 부적합창고</a> --%>
-<!-- 	  </li> -->
 	</ul>
+	
+<%-- 막대그래프 추가 --%>
+ <div id="chart"></div>
 	
 	
 	<%-- nav bar tap end --%>
@@ -275,7 +258,7 @@ for (var i = 0; i < chartjson.data.length; i++) {
   var bardata = document.createElement(TDATA);
   var bar = document.createElement('div');
   bar.setAttribute('class', colors[i]);
-  bar.style.height = chartjson.data[i][chartjson.ykey]/50 + "px";
+  bar.style.height = chartjson.data[i][chartjson.ykey]/30 + "px";
   bardata.innerText = chartjson.data[i][chartjson.ykey];
   bardata.appendChild(bar);
   barrow.appendChild(bardata);
