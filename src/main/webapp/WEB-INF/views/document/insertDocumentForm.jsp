@@ -13,6 +13,7 @@
           		name="documentEnrollFrm" method="post">
           		<div>
           		<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
+          		<input type="hidden" value="${memberLoggedIn.email}" id="email" name="email" />
           		</div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">

@@ -25,5 +25,6 @@ public class Document {
 	private Date regDate;
 	private String startDate;
 	private String endDate;
+	private String email;
 }
 

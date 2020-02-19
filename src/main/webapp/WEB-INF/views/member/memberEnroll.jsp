@@ -13,26 +13,23 @@
 	margin-top: 30px;
 }
 
-.btn {
+.table-box.enroll .btn {
 	height: 33px;
 	font-size: 13px;
 	display: inline-block;
 }
 
-.action {
-	background: black;
-}
-
-.table-box {
+.table-box.enroll{
 	margin: 0 auto;
 	padding: 100px 50px;
 	text-align: center;
 }
-.table-box td{
-width:350px;
+.table-box.enroll td{
+	width:350px;
+	padding-top:9px;
 }
 
-table {
+.table-box.enroll  {
 	position:relative;
 	width:800px;
 	margin: 0 auto;
@@ -40,35 +37,31 @@ table {
 	border-spacing: 50px 10px;
 }
 
-#table2 {
-	margin: 0 auto;
-}
-
-.form-control {
+.table-box.enroll .form-control {
 	border-radius: 5px;
 	border: 1px solid lightgray;
 }
-.input-text {
+.table-box.enroll .input-text {
 	width:350px;
 }
-.input-text-ssn {
+.table-box.enroll .input-text-ssn {
 	width:163px;
 	display:inline-block;
 }
 
-#enroll-btn {
+.table-box.enroll #enroll-btn {
 	margin:0 auto;
 }
 
-#button-group {
+.table-box.enroll #button-group {
 	padding: 0px 50px;
 }
 
-#button-group .step {
+.table-box.enroll #button-group .step {
 	margin-top: 0px;
 }
 
-.td-warn{
+.table-box.enroll .td-warn{
 	font-size: 14px;
     color: rgba(221, 30, 47, 1);
 }
@@ -297,7 +290,7 @@ function regExpTest(regExp, el, msg){
         	  name="memberEnrollFrm" 
         	  method="post" 
         	  onsubmit="return enrollValidate();" >
-		<div class="table-box">
+		<div class="table-box enroll">
 			<table>
 				<tr>
 					<td>이메일주소<span>*</span></td>

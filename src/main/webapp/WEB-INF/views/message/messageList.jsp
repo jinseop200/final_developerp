@@ -20,7 +20,7 @@
   <li class="nav-item">
     <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
   </li>
-  <li class="nav-item" style="padding-left:145px; ">
+  <li class="nav-item" style="padding-left:165px; ">
     <span class="nav-link" id="message-insert-button">신규</span>
   </li>
 </ul>
@@ -28,7 +28,7 @@
      <table class="table table-bordered message-list-table" style="text-align:center;" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
-           <th style="padding:12px 11px;">No</th>
+           <th style="padding:12px 13px;">No</th>
            <th>제목</th>
            <th class="messageShow">보낸사람</th>
            <th class="messageHide">받는사람</th>
@@ -43,9 +43,21 @@
 <%--      ${pageBar} --%>
 
 <style>
+.nav.nav-tabs{
+	border:0;
+}
+.nav-item:hover{
+	color:black;
+}
+.nav-item .nav-link.active{
+	color:black;
+	font-weight:bold;
+	border-bottom:1px solid #dddfeb;
+}
 .message-list-table tbody tr:hover td{
 	cursor : pointer;
 	background-color:#ccc;
+	color:black;
 }
 .message-list-table tbody tr td{
 	text-align:center;
@@ -93,6 +105,7 @@ $("#message-insert-button").on('click',function(){
 
 $(".messageListModal-end").click(function(){
 	$('#messageList').modal("hide");
+	location.reload();
 }); 
 
 $("#messageAll").on('click',function(){

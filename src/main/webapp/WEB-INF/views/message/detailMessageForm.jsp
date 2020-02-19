@@ -43,7 +43,7 @@
 #detail-message-container {
     height:460px;
 }
-.modal-content{
+.modal-content.messeage{
 	width:550px;
 	height:665px; 
 }
@@ -97,6 +97,14 @@
 		        
 		    });
 	    }); 
+		$(".btn.detailMessage-close").click(function(){
+			$("#detailMessage").modal('hide');
+			$('.controll-modal-body-messageList').load("${pageContext.request.contextPath}/message/messageList.do?empName=${memberLoggedIn.empName}",function(){
+		        $('#messageList').modal({backdrop: 'static', keyboard: false});
+		        $('#messageList').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+		    });
+		})
 	  
 })
   

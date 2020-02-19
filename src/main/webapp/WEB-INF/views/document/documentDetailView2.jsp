@@ -23,7 +23,8 @@ border:1px solid #ccc;
 </style>
 	<form action="${pageContext.request.contextPath}/document/updateDocument.do" name="documentEnrollFrm"  method="post" >
 	<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
-          		<input type="hidden" value="${list.docNo}" id="docNo" name="docNo" />
+    <input type="hidden" value="${list.docNo}" id="docNo" name="docNo" />
+    <input type="hidden" value="${memberLoggedIn.email}" id="email" name="email" />
     	<table style="margin: 0px auto; width: 800px; position: static; left: auto; top: auto;">
     		<tbody>
     			<tr>
