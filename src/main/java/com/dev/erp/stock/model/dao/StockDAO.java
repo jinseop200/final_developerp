@@ -6,6 +6,8 @@ import java.util.Map;
 public interface StockDAO {
 	
 	List<Map<String, String>> selectRmStockList();
+	
+	List<Map<String, String>> selectRmTotalList();
 
 	List<Map<String, String>> selectRmSnrStockList();
 
@@ -19,6 +21,7 @@ public interface StockDAO {
 	
 	List<Map<String, String>> storageList();
 
+	List<Map<String, String>> storageTotalList();
 	
 	
 	
@@ -45,6 +48,10 @@ public interface StockDAO {
 	int selectRecievingCountByLotNo();
 
 	int DeleteRm(Map<String, String> rawMaterial);
+
+
+
+	
 
 
 

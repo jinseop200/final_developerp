@@ -37,42 +37,44 @@
 	  </li>
 	</ul>
 	<%-- nav bar tap end --%>
-	
-	  <div id="chart"></div>
-	
-	  <div class="card-body">
-	    <div class="table-responsive" >
-			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
-			  <thead>
-			    <tr>
-			     <th>원재료번호</th>
-			     <th>원재료이름</th>
-			     <th>거래처번호</th>
-			     <th>거래처이름</th>
-			     <th>보유 수량</th>
-			    </tr>
-			  </thead>
-			  
-			  
-			  <tbody>
-		      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
-			        <tr>
-			          <td>${rm.RM_NO}</td>
-			          <td>${rm.RM_NAME}</td>    
-			          <td>${rm.VENDOR_NO}</td>    
-			          <td>${rm.VENDOR_NAME}</td>    			          
-			          <td>${rm.RM_SUM}</td>
-			        </tr>
-		        </c:forEach>
-			  </tbody>
-			  
-			</table>
-	    </div>
-	  </div>
-	</div>
+	 
+ <%-- 막대그래프 추가 --%>
+ <div id="chart"></div>
+ 
+
+  <div class="card-body">
+    <div class="table-responsive" >
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
+		  <thead>
+		    <tr>
+		     <th>원재료번호</th>
+		     <th>원재료이름</th>
+		     <th>거래처번호</th>
+		     <th>거래처이름</th>
+		     <th>보유 수량</th>
+		    </tr>
+		  </thead>
+		  
+		  
+		  <tbody>
+	      	<c:forEach items="${rmList}" var="rm" varStatus="vs">
+		        <tr>
+		          <td>${rm.RM_NO}</td>
+		          <td>${rm.RM_NAME}</td>    
+		          <td>${rm.VENDOR_NO}</td>    
+		          <td>${rm.VENDOR_NAME}</td>    			          
+		          <td>${rm.RM_SUM}</td>
+		        </tr>
+	        </c:forEach>
+		  </tbody>
+		  
+		</table>
+    </div>
+  </div>
+</div>
 	          
 	
-	<!-- ================================================================== 그래프 Start -->
+<!-- ================================================================== 그래프 Start -->
 
 
 <style>
@@ -90,8 +92,10 @@ table {
   text-align: center;
 }
 
+
 .bars td {
   vertical-align: bottom;
+  width: 30px;
 }
 
 .bars div:hover {
@@ -99,14 +103,17 @@ table {
 }
 
 .legend {
-  vertical-align: bottom;
-  padding-left: 20px;
-  text-align: left;
+    text-align: center;
+
 }
 
 .legbox {
-  display: block;
+  display: aline-block;
   clear: both;
+  writing-mode: tb-rl;
+  margin-right: 0.71%;
+  vertical-align: top;
+  
 }
 
 .xaxisname {
@@ -201,44 +208,116 @@ table {
 }
 
 .twenty {
-  background: #7F8C8D;
+  background: #74e383;
 }
+
+.twentyone {
+  background: #344d94;
+}
+
+.twentytwo {
+  background: #E67E22;
+}
+
+.twentythree {
+  background: #c47c18;
+}
+
+.twentyfour {
+  background: #b3cf15;
+}
+
+.twentyfive {
+  background: #60368f;
+}
+
+.twentysix {
+  background: #ffb300;
+}
+
+.twentyseven {
+  background: #02bf02;
+}
+
+.twentyeight {
+  background: #4289b3;
+}
+
+.twentynine {
+  background: #471a47;
+}
+
+.thirty {
+  background: #8a0c58;
+}
+
+.thirtyone {
+  background: #947f65;
+}
+
+.thirtytwo {
+  background: #bf4732;
+}
+
+.thirtythree {
+  background: #7000e0;
+}
+
+.thirtyfour {
+  background: #043d0e;
+}
+
+.thirtyfive {
+  background: #1b09e0;
+}
+
+
+
 </style>
 
 <script>
 var chartjson = {
-  "title": "완제품 한눈에 보기",
-  "data": ${productTotalList2},
-	  
+		
+  "title": "원재료 수량 차트",
+  "data": ${rmTotalList},
+  
   "xtitle": "Secured Marks",
   "ytitle": "Marks",
   "ymax": 100,
-  "ykey": 'TOTAL',
+  "ykey": 'RM_SUM',
   "xkey": "RM_NAME",
   "prefix": "개"
 }
 
 //chart colors
 var colors = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-	'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'
-	,'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'];
+ 	'fifteen', 'sixteen', 'eighteen', 'nineteen', 'twenty', 'twentyone', 'twentytwo', 'twentythree', 'twentyfour', 'twentyfive'
+	,'twentysix', 'twentyseven', 'twentyeight', 'twentynine', 'thirty', 'thirtyone', 'thirtytwo', 'thirtythree', 'thirtyfour', 'thirtyfive'];
 
 //constants
 var TROW = 'tr',
-  TDATA = 'td';
+    TDATA = 'td';
 
 var chart = document.createElement('div');
+
 //create the chart canvas
 var barchart = document.createElement('table');
+
 //create the title row
 var titlerow = document.createElement(TROW);
+
 //create the title data
 var titledata = document.createElement(TDATA);
+
 //make the colspan to number of records
 titledata.setAttribute('colspan', chartjson.data.length + 1);
+
 titledata.setAttribute('class', 'charttitle');
+
 titledata.innerText = chartjson.title;
+
 titlerow.appendChild(titledata);
+
 barchart.appendChild(titlerow);
 chart.appendChild(barchart);
 
@@ -253,8 +332,10 @@ for (var i = 0; i < chartjson.data.length; i++) {
   var bardata = document.createElement(TDATA);
   var bar = document.createElement('div');
   bar.setAttribute('class', colors[i]);
-  bar.style.height = chartjson.data[i][chartjson.ykey] + "%";
+  bar.style.height = chartjson.data[i][chartjson.ykey]/3 + "px";
+  
   bardata.innerText = chartjson.data[i][chartjson.ykey];
+
   bardata.appendChild(bar);
   barrow.appendChild(bardata);
 }
@@ -264,7 +345,7 @@ var legendrow = document.createElement(TROW);
 var legend = document.createElement(TDATA);
 legend.setAttribute('class', 'legend');
 legend.setAttribute('colspan', chartjson.data.length);
-
+chart.appendChild(barchart);
 //add legend data
 for (var i = 0; i < chartjson.data.length; i++) {
   var legbox = document.createElement('span');
@@ -275,12 +356,12 @@ for (var i = 0; i < chartjson.data.length; i++) {
   bartext.innerText = chartjson.data[i][chartjson.xkey];
   legbox.appendChild(barname);
   legbox.appendChild(bartext);
-  legend.appendChild(legbox);
+  chart.appendChild(legbox);
 }
 barrow.appendChild(legend);
 barchart.appendChild(barrow);
 barchart.appendChild(legendrow);
-chart.appendChild(barchart);
+
 document.getElementById('chart').innerHTML = chart.outerHTML;
 </script>
 <!-- ==================================================================  그래프 End -->  

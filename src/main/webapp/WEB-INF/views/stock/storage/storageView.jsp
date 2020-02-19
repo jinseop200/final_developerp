@@ -22,6 +22,9 @@
 	<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
 </div>
 
+<%-- 막대그래프 추가 --%>
+ <div id="chart"></div>
+
   <%-- nav bar tap start --%>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
@@ -88,6 +91,221 @@
     </div>
   </div>
 </div>
+         
+<!-- ================================================================== 그래프 Start -->
+
+
+<style>
+
+#chart {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  height: 400px;
+}
+
+.charttitle {
+  text-align: center;
+}
+
+.bars td {
+  vertical-align: bottom;
+}
+
+.bars div:hover {
+  opacity: 0.6;
+}
+
+.legend {
+  vertical-align: bottom;
+  padding-left: 30px;
+  text-align: left;
+  width: 7px;
+}
+
+.legbox {
+  display: block;
+  clear: both;
+}
+
+.xaxisname {
+  margin: 5px;
+  color: #fff;
+  font-size: 77%;
+  padding: 5px;
+  float: left;
+}
+
+
+/*Flat UI colors*/
+
+.one {
+  background: #16A085;
+}
+
+.two {
+  background: #2ECC71;
+}
+
+.three {
+  background: #27AE60;
+}
+
+.four {
+  background: #3498DB;
+}
+
+.five {
+  background: #2980B9;
+}
+
+.six {
+  background: #9B59B6;
+}
+
+.seven {
+  background: #8E44AD;
+}
+
+.eight {
+  background: #34495E;
+}
+
+.nine {
+  background: #2C3E50;
+}
+
+.ten {
+  background: #22313f;
+}
+
+.eleven {
+  background: #F1C40F;
+}
+
+.twelve {
+  background: #F39C12;
+}
+
+.thirteen {
+  background: #E67E22;
+}
+
+.fourteen {
+  background: #D35400;
+}
+
+.fifteen {
+  background: #E74C3C;
+}
+
+.sixteen {
+  background: #C0392B;
+}
+
+.seventeen {
+  background: #ECF0F1;
+}
+
+.seventeen.clouds {
+  color: #BDC3C7;
+}
+
+.eighteen {
+  background: #BDC3C7;
+}
+
+.nineteen {
+  background: #95A5A6;
+}
+
+.twenty {
+  background: #7F8C8D;
+}
+</style>
+
+<script>
+var chartjson = {
+		
+  "title": "창고번호별 수량 차트",
+  "data": ${storageTotalList},
+  
+  "xtitle": "Secured Marks",
+  "ytitle": "Marks",
+  "ymax": 100,
+  "ykey": 'STORE_SUM',
+  "xkey": "STORE_NO",
+  "prefix": "개"
+}
+
+//chart colors
+var colors = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
+	'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'
+	,'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'];
+
+//constants
+var TROW = 'tr',
+  TDATA = 'td';
+
+var chart = document.createElement('div');
+//create the chart canvas
+var barchart = document.createElement('table');
+//create the title row
+var titlerow = document.createElement(TROW);
+//create the title data
+var titledata = document.createElement(TDATA);
+//make the colspan to number of records
+titledata.setAttribute('colspan', chartjson.data.length + 1);
+titledata.setAttribute('class', 'charttitle');
+titledata.innerText = chartjson.title;
+titlerow.appendChild(titledata);
+barchart.appendChild(titlerow);
+chart.appendChild(barchart);
+
+//create the bar row
+var barrow = document.createElement(TROW);
+
+//lets add data to the chart
+for (var i = 0; i < chartjson.data.length; i++) {
+  barrow.setAttribute('class', 'bars');
+  var prefix = chartjson.prefix || '';
+  //create the bar data
+  var bardata = document.createElement(TDATA);
+  var bar = document.createElement('div');
+  bar.setAttribute('class', colors[i]);
+  bar.style.height = chartjson.data[i][chartjson.ykey]/50 + "px";
+  bardata.innerText = chartjson.data[i][chartjson.ykey];
+  bardata.appendChild(bar);
+  barrow.appendChild(bardata);
+}
+
+//create legends
+var legendrow = document.createElement(TROW);
+var legend = document.createElement(TDATA);
+legend.setAttribute('class', 'legend');
+legend.setAttribute('colspan', chartjson.data.length);
+
+//add legend data
+for (var i = 0; i < chartjson.data.length; i++) {
+  var legbox = document.createElement('span');
+  legbox.setAttribute('class', 'legbox');
+  var barname = document.createElement('span');
+  barname.setAttribute('class', colors[i] + ' xaxisname');
+  var bartext = document.createElement('span');
+  bartext.innerText = chartjson.data[i][chartjson.xkey] + "번 창고";
+  legbox.appendChild(barname);
+  legbox.appendChild(bartext);
+  legend.appendChild(legbox);
+}
+barrow.appendChild(legend);
+barchart.appendChild(barrow);
+barchart.appendChild(legendrow);
+chart.appendChild(barchart);
+document.getElementById('chart').innerHTML = chart.outerHTML;
+</script>
+<!-- ==================================================================  그래프 End -->           
           
           
 <!-- Modal -->
