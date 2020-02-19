@@ -53,7 +53,7 @@
     <div id="insert-container">
         <form class="needs-validation"
         	  id="orderRequestForm"
-        	  action="${pageContext.request.contextPath }/productplan/orderRequest.do"
+        	  action="${pageContext.request.contextPath }/productplan/orderRequestEnd.do"
         	  method="POST" >	
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
@@ -67,25 +67,12 @@
 	        </div>        
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
-	                <label for="lotNo">거래처</label>&emsp;&emsp;
-	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
-	                
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
-	            </div>
-	            <div class="col-md-6 mb-3">
 	                <label for="type">원재료명</label>&emsp;
-	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-	                <button class="btn btn-primary searchSpec" type="button" value="productName">
-	                    <i class="fas fa-search fa-sm"></i>
-	                </button>
+	                <input type="text" id="rmName" name="rmName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${rmName }" readonly>
 	            </div>
-	        </div>
-	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
-	                <label for="storeNo">발주수량</label>&emsp;
-	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" readonly>
+	                <label for="storeNo">필요수량</label>&emsp;
+	                <input type="number" id="requireAmount" name="requireAmount" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" value="${requireAm }" readonly>
 	            </div>
 	        </div>
 	        
@@ -102,24 +89,6 @@
 	        </div>
      	</form>
     </div>
-    
-   	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="searchDetailsModal">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	        <div class="modal-header">
-	            <h5 class="modal-title controll-title" id="sc-title"></h5>
-	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">&times;</span>
-	            </button>
-	        </div>
-	        <div class="modal-body sd-modal-body">
-	            <!-- <p>Modal body text goes here.</p> -->
-	        </div>
-	        </div>
-	    </div>
-	</div>
-
 
 	<script>    
 	$(function() {
@@ -155,31 +124,23 @@
 			$("#joModal").modal('hide');
 		});
 		
-		//각 요소 조회 버튼 이벤트핸들러
-		$(".searchSpec").click(function(){
-			var title = $(this).siblings().html();
-			console.log("title="+title);
-			$("#sc-title").html(title);
-			var searchType = $(this).val();
-			console.log("searchType="+searchType);
-			
-			$('.sd-modal-body').load("${pageContext.request.contextPath}/productplan/searchDetails.do?searchType="+searchType,function(){
-		        $('#searchDetailsModal').modal({backdrop: 'static', keyboard: false});
-		        $('#searchDetailsModal').modal({show:true});
-		        $(".modal-backdrop.in").css('opacity', 0.4);
-			});
-		});
-		
 		$("#enrollBtn").click(function(){
 			if(!confirm("등록하시겠습니까?")) return;
+			
+			/* var validate = $("#requireAmount")[0];
+			if (validate.checkValidity() == false) {
+				return;
+			} */
 			$("#orderRequestForm").submit();
+			
 		});
-				
 				
 		$(".cancelBtn").click(function(){
 			$("#joModal").modal('hide');
 		});
 		
+		
+
 		
 		
 				

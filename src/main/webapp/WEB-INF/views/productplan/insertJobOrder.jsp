@@ -69,7 +69,7 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
-	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required>
 	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
@@ -85,14 +85,14 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="type">제품명 </label>&emsp;&emsp;
-	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required>
 	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">지시수량 </label>&emsp;
-	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2">
+	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" required>
 	            </div>
 	        </div>
 	        
@@ -179,6 +179,22 @@
 		
 		$("#enrollBtn").click(function(){
 			if(!confirm("등록하시겠습니까?")) return;
+			
+			var $customer = $("#customer")[0];
+			var $pdtName = $("#productName")[0];
+			var $qty = $("#quantity")[0];
+			
+			if($customer.checkValidity() == false) {
+				return;
+			}
+			if($pdtName.checkValidity() == false){
+				return;
+			}
+			if($qty.checkValidity() == false){
+				return;
+			}
+			
+			
 			$("#insertJoFrm").submit();
 		});
 				

@@ -236,18 +236,27 @@ $(".searchProduct-btn").click(function(){
 	
 //필요수량 구매계획 모달
 $(".jo-table tbody").on('dblclick', 'tr', function(){
-	var dataName = $(this).children().eq(1).html();
-	console.log(dataName);
 	
-	/* $(".order-body").css('display','block');
-	$(".epl-body").css('display','none'); */
+	var rmName = $(this).children().eq(1).html();
+	var requireAm = $(this).children().eq(4).html();
 	
-	$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?dataName="+dataName,function(){
-        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
-        $('#purchasePlan-modal2').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        $(".controll-title").html("구매계획 등록");
-	});
+	if(requireAm <= 0){
+		alert("발주요청 불가!\n(필요구매량을 확인해주세요.)");
+	}
+	else{
+		var rmNameArr = rmName.split(" ");
+		
+		/* $(".order-body").css('display','block');
+		$(".epl-body").css('display','none'); */
+		
+		$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?rmNameArr="+rmNameArr+"&requireAm="+requireAm,function(){
+	        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
+	        $('#purchasePlan-modal2').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("구매계획 등록");
+		});
+		
+	}	
 });
 
 	
