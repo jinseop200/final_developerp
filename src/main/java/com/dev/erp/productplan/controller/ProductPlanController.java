@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -137,8 +136,21 @@ public class ProductPlanController {
 	//필요수량에 대한 구매계획 등록창
 	@RequestMapping("/productplan/orderRequest.do")
 	public ModelAndView insertPurchasePlanForm(ModelAndView mav,
-											   @RequestParam(value="dataName") String dataName) {
-		logger.debug("민병준테스트={}", dataName);
+											   @RequestParam String[] rmNameArr,
+											   @RequestParam String requireAm) {
+		String rmName ="";
+		
+		for(String str :rmNameArr) {
+			if(str == rmNameArr[rmNameArr.length-1])
+				rmName+=str;
+			else
+				rmName+=str+" ";
+			
+		}
+		logger.info("테스트@={}",rmName);
+		
+		mav.addObject("rmName", rmName);
+		mav.addObject("requireAm", requireAm);
 		mav.setViewName("productplan/orderRequest");
 		
 		return mav;

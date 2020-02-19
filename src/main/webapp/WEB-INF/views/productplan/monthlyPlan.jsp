@@ -43,14 +43,38 @@ input[type=text]{
     width: auto;
 
 }
+#myModal{
+	z-index: 1060;
+}
 </style>
 
 		
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">월별 생산계획(최근 3개월 생산량 평균)</h1>
+<h1 class="h3 mb-2 text-gray-800">생산현황 및 월별 생산계획</h1>
+<!-- 생산현황 테이블 -->
+<div id="productionStatus">
+	<h4>생산 현황</h4>
+	<table id="stausTable" width="30%" >
+	  <thead>
+	    <tr>
+	      <th>완제품계획</th>
+	      <th>완제품실적</th>
+	      <th>달성율</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<tr class="table-info">
+	  		<td></td>
+	  		<td></td>
+	  		<td></td>
+	  	</tr>
+	  </tbody>
+	</table>
+</div>
+
 <div class="form-row">
 	<div class="col-lg-20 mb-3 rowResize">
-		 <label for="productName">제품별 소요량-재고량 조회</label>&emsp;<br>
+		 <label for="productName">제품별 월별 생산계획 조회</label>&emsp;<br>
 	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 	     <input type="hidden" id="productNo" name="productNo" />
 	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
@@ -58,9 +82,10 @@ input[type=text]{
 		 </button>
 	</div>
 </div>
+
 <br />
 <div id="graph">
-  <canvas id="lineChart"></canvas>
+	<canvas id="barChart"></canvas>
 </div>
  
   <!-- Modal -->
@@ -80,11 +105,7 @@ input[type=text]{
         </div>
     </div>
 </div>
-<style>
-#myModal{
-	z-index: 1060;
-}
-</style>
+
 
 <!-- jQuery -->
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/js_mdb/jquery.min.js"></script>
@@ -96,43 +117,45 @@ input[type=text]{
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/js_mdb/mdb.min.js"></script>
 <script>
 $(()=>{
-	console.log("민병준test="+${firstPL});
+	
 });
 	//그래프 자바스크립트
-	//line
-	var ctxL = document.getElementById("lineChart").getContext('2d');
-	var myLineChart = new Chart(ctxL, {
-	type: 'line',
+	//bar
+	var ctxB = document.getElementById("barChart").getContext('2d');
+	var myBarChart = new Chart(ctxB, {
+	type: 'bar',
 	data: {
-	labels: ["January", "February", "March", "April", "May", "June", "July"],
-	// ${labels}
+	labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
 	datasets: [{
-	label: "소요량",
-	data: [65, 59, 80, 81, 56, 55, 40],
-	//${data}
+	label: '# of Votes',
+	data: [12, 19, 3, 5, 2, 3],
 	backgroundColor: [
-	'rgba(105, 0, 132, .2)',
+	'rgba(255, 99, 132, 0.2)',
+	'rgba(54, 162, 235, 0.2)',
+	'rgba(255, 206, 86, 0.2)',
+	'rgba(75, 192, 192, 0.2)',
+	'rgba(153, 102, 255, 0.2)',
+	'rgba(255, 159, 64, 0.2)'
 	],
 	borderColor: [
-	'rgba(200, 99, 132, .7)',
+	'rgba(255,99,132,1)',
+	'rgba(54, 162, 235, 1)',
+	'rgba(255, 206, 86, 1)',
+	'rgba(75, 192, 192, 1)',
+	'rgba(153, 102, 255, 1)',
+	'rgba(255, 159, 64, 1)'
 	],
-	borderWidth: 2
-	},
-	{
-	label: "재고량",
-	data: [28, 48, 40, 19, 86, 27, 90],
-	backgroundColor: [
-	'rgba(0, 137, 132, .2)',
-	],
-	borderColor: [
-	'rgba(0, 10, 130, .7)',
-	],
-	borderWidth: 2
-	}
-	]
+	borderWidth: 1
+	}]
 	},
 	options: {
-	responsive: true
+	scales: {
+	yAxes: [{
+	ticks: {
+	beginAtZero: true
+	}
+	}]
+	}
 	}
 	});
 
