@@ -91,8 +91,10 @@ table {
 
 .legend {
   vertical-align: bottom;
-  padding-left: 20px;
+  margin: 10px;
   text-align: left;
+  width: 7px;
+  padding-left: 20px;
 }
 
 .legbox {
@@ -198,11 +200,11 @@ table {
 
 <script>
 var chartjson = {
-  "title": "완제품 한눈에 보기",
+  "title": "완제품 수량 차트",
   "data": ${productTotalList2},
 	  
-  "xtitle": "Secured Marks",
-  "ytitle": "Marks",
+  "xtitle": "제품이름",
+  "ytitle": "수량",
   "ymax": 100,
   "ykey": 'TOTAL',
   "xkey": "PRODUCT_NAME",
@@ -244,7 +246,7 @@ for (var i = 0; i < chartjson.data.length; i++) {
   var bardata = document.createElement(TDATA);
   var bar = document.createElement('div');
   bar.setAttribute('class', colors[i]);
-  bar.style.height = chartjson.data[i][chartjson.ykey] + "%";
+  bar.style.height = chartjson.data[i][chartjson.ykey] + "px";
   bardata.innerText = chartjson.data[i][chartjson.ykey];
   bardata.appendChild(bar);
   barrow.appendChild(bardata);
