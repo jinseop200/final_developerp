@@ -6,17 +6,27 @@ import java.util.Map;
 public interface StockService {
 
 	List<Map<String, String>> selectRmStockList();
-
+	
+	List<Map<String, String>> selectRmTotalList();
+	
 	List<Map<String, String>> selectRmSnrStockList();
+	
+	
 
 	List<Map<String, String>> selectProductStockList();
 	
 	List<Map<String, String>> selectProductStockTotalList();
 
+	
+	
 	List<Map<String, String>> selectStorageStockList(String storeNo);
 	
 	List<Map<String, String>> allStorageStockList();
+	
+	List<Map<String, String>> storageTotalList();
 
+	
+	
 	int UpdateRm(Map<String, String> rawMaterial);
 
 	int InsertRm(Map<String, String> rawMaterial);
@@ -42,6 +52,10 @@ public interface StockService {
 	int DeleteRm(Map<String, String> recieving);
 
 	List<Map<String, String>> storageList();
+
+
+
+	
 
 	
 

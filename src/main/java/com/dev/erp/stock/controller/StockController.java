@@ -33,26 +33,20 @@ public class StockController {
 	public ModelAndView selectRmStockList(ModelAndView mav) {
 		
 		List<Map<String, String>> rmList = stockservice.selectRmStockList();
+		List<Map<String, String>> rmTotalList = stockservice.selectRmTotalList();
+		
+		String json = new Gson().toJson(rmTotalList);
 		
 		logger.info("rmList@Controller={}", rmList);
+		logger.info("rmTotalList@Controller={}", rmTotalList);
 		
+		mav.addObject("rmTotalList",json);  
 		mav.addObject("rmList", rmList);
-		mav.setViewName("stock/rm/rmView");
-		
-		return mav;
-	}
-	
-	@RequestMapping("/stock/rm/modalRmSearch.do")
-	public ModelAndView modalRmInsert(ModelAndView mav) {
-		
-		mav.setViewName("/stock/rm/modalRmSearch");
+		mav.setViewName("/stock/rm/rmView");
 		
 		return mav;
 	}
 
-
-	
-	// ========================================= 원재료 입출고관리 파트 =========================================
 	
 	@RequestMapping("/stock/rm/rmSnrView.do")
 	public ModelAndView selectRmSnrStockList(ModelAndView mav) {
@@ -62,20 +56,13 @@ public class StockController {
 		logger.info("rmSnrList@Controller={}", rmSnrList);
 		
 		mav.addObject("rmSnrList", rmSnrList);
-		mav.setViewName("stock/rm/rmSnrView");
+		mav.setViewName("/stock/rm/rmSnrView");
 		
 		return mav;
 	}
 	
 	
 
-	@RequestMapping("/stock/rm/modalRmSnrSearch.do")
-	public ModelAndView modalRmSnrSearch(ModelAndView mav) {
-		
-		mav.setViewName("/stock/rm/modalRmSnrSearch");
-		
-		return mav;
-	}
 	@RequestMapping("/stock/rm/modalRmSnrInsert.do")
 	public ModelAndView modalRmSnrInsert(ModelAndView mav) {
 		
@@ -194,7 +181,7 @@ public class StockController {
 		String json = new Gson().toJson(productTotalList);
 		
 		mav.addObject("productTotalList",productTotalList);
-		mav.addObject("productTotalList2",json);  // 요놈부터  원재료 가져오는것부터 시작
+		mav.addObject("productTotalList2",json);  
 		mav.setViewName("/stock/product/productTotalView");
 		
 		return mav;
@@ -223,6 +210,10 @@ public class StockController {
 	
 		List<Map<String, String>> storageStockList;
 		List<Map<String, String>> storageList;
+		List<Map<String, String>> storageTotalList = stockservice.storageTotalList();
+
+		String json = new Gson().toJson(storageTotalList);
+
 		
 		if(storeNo.equals("0"))
 			storageStockList = stockservice.allStorageStockList();
@@ -234,11 +225,14 @@ public class StockController {
 		
 		logger.info("storageList@Controller={}", storageStockList);
 		
+		
+		mav.addObject("storageTotalList",json);  
 		mav.addObject("storageStockList", storageStockList);
 		mav.addObject("storageList", storageList);
 		mav.setViewName("/stock/storage/storageView");
 		
 		return mav;
+		
 	}
 	
 	
