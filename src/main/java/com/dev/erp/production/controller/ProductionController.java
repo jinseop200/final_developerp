@@ -1,9 +1,12 @@
 package com.dev.erp.production.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.enrollment.model.service.EnrollmentService;
 import com.dev.erp.production.model.service.ProductionService;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 
 @Controller
@@ -390,9 +395,10 @@ public class ProductionController {
 	//==============================releasing start======================================
 	@RequestMapping("/production/checkBOMExist")
 	@ResponseBody
-	public List<Map<String, String>> checkBOMExist(@RequestParam("chkBOM") String chkBOM,
-											 @RequestParam("rQuantity") String rQuantity) {
-		
+	public ModelAndView checkBOMExist(@RequestParam("chkBOM") String chkBOM,
+											 @RequestParam("rQuantity") String rQuantity,HttpServletResponse response,
+											 ModelAndView mav) throws JsonIOException, IOException {
+		response.setContentType("text/html;charset=utf-8");
 		logger.info("chkBOM@Controller={}",chkBOM);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -408,7 +414,8 @@ public class ProductionController {
 		boolean isUsable = lMap.size()==0?false:true;
 		map.put("isUsable", isUsable);
 		
-		
+		List<Map<String, String>> list = productionService.quantityCheck(map);
+		logger.info("list@Controller={}",list);
 		
 		//Map<String, String> isUsableMap = new HashMap<>();
 		//isUsableMap.put("isUsable", String.valueOf(isUsable));
@@ -417,7 +424,11 @@ public class ProductionController {
 		//lMap.add(isUsableMap);
 		
 		logger.info("lMap@Controller={}",lMap);
-
+		
+		mav.addObject("isUsable",isUsable);
+		mav.addObject("list",list);
+		mav.setViewName("jsonView");
+		return mav;
 		/*
 		//필요수량이 모자란것들(QUANCHK < 0) 담을 nList 생성
 		List<Map<String, String>> nList = new ArrayList<>();
@@ -461,7 +472,6 @@ public class ProductionController {
 		}
 		logger.info("nList@Controller={}",nList);*/
 		
-		return lMap;
 	}
 	
 	

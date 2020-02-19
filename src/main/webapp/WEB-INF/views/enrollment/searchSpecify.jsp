@@ -62,6 +62,11 @@
            <th>제품명</th>
            <th>지시수량</th>
            </c:if>
+           <c:if test="${searchType == 'receivingLotNo'}">
+           <th>입고날짜</th>
+           <th>로트번호</th>
+           <th>입고수량</th>
+           </c:if>
          </tr>
        </thead>
        <tbody id="tbodyList">
@@ -201,6 +206,17 @@ function morePage(a){
 					let p = speclist[i];
 					//console.log(p);	
 					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><td>"+p.content5+"</td><td>"+p.content6+"</td><tr>");
+				}
+				$(".pageBar").html(data.pageBar);
+				$("span.page-link").attr('onclick',"morePage(this.id)");
+			}
+			else if(data.searchType == 'receivingLotNo'){
+				var speclist = data.speclist;
+				$(".quality-specify-table tbody").children().remove();
+				for(var i in speclist ) {
+					let p = speclist[i];
+					//console.log(p);	
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><tr>");
 				}
 				$(".pageBar").html(data.pageBar);
 				$("span.page-link").attr('onclick',"morePage(this.id)");
