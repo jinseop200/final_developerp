@@ -23,7 +23,6 @@ System.out.println("현재시간  : " +sdf.format(now));
 <script src='${pageContext.request.contextPath}/resources/js/calendar/timegrid/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/calendar/list/main.js'></script>
 <script>
-
 document.addEventListener('DOMContentLoaded', function() {	
 			    var calendarEl = document.getElementById('calendar');				
 			    var calendar = new FullCalendar.Calendar(calendarEl, {

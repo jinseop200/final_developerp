@@ -30,19 +30,26 @@ public class AttendController {
 		List<Attend> list= attendService.attendShow(email);
 		String content="";
 
-		
+	System.out.println("fdfdffdfdfdddddddddddd"+list);
 		for(Attend a:list) {
 			if(a.getEarlyAttend()!=null)
 			{
 				content+=",{title:'*조퇴 사유 :"+a.getReason()+"',start:'"+a.getEarlyAttendForm()+"'}";
 				content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend()+"',start:'"+a.getEarlyAttendForm()+"'}";
 			}
-			if(a.getAttendStart()!=null)
+			if(a.getReason()!=null)
+			if(a.getReason().equals("휴가"))
+			{
+				content+=",{title:'휴가',start:'"+a.getAttendStartForm()+"',end:'"+a.getAttendEndForm()+"'}";
+				System.out.println("fffffffffffffffffffffffffffffffffffffff");
+			}
+			else if(a.getAttendStart()!=null)
 				content+=",{title:'-출근:"+a.getAttendStart()+"',start:'"+a.getAttendStartForm()+"'}";
-			if(a.getAttendEnd()!=null)
+			else if(a.getAttendEnd()!=null)
 				content+=",{title:'-퇴근:"+a.getAttendEnd()+"',start:'"+a.getAttendEndForm()+"'}";
 		}
 
+		System.out.println("Fdazzzzzz"+content);
 		mav.addObject("content",content);
 		mav.setViewName("gw/attendCal");
 		return mav;
