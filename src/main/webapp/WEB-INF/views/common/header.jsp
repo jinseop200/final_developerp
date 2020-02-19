@@ -92,7 +92,7 @@
                 <h6 class="collapse-header">Detail</h6>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}">문서결재</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
-                <a class="collapse-item" href="cards.html">게시판</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/board/boardList.do">게시판</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do?">시설물 예약</a>
               </div>
             </div>
@@ -601,7 +601,7 @@
 						<%--documentLastApproval modal --%>
 			<div class="modal" tabindex="-1" role="dialog" id="searhMessageList">
 			  <div class="modal-dialog" role="document">
-			      <div class="modal-content messenger">
+			      <div class="modal-content messeage">
 			      <div class="modal-header">
 			          <h5 class="modal-title control-title-searhMessageList" id="searhMessageList"> </h5>
 			      </div>
@@ -660,9 +660,7 @@
 				    });
 			});
 			
-			$(".btn.detailMessage-close").click(function(){
-				$("#detailMessage").modal('hide');
-			})
+		
 			
 			$(".nav-link.dropdown-toggle.messenger").on("click",function(){
 					$('.controll-modal-body-messengerList').load("${pageContext.request.contextPath}/messenger/messengerList.do",function(){

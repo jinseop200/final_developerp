@@ -10,6 +10,8 @@ public interface StockService {
 	List<Map<String, String>> selectRmSnrStockList();
 
 	List<Map<String, String>> selectProductStockList();
+	
+	List<Map<String, String>> selectProductStockTotalList();
 
 	List<Map<String, String>> selectStorageStockList(String storeNo);
 	
@@ -38,6 +40,10 @@ public interface StockService {
 	int selectRecievingCountByLotNo();
 
 	int DeleteRm(Map<String, String> recieving);
+
+	List<Map<String, String>> storageList();
+
+	
 
 
 

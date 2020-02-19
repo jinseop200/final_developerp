@@ -28,6 +28,13 @@ public class StockDAOImpl implements StockDAO {
 	public List<Map<String, String>> selectProductStockList() {
 		return sqlsession.selectList("stock.selectProductStockList");
 	}
+	
+	@Override
+	public List<Map<String, String>> selectProductStockTotalList() {
+		return sqlsession.selectList("stock.selectProductStockTotalList");
+
+	}
+
 
 	@Override
 	public List<Map<String, String>> selectStorageStockList(String storeNo) {
@@ -37,6 +44,11 @@ public class StockDAOImpl implements StockDAO {
 	@Override
 	public List<Map<String, String>> allStorageStockList() {
 		return sqlsession.selectList("stock.allStorageStockList");
+	}
+	
+	@Override
+	public List<Map<String, String>> storageList() {
+		return sqlsession.selectList("stock.storageStockList");
 	}
 
 	
@@ -103,6 +115,9 @@ public class StockDAOImpl implements StockDAO {
 	public int selectRecievingCountByLotNo() {
 		return sqlsession.selectOne("stock.selectRecievingCountByLotNo");
 	}
+
+
+
 
 
 

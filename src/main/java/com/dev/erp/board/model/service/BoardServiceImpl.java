@@ -1,6 +1,7 @@
 package com.dev.erp.board.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.dev.erp.board.model.dao.BoardDAO;
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
-import com.dev.erp.board.model.vo.BoardClub;
 
 
 @Service
@@ -17,6 +17,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	BoardDAO boardDAO;
+	
 
 	@Override
 	public int insertBoardCategory(BoardCategory boardCategory) {
@@ -24,7 +25,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardCategory> selectBoardCategoryList() {
+	public List<Map<String, Object>> selectBoardCategoryList() {
 		return boardDAO.selectBoardCategoryList();
 			
 		}
@@ -34,14 +35,26 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.seletOneBoard(boardNo);
 	}
 
-	@Override
-	public List<Board> selectBoardType() {
-		return boardDAO.selectBoardType();
-	}
+	
 
 	@Override
 	public BoardCategory boardCategoryView(int categoryNo) {
 		return boardDAO.boardCategoryView(categoryNo);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectBoardClubList(int boardNo) {
+		return boardDAO.selectBoardClubList(boardNo);
+	}
+
+	@Override
+	public List<Board> selectBoardList() {
+		return boardDAO.selectBoardList();
+	}
+
+	@Override
+	public List<Map<String,Object>> selectBoardAllList() {
+		return boardDAO.selectBoardAllList();
 	}
 
 

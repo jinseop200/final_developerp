@@ -41,13 +41,21 @@
 				select * from board_category where category_no = #{categoryNo}
 			</select>
 			
-			<select id="selectBoardCategoryList" resultType="boardCategory">
-				select * from board_category order by category_no 
+			<select id="selectBoardCategoryList" resultType="map">
+				select * from board_category C left join board B on C.board_no = B.board_no 
 			</select>	
 			
-			<select id="selectBoardClubList" resultType="boardClub">
-				select * from board_club where board_no = #{boardNo} 
+			<select id="selectBoardClubList" resultType="map">
+				select C.*, B.*, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no where C.board_no = #{boardNo} 
 			</select>	 
+			
+			<select id="selectBoardList" resultType="board">
+				select * from board order by board_no
+			</select>
+			
+			<select id="selectBoardAllList" resultType="map">
+				select C.*,B.*,to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no order by C.board_no
+			</select>
 	
 	
 </mapper>

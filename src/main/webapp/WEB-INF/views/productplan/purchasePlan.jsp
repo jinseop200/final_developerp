@@ -88,7 +88,21 @@ input[type=text]{
         <div class="modal-body epl-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
-        <div class="modal-body insertPP-body">
+        </div>
+    </div>
+</div>
+
+<!-- Modal2 -->
+<div class="modal" tabindex="-1" role="dialog" id="purchasePlan-modal2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body order-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         </div>
@@ -209,8 +223,8 @@ input[type=text]{
 	
 //제품조회 모달
 $(".searchProduct-btn").click(function(){
-	 $(".epl-body").css('display','block');
-	 $(".insertPP-body").css('display','none');
+	 /* $(".epl-body").css('display','block');
+	 $(".order-body").css('display','none'); */
 	 
 	 $('.epl-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
 	        $('#purchasePlan-modal').modal({backdrop: 'static', keyboard: false});
@@ -222,12 +236,15 @@ $(".searchProduct-btn").click(function(){
 	
 //필요수량 구매계획 모달
 $(".jo-table tbody").on('dblclick', 'tr', function(){
-	$(".insertPP-body").css('display','block');
-	$(".epl-body").css('display','none');
+	var dataName = $(this).children().eq(1).html();
+	console.log(dataName);
 	
-	$(".insertPP-body").load("${pageContext.request.contextPath}/productplan/purchaseRequest.do",function(){
-        $('#purchasePlan-modal').modal({backdrop: 'static', keyboard: false});
-        $('#purchasePlan-modal').modal({show:true});
+	/* $(".order-body").css('display','block');
+	$(".epl-body").css('display','none'); */
+	
+	$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?dataName="+dataName,function(){
+        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
+        $('#purchasePlan-modal2').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         $(".controll-title").html("구매계획 등록");
 	});

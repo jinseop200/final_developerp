@@ -53,7 +53,7 @@ table.table th, table.table td {text-align: center;}
 			<%--searhMessengerList  modal --%>
 			<div class="modal" tabindex="-1" role="dialog" id="searhMessengerList">
 			  <div class="modal-dialog" role="document">
-			      <div class="modal-content">
+			      <div class="modal-content messenger">
 			      <div class="modal-header">
 			          <h5 class="modal-title control-title-searhMessengerList" id="searhMessengerList"> </h5>
 			      </div>
@@ -68,7 +68,7 @@ table.table th, table.table td {text-align: center;}
 			<%--messengerChat modal --%>
 			<div class="modal" tabindex="-1" role="dialog" id="messengerChat">
 			  <div class="modal-dialog" role="document">
-			      <div class="modal-content">
+			      <div class="modal-content messenger">
 			      <div class="modal-header">
 			          <h5 class="modal-title control-title-messengerChat" id="messengerChat"> </h5>
 			      </div>

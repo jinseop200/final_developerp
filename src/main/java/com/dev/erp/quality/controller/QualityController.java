@@ -229,6 +229,7 @@ public class QualityController {
 		param.put("qualityYN", qualityYN);
 		param.put("storeNo", storeNo);
 		param.put("qualityComment",qualityComment);
+		logger.debug("param@controller={}",param);
 		int result = 0;
 		switch(type) {
 		case "원재료" : result = qualityService.updateInsectionYNInRecieving(param); break;

@@ -28,6 +28,12 @@
 	   ORDER BY PRODUCTION DESC
 	</select>
 	
+	<select id="selectProductStockTotalList" resultMap="stockMap">
+	   SELECT PRODUCT_NAME, SUM(QUANTITY) AS TOTAL 
+	   FROM PRODUCTION
+	   GROUP BY PRODUCT_NAME
+	</select>
+	
 	
 	<select id="selectStorageStockList" resultMap="stockMap">
 	   SELECT STORAGE.STORE_NO, STORAGE.STORE_NAME, PRODUCTION.LOT_NO, PRODUCTION.PRODUCT_NAME AS STORED_ITEM_NAME, PRODUCTION.QUANTITY, PRODUCT_TYPE.TYPE
@@ -52,6 +58,12 @@
 	   FROM RECEIVING LEFT JOIN STORAGE ON STORAGE.STORE_NO = RECEIVING.STORE_NO
                       LEFT JOIN RAW_MATERIAL ON RECEIVING.RM_NO = RAW_MATERIAL.RM_NO
                       LEFT JOIN PRODUCT_TYPE  ON RECEIVING.PT_NO = PRODUCT_TYPE.PT_NO
+	</select>
+	
+
+	<select id="storageStockList" resultMap="stockMap">
+	   SELECT *
+	   FROM storage
 	</select>
 
 <!-- ========================================= INSERT UPDATE mapper ========================================= -->

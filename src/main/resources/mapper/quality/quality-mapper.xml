@@ -79,7 +79,7 @@
 		 where p.insection_yn = 'N') where lot_no = #{lotNo}
 	</select>
 	
-	<update id="updateInsectionYNInrecieving">
+	<update id="updateInsectionYNInRecieving">
 		update receiving set insection_yn = 'Y', quality_yn = #{qualityYN}, store_no=#{storeNo}, measurement=#{measurement} where lot_no = #{lotNo}
 	</update>
 	<update id="updateInsectionYNInProduction">

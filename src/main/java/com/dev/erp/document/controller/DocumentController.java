@@ -57,7 +57,8 @@ public class DocumentController {
 										@RequestParam("docLastapproval1") String docLastapproval1, @RequestParam("docLastapproval2") String docLastapproval2,
 										@RequestParam("docLastapproval3") String docLastapproval3,
 										@RequestParam("documentType") String documentType, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
-										@RequestParam("documentContent") String documentContent, @RequestParam("empName") String empName) {
+										@RequestParam("documentContent") String documentContent, @RequestParam("empName") String empName,
+										@RequestParam("email") String email) {
 		logger.debug("startDate={}",startDate);
 		int typeNo = 0;
 		if(documentType.equals("기본")) {
@@ -76,7 +77,7 @@ public class DocumentController {
 		Document document = new Document();
 		if(docLastapproval!=""&&docLastapproval1=="" &&docLastapproval2=="" &&docLastapproval3=="") {
 			docLast=docLastapproval;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate,email);
 			DocumentLine documentLine = new DocumentLine(0,0,typeNo,empName,docLast,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLast,null,"Y");
 			result = documentService.insertDocument(document);
@@ -85,7 +86,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2==""&&docLastapproval3=="") {
 			docLast=docLastapproval1;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate,email);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,null,"Y");
@@ -96,7 +97,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3=="") {
 			docLast=docLastapproval2;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate,email);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
@@ -109,7 +110,7 @@ public class DocumentController {
 		}
 		if(docLastapproval!=""&&docLastapproval1!=""&&docLastapproval2!=""&&docLastapproval3!="") {
 			docLast=docLastapproval3;
-			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate);
+			document = new Document(0,typeNo,documentType,documentTitle,"진행중",empName,docLast,documentContent,documentDate,startDate,endDate,email);
 			DocumentLine documentLine0 = new DocumentLine(0,0,typeNo,empName,docLastapproval,"Y");
 			DocumentLine documentLine1 = new DocumentLine(0,0,typeNo,docLastapproval,docLastapproval1,"Y");
 			DocumentLine documentLine2 = new DocumentLine(0,0,typeNo,docLastapproval1,docLastapproval2,"Y");
@@ -200,7 +201,7 @@ public class DocumentController {
 	}
 	@RequestMapping("/document/updateDocument.do")
 	public ModelAndView updateDocument(ModelAndView mav, @RequestParam("docNo") int docNo, @RequestParam("empName") String empName, 
-										@RequestParam("submitApprove") int submitApprove) {
+										@RequestParam("submitApprove") int submitApprove,@RequestParam("email") String email) {
 		int result1=0;
 		int result2=0;
 		Map<String,Object> param = new HashMap<>();
