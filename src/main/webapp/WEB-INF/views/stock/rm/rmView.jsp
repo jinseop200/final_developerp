@@ -13,7 +13,7 @@
   
 
 <!-- ============================ 원재료 재고관리 부분 ==================================== -->
-	<h1 class="h3 mb-2 text-gray-800">원재료 재고 관리</h1>
+	<h1 class="h3 mb-2 text-gray-800">원재료 재고 조회</h1>
 	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
 		<div class="input-group" style="margin:30px;">
 		</div>

@@ -12,7 +12,7 @@
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">창고별 재고관리</h1>
+<h1 class="h3 mb-2 text-gray-800">창고별 재고 조회</h1>
 
 <br />
 
