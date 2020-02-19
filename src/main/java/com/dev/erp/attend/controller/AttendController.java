@@ -40,6 +40,7 @@ public class AttendController {
 			if(a.getReason()!=null)
 			if(a.getReason().equals("휴가"))
 			{
+				
 				content+=",{title:'휴가',start:'"+a.getAttendStartForm()+"',end:'"+a.getAttendEndForm()+"'}";
 				System.out.println("fffffffffffffffffffffffffffffffffffffff");
 			}

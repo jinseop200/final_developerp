@@ -13,7 +13,7 @@
 	</select> 
 	<insert id="insertDocument">
 		insert into document values(seq_doc_no.nextval,#{typeNo},#{docType},#{docTitle},#{docStatus},
-									#{docWriter},#{docLastapproval},#{docContent},#{regDate},#{startDate},#{endDate},#{email})
+									#{docWriter},#{docLastapproval},#{docContent},#{regDate},to_date(#{startDate},'yyyy-mm-dd'),to_date(#{endDate},'yyyy-mm-dd')+1,#{email})
 	</insert>
 	
 	<insert id="insertDocumentLine">
@@ -56,7 +56,7 @@
 		select * from doc_line where next_writer=#{prevWriter} and doc_no =#{docNo}
 	</select>
 	<update id="updateDocument">
-		update document set doc_status='결재완료' where doc_no = #{docNo}
+		update document set doc_status='결재완료' where doc_no =#{docNo}
 	</update>
 	<update id="notUpdateDocument">
 		update document set doc_status='반려' where doc_no = #{docNo}
