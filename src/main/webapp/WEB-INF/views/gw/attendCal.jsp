@@ -23,6 +23,13 @@ System.out.println("현재시간  : " +sdf.format(now));
 <script src='${pageContext.request.contextPath}/resources/js/calendar/timegrid/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/calendar/list/main.js'></script>
 <script>
+$(()=>{
+	 var holiday=$(".fc-title").text();
+	 console.log(holiday);
+	  if("holiday:contains('휴가')"){
+		  $(".fc-content").addClass("holiday");
+	  }
+})
 document.addEventListener('DOMContentLoaded', function() {	
 			    var calendarEl = document.getElementById('calendar');				
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -121,11 +128,16 @@ document.addEventListener('DOMContentLoaded', function() {
 		frm.submit();
 	
   }
+ 
 </script>
 <form name="attendForm">
 		<input type="hidden" name="Id" val= />
 	</form>
 <style>
+.fc-content.holiday{
+	text-align:center;
+	background-color:yellowgreen;
+}
 a.fc-day-number{
 cursor:pointer;}
 /*   body {*/

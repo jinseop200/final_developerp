@@ -190,6 +190,7 @@ public class DocumentController {
 			map.put("prevWriter", nextWriter.getPrevWriter());
 			prevWriter=documentService.documentPrevWriter(map);
 		}
+
 		logger.debug("docLine={}",docLine);
 		mav.addObject("list",document);
 		mav.addObject("docLine",docLine);
@@ -204,6 +205,7 @@ public class DocumentController {
 										@RequestParam("submitApprove") int submitApprove,@RequestParam("email") String email) {
 		int result1=0;
 		int result2=0;
+		logger.debug("JJKLJKLJKL={}",docNo);
 		Map<String,Object> param = new HashMap<>();
 		param.put("docNo",docNo);
 		param.put("empName",empName);
