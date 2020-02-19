@@ -205,6 +205,17 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int selectAllJobOrder() {
 		return sqlsession.selectOne("enrollment.selectAllJobOrder");
 	}
+
+	@Override
+	public List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlsession.selectList("enrollment.selectReceivingLotNoAll",null,rowBounds);
+	}
+
+	@Override
+	public int selectAllReceivingLotNo() {
+		return sqlsession.selectOne("enrollment.selectAllReceivingLotNo");
+	}
 	
 	
 }

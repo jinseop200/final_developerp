@@ -99,6 +99,45 @@
 						 </button>
 					</div>
 				</div>
+				<!-- Editable table -->
+				<div class="card">
+				  <div class="card-body">
+				    <div id="table" class="table-editable releasingAdd">
+				      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+				            class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+				      <table class="table table-bordered table-responsive-md table-striped text-center" id="edTable">
+				        <thead>
+				          <tr>
+				            <th class="text-center">No</th>
+				            <th class="text-center">품목코드</th>
+				            <th class="text-center">품목명</th>
+				            <th class="text-center">필요수량</th>
+				            <th class="text-center">로트넘버</th>
+				            <th class="text-center">불출수량</th>
+				            <!-- <th class="text-center">Sort</th> -->
+				            <th class="text-center">Remove</th>
+				          </tr>
+				        </thead>
+				        <tbody class="releasingTbody">
+				          <!-- <tr>
+				            <td class="pt-3-half pNo" contenteditable="false"></td>
+				            <td class="pt-3-half pCode tdPtCode" contenteditable="true"></td>
+				            <td class="pt-3-half pName" contenteditable="false"></td>
+				            <td class="pt-3-half pNeed" contenteditable="true"></td>
+				            <td class="pt-3-half pLotNo" contenteditable="true"></td>
+				            <td class="pt-3-half pReleasing" contenteditable="true"></td>
+				            <td>
+				              <span class="table-remove"><button type="button"
+				                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+				            </td>
+				          </tr> -->
+				        </tbody>
+				      </table>
+				    </div>
+				  </div>
+				</div>
+				<br />
+				<!-- Editable table -->
       </div>
         <div class="modal-footer">
         	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return storageAddValidate();">저장</button>
@@ -270,10 +309,28 @@
 #mySearchModal .modal-content{
 	width: 950px;
 }
+#resizeModal .modal-content{
+	width: 740px;
+}
+#edTable {
+    counter-reset: rowNumber;
+}
+#edTable tr td:first-child::before {
+	counter-increment: rowNumber;
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}
 </style>
 <script>
 <%--onload start--%>
 $(()=>{
+	
+	<%--입력 모달 창 close시 값 초기화--%>
+	$('#addReleasing-Modal').on('hidden.bs.modal', function (e) {
+	    console.log('modal close');
+	  $(this).find('form')[0].reset();
+	});
 	
 	$(".searchBtn").click(function(){
     	var title = $(this).siblings().html();
@@ -375,11 +432,28 @@ $(()=>{
 		
 		 $.ajax({
 			url:"${pageContext.request.contextPath}/production/checkBOMExist",
+			contentType:"application/json;charset=UTF-8",	
+			dataType:"json",
 			data:{chkBOM:chkBOM,
 				  rQuantity:rQuantity},
 			async: false,
 			success: data => {
-				console.log(data);
+				console.log(data.isUsable);
+				console.log(data.list);
+	           
+				var context;
+				$.each(data.list, (idx, elem)=>{
+					var tr = "<tr>";
+					tr += "<td class='pt-3-half pNo' contenteditable='false'></td>";
+					tr += "<td class='pt-3-half pCode tdPtCode' contenteditable='true'>"+elem.RM_NO+"</td>";
+					tr += "<td class='pt-3-half pName' contenteditable='false'>"+elem.RM_NAME+"</td>";
+					tr += "<td class='pt-3-half pNeed' contenteditable='false'>"+elem.REQUIRED+"</td>";
+					tr += "<td class='pt-3-half pLotNo' contenteditable='true'></td>";
+					tr += "<td class='pt-3-half pReleasing' contenteditable='true'></td>";
+					tr += "<td><span class='table-remove'><button type='button' class='btn btn-danger btn-rounded btn-sm my-0'>Remove</button></span></td></tr>";
+					$(".releasingAdd .releasingTbody").prepend(tr);
+				});
+				
 			},
 			error : (x,s,e) =>{
 				console.log("ajax요청 실패!!", x, s, e);
@@ -388,8 +462,144 @@ $(()=>{
 	}); //end of ajax
 	
 	
+	<%--editable table script--%>
+	 const $tableID = $('#table');
+	 const $BTN = $('#export-btn');
+	 const $EXPORT = $('#export');
+	
+	 
+	 const newTr = `
+	<tr class="hide">
+		 <td class='pt-3-half pNo' contenteditable='false'></td>
+		 <td class='pt-3-half pCode tdPtCode' contenteditable='true'></td>
+		 <td class='pt-3-half pName' contenteditable='false'></td>
+		 <td class='pt-3-half pNeed' contenteditable='false'></td>
+		 <td class='pt-3-half pLotNo' contenteditable='true'></td>
+		 <td class='pt-3-half pReleasing' contenteditable='true'></td>
+	  <td>
+	    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+	  </td>
+	</tr>`;
+
+	 $('.table-add').on('click', 'i', () => {
+		 
+	   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+	   $tableID.find('table tbody').append(newTr);
+		
+	 });
+
+	 $tableID.on('click', '.table-remove', function () {
+	   $(this).parents('tr').detach();
+	   
+	   var tds = $("#addReleasing-Modal .releasingTbody tr");
+	   
+	 	console.log("tds length?",tds.length);
+	 	
+	 	if(tds.length == 0){
+	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+		     $tableID.find('table tbody').append(newTr);
+	 	}
+	 });
+
+	 $tableID.on('click', '.table-up', function () {
+
+	   const $row = $(this).parents('tr');
+
+	   if ($row.index() === 1) {
+	     return;
+	   }
+
+	   $row.prev().before($row.get(0));
+	 });
+
+	 $tableID.on('click', '.table-down', function () {
+
+	   const $row = $(this).parents('tr');
+	   $row.next().after($row.get(0));
+	 });
+
+	 // A few jQuery helpers for exporting only
+	 jQuery.fn.pop = [].pop;
+	 jQuery.fn.shift = [].shift;
+
+	 $BTN.on('click', () => {
+
+	   const $rows = $tableID.find('tr:not(:hidden)');
+	   const headers = [];
+	   const data = [];
+
+	   // Get the headers (add special header logic here)
+	   $($rows.shift()).find('th:not(:empty)').each(function () {
+
+	     headers.push($(this).text().toLowerCase());
+	   });
+
+	   // Turn all existing rows into a loopable array
+	   $rows.each(function () {
+	     const $td = $(this).find('td');
+	     const h = {};
+
+	     // Use the headers from earlier to name our hash keys
+	     headers.forEach((header, i) => {
+
+	       h[header] = $td.eq(i).text();
+	     });
+
+	     data.push(h);
+	   });
+
+	   // Output the result
+	   $EXPORT.text(JSON.stringify(data));
+	 });
+	 <%--editable table script end--%>
+	
 })
 <%--onload end--%>
+
+//품목코드 더블클릭시 searchType 모달 활성화
+$(document).on('dblclick','.tdPtCode',function(){
+	$("#searchModalTitle").html('품목코드 검색');
+	var searchType = "rawMaterial";
+	var clickedTd = $(this).parent().index();
+	var trNum = $(this).closest('tr').prevAll().length;
+	
+	trNum += 1;
+	
+	console.log("this", clickedTd);
+	console.log("trNum", trNum);
+	console.log("prevAll", $(this).closest('tr').prevAll());
+	
+	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
+	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
+	        $('#mySearchModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $("#mySearchModal #trNum").val(trNum);
+	 })
+})
+
+//품목코드 더블클릭시 searchType 모달 활성화
+$(document).on('dblclick','.pLotNo',function(){
+	$("#searchModalTitle").html('원재료 검색');
+	var searchType = "receivingLotNo";
+	var clickedTd = $(this).parent().index();
+	var trNum = $(this).closest('tr').prevAll().length;
+	var thisCode = $(this).parent().children().eq(1).text()+"";
+	console.log("thisCode="+thisCode);
+	trNum += 1;
+	
+	console.log("this", clickedTd);
+	console.log("trNum", trNum);
+	console.log("prevAll", $(this).closest('tr').prevAll());
+	var url = "${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType+"&thisCode="+thisCode;
+	console.log(url);
+	 $('.searchModalBody').load(url,function(){
+	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
+	        $('#mySearchModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $("#mySearchModal #trNum").val(trNum);
+	 })
+})
 
 </script>
 

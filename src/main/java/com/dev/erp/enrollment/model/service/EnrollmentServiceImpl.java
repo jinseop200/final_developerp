@@ -202,6 +202,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int selectAllJobOrder() {
 		return enrollmentDAO.selectAllJobOrder();
 	}
+
+	@Override
+	public List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage) {
+		return enrollmentDAO.selectReceivingLotNoAll(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectAllReceivingLotNo() {
+		return enrollmentDAO.selectAllReceivingLotNo();
+	}
 	
 	
 }

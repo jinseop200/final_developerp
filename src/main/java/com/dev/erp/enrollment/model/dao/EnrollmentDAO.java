@@ -79,4 +79,8 @@ public interface EnrollmentDAO {
 
 	int selectAllJobOrder();
 
+	List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage);
+
+	int selectAllReceivingLotNo();
+
 }

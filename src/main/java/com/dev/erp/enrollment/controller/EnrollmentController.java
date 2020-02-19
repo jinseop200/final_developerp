@@ -375,8 +375,8 @@ public class EnrollmentController {
 	}
 	
 	@RequestMapping("/enrollment/searchSpecify.do")
-	public ModelAndView searchSpecify(ModelAndView mav, @RequestParam("searchType") String searchType) {
-		
+	public ModelAndView searchSpecify(ModelAndView mav, @RequestParam("searchType") String searchType, @RequestParam(value="thisCode", defaultValue="0") String thisCode) {
+		logger.info("thisCode@controller={}",String.valueOf(thisCode));
 		mav.addObject("searchType",searchType);
 		mav.setViewName("enrollment/searchSpecify");
 		
@@ -385,8 +385,12 @@ public class EnrollmentController {
 	
 	@RequestMapping("/enrollment/searchSpecifyPage.do")
 	@ResponseBody
-	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType, @RequestParam(defaultValue="1") int cPage, HttpServletResponse rexsponse) {
+	public Map<String,Object> searchSpecify(@RequestParam("searchType") String searchType,
+											@RequestParam(defaultValue="1") int cPage,
+											@RequestParam(value="thisCode", defaultValue="0") String thisCode,
+											HttpServletResponse rexsponse) {
 		logger.info("searchType@controller={}",searchType);
+		logger.info("thisCode@controller={}",String.valueOf(thisCode));
 		List<Map<String,String>> list = new ArrayList<>();
 		final int numPerPage = 5;
 		int totalContents = 0;
@@ -418,6 +422,11 @@ public class EnrollmentController {
 		case "showJobOrder" :  
 			list =  enrollmentservice.selectJobOrderAll(cPage,numPerPage); 
 			totalContents = enrollmentservice.selectAllJobOrder();
+			break;
+		case "receivingLotNo" :  
+			list =  enrollmentservice.selectReceivingLotNoAll(cPage,numPerPage);
+			logger.info("list@Controller={}",list);
+			totalContents = enrollmentservice.selectAllReceivingLotNo();
 			break;
 		}
 		String url = "searchSpecifyPage.do?searchType="+searchType;

@@ -247,4 +247,15 @@
 		select count(*) from job_order
 	</select>
 	
+	<select id="selectReceivingLotNoAll" resultType="map">
+		select to_char(rec_date,'yyyy-MM-dd') as "content2"
+			   ,lot_no as "content"
+			   ,quantity as "content3"
+   		from receiving order by rec_date
+	</select>
+	
+	<select id="selectAllReceivingLotNo" resultType="_int">
+		select count(*) from receiving
+	</select>
+	
 </mapper>
