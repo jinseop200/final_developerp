@@ -120,6 +120,24 @@
               </div>
             </div>
           </li>
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>구매관리</span>
+            </a>
+            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">DETAIL</h6>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/purchase/purchaseView.do">구매조회</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/purchase/purchaseInsertView.do">구매입력</a>
+              </div>
+            </div>
+          </li>
+          
+          
 
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
