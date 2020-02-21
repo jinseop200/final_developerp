@@ -37,7 +37,12 @@
 	          <td>${p.PL_NO}</td>
 	          <td>${p.QUANTITY}</td>
 	          <td>${p.PRODUCTION}</td>
+	          <c:if test="${p.JO_NO == null}">
+	          <td></td>
+	          </c:if>
+	          <c:if test="${p.JO_NO != null}">
 	          <td><button class="btn btn-primary openJobOrder" type="button" value="${p.JO_NO}">작업지시서보기</button></td>
+	          </c:if>
 	        </tr>
         </c:forEach>
       </tbody>
