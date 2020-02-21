@@ -240,6 +240,7 @@
 			   ,manager as "content4"
 			   ,product_name as "content5"
 			   ,order_quantity as "content6"
+			   ,pl_no as "content7"
    		from job_order order by jo_no
 	</select>
 	
@@ -251,11 +252,14 @@
 		select to_char(rec_date,'yyyy-MM-dd') as "content2"
 			   ,lot_no as "content"
 			   ,quantity as "content3"
-   		from receiving order by rec_date
+   		from receiving 
+   		where rm_no = #{thisCode} and store_no = 2 <!-- 2인것만 -->
+   		order by rec_date
 	</select>
 	
 	<select id="selectAllReceivingLotNo" resultType="_int">
 		select count(*) from receiving
+		where rm_no = #{thisCode} and store_no = 2  <!-- 2인것만 -->
 	</select>
 	
 </mapper>

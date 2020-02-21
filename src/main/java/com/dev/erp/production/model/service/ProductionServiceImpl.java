@@ -65,11 +65,6 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public int addWarehousing(Map<String, String> warehousing) {
-		return productionDAO.addWarehousing(warehousing);
-	}
-
-	@Override
 	public Map<String, Object> selectWarehousingByLotNo(String tdLotNo) {
 		return productionDAO.selectWarehousingByLotNo(tdLotNo);
 	}
@@ -112,6 +107,36 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public int addRelease(Map<String, String> addMap) {
 		return productionDAO.addRelease(addMap);
+	}
+
+	@Override
+	public int addWarehousing(Map<String, String> map) {
+		return productionDAO.addWarehousing(map);
+	}
+
+	@Override
+	public int updateReceivingForWarehousing(Map<String, String> map) {
+		return productionDAO.updateReceivingForWarehousing(map);
+	}
+
+	@Override
+	public Map<String, String> selectOneProductByPlNo(String rCode) {
+		return productionDAO.selectOneProductByPlNo(rCode);
+	}
+
+	@Override
+	public int selectOneBOMNoByPlNo(String rCode) {
+		return productionDAO.selectOneBOMNoByPlNo(rCode);
+	}
+
+	@Override
+	public int insertProduction(Map<String, String> pMap) {
+		return productionDAO.insertProduction(pMap);
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductionList() {
+		return productionDAO.selectProductionList();
 	}
 
 }

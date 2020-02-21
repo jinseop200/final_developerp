@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.enrollment.model.service.EnrollmentService;
 import com.dev.erp.production.model.service.ProductionService;
-import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 
 
@@ -50,11 +49,11 @@ public class ProductionController {
 	@RequestMapping("/production/warehousing.do")
 	public ModelAndView warehousing(ModelAndView mav) {
 		
-		List<Map<String, String>> releaseList  = productionService.selectReleaseList();
+		List<Map<String, String>> productList  = productionService.selectProductionList();
 		
-		logger.info("releaseList@Controller={}",releaseList);
+		logger.info("productList@Controller={}",productList);
 		
-		mav.addObject("releaseList",releaseList);
+		mav.addObject("productList",productList);
 		mav.setViewName("production/warehousing");
 		return mav;
 	}
@@ -472,6 +471,94 @@ public class ProductionController {
 		}
 		logger.info("nList@Controller={}",nList);*/
 		
+	}
+	
+	@RequestMapping(value="/production/addWarehousing.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object addWarehousing(@RequestParam(value="pLotNos[]", required=false) List<String> pLotNoList,
+								 @RequestParam(value="pReleasings[]", required=false) List<String> pReleasingList,
+								 @RequestParam(value="rProduct", required=false) String rProduct,
+								 @RequestParam(value="rQuantity", required=false) String rQuantity,
+								 @RequestParam(value="rCode", required=false) String rCode,
+							 	 ModelAndView mav) {
+		
+		logger.info("pLotNoList@Controller={}",pLotNoList);
+		logger.info("pReleasingList@Controller={}",pReleasingList);
+		logger.info("rProduct@Controller={}",rProduct);
+		logger.info("rQuantity@Controller={}",rQuantity);
+		logger.info("rQuantity@Controller={}",rCode);
+		
+		
+		//receiving, release update/insert
+		for(int i = 0 ; i < pLotNoList.size(); i++) {
+			Map<String, String> map = new HashMap<>();
+			String pLotNo = pLotNoList.get(i);
+			String pReleasing = pReleasingList.get(i);
+			map.put("pLotNo", pLotNo);
+			map.put("pReleasing", pReleasing);
+			
+			int result = productionService.addWarehousing(map);
+			int result2 = productionService.updateReceivingForWarehousing(map);
+		}
+		
+		Map<String, String> product = productionService.selectOneProductByPlNo(rCode);
+		logger.info("product@Conteroller={}",product);
+		
+		int bomNo = productionService.selectOneBOMNoByPlNo(rCode);
+		logger.info("bomNo@Conteroller={}",bomNo);
+		
+		String vendorNo = String.valueOf(product.get("VENDOR_NO"));
+		String ptNo = String.valueOf(product.get("PT_NO"));
+		String vendorType = String.valueOf(product.get("VENDOR_TYPE"));
+		String productName = product.get("PRODUCT_NAME");
+		
+		Map<String, String> pMap = new HashMap<>();
+		pMap.put("rCode", rCode);
+		pMap.put("bomNo", Integer.toString(bomNo));
+		pMap.put("vendorNo", vendorNo);
+		pMap.put("ptNo", ptNo);
+		pMap.put("vendorType", vendorType);
+		pMap.put("productName", productName);
+		pMap.put("rQuantity", rQuantity);
+		
+		
+		int pResult = productionService.insertProduction(pMap);
+		
+		
+		
+//		if(!(pCodeList.size()==0 || pCountList.size()==0)) {
+//			Map<String, String> map = new HashMap<>();
+//			map.put("productCode", productCode);
+//			logger.info("map@controller={}",map);
+//			int result = productionService.insertBOM(productCode); 
+//			
+//			int bomNo = productionService.selectBOMNobyProductCode(productCode);
+//			
+//			logger.info("bomNo@Conteroller={}",bomNo);
+//			
+//			
+//			
+//			List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
+//	
+//			Map<String, Object> paramMap = new HashMap<String, Object>();
+//			paramMap.put("productCode", productCode);
+//			paramMap.put("bomNo", bomNo);
+//			
+//			for(int i=0; i<pCodeList.size();i++) {
+//				Map<String,Object> temp = new HashMap<>();
+//				temp.put("pCodeList", pCodeList.get(i));
+//				temp.put("pCountList", pCountList.get(i));
+//				
+//				BOMList.add(temp);
+//			}
+//			paramMap.put("BOMList", BOMList);
+//			logger.info("1232134BOM={}",paramMap);
+//			int result2 = productionService.insertBOMlist(paramMap);
+//		}
+
+		List<String> list = new ArrayList<>();
+		list.add("성공");
+		return list;
 	}
 	
 	

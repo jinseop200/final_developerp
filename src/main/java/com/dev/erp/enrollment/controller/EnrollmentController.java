@@ -378,6 +378,7 @@ public class EnrollmentController {
 	public ModelAndView searchSpecify(ModelAndView mav, @RequestParam("searchType") String searchType, @RequestParam(value="thisCode", defaultValue="0") String thisCode) {
 		logger.info("thisCode@controller={}",String.valueOf(thisCode));
 		mav.addObject("searchType",searchType);
+		mav.addObject("thisCode",thisCode);
 		mav.setViewName("enrollment/searchSpecify");
 		
 		return mav;
@@ -424,9 +425,9 @@ public class EnrollmentController {
 			totalContents = enrollmentservice.selectAllJobOrder();
 			break;
 		case "receivingLotNo" :  
-			list =  enrollmentservice.selectReceivingLotNoAll(cPage,numPerPage);
+			list =  enrollmentservice.selectReceivingLotNoAll(cPage,numPerPage,thisCode);
 			logger.info("list@Controller={}",list);
-			totalContents = enrollmentservice.selectAllReceivingLotNo();
+			totalContents = enrollmentservice.selectAllReceivingLotNo(thisCode);
 			break;
 		}
 		String url = "searchSpecifyPage.do?searchType="+searchType;

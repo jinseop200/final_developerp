@@ -204,13 +204,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage) {
-		return enrollmentDAO.selectReceivingLotNoAll(cPage, numPerPage);
+	public List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage, String thisCode) {
+		return enrollmentDAO.selectReceivingLotNoAll(cPage, numPerPage, thisCode);
 	}
 
 	@Override
-	public int selectAllReceivingLotNo() {
-		return enrollmentDAO.selectAllReceivingLotNo();
+	public int selectAllReceivingLotNo(String thisCode) {
+		return enrollmentDAO.selectAllReceivingLotNo(thisCode);
 	}
 	
 	

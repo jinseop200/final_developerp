@@ -79,8 +79,8 @@ public interface EnrollmentService {
 
 	int selectAllJobOrder();
 
-	List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage);
+	List<Map<String, String>> selectReceivingLotNoAll(int cPage, int numPerPage, String thisCode);
 
-	int selectAllReceivingLotNo();
+	int selectAllReceivingLotNo(String thisCode);
 
 }

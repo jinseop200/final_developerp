@@ -10,47 +10,42 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-<%-- table start --%>
+
+<!-- table start -->
 <div class="card shadow mb-4">
 <div class="card-header py-3">
   <h6 class="m-0 font-weight-bold text-primary">생산입고</h6>
 </div>
 <div class="card-body">
   <div class="table-responsive">
-    <table class="table table-bordered" id="dataTableBOMList" width="100%" cellspacing="0">
+    <table class="table table-bordered" id="dataTablep" width="100%" cellspacing="0">
       <thead>
         <tr>
           <th>로트번호</th>
-          <th>창고명</th>
-          <th>품목구분</th>
-          <th>품목명</th>
-          <th>출고수량</th>
-          <th>출고날짜</th>
-          <th>검사여부</th>
-          <th>부적합여부</th>
-          <th>작업지시서</th>
+          <th>제품명</th>
+          <th>품목코드</th>
+          <th>생산량</th>
+          <th>생산일</th>
+          <th>작업지시서 번호</th>
         </tr>
       </thead>
 	  <tbody>
-      	<c:forEach items="${releaseList}" var="r" varStatus="vs">
+      	<c:forEach items="${productList}" var="p" varStatus="vs">
 	        <tr class="getTr">
-	          <td><a href="#" >${r.LOT_NO}</a></td>
-	          <td>${r.STORE_NAME}</td>
-	          <td>${r.RM_NO}</td>
-	          <td>${r.PT_NO}</td>
-	          <td>${r.VENDOR_TYPE}</td>
-	          <td>${r.QUANTITY}</td>
-	          <td>${r.QUALITY_YN}</td>
-	          <td>${r.INSECTION_YN}</td>
-	          <td>${r.REG_DATE}</td>
-	          <td><button class="btn btn-primary BOMAddBtn" type="button">작업지시서 보기</button></td>
+	          <td><a href="#" >${p.LOT_NO}</a></td>
+	          <td>${p.PRODUCT_NAME}</td>
+	          <td>${p.PL_NO}</td>
+	          <td>${p.QUANTITY}</td>
+	          <td>${p.PRODUCTION}</td>
+	          <td><button class="btn btn-primary openJobOrder" type="button" value="${p.JO_NO}">작업지시서보기</button></td>
 	        </tr>
         </c:forEach>
-    </tbody>
+      </tbody>
 </table>
 </div>
 </div>
 </div>
+
 
 <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-success openBtn" data-toggle="modal" data-target="#addReleasing-Modal">생산불출 등록</button>
@@ -92,6 +87,12 @@
 					     <input type="number" id="rQuantity" name="rQuantity" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
+                <div class="form-row">
+					<div class="col-lg-20 mb-3 rowResize">
+					     <label for="rCode">품목코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <input type="number" id="rCode" name="rCode" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+					</div>
+				</div>
 				<div class="col-lg-20 mb-3 rowResize">
 					     <label for="searchBOM">BOM 검색</label>&nbsp;&nbsp;
 					     <button class="btn btn-primary" id="BOMSrcBtn" type="button" value="showJobOrder">
@@ -113,6 +114,7 @@
 				            <th class="text-center">품목명</th>
 				            <th class="text-center">필요수량</th>
 				            <th class="text-center">로트넘버</th>
+				            <th class="text-center">보유수량</th>
 				            <th class="text-center">불출수량</th>
 				            <!-- <th class="text-center">Sort</th> -->
 				            <th class="text-center">Remove</th>
@@ -140,7 +142,7 @@
 				<!-- Editable table -->
       </div>
         <div class="modal-footer">
-        	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return storageAddValidate();">저장</button>
+        	<button type="button" id="FrmBtn" class="btn btn-primary">저장</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
         </div>
@@ -148,110 +150,6 @@
         </div>
     </div>
 
-<!-- 입고 등록 수정 Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="updateWarehousing">
-    <div class="modal-dialog modal-lg" id="resizeModal" role="document">
-        <div class="modal-content">
-        <form class="needs-validation"
-         action="${pageContext.request.contextPath}/production/updateWarehousing.do"
-         method="POST">
-        <div class="modal-header">
-            <h5 class="modal-title">입고 등록 수정</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <!-- search-container start -->
-      <div id="search-container">
-                <div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rawMaterial">원재료번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="rawMaterialDetail" name="rawMaterialDetail" class="form-control bg-light small" placeholder="원재료번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="rawMaterialDetail">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-                <div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="vendorTypeCode">거래처구분코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="vendorType" name="vendorTypeCode" class="form-control bg-light small" placeholder="거래처구분코드" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="storeNo">창고번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="storeNo" name="storeNo" class="form-control bg-light small" placeholder="창고번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="storeNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="quantity">입고수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="입고수량" aria-label="Search" aria-describedby="basic-addon2">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-						<label for="regDate">입고일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="date" id="regDate" name="regDate"
-							class="form-control bg-light small" placeholder="입고일"
-							aria-label="Search" aria-describedby="basic-addon2" step="0.01"
-							style="width: 175px">
-					</div>
-				</div>
-				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-			      	추가정보 입력
-			    </button>
-			    <br />
-			    <br />
-				<div class="collapse" id="collapseExample">
-					<div class="form-row">
-						<div class="col-lg-20 mb-3 rowResize">
-						     <label for=quailityYN>부적합여부</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							 <select class="custom-select" name='quailityYN' id="quailityYN">
-								  <option selected value="N">N</option>
-								  <option value="Y">Y</option>
-							 </select>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="col-lg-20 mb-3 rowResize">
-						     <label for="insectionYN">검사여부</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							 <select class="custom-select" name='insectionYN' id="insectionYN">
-								  <option selected value="N">N</option>
-								  <option value="Y">Y</option>
-							 </select>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="col-lg-20 mb-3 rowResize">
-						     <label for="measurement">측정값</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						     <input type="number" id="measurement" name="measurement" class="form-control bg-light small" placeholder="측정값" aria-label="Search" aria-describedby="basic-addon2" value="0" step="0.1" >
-						     <input type="hidden" id="lotNo" name="lotNo" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2">
-						</div>
-					</div>
-				</div>
-      </div>
-        </div>
-        <div class="modal-footer">
-        	<button type="submit" id="FrmBtn" class="btn btn-primary" onclick="return storageAddValidate();">저장</button>
-        	<button type="button" class="btn btn-secondary" id="delBtn">삭제</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        </div>
-        </form>
-        </div>
-    </div>
-</div>
 
 <%--Search modal --%>
 <div class="modal" tabindex="-1" role="dialog" id="mySearchModal">
@@ -270,6 +168,24 @@
   </div>
 </div>
 
+
+ <!-- 작업지시서 Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="joModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body jo-modal-body">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
 
 <style>
 .form-control {
@@ -307,7 +223,7 @@
 	width: 60%;
 }
 #mySearchModal .modal-content{
-	width: 950px;
+	width: 1040px;
 }
 #resizeModal .modal-content{
 	width: 740px;
@@ -321,10 +237,40 @@
     min-width: 1em;
     margin-right: 0.5em;
 }
+#insert-container {
+    width: 100%;
+    height: 100%;
+}
+#enrollBtn{
+	display: none;
+}
+.modal-body {
+    height: 100%;
+}
+[name=orderContent]{
+	width: 73%;
+}
+.jResize{
+	max-width: 100%;
+}
+.searchSpec{
+	float: inherit!important;
+	display: none;
+}
+.ui-datepicker-trigger{
+	display: none;
+}
 </style>
 <script>
+	var rArr = [];
 <%--onload start--%>
 $(()=>{
+	
+	$("#dataTablep").DataTable({
+		// 3번째 항목을 오름 차순 
+		// order : [ [ 열 번호, 정렬 순서 ], ... ]
+		order: [ [ 4, "desc" ] ]
+	});
 	
 	<%--입력 모달 창 close시 값 초기화--%>
 	$('#addReleasing-Modal').on('hidden.bs.modal', function (e) {
@@ -350,58 +296,7 @@ $(()=>{
 	$(".searchModal-end").click(function(){
     	$('#mySearchModal').modal("hide");
     });
-	
-	<%--a태그 클릭시 정보수정 Modal 활성화--%>
-	$(".getTr td a").click(function(){ 	
-	
-		// 현재 클릭된 Row(<tr>)
-		var tr = $(this).parent().parent();
-		var td = tr.children();
 		
-		// td.eq(index)를 통해 값을 가져올 수도 있다.
-		var tdLotNo = td.eq(0).text();
-		console.log(tdLotNo);
-		
-		$.ajax({
-			url: "${pageContext.request.contextPath}/production/selectWarehousingByLotNo.do",
-			data: {tdLotNo : tdLotNo},
-			dataType: "json",
-		 	async: false,
-			contentType:"application/json;charset=UTF-8",
-			success: data => {
-				console.log(data);
-				$('#updateWarehousing #rawMaterialDetail').val(data.RM_NO);
-				$('#updateWarehousing #ptNo').val(data.PT_NO);
-				$('#updateWarehousing #vendorType').val(data.VENDOR_TYPE);
-				$('#updateWarehousing #storeNo').val(data.STORE_NO);
-				$('#updateWarehousing #quantity').val(data.QUANTITY);
-				if(data.QUALITY_YN == "N"){
-					$("#quailityYN").val("N").prop("selected", true);
-				}
-				if(data.QUALITY_YN == "Y"){
-					$("#quailityYN").val("Y").prop("selected", true);
-				}
-				if(data.INSECTION_YN == "N"){
-					$("#insectionYN").val("N").prop("selected", true);
-				}
-				if(data.INSECTION_YN == "Y"){
-					$("#insectionYN").val("Y").prop("selected", true);
-				}
-				$('#updateWarehousing #measurement').val(data.MEASUREMENT);
-				$('#updateWarehousing #lotNo').val(data.LOT_NO);
-				$('#updateWarehousing #regDate').val(data.nDate);
-				
-				
-			},
-			error : (jqxhr, textStatus, errorThrown)=>{
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
-		
-		
-		$('#updateWarehousing').modal('show');
-	});
-	
 	//삭제버튼클릭
 	$("#delBtn").on("click",function(){
 		if(!confirm("정말 삭제하시겠습니까?"))
@@ -439,8 +334,14 @@ $(()=>{
 			async: false,
 			success: data => {
 				console.log(data.isUsable);
+				if(data.isUsable == false){
+					alert("BOM이 존재하지 않습니다. BOM을 등록해 주세요.");
+					return false;
+				}
 				console.log(data.list);
-	           
+				Object.assign(rArr, data.list);
+	            console.log("rArr="+rArr[0].RM_NO);
+	            console.log(JSON.stringify(rArr));
 				var context;
 				$.each(data.list, (idx, elem)=>{
 					var tr = "<tr>";
@@ -449,9 +350,11 @@ $(()=>{
 					tr += "<td class='pt-3-half pName' contenteditable='false'>"+elem.RM_NAME+"</td>";
 					tr += "<td class='pt-3-half pNeed' contenteditable='false'>"+elem.REQUIRED+"</td>";
 					tr += "<td class='pt-3-half pLotNo' contenteditable='true'></td>";
+					tr += "<td class='pt-3-half pQuantity' contenteditable='false'></td>";
 					tr += "<td class='pt-3-half pReleasing' contenteditable='true'></td>";
 					tr += "<td><span class='table-remove'><button type='button' class='btn btn-danger btn-rounded btn-sm my-0'>Remove</button></span></td></tr>";
 					$(".releasingAdd .releasingTbody").prepend(tr);
+					
 				});
 				
 			},
@@ -460,7 +363,6 @@ $(()=>{
 			}
 		})
 	}); //end of ajax
-	
 	
 	<%--editable table script--%>
 	 const $tableID = $('#table');
@@ -475,6 +377,7 @@ $(()=>{
 		 <td class='pt-3-half pName' contenteditable='false'></td>
 		 <td class='pt-3-half pNeed' contenteditable='false'></td>
 		 <td class='pt-3-half pLotNo' contenteditable='true'></td>
+		 <td class='pt-3-half pQuantity' contenteditable='false'></td>
 		 <td class='pt-3-half pReleasing' contenteditable='true'></td>
 	  <td>
 	    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
@@ -553,6 +456,62 @@ $(()=>{
 	   $EXPORT.text(JSON.stringify(data));
 	 });
 	 <%--editable table script end--%>
+	 
+	  $("#FrmBtn").off("click").on('click', function() {
+		   var tds = $("#edTable .pNo").nextAll();
+			//console.log(tds);
+			var exit= false;
+			$(tds).each(function(){
+				if($(this).text()==""){
+					 exit = true;
+					alert("값을 입력해 주세요.");
+					$(this).focus();
+					return false;
+				}
+				else{
+					exit= false;
+				}
+			}) 
+			if(exit){ return false;}
+			
+			var pLotNo = $(".pLotNo");
+			var pLotNos = [];
+
+			var pReleasing = $(".pReleasing");
+			var pReleasings = [];
+			
+			var rProduct = $("#rProduct").val();
+			var rQuantity = $("#rQuantity").val();
+			var rCode = $("#rCode").val();
+			
+			for(var i=0;i<pLotNo.length;i++) {
+				pLotNos.push(pLotNo.eq(i).text());
+				pReleasings.push(pReleasing.eq(i).text());
+			}
+			var data_ = {"pLotNos":pLotNos,
+						 "pReleasings":pReleasings,
+						 "rProduct":rProduct,
+						 "rQuantity":rQuantity,
+						 "rCode":rCode
+						 };
+			console.log(data_);
+ 		 	$.ajax({
+		 		url: "${pageContext.request.contextPath}/production/addWarehousing.do",
+		 		data: data_,
+		 		async: false,
+		 		type : 'POST', 
+		 		//contentType : "application; charset=utf-8",
+		 		dataType: "json",
+		 		success: data => {
+		 			console.log(data);
+		 			//$('#BOMAddModal').modal("hide"); //닫기 
+		 			//location.reload();
+		 		},
+		 		error : (jqxhr, textStatus, errorThrown)=>{
+		 			console.log(jqxhr, textStatus, errorThrown);
+		 		}
+		 	}); // end of ajax */
+		}) 
 	
 })
 <%--onload end--%>
@@ -598,9 +557,95 @@ $(document).on('dblclick','.pLotNo',function(){
 	        $('#mySearchModal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
 	        $("#mySearchModal #trNum").val(trNum);
+	        $("#mySearchModal #valForSearch").val("receivingLotNo");
 	 })
 })
 
+//불출수량 입력시 keyup 이벤트, 조건 지정
+$(document).on( 'keyup', '.pReleasing', function() {
+	var thisObj = $(this);
+	var thisHavingQuantity = $(this).parent().children().eq(5).text();
+	var thisNeedQuantity = $(this).parent().children().eq(3);
+	var thisTrPname = $(this).parent().children().eq(2).text();
+	var thisTrReleasingQuantity = $(this).text();
+	var thisTrReleasingQuantity2 = $(".releasingTbody tr .pName:contains('삼성 LED패널')").next().next().next().next().text();
+	console.log("thisNeedQuantity", thisNeedQuantity.text());
+	//var sum = 0;
+	/* for(var i=0;i<thisTrReleasingQuantity2.length;i++){
+		sum += parseInt(thisTrReleasingQuantity2[i]);
+		console.log("sum",sum);
+	} */
+	var trs = $(".releasingTbody tr .pName:contains('삼성 케이블')");
+	/* console.log(thisTrPname);
+	console.log("thisHavingQuantity="+thisHavingQuantity);
+    console.log($(this).text());
+    console.log(rArr);
+    console.log(trs);
+    console.log("thisTrReleasingQuantity2",thisTrReleasingQuantity2); */
+    if(parseInt(thisTrReleasingQuantity) > parseInt(thisHavingQuantity)){
+    	alert("불출수량이 보유수량보다 클 수 없습니다.");
+		thisObj.text("");
+    }
+    
+    for(var i=0; i<rArr.length; i++){
+    	console.log("Z");
+	    $.each(rArr[i], function(key, value){
+	    	if(key == "RM_NAME" && value == thisTrPname ){
+	        	//console.log('key:' + key + ' / ' + 'value:' + parseInt(value-thisTrReleasingQuantity));
+	        	//console.log('key2:' + key + ' / ' + 'value2:' + value);
+	        	//console.log(rArr[i].REQUIRED-thisTrReleasingQuantity);
+	        	var rmName = rArr[i].RM_NAME;
+	        	//var cal = rArr[i].REQUIRED-thisTrReleasingQuantity;
+	        	//console.log(rmName);
+	        	//console.log("zz",$('.releasingTbody tr .pName:contains('+rmName+')').next().text(cal));
+	        	//rArr[i].REQUIRED = parseInt(rArr[i].REQUIRED-thisTrReleasingQuantity);
+	        	var sum = 0;
+	        	var minus = $('.releasingTbody tr .pName:contains('+rmName+')').next().next().next().next();
+	        	//console.log("minus",minus)
+	        	for(var q=0;q<minus.length;q++){
+	        		sum += parseInt(minus[q].innerText);
+	        		console.log("sum",sum);
+	        		if(isNaN(sum)){
+		        		sum = 0;
+		        	}
+	        	}
+	        	if(isNaN(sum)){
+	        		sum = 0;
+	        	}
+	        	var cal = rArr[i].REQUIRED-sum;
+	        	thisNeedQuantity.text(cal);
+	        	$('.releasingTbody tr .pName:contains('+rmName+')').next().text(cal);
+	        	
+	        	if(cal < 0){
+	        		alert("불출수량이 필요수량보다 클 수 없습니다.");
+	        		if(isNaN(sum)){
+		        		sum = 0;
+		        	}
+	        		thisObj.text("");
+	        		thisNeedQuantity.text(rArr[i].REQUIRED);
+	        		$('.releasingTbody tr .pName:contains('+rmName+')').next().text(rArr[i].REQUIRED);
+	        	}
+	    	}
+	        	//console.log('key:' + key + ' / ' + 'value:' + value);
+	    });
+    }
+    //console.log(rArr);
+});
+
+
+//작업지시서 보기
+$(".openJobOrder").click(function(){
+	var joNo = $(this).val();
+	console.log("joNo="+joNo);
+	if(joNo != ""){
+	 	$('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do?joNo="+joNo,function(){
+	        $('#jodal').modal({backdrop: 'static', keyboard: false});
+	        $('#joModal').modal({show:true});
+	        $(".modal-backdrop.in").css('opacity', 0.4);
+	        $(".controll-title").html("작업지시서 보기");
+		});
+	}
+});
 </script>
 
 

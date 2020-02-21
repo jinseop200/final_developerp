@@ -196,4 +196,48 @@
 	<resultMap type="map" id="QuantityChkMap">
 	</resultMap>
 	
+	<update id="addWarehousing">
+		INSERT INTO release
+		( lot_no, store_no, rm_no, pt_no, vendor_type, quantity, quality_yn, insection_yn, measurement, reg_date)
+		SELECT lot_no, 6, rm_no, pt_no, vendor_type, #{pReleasing}, quality_yn, insection_yn, measurement, sysdate
+		FROM receiving
+		WHERE lot_no = #{pLotNo}
+	</update>
+	
+	<update id="updateReceivingForWarehousing">
+		update receiving set quantity = quantity-#{pReleasing} where lot_no = #{pLotNo}
+	</update>
+	
+	<select id="selectOneProductByPlNo" resultMap="pMap">
+	select * from product_list where pl_no = #{rCode}
+	</select>
+	<resultMap type="map" id="pMap">
+	</resultMap>
+	
+	<select id="selectOneBOMNoByPlNo" resultType="_int">
+	select bom_no from bom where pl_no = #{rCode}
+	</select>
+	
+	<insert id="insertProduction">
+	insert into production values(
+			('p_'||(select substr(product_name,1,2)||substr(product_name,(instr(product_name,'_')+1),2) from product_list where pl_no=#{rCode})||'_'||to_char(sysdate,'yyyyMMdd')||'_'|| SEQ_PRODUCTION_LOTNO.nextval),
+			#{rCode},
+			default,
+			#{vendorNo},
+			#{ptNo},
+			#{productName},
+			#{rQuantity},
+			default,
+			default,
+			default,
+			default
+		)
+	</insert>
+	
+	<select id="selectProductionList" resultMap="pListMap">
+	select p.*, jo.jo_no from production p left join job_order jo on p.pl_no = jo.pl_no order by production
+	</select>
+	<resultMap type="map" id="pListMap">
+	</resultMap>
+	
 </mapper>

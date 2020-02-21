@@ -34,10 +34,6 @@ public interface ProductionService {
 
 	List<Map<String, String>> selectReceivingList();
 
-
-	int addWarehousing(Map<String, String> warehousing);
-
-
 	Map<String, Object> selectWarehousingByLotNo(String tdLotNo);
 
 
@@ -63,5 +59,23 @@ public interface ProductionService {
 
 
 	int addRelease(Map<String, String> addMap);
+
+
+	int addWarehousing(Map<String, String> map);
+
+
+	int updateReceivingForWarehousing(Map<String, String> map);
+
+
+	Map<String, String> selectOneProductByPlNo(String rCode);
+
+
+	int selectOneBOMNoByPlNo(String rCode);
+
+
+	int insertProduction(Map<String, String> pMap);
+
+
+	List<Map<String, String>> selectProductionList();
 
 }

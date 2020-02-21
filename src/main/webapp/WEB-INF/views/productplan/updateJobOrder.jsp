@@ -57,17 +57,17 @@
         	  action="${pageContext.request.contextPath }/productplan/updateJobOrderEnd.do?joNo=${joNo }"
         	  method="POST" >	
 	        <div class="form-row">
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	            <label for="datepicker">발생일자</label>&emsp;
 	            <input type="text" id="enrollDate" name="enrollDate" class="form-control enrollDate" value="${enrollDate}" readonly>
 	            </div>
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	            <label for="datepicker">납기일자</label>&emsp;
 	            <input type="text" id="dueDate" name="dueDate" class="form-control dueDate" value="${load.dueDate }">
 	            </div>
 	        </div>        
 	        <div class="form-row">
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
 	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.customer }">
 	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
@@ -76,28 +76,28 @@
 	                </button>
 	                
 	            </div>
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	                <label for="lotNo">담당자 </label>&emsp;&emsp;
 	                <input type="text" id="manager" name="manager" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" value="${load.manager }"readonly>
 	                
 	            </div>
 	        </div>
 	        <div class="form-row">
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	                <label for="type">제품명 </label>&emsp;&emsp;
 	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.productName }">
 	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
 	            </div>
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	                <label for="storeNo">지시수량 </label>&emsp;
 	                <input type="number" id="quantity" name="quantity" class="form-control bg-light small" placeholder="" aria-label="Search" aria-describedby="basic-addon2" value="${load.orderQuantity }">
 	            </div>
 	        </div>
 	        
 	        <div class="form-row">
-	            <div class="col-md-6 mb-3">
+	            <div class="col-md-6 mb-3 jResize">
 	                <label for="storeNo">지시 내용</label><br />
 	                <textarea class="form-control quality-comment" name="orderContent" cols="100" rows="5" aria-label="With textarea" placeholder="내용을 입력하세요." >${load.orderContent }</textarea>	
 	            </div>

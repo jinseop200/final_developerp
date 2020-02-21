@@ -64,11 +64,6 @@ public class ProductionDAOImpl implements ProductionDAO {
 	}
 
 	@Override
-	public int addWarehousing(Map<String, String> warehousing) {
-		return sqlSession.insert("production.addWarehousing",warehousing);
-	}
-
-	@Override
 	public Map<String, Object> selectWarehousingByLotNo(String tdLotNo) {
 		return sqlSession.selectOne("production.selectWarehousingByLotNo",tdLotNo);
 	}
@@ -111,6 +106,36 @@ public class ProductionDAOImpl implements ProductionDAO {
 	@Override
 	public int addRelease(Map<String, String> addMap) {
 		return sqlSession.insert("production.addRelease",addMap);
+	}
+
+	@Override
+	public int addWarehousing(Map<String, String> map) {
+		return sqlSession.update("production.addWarehousing",map);
+	}
+
+	@Override
+	public int updateReceivingForWarehousing(Map<String, String> map) {
+		return sqlSession.update("production.updateReceivingForWarehousing",map);
+	}
+
+	@Override
+	public Map<String, String> selectOneProductByPlNo(String rCode) {
+		return sqlSession.selectOne("production.selectOneProductByPlNo",rCode);
+	}
+
+	@Override
+	public int selectOneBOMNoByPlNo(String rCode) {
+		return sqlSession.selectOne("production.selectOneBOMNoByPlNo",rCode);
+	}
+
+	@Override
+	public int insertProduction(Map<String, String> pMap) {
+		return sqlSession.insert("production.insertProduction",pMap);
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductionList() {
+		return sqlSession.selectList("production.selectProductionList");
 	}
 
 

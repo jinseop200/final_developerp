@@ -61,6 +61,7 @@
            <th>담당자</th>
            <th>제품명</th>
            <th>지시수량</th>
+           <th>품목코드</th>
            </c:if>
            <c:if test="${searchType == 'receivingLotNo'}">
            <th>입고날짜</th>
@@ -96,7 +97,7 @@
 
 <script>
 $(()=>{
-	//console.log("${searchType}");
+	console.log("specify="+"${searchType}");
 	morePage(0);
 	
 	//input search
@@ -120,14 +121,22 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value4 = $(this).children().eq(4).html();
 	var value5 = $(this).children().eq(5).html();
 	var value6 = $(this).children().eq(6).html();
+	var value7 = $(this).children().eq(7).html();
 	var trNum = $("#trNum").val();
 	//console.log(trNum);
 	//console.log(value);
 	
 	if(trNum != "nulla"){
 		console.log("1");
-		$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
-		$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
+		if($("#valForSearch").val() == "receivingLotNo"){
+			console.log("lotNo")
+			$(".table-editable tr").eq(trNum).find("td").eq(4).text(value2);
+			$(".table-editable tr").eq(trNum).find("td").eq(5).text(value3);
+		}
+		else{
+			$(".table-editable tr").eq(trNum).find("td").eq(1).text(value);
+			$(".table-editable tr").eq(trNum).find("td").eq(2).text(value2);
+		}
 	}
 	if($("#${searchType}").attr('name') == 'accountNo'){
 		console.log("2");
@@ -146,6 +155,7 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 		$("#${searchType}").val(value);
 		$("#addReleasing-Modal #rProduct").val(value5);
 		$("#addReleasing-Modal #rQuantity").val(value6);
+		$("#addReleasing-Modal #rCode").val(value7);
 	}
 	if($("#valForSearch").val() == "update"){
 		console.log("update COM")
@@ -164,12 +174,15 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 function morePage(a){
 	//console.log("a==="+a);
 	var searchType = "${searchType}";
+	var thisCode = "${thisCode}";
+	console.log("searchType="+searchType);
+	console.log("thisCode="+thisCode);
 	var url_="";
 	if(a==0) {
-		url_ = "${pageContext.request.contextPath}/enrollment/searchSpecifyPage.do?searchType=${searchType}&cPage=1";
+		url_ = "${pageContext.request.contextPath}/enrollment/searchSpecifyPage.do?searchType=${searchType}&cPage=1&thisCode=${thisCode}";
 	}
 	else {
-		url_="${pageContext.request.contextPath}/enrollment/"+a;
+		url_="${pageContext.request.contextPath}/enrollment/"+a+"&thisCode=${thisCode}";
 	}
 	//console.log("url="+url_);
 	$.ajax({
@@ -205,7 +218,7 @@ function morePage(a){
 				for(var i in speclist ) {
 					let p = speclist[i];
 					//console.log(p);	
-					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><td>"+p.content5+"</td><td>"+p.content6+"</td><tr>");
+					$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><td>"+p.content3+"</td><td>"+p.content4+"</td><td>"+p.content5+"</td><td>"+p.content6+"</td><td>"+p.content7+"</td><tr>");
 				}
 				$(".pageBar").html(data.pageBar);
 				$("span.page-link").attr('onclick',"morePage(this.id)");
@@ -213,6 +226,9 @@ function morePage(a){
 			else if(data.searchType == 'receivingLotNo'){
 				var speclist = data.speclist;
 				$(".quality-specify-table tbody").children().remove();
+				if(data.speclist.length == 0){
+					$(".quality-specify-table tbody").append("<tr><td colspan='4' style='TEXT-ALIGN: center'>해당 품목의 원재료가 존재하지 않습니다.</td><tr>");
+				}
 				for(var i in speclist ) {
 					let p = speclist[i];
 					//console.log(p);	
