@@ -235,7 +235,7 @@
 	</insert>
 	
 	<select id="selectProductionList" resultMap="pListMap">
-	select p.*, jo.jo_no from production p left join job_order jo on p.pl_no = jo.pl_no order by production
+	select * from production order by production
 	</select>
 	<resultMap type="map" id="pListMap">
 	</resultMap>

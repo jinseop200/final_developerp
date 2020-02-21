@@ -509,8 +509,8 @@ $(()=>{
 		 		dataType: "json",
 		 		success: data => {
 		 			console.log(data);
-		 			//$('#BOMAddModal').modal("hide"); //닫기 
-		 			//location.reload();
+		 			$('#addReleasing-Modal').modal("hide"); //닫기 
+		 			location.reload();
 		 		},
 		 		error : (jqxhr, textStatus, errorThrown)=>{
 		 			console.log(jqxhr, textStatus, errorThrown);
