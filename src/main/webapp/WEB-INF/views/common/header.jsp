@@ -183,6 +183,20 @@
                 </div>
               </div>
             </li>
+            
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>영업관리</span>
+              </a>
+              <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">DETAIL</h6>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/sales/salesListManagement.do">영업관리</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath }/sales/xbarGraphByProduct.do">제품별 판매 조회</a>
+                </div>
+              </div>
+            </li>
            <c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
           <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
