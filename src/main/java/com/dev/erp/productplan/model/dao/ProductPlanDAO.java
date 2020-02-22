@@ -33,4 +33,8 @@ public interface ProductPlanDAO {
 
 	List<Map<String, String>> selectFirstByPL();
 
+	int selectTotalEpPlan();
+
+	int selectTotalEpResult();
+
 }

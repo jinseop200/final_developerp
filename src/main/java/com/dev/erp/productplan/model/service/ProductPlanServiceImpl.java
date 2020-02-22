@@ -84,4 +84,14 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.selectFirstByPL();
 	}
 
+	@Override
+	public int selectTotalEpPlan() {
+		return productPlanDAO.selectTotalEpPlan();
+	}
+
+	@Override
+	public int selectTotalEpResult() {
+		return productPlanDAO.selectTotalEpResult();
+	}
+
 }

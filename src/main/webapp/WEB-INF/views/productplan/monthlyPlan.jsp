@@ -21,15 +21,23 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css_mdb/mdb.min.css"> --%>
   
-  <style>
-  #graph{
-  	width: 90%;
-  	height:70%;
-  	margin: 0 auto;
-  }
-  
-  </style>
-  <style>
+<style>
+#graph{
+	width: 90%;
+	height:70%;
+	margin: 0 auto;
+}
+#productionStatus{
+    display: inline-block;
+    width: 25%;
+    border-style: ridge;
+    margin-left: 90px;
+    font-size: unset;
+    position: relative;
+    top: 100px;
+}
+</style>
+<style>
 .form-control {
     display: inline;
 }
@@ -50,11 +58,11 @@ input[type=text]{
 
 		
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">생산현황 및 월별 생산계획</h1>
+<h1 class="h3 mb-2 text-gray-800">생산현황 및 생산계획</h1>
 <!-- 생산현황 테이블 -->
 <div id="productionStatus">
 	<h4>생산 현황</h4>
-	<table id="stausTable" width="30%" >
+	<table id="stausTable" width="100%" >
 	  <thead>
 	    <tr>
 	      <th>완제품계획</th>
@@ -64,31 +72,31 @@ input[type=text]{
 	  </thead>
 	  <tbody>
 	  	<tr class="table-info">
-	  		<td></td>
-	  		<td></td>
-	  		<td></td>
+	  		<td>${epPlan }</td>
+	  		<td>${epResult }</td>
+	  		<td>${attainment }%</td>
 	  	</tr>
 	  </tbody>
 	</table>
 </div>
-
-<div class="form-row">
-	<div class="col-lg-20 mb-3 rowResize">
-		 <label for="productName">제품별 월별 생산계획 조회</label>&emsp;<br>
-	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-	     <input type="hidden" id="productNo" name="productNo" />
-	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
-		 	<i class="fas fa-search fa-sm"></i>
-		 </button>
+<div id="monthlyProduction" >
+	<div class="form-row">
+		<div class="col-lg-20 mb-3 rowResize">
+			 <label for="productName">제품별 월별 생산계획 조회</label>&emsp;<br>
+		     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+		     <input type="hidden" id="productNo" name="productNo" />
+		     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
+			 	<i class="fas fa-search fa-sm"></i>
+			 </button>
+		</div>
 	</div>
-</div>
-
-<br />
-<div id="graph">
-	<canvas id="barChart"></canvas>
-</div>
- 
-  <!-- Modal -->
+	
+	<br />
+	<div id="graph">
+		<canvas id="barChart"></canvas>
+	</div>
+	
+	  <!-- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="searchProduct">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -105,6 +113,9 @@ input[type=text]{
         </div>
     </div>
 </div>
+</div>
+ 
+
 
 
 <!-- jQuery -->
@@ -125,9 +136,9 @@ $(()=>{
 	var myBarChart = new Chart(ctxB, {
 	type: 'bar',
 	data: {
-	labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+	labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 	datasets: [{
-	label: '# of Votes',
+	label: '월별 생산량',
 	data: [12, 19, 3, 5, 2, 3],
 	backgroundColor: [
 	'rgba(255, 99, 132, 0.2)',

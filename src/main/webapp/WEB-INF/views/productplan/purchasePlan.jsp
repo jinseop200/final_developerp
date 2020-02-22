@@ -221,7 +221,7 @@ input[type=text]{
 	});
 
 	
-//제품조회 모달
+//제품조회 모달1
 $(".searchProduct-btn").click(function(){
 	 /* $(".epl-body").css('display','block');
 	 $(".order-body").css('display','none'); */
@@ -234,7 +234,7 @@ $(".searchProduct-btn").click(function(){
 		});
 	});
 	
-//필요수량 구매계획 모달
+//필요수량 구매계획 모달2
 $(".jo-table tbody").on('dblclick', 'tr', function(){
 	
 	var rmName = $(this).children().eq(1).html();

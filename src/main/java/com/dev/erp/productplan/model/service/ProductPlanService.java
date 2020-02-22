@@ -33,4 +33,8 @@ public interface ProductPlanService {
 
 	List<Map<String, String>> selectFirstByPL();
 
+	int selectTotalEpPlan();
+
+	int selectTotalEpResult();
+
 }

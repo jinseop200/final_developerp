@@ -62,6 +62,9 @@ $(".joDetails-table tbody").on('dblclick','tr',function(){
 		var value = $(this).children().eq(2).html();
 		console.log(value);
 		$("#${searchType}").val(value);
+		
+		var plNo = $(this).children().eq(1).html();
+		$("#plNo").val(plNo);
 	}
 	
 	$("#searchDetailsModal").modal('hide');

@@ -61,6 +61,16 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/productionPlan.do")
 	public ModelAndView productionPlan(ModelAndView mav) {
 		
+		int epPlan = productPlanService.selectTotalEpPlan();
+		int epResult = productPlanService.selectTotalEpResult();
+		int attainment = (100*epResult)/epPlan;
+		
+		
+		mav.addObject("epPlan", epPlan);
+		mav.addObject("epResult", epResult);
+		mav.addObject("attainment", attainment);
+		
+		
 		
 		mav.setViewName("productplan/monthlyPlan");
 		
@@ -231,6 +241,7 @@ public class ProductPlanController {
 									   @RequestParam String customer,
 									   @RequestParam String manager,
 									   @RequestParam String productName,
+									   @RequestParam String plNo,
 									   @RequestParam String quantity,
 									   @RequestParam String orderContent,
 									   ModelAndView mav) {
@@ -241,10 +252,12 @@ public class ProductPlanController {
 		String str = String.join("", enrollDate.split("-"));
 		Map<String, String> joList = new HashMap<>();
 		joList.put("joNo", str+"-"+(joTotalContents+1));
+		joList.put("enrollDate", enrollDate);
 		joList.put("dueDate", dueDate);
 		joList.put("customer", customer);
 		joList.put("manager", manager);
 		joList.put("productName", productName);
+		joList.put("plNo", plNo);
 		joList.put("quantity", quantity);
 		joList.put("orderContent", orderContent);
 		

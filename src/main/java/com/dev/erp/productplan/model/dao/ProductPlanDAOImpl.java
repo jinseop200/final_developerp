@@ -87,4 +87,14 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public List<Map<String, String>> selectFirstByPL() {
 		return sqlSession.selectList("productplan.selectFirstByPL");
 	}
+
+	@Override
+	public int selectTotalEpPlan() {
+		return sqlSession.selectOne("productplan.selectTotalEpPlan");
+	}
+
+	@Override
+	public int selectTotalEpResult() {
+		return sqlSession.selectOne("productplan.selectTotalEpResult");
+	}
 }

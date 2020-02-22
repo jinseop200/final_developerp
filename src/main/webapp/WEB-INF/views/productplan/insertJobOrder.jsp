@@ -86,6 +86,7 @@
 	            <div class="col-md-6 mb-3">
 	                <label for="type">제품명 </label>&emsp;&emsp;
 	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required>
+	                <input type="hidden" id="plNo" name="plNo" />
 	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
