@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Page Heading -->
-
           <!-- DataTales Example -->
+            <h1 class="h3 mb-2 text-gray-800">문서결재</h1>
+           <br />
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
+              <h6 class="m-0 font-weight-bold text-primary">조회결과</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -38,9 +39,24 @@
 	                      <td>${l.regDate }</td>
 	                      <td>${l.docTitle }</td>
 	                      <td>${l.docType }</td>
-	                      <td>${l.docWriter}</td>
-	                      <td>${l.docLastapproval}</td>
-	                      <td>${l.docStatus}</td>
+	                      <c:if test="${l.docWriter==memberLoggedIn.empName}">
+		                      <td style="color:black;">${l.docWriter}</td>
+	                      </c:if>
+	                      <c:if test="${l.docWriter!=memberLoggedIn.empName}">
+		                      <td>${l.docWriter}</td>
+	                      </c:if>
+	                      <c:if test="${l.docLastapproval==memberLoggedIn.empName}">
+		                      <td style="color:black;">${l.docLastapproval}</td>
+		                  </c:if>
+	                      <c:if test="${l.docLastapproval!=memberLoggedIn.empName}">
+		                      <td>${l.docLastapproval}</td>
+		                  </c:if>
+		                  <c:if test="${l.docStatus=='결재완료'}">
+	                     	 <td style="color:red;">${l.docStatus}</td>
+	                      </c:if>
+		                  <c:if test="${l.docStatus!='결재완료'}">
+	                     	 <td>${l.docStatus}</td>
+	                      </c:if>
 	                      <td><a href="#">보기</a></td>
 	                    </tr>
                   	</c:forEach>

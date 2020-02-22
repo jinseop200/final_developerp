@@ -20,7 +20,7 @@
   <li class="nav-item">
     <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
   </li>
-  <li class="nav-item" style="padding-left:165px; ">
+  <li class="nav-item" style="padding-left:140px; ">
     <span class="nav-link" id="message-insert-button">신규</span>
   </li>
 </ul>

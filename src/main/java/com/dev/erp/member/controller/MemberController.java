@@ -52,62 +52,71 @@ public class MemberController {
 			@RequestParam("dept_code") String dept_code, @RequestParam("job_code") String job_code,@RequestParam("ssn1") String ssn1,
 			@RequestParam("ssn2") String ssn2,@RequestParam("phone") String phone
 			) {
-		Member member = new Member(0,emp_name,(ssn1+"-"+ssn2),email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
-		String rawPassword=member.getPassword();
-		String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
-		member.setPassword(encryptedPassword);
-		int result =memberService.insertMember(member);
+		try {
+			Member member = new Member(0,emp_name,(ssn1+"-"+ssn2),email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
+			String rawPassword=member.getPassword();
+			String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
+			member.setPassword(encryptedPassword);
+			int result =memberService.insertMember(member);
+				
+			String msg="";
+			String loc="/main/main.do?email="+email;
+			if(result>0) {
+				msg="회원추가성공!";
+			}
+			mav.addObject("loc",loc);
+			mav.addObject("msg",msg);
 			
-		String msg="";
-		String loc="/main/main.do?email="+email;
-		if(result>0) {
-			msg="회원추가성공!";
+			mav.setViewName("common/msg");
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
 		}
-		mav.addObject("loc",loc);
-		mav.addObject("msg",msg);
-		
-		mav.setViewName("common/msg");
-		
-		return mav;
 	}
 	
 	@RequestMapping("/member/memberEnroll.do")
 	public ModelAndView memberEnroll(ModelAndView mav) {
-		
-		List<Map<String,String>> deptList = memberService.selectDeptList();
-		List<Map<String,String>> jobList = memberService.selectJobList();
-		
-		mav.addObject("dept",deptList);
-		mav.addObject("job",jobList);
-		mav.setViewName("member/memberEnroll");
-		
-		return mav;
+		try {
+			List<Map<String,String>> deptList = memberService.selectDeptList();
+			List<Map<String,String>> jobList = memberService.selectJobList();
+			
+			mav.addObject("dept",deptList);
+			mav.addObject("job",jobList);
+			mav.setViewName("member/memberEnroll");
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/member/memberEmailDuplicatedCheck.do")
 	@ResponseBody
 	public Map<String,Object> memberEmailDuplicatedCheck(@RequestParam("email") String email, HttpServletResponse response) {
-		logger.debug("email={}",email);
-		Map<String, Object> map = new HashMap<>();
-		List<Member> emailList = memberService.memberSelectList();
-		int result=0;
-		for(int i=0; i<emailList.size(); i++) {
-			if(email.equals(emailList.get(i).getEmail())) {
-				result =1;//기존의 값과 일치하는경우
-			}else {
-				result=0; //아닌경우
+		try {
+			Map<String, Object> map = new HashMap<>();
+			List<Member> emailList = memberService.memberSelectList();
+			int result=0;
+			for(int i=0; i<emailList.size(); i++) {
+				if(email.equals(emailList.get(i).getEmail())) {
+					result =1;//기존의 값과 일치하는경우
+				}else {
+					result=0; //아닌경우
+				}
 			}
+			map.put("email", email);
+			
+			boolean isUsable = memberService.selectOneMember(email)==null?true:false;//기존의 값이 없는경우 true
+			map.put("isUsable", isUsable);
+			map.put("result", result);
+			
+			return map;
+		}catch(Exception e) {
+			throw e;
 		}
-		map.put("email", email);
-		
-		boolean isUsable = memberService.selectOneMember(email)==null?true:false;//기존의 값이 없는경우 true
-		map.put("isUsable", isUsable);
-		map.put("result", result);
-		
-		return map;
 	}
 	@PostMapping("/member/memberLogin.do")
 	public ModelAndView memberLogin(@RequestParam String email, @RequestParam String password, ModelAndView mav, HttpSession session) {
-		logger.debug("email={}",email);
 		
 		try {
 			//1.업무로직
@@ -156,121 +165,148 @@ public class MemberController {
 	
 	@RequestMapping("/member/memberLogOut.do")
 	public String memberLogout(SessionStatus sessionStatus, Model model) {
-		
-		//setComplete 메소드 호출로 해당세션 폐기
-		if(!sessionStatus.isComplete()) {
-			sessionStatus.setComplete();
+		try {
+			//setComplete 메소드 호출로 해당세션 폐기
+			if(!sessionStatus.isComplete()) {
+				sessionStatus.setComplete();
+			}
+			String msg="로그아웃되었습니다!";
+			String loc="/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("loc", loc);
+			
+			
+			return "common/msg";//  /spring 으로 리다이렉트
+		}catch(Exception e) {
+			throw e;
 		}
-		String msg="로그아웃되었습니다!";
-		String loc="/";
-		model.addAttribute("msg", msg);
-		model.addAttribute("loc", loc);
-		
-		
-		return "common/msg";//  /spring 으로 리다이렉트
 	}
 	@RequestMapping("/member/memberAlterPassword.do")
 	public ModelAndView memberAlterPassword(ModelAndView mav) {
-		
-		mav.setViewName("member/memberAlterPassword");
-		return mav;
+		try {
+			mav.setViewName("member/memberAlterPassword");
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/member/memberUpdateInfo.do")
 	public ModelAndView memberUpdateInfo(ModelAndView mav) {
-		List<Map<String,String>> deptList = memberService.selectDeptList();
-		List<Map<String,String>> jobList = memberService.selectJobList();
-		
-		mav.addObject("dept",deptList);
-		mav.addObject("job",jobList);
-		mav.setViewName("member/memberUpdateInfo");
-		return mav;
+		try {
+			List<Map<String,String>> deptList = memberService.selectDeptList();
+			List<Map<String,String>> jobList = memberService.selectJobList();
+			
+			mav.addObject("dept",deptList);
+			mav.addObject("job",jobList);
+			mav.setViewName("member/memberUpdateInfo");
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	
 	@RequestMapping("/member/memberPasswordCheck.do")
 	@ResponseBody
 	public Map<String,Object> memberPasswordCheck(@RequestParam("password") String password, @RequestParam("email") String email, HttpServletResponse response) {
-		Map<String, Object> map = new HashMap<>();
-		Member m = memberService.selectOneMember(email);
-		boolean isUsable;
-		if(bcryptPasswordEncoder.matches(password, m.getPassword())) {
-			isUsable=true;
-		}else {
-			isUsable=false;
-		}
-		map.put("isUsable",isUsable);
+		try {
+			Map<String, Object> map = new HashMap<>();
+			Member m = memberService.selectOneMember(email);
+			boolean isUsable;
+			if(bcryptPasswordEncoder.matches(password, m.getPassword())) {
+				isUsable=true;
+			}else {
+				isUsable=false;
+			}
+			map.put("isUsable",isUsable);
+				
 			
-		
-		return map;
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	
 	@PostMapping("/member/updatePasswordEnd.do")
 	@ResponseBody
 	public ModelAndView updatePasswordEnd(ModelAndView mav, @RequestParam("password_Chk") String password_Chk, @RequestParam("email") String email) {
-		String encryptedPassword = bcryptPasswordEncoder.encode(password_Chk);
-		Map<String, Object> param = new HashMap<>();
-		param.put("email", email);
-		param.put("password", encryptedPassword);
-		int result = memberService.updatePassword(param);
-		String msg="";
-		String loc="/main/main.do";
-		if(result>0) {
-			msg="비밀번호 변경성공!";
+		try {
+			String encryptedPassword = bcryptPasswordEncoder.encode(password_Chk);
+			Map<String, Object> param = new HashMap<>();
+			param.put("email", email);
+			param.put("password", encryptedPassword);
+			int result = memberService.updatePassword(param);
+			String msg="";
+			String loc="/main/main.do";
+			if(result>0) {
+				msg="비밀번호 변경성공!";
+			}
+			mav.addObject("loc",loc);
+			mav.addObject("msg",msg);
+			
+			mav.setViewName("common/msg");
+			
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
 		}
-		mav.addObject("loc",loc);
-		mav.addObject("msg",msg);
-		
-		mav.setViewName("common/msg");
-		
-		
-		return mav;
 	}
 	@RequestMapping("/member/memberFindMypage.do")
 	public ModelAndView memberFindMypage(ModelAndView mav, @RequestParam("email") String email) {
-		Map<String, String> deptOne = memberService.selectOneDept(email);
-		Map<String, String> jobOne = memberService.selectOneJob(email);
-		
-		mav.addObject("dept_title",deptOne);
-		mav.addObject("job_name",jobOne);
-		
-		
-		mav.setViewName("main/main");
-		
-		return mav;
+		try {
+			Map<String, String> deptOne = memberService.selectOneDept(email);
+			Map<String, String> jobOne = memberService.selectOneJob(email);
+			
+			mav.addObject("dept_title",deptOne);
+			mav.addObject("job_name",jobOne);
+			
+			
+			mav.setViewName("main/main");
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@PostMapping("/member/memberUpdateInfoEnd.do")
 	public ModelAndView memberUpdateInfoEnd(ModelAndView mav,@RequestParam("email") String email,
 			@RequestParam("password") String password, @RequestParam("emp_name") String emp_name,
 			@RequestParam("dept_code") String dept_code, @RequestParam("job_code") String job_code,@RequestParam("ssn1") String ssn1,
 			@RequestParam("phone") String phone) {
-		Member member = new Member(0,emp_name,ssn1,email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
-		String rawPassword=member.getPassword();
-		String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
-		member.setPassword(encryptedPassword);
-		
-		int result =memberService.updateMember(member);
-		Map<String, String> deptOne = memberService.selectOneDept(email);
-		Map<String, String> jobOne = memberService.selectOneJob(email);
+		try {
+			Member member = new Member(0,emp_name,ssn1,email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
+			String rawPassword=member.getPassword();
+			String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
+			member.setPassword(encryptedPassword);
 			
-		String msg="";
-		String loc="/main/main.do";
-		if(result>0) {
-			msg="회원정보수정성공!";
-			mav.addObject("memberLoggedIn", member);
-			mav.addObject("dept_title",deptOne);
-			mav.addObject("job_name", jobOne);
+			int result =memberService.updateMember(member);
+			Map<String, String> deptOne = memberService.selectOneDept(email);
+			Map<String, String> jobOne = memberService.selectOneJob(email);
+				
+			String msg="";
+			String loc="/main/main.do";
+			if(result>0) {
+				msg="회원정보수정성공!";
+				mav.addObject("memberLoggedIn", member);
+				mav.addObject("dept_title",deptOne);
+				mav.addObject("job_name", jobOne);
+			}
+			
+			mav.addObject("loc",loc);
+			mav.addObject("msg",msg);
+			
+			mav.setViewName("common/msg");
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
 		}
-		
-		mav.addObject("loc",loc);
-		mav.addObject("msg",msg);
-		
-		mav.setViewName("common/msg");
-		
-		return mav;
 	}
 	@RequestMapping("/member/memberProfile.do")
 	public ModelAndView memberProfile(ModelAndView mav, @RequestParam("email") String email, 
 									@RequestParam(value="uploadFile",required=false) MultipartFile profileImage, 
 									HttpServletRequest request) {
+		try {
 			String saveDirectory = request.getSession()
 										  .getServletContext()
 										  .getRealPath("/resources/upload/member");
@@ -309,6 +345,9 @@ public class MemberController {
 				mav.setViewName("main/main");
 			}
 			
-		return mav;
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 }

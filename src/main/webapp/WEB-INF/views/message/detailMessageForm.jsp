@@ -26,7 +26,7 @@
                 <div class="form-row message">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</label><br />
-                        <textarea class="form-control message-comment" placeholder="${message.message }" readonly name="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control detail-message-comment" placeholder="${message.message }" readonly name="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
       </div>
@@ -50,12 +50,8 @@
 #formGroupExampleInput {
     width: 70%;
 }
-.form-control {
-    display:inline;
-    width: 55%;
-}
-.message-comment {
-	width:200%;
+.detail-message-comment {
+	width:205%;
 	height:90% !important;
 }
 
@@ -78,7 +74,7 @@
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
 .form-row.message{
-	height:388px;
+	height:327px;
 }
 
 </style>

@@ -29,141 +29,165 @@ public class MessageController {
 	
 	@RequestMapping("/message/messageList.do")
 	public ModelAndView messageList(ModelAndView mav,@RequestParam("empName") String empName) {
-//		List<Map<String,Object>> msgList = new ArrayList<>();
-//		msgList = messageService.selectMessageList(empName);
-//		logger.debug("msgList={}",msgList);
-//		mav.addObject("msgList",msgList);
-		mav.setViewName("message/messageList");
-		
-		return mav;
+		try {
+			mav.setViewName("message/messageList");
+			
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/messageListPage.do")
 	@ResponseBody
 	public Map<String,Object> messageListPage(@RequestParam(defaultValue="1") int cPage,  @RequestParam("empName") String empName, HttpServletResponse rexsponse) {
-		
-		List<Message> list = new ArrayList<>();
-		final int numPerPage = 7;
-		int totalContents = 0;
-		list = messageService.selectMessageAllList(cPage,numPerPage,empName);  
-		logger.debug("list={}",list);
-		totalContents = messageService.selectAllCountByAccountNo(empName); 
-		String url = "messageListPage.do?empName="+empName;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		Map<String,Object> map = new HashMap<>();
-		map.put("numPerPage",numPerPage);
-		map.put("cPage",cPage);
-		map.put("totalContents",totalContents);
-		map.put("list",list);
-		map.put("pageBar", pageBar);
-		return map;
+		try {
+			List<Message> list = new ArrayList<>();
+			final int numPerPage = 7;
+			int totalContents = 0;
+			list = messageService.selectMessageAllList(cPage,numPerPage,empName);  
+			totalContents = messageService.selectAllCountByAccountNo(empName); 
+			String url = "messageListPage.do?empName="+empName;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			Map<String,Object> map = new HashMap<>();
+			map.put("numPerPage",numPerPage);
+			map.put("cPage",cPage);
+			map.put("totalContents",totalContents);
+			map.put("list",list);
+			map.put("pageBar", pageBar);
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/messageConfirmPage.do")
 	@ResponseBody
 	public Map<String,Object> messageConfirmPage(@RequestParam(defaultValue="1") int cPage,  @RequestParam("empName") String empName, HttpServletResponse rexsponse) {
-		
-		List<Message> list = new ArrayList<>();
-		final int numPerPage = 7;
-		int totalContents = 0;
-		list = messageService.messageConfirmPage(cPage,numPerPage,empName);  
-		logger.debug("list={}",list);
-		totalContents = messageService.selectAllCountmessageConfirmPage(empName); 
-		String url = "messageConfirmPage.do?empName="+empName;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		Map<String,Object> map = new HashMap<>();
-		map.put("numPerPage",numPerPage);
-		map.put("cPage",cPage);
-		map.put("totalContents",totalContents);
-		map.put("list",list);
-		map.put("pageBar", pageBar);
-		return map;
+		try {
+			List<Message> list = new ArrayList<>();
+			final int numPerPage = 7;
+			int totalContents = 0;
+			list = messageService.messageConfirmPage(cPage,numPerPage,empName);  
+			totalContents = messageService.selectAllCountmessageConfirmPage(empName); 
+			String url = "messageConfirmPage.do?empName="+empName;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			Map<String,Object> map = new HashMap<>();
+			map.put("numPerPage",numPerPage);
+			map.put("cPage",cPage);
+			map.put("totalContents",totalContents);
+			map.put("list",list);
+			map.put("pageBar", pageBar);
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/messageNoConfirmPage.do")
 	@ResponseBody
 	public Map<String,Object> messageNoConfirmPage(@RequestParam(defaultValue="1") int cPage,  @RequestParam("empName") String empName, HttpServletResponse rexsponse) {
-		
-		List<Message> list = new ArrayList<>();
-		final int numPerPage = 7;
-		int totalContents = 0;
-		list = messageService.messageNoConfirmPage(cPage,numPerPage,empName);  
-		logger.debug("list={}",list);
-		totalContents = messageService.selectAllCountmessageNoConfirmPage(empName); 
-		String url = "messageNoConfirmPage.do?empName="+empName;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		Map<String,Object> map = new HashMap<>();
-		map.put("numPerPage",numPerPage);
-		map.put("cPage",cPage);
-		map.put("totalContents",totalContents);
-		map.put("list",list);
-		map.put("pageBar", pageBar);
-		return map;
+		try {
+			List<Message> list = new ArrayList<>();
+			final int numPerPage = 7;
+			int totalContents = 0;
+			list = messageService.messageNoConfirmPage(cPage,numPerPage,empName);  
+			totalContents = messageService.selectAllCountmessageNoConfirmPage(empName); 
+			String url = "messageNoConfirmPage.do?empName="+empName;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			Map<String,Object> map = new HashMap<>();
+			map.put("numPerPage",numPerPage);
+			map.put("cPage",cPage);
+			map.put("totalContents",totalContents);
+			map.put("list",list);
+			map.put("pageBar", pageBar);
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/messageSenderFormPage.do")
 	@ResponseBody
 	public Map<String,Object> messageSenderFormPage(@RequestParam(defaultValue="1") int cPage,  @RequestParam("empName") String empName, HttpServletResponse rexsponse) {
 		
-		List<Message> list = new ArrayList<>();
-		final int numPerPage = 7;
-		int totalContents = 0;
-		list = messageService.messageSenderFormPage(cPage,numPerPage,empName);  
-		logger.debug("list={}",list);
-		totalContents = messageService.selectAllCountmessageSenderFormPage(empName); 
-		String url = "messageSenderFormPage.do?empName="+empName;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		Map<String,Object> map = new HashMap<>();
-		map.put("numPerPage",numPerPage);
-		map.put("cPage",cPage);
-		map.put("totalContents",totalContents);
-		map.put("list",list);
-		map.put("pageBar", pageBar);
-		return map;
+		try {
+			List<Message> list = new ArrayList<>();
+			final int numPerPage = 7;
+			int totalContents = 0;
+			list = messageService.messageSenderFormPage(cPage,numPerPage,empName);  
+			totalContents = messageService.selectAllCountmessageSenderFormPage(empName); 
+			String url = "messageSenderFormPage.do?empName="+empName;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			Map<String,Object> map = new HashMap<>();
+			map.put("numPerPage",numPerPage);
+			map.put("cPage",cPage);
+			map.put("totalContents",totalContents);
+			map.put("list",list);
+			map.put("pageBar", pageBar);
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/insertMessageForm.do")
 	public ModelAndView insertMessageForm(ModelAndView mav) {
-		
-		mav.setViewName("message/insertMessageForm");
-		return mav;
+		try {
+			mav.setViewName("message/insertMessageForm");
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/messageSelectList.do")
 	public ModelAndView messageSelectList(ModelAndView mav) {
-		
-		mav.setViewName("message/messageSelectList");
-		return mav;
+		try {
+			mav.setViewName("message/messageSelectList");
+			return mav;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/insertMessage.do")
 	@ResponseBody
 	public Map<String,Object> insertMessage(@RequestParam("empName") String empName, @RequestParam("insertSender") String insertSender,
 									@RequestParam("meTitle") String meTitle, @RequestParam("messageContent") String messageContent,HttpServletResponse rexsponse){
-		
-		Message message = new Message(0, meTitle,empName,insertSender,messageContent,"n",null);
-		int result = messageService.insertMessage(message);
-		Map<String,Object> map = new HashMap<>();
-		return map;
+		try {
+			Message message = new Message(0, meTitle,empName,insertSender,messageContent,"n",null);
+			int result = messageService.insertMessage(message);
+			Map<String,Object> map = new HashMap<>();
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 	@RequestMapping("/message/detailMessageForm.do")
 	public ModelAndView detailMessageForm(ModelAndView mav, @RequestParam("meNo") int meNo, @RequestParam("empName") String empName) {
-		
-		Message message = new Message();
-		message = messageService.detailMessage(meNo);
-		if(message.getReciever().equals(empName)) {
-			int result = messageService.updateMessage(meNo);
+		try {
+			Message message = new Message();
+			message = messageService.detailMessage(meNo);
+			if(message.getReciever().equals(empName)) {
+				int result = messageService.updateMessage(meNo);
+			}
+			mav.addObject("message",message);
+			mav.setViewName("message/detailMessageForm");
+			return mav;
+		}catch(Exception e) {
+			throw e;
 		}
-		mav.addObject("message",message);
-		mav.setViewName("message/detailMessageForm");
-		return mav;
 	}
+		
 	@RequestMapping("/message/messageCount.do")
 	@ResponseBody
 	public Map<String,Integer> messageCount(@RequestParam("empName") String empName) {
-		
-		int messageCount = messageService.selectAllCountmessageNoConfirmPage(empName);
-		Map<String, Integer> map = new HashMap<>();
-		logger.debug("messageCOunt={}",messageCount);
-		map.put("messageCount", messageCount);
-		return map;
+		try {
+			int messageCount = messageService.selectAllCountmessageNoConfirmPage(empName);
+			Map<String, Integer> map = new HashMap<>();
+			map.put("messageCount", messageCount);
+			return map;
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 }
 
