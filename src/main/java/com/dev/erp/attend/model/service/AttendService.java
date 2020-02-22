@@ -29,4 +29,6 @@ public interface AttendService {
 	String checkend(Attend attend);
 
 	String checkearly(Attend attend);
+
+	String checkholiday(Attend holiday);
 }

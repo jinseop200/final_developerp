@@ -18,25 +18,14 @@ public class MainController {
 	ScheduleService scheduleService ;
 	@RequestMapping("/main/main.do")
 	public ModelAndView mainPage(ModelAndView mav,@RequestParam(value="email") String email) {
-		System.out.println("sasfasdddddddddf"+email);
-		
+		System.out.println("sasfasdddddddddf"+email);		
 		List<Schedule> list= scheduleService.getSchedule(email);
-		System.out.println("asfsafsfsadddddd"+list);
-		
-		
-String content="";
-
-		
-		for(Schedule s:list) {
-			
+		System.out.println("asfsafsfsadddddd"+list);		
+		String content="";	
+		for(Schedule s:list) {			
 				content+=",{title:'"+s.getTitle()+"',start:'"+s.getStartScheduleTime()+"',end:'"+s.getEndScheduleTime()+"'}";
-		}
-		
-		
-		mav.addObject("content",content);
-		
-		
-		
+		}			
+		mav.addObject("content",content);		
 		mav.setViewName("main/main");
 		return mav;
 	}
