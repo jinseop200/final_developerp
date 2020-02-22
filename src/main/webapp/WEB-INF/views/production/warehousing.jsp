@@ -26,7 +26,6 @@
           <th>품목코드</th>
           <th>생산량</th>
           <th>생산일</th>
-          <th>작업지시서 번호</th>
         </tr>
       </thead>
 	  <tbody>
@@ -37,12 +36,6 @@
 	          <td>${p.PL_NO}</td>
 	          <td>${p.QUANTITY}</td>
 	          <td>${p.PRODUCTION}</td>
-	          <c:if test="${p.JO_NO == null}">
-	          <td></td>
-	          </c:if>
-	          <c:if test="${p.JO_NO != null}">
-	          <td><button class="btn btn-primary openJobOrder" type="button" value="${p.JO_NO}">작업지시서보기</button></td>
-	          </c:if>
 	        </tr>
         </c:forEach>
       </tbody>
@@ -82,19 +75,19 @@
 				</div>
                 <div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rProduct">생산불출 품목</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <label for="rProduct">생산불출 품목</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="text" id="rProduct" name="rProduct" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
                 <div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rQuantity">불출수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <label for="rQuantity">불출수량</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="number" id="rQuantity" name="rQuantity" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
                 <div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="rCode">품목코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					     <label for="rCode">품목코드</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="number" id="rCode" name="rCode" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					</div>
 				</div>
@@ -148,7 +141,7 @@
       </div>
         <div class="modal-footer">
         	<button type="button" id="FrmBtn" class="btn btn-primary">저장</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-secondary cloMdl" data-dismiss="modal">닫기</button>
         </div>
         </div>
         </form>
@@ -281,6 +274,7 @@ $(()=>{
 	$('#addReleasing-Modal').on('hidden.bs.modal', function (e) {
 	    //console.log('modal close');
 	  $(this).find('form')[0].reset();
+	  $(".releasingTbody tr").detach();
 	});
 	
 	$(".searchBtn").click(function(){

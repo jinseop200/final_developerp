@@ -97,7 +97,7 @@
 
 <script>
 $(()=>{
-	/console.log("specify="+"${searchType}");
+	//console.log("specify="+"${searchType}");
 	morePage(0);
 	
 	//input search
