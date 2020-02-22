@@ -321,7 +321,7 @@ $(()=>{
     	var title = $(this).siblings().html();
     	$("#searchModalTitle").html(title);
     	var searchType = $(this).val();
-    	console.log(searchType);
+    	//console.log(searchType);
     	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
  	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
  	        $('#mySearchModal').modal({show:true});
@@ -345,7 +345,7 @@ $(()=>{
 		
 		// td.eq(index)를 통해 값을 가져올 수도 있다.
 		var tdLotNo = td.eq(0).text();
-		console.log(tdLotNo);
+		//console.log(tdLotNo);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/production/selectWarehousingByLotNo.do",
@@ -354,7 +354,7 @@ $(()=>{
 		 	async: false,
 			contentType:"application/json;charset=UTF-8",
 			success: data => {
-				console.log(data);
+				//console.log(data);
 				$('#updateWarehousing #rawMaterialDetail').val(data.RM_NO);
 				$('#updateWarehousing #ptNo').val(data.PT_NO);
 				$('#updateWarehousing #vendorType').val(data.VENDOR_TYPE);
@@ -379,7 +379,7 @@ $(()=>{
 				
 			},
 			error : (jqxhr, textStatus, errorThrown)=>{
-				console.log(jqxhr, textStatus, errorThrown);
+				//console.log(jqxhr, textStatus, errorThrown);
 			}
 		});
 		
@@ -393,7 +393,7 @@ $(()=>{
 			return;
 	
 		var rmNo = $("#updateWarehousing #rawMaterialDetail").val();
-		console.log(rmNo);
+		//console.log(rmNo);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/production/deleteWarehousingByRmNo.do",
@@ -405,7 +405,7 @@ $(()=>{
 				location.reload();
 			},
 			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	});

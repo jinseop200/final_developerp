@@ -182,7 +182,7 @@ $(()=>{
 	   
 	   var tds = $("#BOMAddModal .BOMTbody tr");
 	   
-	 	console.log("tds length?",tds.length);
+	 	//console.log("tds length?",tds.length);
 	 	
 	 	if(tds.length == 0){
 	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
@@ -287,7 +287,7 @@ $(()=>{
 						 "pCounts":pCounts,
 						 "productCode":productCode
 						 };
-			console.log(data_);
+			//console.log(data_);
 		 	$.ajax({
 		 		url: "${pageContext.request.contextPath}/production/addBOM.do",
 		 		data: data_,
@@ -296,12 +296,12 @@ $(()=>{
 //		 		contentType : "application; charset=utf-8",
 		 		dataType: "json",
 		 		success: data => {
-		 			console.log(data);
+		 			//console.log(data);
 		 			$('#BOMAddModal').modal("hide"); //닫기 
 		 			location.reload();
 		 		},
 		 		error : (jqxhr, textStatus, errorThrown)=>{
-		 			console.log(jqxhr, textStatus, errorThrown);
+		 			//console.log(jqxhr, textStatus, errorThrown);
 		 		}
 		 	});
 		}) 
@@ -325,9 +325,9 @@ $(document).on('dblclick','.tdPtCode',function(){
 	
 	trNum += 1;
 	
-	console.log("this", clickedTd);
-	console.log("trNum", trNum);
-	console.log("prevAll", $(this).closest('tr').prevAll());
+	//console.log("this", clickedTd);
+	//console.log("trNum", trNum);
+	//console.log("prevAll", $(this).closest('tr').prevAll());
 	
 	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
 	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});

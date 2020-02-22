@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.enrollment.model.service.EnrollmentService;
 import com.dev.erp.production.model.service.ProductionService;
 import com.google.gson.JsonIOException;
@@ -36,59 +37,78 @@ public class ProductionController {
 	
 	@RequestMapping("/production/BOMListManagement.do")
 	public ModelAndView BOMListManagement(ModelAndView mav) {
-		
-		List<Map<String, String>> productList = productionService.selectproductList();
-		
-		logger.info("vendorList@Controller={}", productList);
-		
-		mav.addObject("productList", productList);
-		mav.setViewName("production/BOMListManagement");
+		try {
+			List<Map<String, String>> productList = productionService.selectproductList();
+			
+			//loger.info("vendorList@Controller={}", productList);
+			
+			mav.addObject("productList", productList);
+			mav.setViewName("production/BOMListManagement");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 등록 페이지를 불러올 수 없습니다. 관리자에게 문의하세요.");
+		}
 		return mav;
 	}
 	
 	@RequestMapping("/production/warehousing.do")
 	public ModelAndView warehousing(ModelAndView mav) {
-		
-		List<Map<String, String>> productList  = productionService.selectProductionList();
-		
-		logger.info("productList@Controller={}",productList);
-		
-		mav.addObject("productList",productList);
-		mav.setViewName("production/warehousing");
+		try {
+			List<Map<String, String>> productList  = productionService.selectProductionList();
+			
+			//loger.info("productList@Controller={}",productList);
+			
+			mav.addObject("productList",productList);
+			mav.setViewName("production/warehousing");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("생산입고 페이지를 불러올 수 없습니다. 관리자에게 문의하세요.");
+		}
 		return mav;
 	}
 	
 	//add
 	@RequestMapping("/production/addBOMForm.do")
 	public ModelAndView addBOMForm(ModelAndView mav) {
-		
-		mav.setViewName("production/addBOMForm");
+		try {
+			mav.setViewName("production/addBOMForm");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("거래처 등록 페이지를 불러올 수 없습니다. 관리자에게 문의하세요.");
+		}
 		return mav;
 	}
 
 	//add
 	@RequestMapping("/production/updateBOMForm.do")
 	public ModelAndView updateBOMForm(@RequestParam("tdPtNo") String tdPtNo, ModelAndView mav) {
-		
-		logger.info("tdPtNo@Controller={}",tdPtNo);
-		int bomNo = productionService.selectBOMNobyProductCode(tdPtNo);
-		logger.info("bomNo@Controller={}",bomNo);
-		
-		List<Map<String, String>> BOMrmList = productionService.selectBOMRmListByBOMNo(bomNo);
-		
-		logger.info("BOMrmList@Controller={}", BOMrmList);
-		
-		mav.addObject("BOMrmList", BOMrmList);
-		mav.setViewName("production/updateBOMForm");
+		try {
+			//loger.info("tdPtNo@Controller={}",tdPtNo);
+			int bomNo = productionService.selectBOMNobyProductCode(tdPtNo);
+			//loger.info("bomNo@Controller={}",bomNo);
+			
+			List<Map<String, String>> BOMrmList = productionService.selectBOMRmListByBOMNo(bomNo);
+			
+			//loger.info("BOMrmList@Controller={}", BOMrmList);
+			
+			mav.addObject("BOMrmList", BOMrmList);
+			mav.setViewName("production/updateBOMForm");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 수정 오류");
+		}
 		return mav;
 	}
 	
 	@RequestMapping("/production/selectRawMaterialList.do")
 	public ModelAndView selectRawMaterialList(ModelAndView mav) {
-		
-		List<Map<String, String>> rawmaterialList = productionService.selectRawMaterialList();
-		
-		mav.addObject("rawmaterialList",rawmaterialList);
+		try {
+			List<Map<String, String>> rawmaterialList = productionService.selectRawMaterialList();
+			mav.addObject("rawmaterialList",rawmaterialList);
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("원재료 목록을 불러올 수 없습니다. 관리자에게 문의하세요");
+		}
 		return mav;
 	}
 	
@@ -101,43 +121,44 @@ public class ProductionController {
 					 	 @RequestParam(value="pCounts[]", required=false) List<String> pCountList,
 					 	@RequestParam(value="productCode", required=false) String productCode,
 										 ModelAndView mav) {
-		
-		System.out.println("zzz"+pCodeList.size());
-		
-		if(!(pCodeList.size()==0 || pCountList.size()==0)) {
-			Map<String, String> map = new HashMap<>();
-			map.put("productCode", productCode);
-			logger.info("map@controller={}",map);
-			int result = productionService.insertBOM(productCode); 
-			
-			int bomNo = productionService.selectBOMNobyProductCode(productCode);
-			
-			logger.info("bomNo@Conteroller={}",bomNo);
-			
-			
-			logger.info("productCode@Controller={}",productCode);
-			logger.info("pCodeList@Controller={}",pCodeList);
-			logger.info("pNameList@Controller={}",pNameList);
-			logger.info("pCountList@Controller={}",pCountList);
-			
-			List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
-	
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("productCode", productCode);
-			paramMap.put("bomNo", bomNo);
-			
-			for(int i=0; i<pCodeList.size();i++) {
-				Map<String,Object> temp = new HashMap<>();
-				temp.put("pCodeList", pCodeList.get(i));
-				temp.put("pCountList", pCountList.get(i));
+		try {
+			if(!(pCodeList.size()==0 || pCountList.size()==0)) {
+				Map<String, String> map = new HashMap<>();
+				map.put("productCode", productCode);
+				//loger.info("map@controller={}",map);
+				int result = productionService.insertBOM(productCode); 
 				
-				BOMList.add(temp);
+				int bomNo = productionService.selectBOMNobyProductCode(productCode);
+				
+				//loger.info("bomNo@Conteroller={}",bomNo);
+				
+				
+				//loger.info("productCode@Controller={}",productCode);
+				//loger.info("pCodeList@Controller={}",pCodeList);
+				//loger.info("pNameList@Controller={}",pNameList);
+				//loger.info("pCountList@Controller={}",pCountList);
+				
+				List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
+		
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("productCode", productCode);
+				paramMap.put("bomNo", bomNo);
+				
+				for(int i=0; i<pCodeList.size();i++) {
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("pCodeList", pCodeList.get(i));
+					temp.put("pCountList", pCountList.get(i));
+					
+					BOMList.add(temp);
+				}
+				paramMap.put("BOMList", BOMList);
+				//loger.info("1232134BOM={}",paramMap);
+				int result2 = productionService.insertBOMlist(paramMap);
 			}
-			paramMap.put("BOMList", BOMList);
-			logger.info("1232134BOM={}",paramMap);
-			int result2 = productionService.insertBOMlist(paramMap);
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 등록 오류!");
 		}
-
 		List<String> list = new ArrayList<>();
 		list.add("성공");
 		return list;
@@ -146,32 +167,39 @@ public class ProductionController {
 	@RequestMapping("/production/deleteBOMByBOMNo.do")
 	public ModelAndView deleteBOMByBOMNo(@RequestParam("plNo") String plNo,
 										 ModelAndView mav) {
-		logger.info("plNo@Controller={}",plNo);
-		
-		int bomNo = productionService.selectBOMNobyProductCode(plNo);
-		int result = productionService.deleteBOMByBOMNo(bomNo); 
-		
-		logger.info("result@controller={}",result);
-		
-		mav.addObject("result",result);
-		mav.setViewName("redirect:/production/BOMListManagement.do");
+		try {
+			//loger.info("plNo@Controller={}",plNo);
+			
+			int bomNo = productionService.selectBOMNobyProductCode(plNo);
+			int result = productionService.deleteBOMByBOMNo(bomNo); 
+			
+			//loger.info("result@controller={}",result);
+			
+			mav.addObject("result",result);
+			mav.setViewName("redirect:/production/BOMListManagement.do");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 삭제 오류");
+		}
 		return mav;
 	}
 	
 	@RequestMapping("/production/selectBOMForm.do")
 	@ResponseBody
 	public Map<String, Object> selectBOMForm(@RequestParam("tdPtNo") String tdPtNo) {
-		
-		logger.info("productNo@Controller={}",tdPtNo);
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("tdPtNo", tdPtNo);
-		
-		boolean isUsable = productionService.selectBOMForm(tdPtNo)==null?true:false;
-		map.put("isUsable", isUsable);
-		
-		logger.info("isUsable@Controller={}",isUsable);
-
+		try {
+			//loger.info("productNo@Controller={}",tdPtNo);
+			map.put("tdPtNo", tdPtNo);
+			
+			boolean isUsable = productionService.selectBOMForm(tdPtNo)==null?true:false;
+			map.put("isUsable", isUsable);
+			
+			//loger.info("isUsable@Controller={}",isUsable);
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 페이지 로드 오류");
+		}
 		return map;
 	}
 	
@@ -186,95 +214,99 @@ public class ProductionController {
 					 	 @RequestParam(value="beforeArr[]", required=false) List<String> beforeArrList,
 					 	 @RequestParam(value="removeCode[]", required=false) List<String> removeCodeList,
 										 ModelAndView mav) {
-		logger.info("productCode@Controller={}",productCode);
-		logger.info("pCodeList@Controller={}",pCodeList);
-		logger.info("pNameList@Controller={}",pNameList);
-		logger.info("pCountList@Controller={}",pCountList);
-		logger.info("beforeArrList@Controller={}",beforeArrList);
-		logger.info("removeCodeList@Controller={}",removeCodeList);
-		
-		if(beforeArrList == null) {
-			beforeArrList = new ArrayList<>();
-		}
-		
-		//제품코드로 BOM NO 가져오기
-		Map<String, String> map = new HashMap<>();
-		map.put("productCode", productCode);
-		logger.info("map@controller={}",map);
-		int bomNo = productionService.selectBOMNobyProductCode(productCode);
-		logger.info("bomNo@Conteroller={}",bomNo);
-		
-		//delete
-		if(removeCodeList != null) {
-			logger.info("delete started");
-			List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
-			Map<String, Object> deleteMap = new HashMap<String, Object>();
-			deleteMap.put("bomNo", bomNo);
-			for(int i=0; i<removeCodeList.size();i++) {
-				Map<String,Object> temp = new HashMap<>();
-				temp.put("removeCode", removeCodeList.get(i));
-				deleteList.add(temp);
+		try {
+			//loger.info("productCode@Controller={}",productCode);
+			//loger.info("pCodeList@Controller={}",pCodeList);
+			//loger.info("pNameList@Controller={}",pNameList);
+			//loger.info("pCountList@Controller={}",pCountList);
+			//loger.info("beforeArrList@Controller={}",beforeArrList);
+			//loger.info("removeCodeList@Controller={}",removeCodeList);
+			
+			if(beforeArrList == null) {
+				beforeArrList = new ArrayList<>();
 			}
-			deleteMap.put("deleteList", deleteList);
-			int delete = productionService.deleteBOMRm(deleteMap);
-		}
+			
+			//제품코드로 BOM NO 가져오기
+			Map<String, String> map = new HashMap<>();
+			map.put("productCode", productCode);
+			//loger.info("map@controller={}",map);
+			int bomNo = productionService.selectBOMNobyProductCode(productCode);
+			//loger.info("bomNo@Conteroller={}",bomNo);
+			
+			//delete
+			if(removeCodeList != null) {
+				//loger.info("delete started");
+				List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
+				Map<String, Object> deleteMap = new HashMap<String, Object>();
+				deleteMap.put("bomNo", bomNo);
+				for(int i=0; i<removeCodeList.size();i++) {
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("removeCode", removeCodeList.get(i));
+					deleteList.add(temp);
+				}
+				deleteMap.put("deleteList", deleteList);
+				int delete = productionService.deleteBOMRm(deleteMap);
+			}
+			
+			
+			//merge into
+			if(pCodeList != null) {
+			
+				List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
 		
-		
-		//merge into
-		if(pCodeList != null) {
-		
-			List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
-	
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("productCode", productCode);
-			paramMap.put("bomNo", bomNo);
-			logger.info("beforeArrList.size()@Controller={}",beforeArrList.size());
-			if((beforeArrList.size() < pCodeList.size())) {
-				int repeat = pCodeList.size() - beforeArrList.size();
-				logger.info("repeat@controller={}",repeat);
-				for(int i=0;i<repeat;i++) {
-					beforeArrList.add("0");
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("productCode", productCode);
+				paramMap.put("bomNo", bomNo);
+				//loger.info("beforeArrList.size()@Controller={}",beforeArrList.size());
+				if((beforeArrList.size() < pCodeList.size())) {
+					int repeat = pCodeList.size() - beforeArrList.size();
+					//loger.info("repeat@controller={}",repeat);
+					for(int i=0;i<repeat;i++) {
+						beforeArrList.add("0");
+					}
+				}
+				
+				for(int i=0; i<pCodeList.size();i++) {
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("pCodeList", pCodeList.get(i));
+					temp.put("pCountList", pCountList.get(i));
+					temp.put("beforeArrList", beforeArrList.get(i));
+					
+					BOMList.add(temp);
+				}
+				
+				paramMap.put("BOMList", BOMList);
+				//loger.info("paramMap@Controller={}",paramMap);
+				int result2 = productionService.updateBOMRm(paramMap);
+			}
+			
+			//not cotains = delete
+			if(pCodeList != null) {
+				for(String before : beforeArrList) {
+				    if(pCodeList.contains(before)) {
+				        //system.out.println("pCodeList 에는 "+ before + " 가 있다.");
+				    }else {
+				        //system.out.println("pCodeList 에는 "+ before + " 가 없다. 따라서 지울것이다.");
+				        List<String> removeThis = new ArrayList<>();
+				        removeThis.add(before);
+				        
+				        List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
+						Map<String, Object> deleteMap = new HashMap<String, Object>();
+						deleteMap.put("bomNo", bomNo);
+						for(int i=0; i<removeThis.size();i++) {
+							Map<String,Object> temp = new HashMap<>();
+							temp.put("removeCode", removeThis.get(i));
+							deleteList.add(temp);
+						}
+						deleteMap.put("deleteList", deleteList);
+						int delete = productionService.deleteBOMRm(deleteMap);
+				    }
 				}
 			}
-			
-			for(int i=0; i<pCodeList.size();i++) {
-				Map<String,Object> temp = new HashMap<>();
-				temp.put("pCodeList", pCodeList.get(i));
-				temp.put("pCountList", pCountList.get(i));
-				temp.put("beforeArrList", beforeArrList.get(i));
-				
-				BOMList.add(temp);
-			}
-			
-			paramMap.put("BOMList", BOMList);
-			logger.info("paramMap@Controller={}",paramMap);
-			int result2 = productionService.updateBOMRm(paramMap);
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 수정 오류");
 		}
-		
-		//not cotains = delete
-		if(pCodeList != null) {
-			for(String before : beforeArrList) {
-			    if(pCodeList.contains(before)) {
-			        System.out.println("pCodeList 에는 "+ before + " 가 있다.");
-			    }else {
-			        System.out.println("pCodeList 에는 "+ before + " 가 없다. 따라서 지울것이다.");
-			        List<String> removeThis = new ArrayList<>();
-			        removeThis.add(before);
-			        
-			        List<Map<String, Object>> deleteList = new ArrayList<Map<String, Object>>();
-					Map<String, Object> deleteMap = new HashMap<String, Object>();
-					deleteMap.put("bomNo", bomNo);
-					for(int i=0; i<removeThis.size();i++) {
-						Map<String,Object> temp = new HashMap<>();
-						temp.put("removeCode", removeThis.get(i));
-						deleteList.add(temp);
-					}
-					deleteMap.put("deleteList", deleteList);
-					int delete = productionService.deleteBOMRm(deleteMap);
-			    }
-			}
-		}
-		
 		List<String> list = new ArrayList<>();
 		list.add("성공");
 		
@@ -282,194 +314,48 @@ public class ProductionController {
 	}
 	
 	
-	//==============================warehosing start======================================
-//	@RequestMapping("/production/addWarehousing.do")
-//	public ModelAndView addWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
-//									 @RequestParam("ptNo") String ptNo,
-//									 @RequestParam("vendorTypeCode") String vendorTypeCode,
-//									 @RequestParam("storeNo") String storeNo,
-//									 @RequestParam("quantity") String quantity,
-//									 @RequestParam("quailityYN") String quailityYN,
-//									 @RequestParam("insectionYN") String insectionYN,
-//									 @RequestParam("measurement") String measurement,
-//									 @RequestParam("regDate") String regDate,
-//									 @RequestParam("rmName") String rmName,
-//										 ModelAndView mav) {
-//		
-//		Map<String, String> warehousing = new HashMap<>();
-//		warehousing.put("rawMaterialDetail", rawMaterialDetail);
-//		warehousing.put("ptNo", ptNo);
-//		warehousing.put("vendorTypeCode", vendorTypeCode);
-//		warehousing.put("storeNo", storeNo);
-//		warehousing.put("quantity", quantity);
-//		warehousing.put("quailityYN", quailityYN);
-//		warehousing.put("insectionYN", insectionYN);
-//		warehousing.put("measurement", measurement);
-//		warehousing.put("regDate", regDate);
-//		warehousing.put("rmName", rmName);
-//		
-//		logger.info("warehousing@controller={}",warehousing);
-//		
-//		int result = productionService.addWarehousing(warehousing); 
-//		
-//		mav.addObject("warehousing", warehousing);
-//		mav.setViewName("redirect:/production/warehousing.do");
-//		
-//		return mav;
-//	}
-//	
-//	@RequestMapping("/production/selectWarehousingByLotNo.do")
-//	@ResponseBody
-//	public Map<String, Object> selectWarehousingByLotNo(@RequestParam("tdLotNo") String tdLotNo) {
-//		
-//		logger.info("tdLotNo@Controller={}",tdLotNo);
-//		
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("tdLotNo", tdLotNo);
-//		map = productionService.selectWarehousingByLotNo(tdLotNo);
-//		
-//		//날짜형식 수정
-//		String nDate = map.get("REC_DATE").toString().substring(0,10);
-//		map.put("nDate", nDate);
-//		
-//		logger.info("map@Controller={}",map);
-//		
-//		return map;
-//	}
-//	
-//	@RequestMapping("/production/updateWarehousing.do")
-//	public ModelAndView updateWarehousing(@RequestParam("rawMaterialDetail") String rawMaterialDetail,
-//									 @RequestParam("ptNo") String ptNo,
-//									 @RequestParam("vendorTypeCode") String vendorTypeCode,
-//									 @RequestParam("storeNo") String storeNo,
-//									 @RequestParam("quantity") String quantity,
-//									 @RequestParam("quailityYN") String quailityYN,
-//									 @RequestParam("insectionYN") String insectionYN,
-//									 @RequestParam("measurement") String measurement,
-//									 @RequestParam("lotNo") String lotNo,
-//									 @RequestParam("regDate") String regDate,
-//										 ModelAndView mav) {
-//		
-//		Map<String, String> warehousing = new HashMap<>();
-//		warehousing.put("rawMaterialDetail", rawMaterialDetail);
-//		warehousing.put("ptNo", ptNo);
-//		warehousing.put("vendorTypeCode", vendorTypeCode);
-//		warehousing.put("storeNo", storeNo);
-//		warehousing.put("quantity", quantity);
-//		warehousing.put("quailityYN", quailityYN);
-//		warehousing.put("insectionYN", insectionYN);
-//		warehousing.put("measurement", measurement);
-//		warehousing.put("lotNo", lotNo);
-//		warehousing.put("regDate", regDate);
-//		
-//		logger.info("warehousing@controller={}",warehousing);
-//		
-//		int result = productionService.updateWarehousing(warehousing); 
-//		
-//		mav.addObject("warehousing", warehousing);
-//		mav.setViewName("redirect:/production/warehousing.do");
-//		
-//		return mav;
-//	}
-//	
-//	@RequestMapping("/production/deleteWarehousingByRmNo.do")
-//	public ModelAndView deleteWarehousingByRmNo(@RequestParam("rmNo") String rmNo,
-//										 ModelAndView mav) {
-//		logger.info("rmNo@Controller={}",rmNo);
-//		
-//		Integer.parseInt(rmNo);
-//		
-//		int lotNo = productionService.selectRotNobyRmNo(rmNo);
-//		logger.info("lotNo@Controller={}",lotNo);
-//		int result = productionService.deleteWarehousingByRmNo(lotNo); 
-//		
-//		logger.info("result@controller={}",result);
-//		
-//		mav.addObject("result",result);
-//		mav.setViewName("redirect:/production/BOMListManagement.do");
-//		return mav;
-//	}
-	//end
-	
 	//==============================releasing start======================================
 	@RequestMapping("/production/checkBOMExist")
 	@ResponseBody
 	public ModelAndView checkBOMExist(@RequestParam("chkBOM") String chkBOM,
 											 @RequestParam("rQuantity") String rQuantity,HttpServletResponse response,
 											 ModelAndView mav) throws JsonIOException, IOException {
-		response.setContentType("text/html;charset=utf-8");
-		logger.info("chkBOM@Controller={}",chkBOM);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("chkBOM", chkBOM);
-		map.put("rQuantity", rQuantity);
-		
-		//bom존재하는지 확인
-		List<Map<String, String>> lMap = productionService.checkBOMExist(chkBOM);
-		logger.info("lMap@Controller={}",lMap);
-		
-		
-		//값존재시 true 사용가능, 값없을시 false 사용불가
-		boolean isUsable = lMap.size()==0?false:true;
-		map.put("isUsable", isUsable);
-		
-		List<Map<String, String>> list = productionService.quantityCheck(map);
-		logger.info("list@Controller={}",list);
-		
-		//Map<String, String> isUsableMap = new HashMap<>();
-		//isUsableMap.put("isUsable", String.valueOf(isUsable));
-		
-		logger.info("isUsable@Controller={}",isUsable);
-		//lMap.add(isUsableMap);
-		
-		logger.info("lMap@Controller={}",lMap);
-		
-		mav.addObject("isUsable",isUsable);
-		mav.addObject("list",list);
-		mav.setViewName("jsonView");
-		return mav;
-		/*
-		//필요수량이 모자란것들(QUANCHK < 0) 담을 nList 생성
-		List<Map<String, String>> nList = new ArrayList<>();
-		System.out.println("초기 nList 사이즈="+nList.size());
-		if(isUsable == true) {
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			//loger.info("chkBOM@Controller={}",chkBOM);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("chkBOM", chkBOM);
+			map.put("rQuantity", rQuantity);
+			
+			//bom존재하는지 확인
+			List<Map<String, String>> lMap = productionService.checkBOMExist(chkBOM);
+			//loger.info("lMap@Controller={}",lMap);
+			
+			
+			//값존재시 true 사용가능, 값없을시 false 사용불가
+			boolean isUsable = lMap.size()==0?false:true;
+			map.put("isUsable", isUsable);
+			
 			List<Map<String, String>> list = productionService.quantityCheck(map);
-			logger.info("list@controller={}",list);
+			//loger.info("list@Controller={}",list);
 			
-			//bom 구성 품목수 != receiving 테이블과 일치하는 품목개수가 다를경우, 중복되는값 추출
-			int bomCount = lMap.size(); //BOM구성 품목수
-			logger.info("bomCount@controller={}",bomCount);
-			int quanchkSize = list.size(); //리시빙 테이블에서 수량체크후 구성 품목수
-			logger.info("quanchkSize@controller={}",quanchkSize);
+			//Map<String, String> isUsableMap = new HashMap<>();
+			//isUsableMap.put("isUsable", String.valueOf(isUsable));
 			
-			for(int i=0; i<lMap.size(); i++) {
-				lMap.get(i).get("RM_NO");
-			}
+			//loger.info("isUsable@Controller={}",isUsable);
+			//lMap.add(isUsableMap);
 			
-			for(int i = 0; i < list.size(); i++) {
-				Map<String, String> tempMap = new HashMap<>();
-				//System.out.println(Integer.parseInt(String.valueOf(list.get(i).get("QUANCHK"))));
-				if((Integer.parseInt(String.valueOf(list.get(i).get("QUANCHK"))))<0) {
-					tempMap.put("RM_NO", String.valueOf(list.get(i).get("RM_NO")));
-					tempMap.put("QUANCHK", String.valueOf(list.get(i).get("QUANCHK")));
-					tempMap.put("RM_NAME", String.valueOf(list.get(i).get("RM_NAME")));
-					nList.add(tempMap);
-				}
-			}
-			System.out.println("ifIsusable true실행후 nList 사이즈="+nList.size());
+			//loger.info("lMap@Controller={}",lMap);
 			
-			if(nList.size() == 0) {
-				for(int i = 0; i < list.size(); i++) {
-					logger.info("마지막 release에 추가하기");
-					System.out.println(list.get(i));
-					Map<String, String> addMap = list.get(i);
-					int result = productionService.addRelease(addMap);
-					
-				}
-			}
-			
+			mav.addObject("isUsable",isUsable);
+			mav.addObject("list",list);
+			mav.setViewName("jsonView");
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("BOM 존재 유무 확인 오류");
 		}
-		logger.info("nList@Controller={}",nList);*/
+		return mav;
 		
 	}
 	
@@ -481,80 +367,51 @@ public class ProductionController {
 								 @RequestParam(value="rQuantity", required=false) String rQuantity,
 								 @RequestParam(value="rCode", required=false) String rCode,
 							 	 ModelAndView mav) {
-		
-		logger.info("pLotNoList@Controller={}",pLotNoList);
-		logger.info("pReleasingList@Controller={}",pReleasingList);
-		logger.info("rProduct@Controller={}",rProduct);
-		logger.info("rQuantity@Controller={}",rQuantity);
-		logger.info("rQuantity@Controller={}",rCode);
-		
-		
-		//receiving, release update/insert
-		for(int i = 0 ; i < pLotNoList.size(); i++) {
-			Map<String, String> map = new HashMap<>();
-			String pLotNo = pLotNoList.get(i);
-			String pReleasing = pReleasingList.get(i);
-			map.put("pLotNo", pLotNo);
-			map.put("pReleasing", pReleasing);
+		try {
+			//loger.info("pLotNoList@Controller={}",pLotNoList);
+			//loger.info("pReleasingList@Controller={}",pReleasingList);
+			//loger.info("rProduct@Controller={}",rProduct);
+			//loger.info("rQuantity@Controller={}",rQuantity);
+			//loger.info("rQuantity@Controller={}",rCode);
 			
-			int result = productionService.addWarehousing(map);
-			int result2 = productionService.updateReceivingForWarehousing(map);
+			
+			//receiving, release update/insert
+			for(int i = 0 ; i < pLotNoList.size(); i++) {
+				Map<String, String> map = new HashMap<>();
+				String pLotNo = pLotNoList.get(i);
+				String pReleasing = pReleasingList.get(i);
+				map.put("pLotNo", pLotNo);
+				map.put("pReleasing", pReleasing);
+				
+				int result = productionService.addWarehousing(map);
+				int result2 = productionService.updateReceivingForWarehousing(map);
+			}
+			
+			Map<String, String> product = productionService.selectOneProductByPlNo(rCode);
+			//loger.info("product@Conteroller={}",product);
+			
+			int bomNo = productionService.selectOneBOMNoByPlNo(rCode);
+			//loger.info("bomNo@Conteroller={}",bomNo);
+			
+			String vendorNo = String.valueOf(product.get("VENDOR_NO"));
+			String ptNo = String.valueOf(product.get("PT_NO"));
+			String vendorType = String.valueOf(product.get("VENDOR_TYPE"));
+			String productName = product.get("PRODUCT_NAME");
+			
+			Map<String, String> pMap = new HashMap<>();
+			pMap.put("rCode", rCode);
+			pMap.put("bomNo", Integer.toString(bomNo));
+			pMap.put("vendorNo", vendorNo);
+			pMap.put("ptNo", ptNo);
+			pMap.put("vendorType", vendorType);
+			pMap.put("productName", productName);
+			pMap.put("rQuantity", rQuantity);
+			
+			int pResult = productionService.insertProduction(pMap);
+		} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("생산입고 등록 오류");
 		}
-		
-		Map<String, String> product = productionService.selectOneProductByPlNo(rCode);
-		logger.info("product@Conteroller={}",product);
-		
-		int bomNo = productionService.selectOneBOMNoByPlNo(rCode);
-		logger.info("bomNo@Conteroller={}",bomNo);
-		
-		String vendorNo = String.valueOf(product.get("VENDOR_NO"));
-		String ptNo = String.valueOf(product.get("PT_NO"));
-		String vendorType = String.valueOf(product.get("VENDOR_TYPE"));
-		String productName = product.get("PRODUCT_NAME");
-		
-		Map<String, String> pMap = new HashMap<>();
-		pMap.put("rCode", rCode);
-		pMap.put("bomNo", Integer.toString(bomNo));
-		pMap.put("vendorNo", vendorNo);
-		pMap.put("ptNo", ptNo);
-		pMap.put("vendorType", vendorType);
-		pMap.put("productName", productName);
-		pMap.put("rQuantity", rQuantity);
-		
-		
-		int pResult = productionService.insertProduction(pMap);
-		
-		
-		
-//		if(!(pCodeList.size()==0 || pCountList.size()==0)) {
-//			Map<String, String> map = new HashMap<>();
-//			map.put("productCode", productCode);
-//			logger.info("map@controller={}",map);
-//			int result = productionService.insertBOM(productCode); 
-//			
-//			int bomNo = productionService.selectBOMNobyProductCode(productCode);
-//			
-//			logger.info("bomNo@Conteroller={}",bomNo);
-//			
-//			
-//			
-//			List<Map<String, Object>> BOMList = new ArrayList<Map<String, Object>>();
-//	
-//			Map<String, Object> paramMap = new HashMap<String, Object>();
-//			paramMap.put("productCode", productCode);
-//			paramMap.put("bomNo", bomNo);
-//			
-//			for(int i=0; i<pCodeList.size();i++) {
-//				Map<String,Object> temp = new HashMap<>();
-//				temp.put("pCodeList", pCodeList.get(i));
-//				temp.put("pCountList", pCountList.get(i));
-//				
-//				BOMList.add(temp);
-//			}
-//			paramMap.put("BOMList", BOMList);
-//			logger.info("1232134BOM={}",paramMap);
-//			int result2 = productionService.insertBOMlist(paramMap);
-//		}
 
 		List<String> list = new ArrayList<>();
 		list.add("성공");

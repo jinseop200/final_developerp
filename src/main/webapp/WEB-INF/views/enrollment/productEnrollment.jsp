@@ -107,8 +107,8 @@ $(()=>{
 		// 현재 클릭된 Row(<tr>)
 		var tr = $(this).parent().parent();
 		var td = tr.children();
-		console.log(tr)
-		console.log(td)
+		//console.log(tr)
+		//console.log(td)
 		
 		// td.eq(index)를 통해 값을 가져올 수도 있다.
 		var tdProductNo = td.eq(0).text();
@@ -203,7 +203,7 @@ $("#addProductBtn").click(function(){
 	
 	$("input[name=groupOfMaterialRadios]").change(function() {
 		var radioValue = $(this).val();
-		console.log(radioValue);
+		//console.log(radioValue);
 		
 		if(radioValue == 1){
 			$('.controll-modal-body2').load("${pageContext.request.contextPath}/enrollment/addRawMeterialForm.do",function(){

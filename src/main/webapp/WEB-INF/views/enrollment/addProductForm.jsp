@@ -162,7 +162,7 @@ $(()=>{
     	var title = $(this).siblings().html();
     	$("#searchModalTitle").html(title);
     	var searchType = $(this).val();
-    	console.log(searchType);
+    	//console.log(searchType);
     	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
  	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
  	        $('#mySearchModal').modal({show:true});
@@ -190,7 +190,7 @@ $(function() {
   <%-- 품목코드 중복검사 ajax--%>
   function productNoDuplicatedCheck(e){
   	var productNo = e;
-  	console.log(productNo);
+  	//console.log(productNo);
   	
   	$.ajax({
   		url: "${pageContext.request.contextPath}/enrollment/productNoDuplicatedCheck.do",
@@ -199,7 +199,7 @@ $(function() {
   	 	async: false,
   		contentType:"application/json;charset=UTF-8",
   		success: data => {
-  			console.log(data);
+  			//console.log(data);
   			if(data.isUsable == true && data.productNo != ""){
   				alert("사용가능한 품목코드 입니다.");
   				$("#productNo").attr("style","border-bottom: 2px solid #00c500");
@@ -220,7 +220,7 @@ $(function() {
   			
   		},
   		error : (jqxhr, textStatus, errorThrown)=>{
-  			console.log(jqxhr, textStatus, errorThrown);
+  			/* console.log(jqxhr, textStatus, errorThrown); */
   		}
   	});
   }

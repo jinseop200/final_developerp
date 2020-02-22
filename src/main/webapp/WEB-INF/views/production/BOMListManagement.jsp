@@ -129,8 +129,8 @@ $(".BOMAddBtn").click(function(){
 	// 현재 클릭된 Row(<tr>)
 	var tr = $(this).parent().parent();
 	var td = tr.children();
-	console.log(tr)
-	console.log(td)
+	//console.log(tr)
+	//console.log(td)
 	
 	// td.eq(index)를 통해 값을 가져올 수도 있다.
 	var tdPtNo = td.eq(0).text();
@@ -143,8 +143,8 @@ $(".BOMAddBtn").click(function(){
  		contentType : "application; charset=utf-8",
  		dataType: "json",
  		success: data => {
- 			console.log(data);
- 			console.log(data.isUsable);
+ 			//console.log(data);
+ 			//console.log(data.isUsable);
  			if(data.isUsable == true){
  				$('.controll-modal-body3').load("${pageContext.request.contextPath}/production/addBOMForm.do",function(){
  			        $('#BOMAddModal').modal({backdrop: 'static', keyboard: false});
@@ -173,7 +173,7 @@ $(".BOMAddBtn").click(function(){
  			
  		},
  		error : (jqxhr, textStatus, errorThrown)=>{
- 			console.log(jqxhr, textStatus, errorThrown);
+ 			//console.log(jqxhr, textStatus, errorThrown);
  		}
  	});
 	

@@ -279,7 +279,7 @@ $(()=>{
 	
 	<%--입력 모달 창 close시 값 초기화--%>
 	$('#addReleasing-Modal').on('hidden.bs.modal', function (e) {
-	    console.log('modal close');
+	    //console.log('modal close');
 	  $(this).find('form')[0].reset();
 	});
 	
@@ -287,7 +287,7 @@ $(()=>{
     	var title = $(this).siblings().html();
     	$("#searchModalTitle").html(title);
     	var searchType = $(this).val();
-    	console.log(searchType);
+    	//console.log(searchType);
     	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
  	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
  	        $('#mySearchModal').modal({show:true});
@@ -308,7 +308,7 @@ $(()=>{
 			return;
 	
 		var rmNo = $("#updateWarehousing #rawMaterialDetail").val();
-		console.log(rmNo);
+		//console.log(rmNo);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/production/deleteWarehousingByRmNo.do",
@@ -320,7 +320,7 @@ $(()=>{
 				location.reload();
 			},
 			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	});
@@ -328,7 +328,7 @@ $(()=>{
 	$("#BOMSrcBtn").on("click", function(){
 		var chkBOM = $("#rProduct").val().trim()
 		var rQuantity = $("#rQuantity").val().trim()
-		console.log("chkBOM값은?",chkBOM);
+		//console.log("chkBOM값은?",chkBOM);
 		
 		 $.ajax({
 			url:"${pageContext.request.contextPath}/production/checkBOMExist",
@@ -338,15 +338,15 @@ $(()=>{
 				  rQuantity:rQuantity},
 			async: false,
 			success: data => {
-				console.log(data.isUsable);
+				//console.log(data.isUsable);
 				if(data.isUsable == false){
 					alert("BOM이 존재하지 않습니다. BOM을 등록해 주세요.");
 					return false;
 				}
-				console.log(data.list);
+				//console.log(data.list);
 				Object.assign(rArr, data.list);
-	            console.log("rArr="+rArr[0].RM_NO);
-	            console.log(JSON.stringify(rArr));
+	            //console.log("rArr="+rArr[0].RM_NO);
+	            //console.log(JSON.stringify(rArr));
 				var context;
 				$.each(data.list, (idx, elem)=>{
 					var tr = "<tr>";
@@ -364,7 +364,7 @@ $(()=>{
 				
 			},
 			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	}); //end of ajax
@@ -402,7 +402,7 @@ $(()=>{
 	   
 	   var tds = $("#addReleasing-Modal .releasingTbody tr");
 	   
-	 	console.log("tds length?",tds.length);
+	 	//console.log("tds length?",tds.length);
 	 	
 	 	if(tds.length == 0){
 	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
@@ -464,7 +464,7 @@ $(()=>{
 	 
 	  $("#FrmBtn").off("click").on('click', function() {
 		   var tds = $("#edTable .pNo").nextAll();
-			//console.log(tds);
+			////console.log(tds);
 			var exit= false;
 			$(tds).each(function(){
 				if($(this).text()==""){
@@ -499,7 +499,7 @@ $(()=>{
 						 "rQuantity":rQuantity,
 						 "rCode":rCode
 						 };
-			console.log(data_);
+			//console.log(data_);
  		 	$.ajax({
 		 		url: "${pageContext.request.contextPath}/production/addWarehousing.do",
 		 		data: data_,
@@ -508,12 +508,12 @@ $(()=>{
 		 		//contentType : "application; charset=utf-8",
 		 		dataType: "json",
 		 		success: data => {
-		 			console.log(data);
+		 			//console.log(data);
 		 			$('#addReleasing-Modal').modal("hide"); //닫기 
 		 			location.reload();
 		 		},
 		 		error : (jqxhr, textStatus, errorThrown)=>{
-		 			console.log(jqxhr, textStatus, errorThrown);
+		 			//console.log(jqxhr, textStatus, errorThrown);
 		 		}
 		 	}); // end of ajax */
 		}) 
@@ -530,9 +530,9 @@ $(document).on('dblclick','.tdPtCode',function(){
 	
 	trNum += 1;
 	
-	console.log("this", clickedTd);
-	console.log("trNum", trNum);
-	console.log("prevAll", $(this).closest('tr').prevAll());
+	//console.log("this", clickedTd);
+	//console.log("trNum", trNum);
+	//console.log("prevAll", $(this).closest('tr').prevAll());
 	
 	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
 	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
@@ -549,14 +549,14 @@ $(document).on('dblclick','.pLotNo',function(){
 	var clickedTd = $(this).parent().index();
 	var trNum = $(this).closest('tr').prevAll().length;
 	var thisCode = $(this).parent().children().eq(1).text()+"";
-	console.log("thisCode="+thisCode);
+	//console.log("thisCode="+thisCode);
 	trNum += 1;
 	
-	console.log("this", clickedTd);
-	console.log("trNum", trNum);
-	console.log("prevAll", $(this).closest('tr').prevAll());
+	//console.log("this", clickedTd);
+	//console.log("trNum", trNum);
+	//console.log("prevAll", $(this).closest('tr').prevAll());
 	var url = "${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType+"&thisCode="+thisCode;
-	console.log(url);
+	//console.log(url);
 	 $('.searchModalBody').load(url,function(){
 	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
 	        $('#mySearchModal').modal({show:true});
@@ -574,7 +574,7 @@ $(document).on( 'keyup', '.pReleasing', function() {
 	var thisTrPname = $(this).parent().children().eq(2).text();
 	var thisTrReleasingQuantity = $(this).text();
 	var thisTrReleasingQuantity2 = $(".releasingTbody tr .pName:contains('삼성 LED패널')").next().next().next().next().text();
-	console.log("thisNeedQuantity", thisNeedQuantity.text());
+	//console.log("thisNeedQuantity", thisNeedQuantity.text());
 	//var sum = 0;
 	/* for(var i=0;i<thisTrReleasingQuantity2.length;i++){
 		sum += parseInt(thisTrReleasingQuantity2[i]);
@@ -593,7 +593,7 @@ $(document).on( 'keyup', '.pReleasing', function() {
     }
     
     for(var i=0; i<rArr.length; i++){
-    	console.log("Z");
+    	//console.log("Z");
 	    $.each(rArr[i], function(key, value){
 	    	if(key == "RM_NAME" && value == thisTrPname ){
 	        	//console.log('key:' + key + ' / ' + 'value:' + parseInt(value-thisTrReleasingQuantity));
@@ -609,7 +609,7 @@ $(document).on( 'keyup', '.pReleasing', function() {
 	        	//console.log("minus",minus)
 	        	for(var q=0;q<minus.length;q++){
 	        		sum += parseInt(minus[q].innerText);
-	        		console.log("sum",sum);
+	        		//console.log("sum",sum);
 	        		if(isNaN(sum)){
 		        		sum = 0;
 		        	}
@@ -641,7 +641,7 @@ $(document).on( 'keyup', '.pReleasing', function() {
 //작업지시서 보기
 $(".openJobOrder").click(function(){
 	var joNo = $(this).val();
-	console.log("joNo="+joNo);
+	/* console.log("joNo="+joNo); */
 	if(joNo != ""){
 	 	$('.jo-modal-body').load("${pageContext.request.contextPath}/productplan/updateJobOrder.do?joNo="+joNo,function(){
 	        $('#jodal').modal({backdrop: 'static', keyboard: false});

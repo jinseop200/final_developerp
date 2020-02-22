@@ -42,7 +42,7 @@ $(()=>{
 	
 	<%--입력 모달 창 close시 값 초기화--%>
 	$('#addStorage-Modal').on('hidden.bs.modal', function (e) {
-	    console.log('modal close');
+	    //console.log('modal close');
 	  $(this).find('form')[0].reset()
 	  $("#storageNoValid").val(0);
 	  $("#storageNo").removeAttr('style');
@@ -69,7 +69,7 @@ $(()=>{
 			return;
 	
 		var stNo = $("#storageNo2").val();
-		console.log(stNo);
+		//console.log(stNo);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/enrollment/deleteStorageByStNo.do",
@@ -81,7 +81,7 @@ $(()=>{
 				location.reload();
 			},
 			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	});
@@ -127,7 +127,7 @@ function storageAddValidate(){
 <%-- 창고등록 중복검사 ajax--%>
 function storageNoDuplicatedCheck(e){
 	var storageNo = e;
-	console.log(storageNo);
+	//console.log(storageNo);
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/enrollment/storageNoDuplicatedCheck.do",
@@ -136,7 +136,7 @@ function storageNoDuplicatedCheck(e){
 	 	async: false,
 		contentType:"application/json;charset=UTF-8",
 		success: data => {
-			console.log(data);
+			//console.log(data);
 			if(data.isUsable == true && data.storageNo != ""){
 				alert("사용가능한 창고번호 입니다.");
 				$("#storageNo").attr("style","border-bottom: 2px solid #00c500");
@@ -157,7 +157,7 @@ function storageNoDuplicatedCheck(e){
 			
 		},
 		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
+			//console.log(jqxhr, textStatus, errorThrown);
 		}
 	});
 }

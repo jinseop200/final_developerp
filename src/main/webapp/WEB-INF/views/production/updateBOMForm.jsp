@@ -167,11 +167,11 @@ $(()=>{
 	 var beforeArr = [];
 	 var beforeLength = $(".pCode").length;
 	 
-	 console.log($(".pCode").length);
+	 //console.log($(".pCode").length);
 	 
 	 for(var i=0; i<beforeLength; i++){
 		 beforeArr.push($(".pCode").eq(i).text());
-		 console.log("beforeArr", beforeArr);
+		 //console.log("beforeArr", beforeArr);
 	 }
 	 
 	 
@@ -216,12 +216,12 @@ $(()=>{
 
 	 $tableID.on('click', '.table-remove', function () {
 	 	removeCode.push($(this).parent().parent().children().eq(1).text());
-	 	console.log(removeCode);
+	 	//console.log(removeCode);
 	 	
 	   $(this).parents('tr').detach();
 	   
 	   var tds = $(".BOMTbody tr");
-	 	console.log("tds length?",tds.length);
+	 	//console.log("tds length?",tds.length);
 	 	
 	 	if(tds.length == 0){
 	 		 const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
@@ -285,7 +285,7 @@ $(()=>{
 	//수정하기 button submit
 	 $("#updateBOM").off("click").on('click', function() {
 		 var tds = $("#edTable .pNo").nextAll();
-			console.log("tds",tds);
+			//console.log("tds",tds);
 			var exit= false;
 			$(tds).each(function(){
 				if($(this).text()==""){
@@ -327,7 +327,7 @@ $(()=>{
 	 	
 		 for(var i=0; i<beforeLength; i++){
 			 afterArr.push($(".pCode").eq(i).text());
-			 console.log("afterArr",afterArr);
+			 //console.log("afterArr",afterArr);
 		 }	 	
 	 	
 	 	var data_ = {"pNos":pNos,
@@ -338,8 +338,8 @@ $(()=>{
 	 				 "beforeArr":beforeArr,
 	 				 "removeCode":removeCode
 	 				 };
-	 	console.log(data_);
-	 	console.log("removeCode",removeCode);
+	 	//console.log(data_);
+	 	//console.log("removeCode",removeCode);
   	  	 $.ajax({
 	  		url: "${pageContext.request.contextPath}/production/updateBOM.do",
 	  		data: data_,
@@ -347,12 +347,12 @@ $(()=>{
 //	  		contentType : "application; charset=utf-8",
 	  		dataType: "json",
 	  		success: data => {
-	  			console.log(data);
+	  			//console.log(data);
 	  			$('#BOMAddModal').modal("hide"); //닫기 
 	  			location.reload();
 	  		},
 	  		error : (jqxhr, textStatus, errorThrown)=>{
-	  			console.log(jqxhr, textStatus, errorThrown);
+	  			//console.log(jqxhr, textStatus, errorThrown);
 	  		}
 	  	});  
 	 })
@@ -363,7 +363,7 @@ $(()=>{
 				return;
 		
 			var plNo = $("#productCode").val();
-			console.log(plNo);
+			//console.log(plNo);
 			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/production/deleteBOMByBOMNo.do",
@@ -375,7 +375,7 @@ $(()=>{
 					location.reload();
 				},
 				error : (x,s,e) =>{
-					console.log("ajax요청 실패!!", x, s, e);
+					//console.log("ajax요청 실패!!", x, s, e);
 				}
 			})
 		});
@@ -395,7 +395,7 @@ $(function() {
 <%-- 품목코드 수정 중복검사 ajax--%>
 function productNoDuplicatedCheck(e){
 	var productNo = e;
-	console.log(productNo);
+	//console.log(productNo);
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/enrollment/productNoDuplicatedCheckForRawMaterial.do",
@@ -404,7 +404,7 @@ function productNoDuplicatedCheck(e){
 	 	async: false,
 		contentType:"application/json;charset=UTF-8",
 		success: data => {
-			console.log(data);
+			//console.log(data);
 			if(data.isUsable == true && data.productNo != ""){
 				alert("사용가능한 품목코드 입니다.");
 				//$("#vendorNo").attr("style","border-bottom: 2px solid #00c500");
@@ -434,15 +434,15 @@ function productNoDuplicatedCheck(e){
 			
 		},
 		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
+			//console.log(jqxhr, textStatus, errorThrown);
 		}
 	});
 }
 
 function productNoUpdateValidate2(){
 	var formData = $('#productNoUpdateFrm').serialize();
-	console.log(formData);
-	console.log($('#productNoCha').val());
+	//console.log(formData);
+	//console.log($('#productNoCha').val());
 	
 	$.ajax({
         cache : false,
@@ -543,9 +543,9 @@ $(document).off('dblclick').on('dblclick','.tdPtCode',function(){
 	
 	trNum += 1;
 	
-	console.log("this", clickedTd);
-	console.log("trNum", trNum);
-	console.log("prevAll", $(this).closest('tr').prevAll());
+	//console.log("this", clickedTd);
+	//console.log("trNum", trNum);
+	//console.log("prevAll", $(this).closest('tr').prevAll());
 	
 	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
 	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});

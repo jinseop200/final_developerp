@@ -47,21 +47,21 @@
 
 <script>
 $(()=>{
-	console.log("${searchType}");
+	//console.log("${searchType}");
 	morePage(0);
 });
 
 
 $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	var value = $(this).children().eq(1).html();
-	console.log(value);
+	//console.log(value);
 	$("#${searchType}").val(value);
 	$("#mySearchModal").modal('hide');
 });
 
 
 function morePage(a){
-	console.log("a==="+a);
+	//console.log("a==="+a);
 	var searchType = "${searchType}";
 	var url_="";
 	if(a==0) {
@@ -70,7 +70,7 @@ function morePage(a){
 	else {
 		url_="${pageContext.request.contextPath}/enrollment/"+a;
 	}
-	console.log("url="+url_);
+	//console.log("url="+url_);
 	$.ajax({
 		url : url_,
 		dataType : "json",
@@ -79,14 +79,14 @@ function morePage(a){
 			$(".quality-specify-table tbody").children().remove();
 			for(var i in speclist ) {
 				let p = speclist[i];
-				console.log(p);	
+				//console.log(p);	
 				$(".quality-specify-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*5+1)+"</td><td>"+p.content2+"</td><td>"+p.content+"</td><tr>");
 			}
 			$(".pageBar").html(data.pageBar);
 			$("span.page-link").attr('onclick',"morePage(this.id)");
 		},
 		error:(x,s,e)=>{
-			console.log("ajax요청실패",x,s,e);
+			//console.log("ajax요청실패",x,s,e);
 		}
 		
 	});

@@ -70,7 +70,7 @@ $(()=>{
 	
 	<%--입력 모달 창 close시 값 초기화--%>
 	$('#addVendor-Modal').on('hidden.bs.modal', function (e) {
-	    console.log('modal close');
+	    //console.log('modal close');
 	  $(this).find('form')[0].reset();
 	  $("#vendorNoValid").val(0);
 	  $("#vendorNo").removeAttr('style');
@@ -78,13 +78,13 @@ $(()=>{
 	
 	<%--수정 모달 창 close시 값 초기화--%>
 	$('#updateVendor').on('hidden.bs.modal', function (e) {
-	    console.log('modal close');
+	    //console.log('modal close');
 	  $(this).find('form')[0].reset();
 	});
 	
 	<%--거래처번호 수정 모달 창 close시 값 초기화--%>
 	$('#updateVendorNo').on('hidden.bs.modal', function (e) {
-	    console.log('modal close');
+	    //console.log('modal close');
 	  $("#vendorNoUpdateValid").val(0);
 	  $(this).find('form')[0].reset();
  	  $("#vendorNoCha").removeAttr('style');
@@ -118,7 +118,7 @@ $(()=>{
     	var title = $(this).siblings().html();
     	$("#searchModalTitle").html(title);
     	var searchType = $(this).val();
-    	console.log(searchType);
+    	//console.log(searchType);
     	 $('.searchModalBody').load("${pageContext.request.contextPath}/enrollment/searchSpecify.do?searchType="+searchType,function(){
  	        $('#mySearchModal').modal({backdrop: 'static', keyboard: false});
  	        $('#mySearchModal').modal({show:true});
@@ -136,7 +136,7 @@ $(()=>{
 			return;
 	
 		var vendorNo = $("#vendorNo2").val();
-		console.log(vendorNo);
+		//console.log(vendorNo);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/enrollment/deleteVendorByVendorNo.do",
@@ -148,21 +148,21 @@ $(()=>{
 				location.reload();
 			},
 			error : (x,s,e) =>{
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	});
 	
 	$("#addVendor-Modal #vendorTypes").change(function() {
 		var ckData = $(this).val();
-		console.log("data=???",ckData);
+		//console.log("data=???",ckData);
 		$.ajax({
 			url: "${pageContext.request.contextPath}/enrollment/checkDataAvailable",
 			data: {ckData : ckData},
 			async: false,
 			contentType: "application/json;charset=UTF-8",
 			success: data => {
-				console.log(data.isUsable);
+				//console.log(data.isUsable);
 				if(data.isUsable == false){
 					$(this).val("");
 					alert("존재하지 않는 거래처코드입니다. 다시 확인해주세요.");
@@ -172,7 +172,7 @@ $(()=>{
 				
 			},
 			error: (x,s,e) => {
-				console.log("ajax요청 실패!!", x, s, e);
+				//console.log("ajax요청 실패!!", x, s, e);
 			}
 		})
 	});
@@ -226,7 +226,7 @@ function vendorValidate(){
 <%-- 거래처등록 중복검사 ajax--%>
 function vendorNoDuplicatedCheck(e){
 	var vendorNo = e;
-	console.log(vendorNo);
+	//console.log(vendorNo);
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/enrollment/vendorNoDuplicatedCheck.do",
@@ -235,7 +235,7 @@ function vendorNoDuplicatedCheck(e){
 	 	async: false,
 		contentType:"application/json;charset=UTF-8",
 		success: data => {
-			console.log(data);
+			//console.log(data);
 			if(data.isUsable == true && data.vendorNo != ""){
 				alert("사용가능한 거래처번호 입니다.");
 				$("#vendorNo").attr("style","border-bottom: 2px solid #00c500");
@@ -265,7 +265,7 @@ function vendorNoDuplicatedCheck(e){
 			
 		},
 		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
+			//console.log(jqxhr, textStatus, errorThrown);
 		}
 	});
 }
@@ -327,8 +327,8 @@ function vendorNoUpdateValidate(){
 
 function vendorNoUpdateValidate2(){
 	var formData = $('#vendorNoUpdateFrm').serialize();
-	console.log(formData);
-	console.log($('#vendorNoCha').val());
+	//console.log(formData);
+	//console.log($('#vendorNoCha').val());
 	
 	$.ajax({
         cache : false,
