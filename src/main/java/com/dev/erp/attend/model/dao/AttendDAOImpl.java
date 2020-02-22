@@ -49,4 +49,9 @@ public class AttendDAOImpl implements AttendDAO {
 	public String checkearly(Attend attend) {
 		return sqlSession.selectOne("attend.checkearly",attend);
 	}
+
+	@Override
+	public String checkholiday(Attend holiday) {
+		return sqlSession.selectOne("attend.checkholiday",holiday);
+	}
 }

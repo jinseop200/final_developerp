@@ -32,22 +32,24 @@ public class AttendController {
 
 	System.out.println("fdfdffdfdfdddddddddddd"+list);
 		for(Attend a:list) {
+			if(a.getReason()!=null)
 			if(a.getEarlyAttend()!=null)
 			{
 				content+=",{title:'*조퇴 사유 :"+a.getReason()+"',start:'"+a.getEarlyAttendForm()+"'}";
 				content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend()+"',start:'"+a.getEarlyAttendForm()+"'}";
 			}
-			if(a.getReason()!=null)
-			if(a.getReason().equals("휴가"))
+			else if(a.getReason().equals("휴가"))
 			{
 				
 				content+=",{title:'휴가',start:'"+a.getAttendStartForm()+"',end:'"+a.getAttendEndForm()+"'}";
 				System.out.println("fffffffffffffffffffffffffffffffffffffff");
 			}
-			else if(a.getAttendStart()!=null)
+			if(a.getReason()==null) {
+			if(a.getAttendStart()!=null)
 				content+=",{title:'-출근:"+a.getAttendStart()+"',start:'"+a.getAttendStartForm()+"'}";
-			else if(a.getAttendEnd()!=null)
+			if(a.getAttendEnd()!=null)
 				content+=",{title:'-퇴근:"+a.getAttendEnd()+"',start:'"+a.getAttendEndForm()+"'}";
+			}
 		}
 
 		System.out.println("Fdazzzzzz"+content);
@@ -75,18 +77,27 @@ public class AttendController {
 	@RequestMapping("/attend/attendForm.do")
 	public ModelAndView showAttendForm(ModelAndView mav, @RequestParam String date,@RequestParam String email
 			) {
-		Attend attend=new Attend(email,"",date,"","","","","","");
+		System.out.println("fsdasfsfddddD");
+		Attend attend = new Attend(email, "",date,"","","","","","");
 		Attend end=new Attend(email,"","","",date,"","","","");
 		Attend early=new Attend(email,"","","","","",date,"","");
+		Attend holiday=new Attend(email,"",date,"","","","","","");
 		String attendDate=attendService.checkAttend(attend);
 		String endDate=attendService.checkend(end);
 		String earlyDate=attendService.checkearly(early);
+		String holidayInfo=attendService.checkholiday(holiday);
+		System.out.println("dfdf"+holidayInfo);
 		mav.addObject("date",date);
 		mav.addObject("attendDate",attendDate);
 		mav.addObject("endDate",endDate);
 		mav.addObject("earlyDate",earlyDate);
+		mav.addObject("holidayInfo",holidayInfo);
 		mav.setViewName("gw/attendForm");
 		return mav;
+		
+		
+		
+
 	}
 	@RequestMapping("/attend/attendant.do")
 	public ModelAndView attendant(ModelAndView mav, @RequestParam String date,@RequestParam String email) {

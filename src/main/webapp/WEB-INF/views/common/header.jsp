@@ -225,7 +225,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">DETAIL</h6>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">신입사원등록</a>
-                  <a class="collapse-item" href="cards.html">Xbar-R</a>
+                  <a class="collapse-item" href="cards.html">사원관리</a>
                   <a class="collapse-item" href="cards.html">P 관리도</a>
                 </div>
               </div>

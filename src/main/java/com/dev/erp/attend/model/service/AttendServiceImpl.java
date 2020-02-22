@@ -46,5 +46,9 @@ public class AttendServiceImpl implements AttendService {
 	public String checkearly(Attend attend) {
 		return attendDAO.checkearly(attend);
 	}
+	@Override
+	public String checkholiday(Attend holiday) {
+		return attendDAO.checkholiday(holiday);
+	}
 
 }

@@ -8,6 +8,7 @@
 String attendDate = (String)request.getAttribute("attendDate");
 String endDate = (String)request.getAttribute("endDate");
 String earlyDate = (String)request.getAttribute("earlyDate");
+String holiday = (String)request.getAttribute("holidayInfo");
 String date = (String)request.getAttribute("date");
 Date now = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
@@ -124,7 +125,7 @@ function earlyleave(email){
 			<br>
 				</button>
 					<div >
-		<%if(today.equals(date)){%>
+		<%if(today.equals(date)&&holiday==null){%>
 		<%if(attendDate==null){%>
 					<input type="button" class="attend-button" onclick='attend("${date}","${memberLoggedIn.email}")' value="출근" style="width:57px;height:25px;background-color:#005B9E; color:white;border:0; outline:0;cursor:pointer;"/>
 					<%}else if(earlyDate==null&& endDate==null){ %>

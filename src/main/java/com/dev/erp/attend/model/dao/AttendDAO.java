@@ -24,6 +24,8 @@ public interface AttendDAO {
 
 	String checkearly(Attend attend);
 
+	String checkholiday(Attend holiday);
+
 
 
 }
