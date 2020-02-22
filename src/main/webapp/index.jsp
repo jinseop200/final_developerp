@@ -12,7 +12,9 @@
 <head>
   <meta charset="UTF-8">
   
-  <title>DevelopERP</title>
+  <title>
+  DevelopERP
+  </title>
 </head>
 
 
@@ -35,7 +37,6 @@
                 <div class="social-container"></div>
                 <input type="email" name="email" placeholder="Email" />
                 <input type="password" name="password" placeholder="Password" />
-                <a href="#">비밀번호를 잊으셨나요?</a>
                 <br />
                 <input type="submit" id="loginButton" value="로그인 하기" />
             </form>

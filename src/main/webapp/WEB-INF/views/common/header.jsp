@@ -56,11 +56,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
           <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath }/main/main.do?email=${memberLoggedIn.email}">
-            <div class="sidebar-brand-icon rotate-n-15">
-              <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">DEVELOP <sup>ERP</sup></div>
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath }/main/main.do?email=${memberLoggedIn.email}" style="padding-left:0;">
+          	<img src="${pageContext.request.contextPath }/resources/images/logo.png"  width=80px;/>
+          	DevelopERP
           </a>
 
           <!-- Divider -->
@@ -93,7 +91,7 @@
                 <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}">문서결재</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/board/boardList.do">게시판</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do?">시설물 예약</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do">시설물 예약</a>
               </div>
             </div>
           </li>
@@ -201,6 +199,14 @@
                 </div>
               </div>
             </li>
+
+          <!-- Divider -->
+          <hr class="sidebar-divider">
+
+          <!-- Heading -->
+          <div class="sidebar-heading">
+            Admin
+          </div>
            <c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
           <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
@@ -211,62 +217,11 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">DETAIL</h6>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">신입사원등록</a>
-                  <a class="collapse-item" href="cards.html">Xbar-R</a>
-                  <a class="collapse-item" href="cards.html">P 관리도</a>
                 </div>
               </div>
             </li>
             </c:if>
 
-          <!-- Divider -->
-          <hr class="sidebar-divider">
-
-          <!-- Heading -->
-          <div class="sidebar-heading">
-            Addons
-          </div>
-
-          <!-- Nav Item - Pages Collapse Menu -->
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-              <i class="fas fa-fw fa-folder"></i>
-              <span>Pages</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-              <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="blank.html">Blank Page</a>
-              </div>
-            </div>
-          </li>
-
-          <!-- Nav Item - Charts -->
-          <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-              <i class="fas fa-fw fa-chart-area"></i>
-              <span>Charts</span></a>
-          </li>
-
-          <!-- Nav Item - Tables -->
-          <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Tables</span></a>
-          </li>
-
-          <!-- Divider -->
-          <hr class="sidebar-divider d-none d-md-block">
-
-          <!-- Sidebar Toggler (Sidebar) -->
-          <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-          </div>
 
         </ul>
         <!-- End of Sidebar -->
@@ -286,39 +241,17 @@
               </button>
 
               <!-- Topbar Search -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
+                <div class="input-group headerText">
+                  <input type="text" class="form-control bg-light border-0 small headerText" id="searchKeyword" name="searchKeyword" placeholder="Search for..." >
+                  <ul id="search_AutoSearch"></ul>
+                    <button class="btn btn-primary headerText" type="button">
                       <i class="fas fa-search fa-sm"></i>
                     </button>
-                  </div>
                 </div>
-              </form>
+                
 
               <!-- Topbar Navbar -->
               <ul class="navbar-nav ml-auto">
-
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                  <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-search fa-fw"></i>
-                  </a>
-                  <!-- Dropdown - Messages -->
-                  <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100 navbar-search">
-                      <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </li>
 
                 <!-- Nav Item - Alerts -->
                 <li class="nav-item dropdown no-arrow mx-1">
@@ -387,24 +320,6 @@
                         <!-- Counter - Messages -->
                         <span class="badge badge-danger badge-counter messenger"></span>
                       </span>
-                      <!-- Dropdown - Messages -->
-                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">
-                          Messenger Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          <div class="dropdown-list-image mr-3">
-                            <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                            <div class="status-indicator bg-success"></div>
-                          </div>
-                          <div class="font-weight-bold">
-                            <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                            <div class="small text-gray-500">Emily Fowler · 58m</div>
-                          </div>
-                        </a>
-                       
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                      </div>
                     </li>
                 
                 <div class="topbar-divider d-none d-sm-block"></div>
@@ -708,18 +623,186 @@
 						$(".badge-counter.messenger").html(data.messengerCount);
 					}
 				})
-			})
+				
+				
+			});
+			$(".btn.btn-primary.headerText").click(function(){
+				var searchKeyword = $("#searchKeyword").val();
+				switch(searchKeyword){
+				case"전자결재":location.href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}";break;
+				case"출결관리":location.href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}";break;
+				case"게시판":location.href="${pageContext.request.contextPath }/board/boardList.do";break;
+				case"시설물예약":location.href="${pageContext.request.contextPath }/facility/facilityList.do";break;
+				case"거래처등록":location.href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do";break;
+				case"창고등록":location.href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do";break;
+				case"품목등록":location.href="${pageContext.request.contextPath }/enrollment/productEnrollment.do";break;
+				case"구매조회":location.href="${pageContext.request.contextPath }/purchase/purchaseView.do";break;
+				case"구매목록":location.href="${pageContext.request.contextPath }/purchase/purchaseInsertView.do";break;
+				case"BOM목록관리":location.href="${pageContext.request.contextPath }/production/BOMListManagement.do";break;
+				case"생산입고":location.href="${pageContext.request.contextPath }/production/warehousing.do";break;
+				case"월별생산계획":location.href="${pageContext.request.contextPath }/productplan/productionPlan.do";break;
+				case"원재료구매계획":location.href="${pageContext.request.contextPath }/productplan/purchasePlan.do";break;
+				case"작업지시서":location.href="${pageContext.request.contextPath }/productplan/jobOrder.do";break;
+				case"원재료 입출고":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
+				case"원재료 재고관리":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
+				case"완제품 재고관리":location.href="${pageContext.request.contextPath }/stock/product/productView.do";break;
+				case"창고별 재고관리":location.href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0";break;
+				case"부적합현황":location.href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do";break;
+				case"제품별 Xbar그래프":location.href="${pageContext.request.contextPath }/quality/xbarGraphByProduct.do";break;
+				case"공정계수조회":location.href="${pageContext.request.contextPath }/quality/searchCPk.do";break;
+				case"품질검사관리":location.href="${pageContext.request.contextPath }/quality/qualityInsection.do";break;
+				case"부적합관리":location.href="${pageContext.request.contextPath }/quality/qualityControll.do";break;
+				}
+			});
 			
-			  </script>
+			var $autoSearch = $("#search_AutoSearch");
+			$autoSearch.hide();
+			
+			$("#searchKeyword").on('keyup',function(e){
+			
+				var $sel = $(".sel");
+				var $li = $autoSearch.children("li");
+				
+				if(e.key == "ArrowDown"){
+					
+					if($sel.length ==0){
+						$li.first().addClass("sel");
+					}
+					else{
+						$sel.removeClass("sel")
+							.next()
+							.addClass("sel")
+					}
+				}
+				else if(e.key=='ArrowUp'){
+					if($sel.length != 0){
+						$sel.removeClass("sel")
+							.prev()
+							.addClass("sel");
+					}
+					else{
+						$li.last().addClass("sel");
+					}
+				}
+				else if(e.key =='Enter'){
+					var $name = $(".sel").text();
+					console.log($name);
+					$("#searchKeyword").val($name);
+					var searchKeyword= $("#searchKeyword").val();	
+					console.log(searchKeyword);
+					switch(searchKeyword){
+					case"전자결재":location.href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}";break;
+					case"출결관리":location.href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}";break;
+					case"게시판":location.href="${pageContext.request.contextPath }/board/boardList.do";break;
+					case"시설물예약":location.href="${pageContext.request.contextPath }/facility/facilityList.do";break;
+					case"거래처등록":location.href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do";break;
+					case"창고등록":location.href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do";break;
+					case"품목등록":location.href="${pageContext.request.contextPath }/enrollment/productEnrollment.do";break;
+					case"구매조회":location.href="${pageContext.request.contextPath }/purchase/purchaseView.do";break;
+					case"구매목록":location.href="${pageContext.request.contextPath }/purchase/purchaseInsertView.do";break;
+					case"BOM목록관리":location.href="${pageContext.request.contextPath }/production/BOMListManagement.do";break;
+					case"생산입고":location.href="${pageContext.request.contextPath }/production/warehousing.do";break;
+					case"월별생산계획":location.href="${pageContext.request.contextPath }/productplan/productionPlan.do";break;
+					case"원재료구매계획":location.href="${pageContext.request.contextPath }/productplan/purchasePlan.do";break;
+					case"작업지시서":location.href="${pageContext.request.contextPath }/productplan/jobOrder.do";break;
+					case"원재료 입출고":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
+					case"원재료 재고관리":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
+					case"완제품 재고관리":location.href="${pageContext.request.contextPath }/stock/product/productView.do";break;
+					case"창고별 재고관리":location.href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0";break;
+					case"부적합현황":location.href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do";break;
+					case"제품별 Xbar그래프":location.href="${pageContext.request.contextPath }/quality/xbarGraphByProduct.do";break;
+					case"공정계수조회":location.href="${pageContext.request.contextPath }/quality/searchCPk.do";break;
+					case"품질검사관리":location.href="${pageContext.request.contextPath }/quality/qualityInsection.do";break;
+					case"부적합관리":location.href="${pageContext.request.contextPath }/quality/qualityControll.do";break;
+					}
+				}
+				else{
+					var srchNameVal =$(this).val().trim();
+					if(srchNameVal.length ==0) return;
+					console.log(srchNameVal);
+					$.ajax({
+						url:"${pageContext.request.contextPath}/search/headerSearch.do",
+						type:"get",
+						data:{srchName : srchNameVal},
+						dataType:"json",
+						success : data=>{
+							console.log(data);
+							var html="";
+							if(data.csv.trim().length==0){
+								html="<li class='noSearch'>조회된 결과가 없습니다. </li>";
+								$autoSearch.html(html).fadeIn(300);
+							}else{
+							//조회된 결과가 있는 경우
+								var dataArr = data.csv.split("^");
+								console.log(dataArr);
+								$.each(dataArr, (idx,val)=>{
+									html += "<li>"+val.replace(srchNameVal,'<span class = "srchval">'+srchNameVal+'</span>')+"</li>";		
+								});
+								$autoSearch.html(html).fadeIn(300);
+							}
+						},
+						error:function(jqxhr,textStatus, errorThrown){
+							console.log("ajax처리실패!",jqxhr, textStatus, errorThrown);
+						}
+					});
+				}
+				
+				$autoSearch.on('click','li',e=>{
+					var $name = $(e.target).text();
+					
+					$('#searchKeyword').val($(e.target).text());
+					$autoSearch.hide()
+							   .children()
+							   .remove();
+				}).on('mouseover','li',e=>{
+					$(e.target).addClass("sel")
+							   .siblings()
+							   .removeClass("sel");
+				}).on('mouseout','li',e=>{
+					$(e.target).removeClass("sel");
+				});
+				
+			});
+			
+			
+			
+			
+			</script>
 			  <style>
+			  div.input-group.headerText{position: relative; width:400px; }
+			  	#searchKeyword{box-shadow:none;}
+				ul#search_AutoSearch{background-color: #f8f9fc; min-width: 362px; border: 1px solid #bac8f3; 
+									position: absolute; top: 37px; padding:0; margin:0; z-index:1000;
+									border-top:0 !important;     box-shadow: 0 0 0 0.2rem rgba(78,115,223,.25);   
+									    border-radius: .35rem; box-shadow-top:0;}  
+				ul#search_AutoSearch li{padding:13px 28px 0px; list-style:none; cursor:pointer;}
+				ul#search_AutoSearch li hr{margin:0;}
+				ul#search_AutoSearch li.sel{background:#bac8f3; color:white;}
+				span.srchval{color:red;}
 			  .detailMessage-close{
 			  	color: #fff;
 			    background-color: #2e59d9;
 			    border-color: #2653d4;
 			  }
+			  .noSearch{
+			  	padding:13px 28px 11px !important;
+			  	color:black;
+			  	text-align:center;
+			  }
+			  li #searchIcon{
+				position:absolute;
+				left:1%;
+			    display: block;
+			    margin:2px 0 0 6px;
+			    width: 15px;
+			    height: 15px;
+			    background-image: url(../resources/images/images.png);
+			    background-size: 15px 15px;
+			    background-repeat:no-repeat;
+			}
 			  </style>
   
 
             <!-- 페이지 내용(Begin Page Content) -->
             <div class="container-fluid">
-            
+break;            

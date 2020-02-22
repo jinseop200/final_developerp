@@ -61,7 +61,7 @@ border:1px solid #ccc;
 											                    			<td>&nbsp;</td>
 											                        	</c:if>
 											                        	<c:if test="${d.returnYn=='N' && d.nextWriter!=null}">
-											                        		<td><img src="${pageContext.request.contextPath }/resources/images/documentCheck.png" alt="체크" width="35px" height="35px" /></td>
+											                        		<td style="text-align:center;"><img src="${pageContext.request.contextPath }/resources/images/documentCheck.png" alt="체크" width="35px" height="35px" /></td>
 											                        	</c:if>
 											                    	</c:forEach>
 	    														</tr>
