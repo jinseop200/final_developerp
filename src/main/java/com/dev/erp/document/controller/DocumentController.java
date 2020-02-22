@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.document.model.service.DocumentService;
 import com.dev.erp.document.model.vo.Document;
@@ -40,7 +41,7 @@ public class DocumentController {
 			mav.setViewName("document/documentView");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/document/insertDocumentForm.do")
@@ -53,7 +54,7 @@ public class DocumentController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -144,7 +145,7 @@ public class DocumentController {
 			mav.setViewName("common/msg");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/document/documentSelectList.do")
@@ -153,7 +154,7 @@ public class DocumentController {
 			mav.setViewName("document/documentSelectList");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/document/documentListPage.do")
@@ -176,7 +177,7 @@ public class DocumentController {
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/document/documentDetailView.do")
@@ -213,7 +214,7 @@ public class DocumentController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/document/updateDocument.do")
@@ -255,7 +256,7 @@ public class DocumentController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	

@@ -29,6 +29,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.member.model.exception.MemberException;
 import com.dev.erp.member.model.service.MemberService;
@@ -71,7 +72,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -87,7 +88,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/member/memberEmailDuplicatedCheck.do")
@@ -112,7 +113,7 @@ public class MemberController {
 			
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@PostMapping("/member/memberLogin.do")
@@ -155,8 +156,6 @@ public class MemberController {
 //			if(true) throw new RuntimeException("내가 던진 로그인 오류!");
 			
 		}catch(Exception e) {
-			logger.error("로그인 오류!", e);
-			
 			throw new MemberException("회원관리오류!",e);
 		}
 		
@@ -178,7 +177,7 @@ public class MemberController {
 			
 			return "common/msg";//  /spring 으로 리다이렉트
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/member/memberAlterPassword.do")
@@ -187,7 +186,7 @@ public class MemberController {
 			mav.setViewName("member/memberAlterPassword");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/member/memberUpdateInfo.do")
@@ -201,7 +200,7 @@ public class MemberController {
 			mav.setViewName("member/memberUpdateInfo");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -222,7 +221,7 @@ public class MemberController {
 			
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -248,7 +247,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/member/memberFindMypage.do")
@@ -265,7 +264,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@PostMapping("/member/memberUpdateInfoEnd.do")
@@ -299,7 +298,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/member/memberProfile.do")
@@ -347,7 +346,7 @@ public class MemberController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 }

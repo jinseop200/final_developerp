@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.message.model.service.MessageService;
 import com.dev.erp.message.model.vo.Message;
@@ -34,7 +35,7 @@ public class MessageController {
 			
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/messageListPage.do")
@@ -57,7 +58,7 @@ public class MessageController {
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/messageConfirmPage.do")
@@ -80,7 +81,7 @@ public class MessageController {
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/messageNoConfirmPage.do")
@@ -103,7 +104,7 @@ public class MessageController {
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/messageSenderFormPage.do")
@@ -127,7 +128,7 @@ public class MessageController {
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/insertMessageForm.do")
@@ -145,7 +146,7 @@ public class MessageController {
 			mav.setViewName("message/messageSelectList");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/insertMessage.do")
@@ -158,7 +159,7 @@ public class MessageController {
 			Map<String,Object> map = new HashMap<>();
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/message/detailMessageForm.do")
@@ -173,7 +174,7 @@ public class MessageController {
 			mav.setViewName("message/detailMessageForm");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 		
@@ -186,7 +187,7 @@ public class MessageController {
 			map.put("messageCount", messageCount);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 }

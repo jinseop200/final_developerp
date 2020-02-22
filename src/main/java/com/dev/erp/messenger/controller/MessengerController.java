@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.member.model.vo.Member;
 import com.dev.erp.messenger.model.service.MessengerService;
@@ -67,7 +68,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			}
 			return buf.toString();
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	/**
@@ -92,7 +93,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			
 			return fromMessage; 
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -105,7 +106,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			messengerService.insertChatLog(fromMessage);
 			return fromMessage; 
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -124,7 +125,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			
 			return fromMessage; 
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("messenger/messengerSelectList.do")
@@ -133,8 +134,9 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			mav.setViewName("messenger/messengerSelectList");
 			return mav;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
+		
 	}
 	
 	
@@ -160,7 +162,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			}
 			model.addAttribute("recentList", sumList);
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 		
 	}
@@ -179,7 +181,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			
 			return "messenger/messengerChat";
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
@@ -207,7 +209,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			map.put("pageBar", pageBar);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/messenger/makeChatRoom.do")
@@ -230,7 +232,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			map.put("chatId",chatId);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	@RequestMapping("/messenger/messengerCount.do")
@@ -257,7 +259,7 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 			map.put("messengerCount",messengerCount);
 			return map;
 		}catch(Exception e) {
-			throw e;
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
 	
