@@ -231,6 +231,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">DETAIL</h6>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">신입사원등록</a>
+                  <a class="collapse-item" href="${pageContext.request.contextPath}/member/memberManage.do">사원 조회/수정</a>
                 </div>
               </div>
             </li>
