@@ -23,19 +23,22 @@ System.out.println("현재시간  : " +sdf.format(now));
 <script src='${pageContext.request.contextPath}/resources/js/calendar/timegrid/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/calendar/list/main.js'></script>
 <script>
-$(()=>{
-	 var holiday=$(".fc-title").text();
-	 console.log(holiday);
-	  if("holiday:contains('휴가')"){
-		  $(".fc-content").addClass("holiday");
-	  }
-})
+$(document).ready(function(){
+	var len=$(".fc-title");
+	 console.log($(".fc-content").closest("span"));
+	 for(var i=0;i<len.length;i++)
+		 {
+		 if(len.eq(i).text().includes('휴가'))
+			 len.eq(i).closest("div").addClass("holiday");
+		 }
+
+});
 document.addEventListener('DOMContentLoaded', function() {	
 			    var calendarEl = document.getElementById('calendar');				
 			    var calendar = new FullCalendar.Calendar(calendarEl, {
-			      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+			      plugins: [ 'interaction', 'dayGrid',  ],
 			      header: {
-			        left: 'prev,next today',
+			        left: 'prev,next ',
 			        center: 'title',
 			        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 			      },
@@ -86,9 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		<input type="hidden" name="Id" val= />
 	</form>
 <style>
+
 .fc-content.holiday{
 	text-align:center;
-	background-color:yellowgreen;
+	background-color:lightblue;
 }
 a.fc-day-number{
 cursor:pointer;}
