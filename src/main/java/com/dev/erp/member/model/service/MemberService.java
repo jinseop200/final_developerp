@@ -27,5 +27,13 @@ public interface MemberService {
 
 	int updateProfileImage(Member member);
 
+	List<Member> memberManage();
+
+	int memberDelete(String email);
+
+	Member memberManageModify(String email);
+
+	int memberManageModifyEnd(Member member);
+
 
 }

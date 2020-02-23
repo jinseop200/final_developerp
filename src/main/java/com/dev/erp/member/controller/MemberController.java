@@ -349,4 +349,53 @@ public class MemberController {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
+	@RequestMapping("member/memberManage.do")
+	public ModelAndView memberManage(ModelAndView mav)
+	{
+		List<Member> list=memberService.memberManage();
+		mav.addObject("list",list);
+	mav.setViewName("member/memberManage");
+	return mav;
+	}
+	@RequestMapping("/member/memberDelete.do")
+	public ModelAndView memberDelete(ModelAndView mav,@RequestParam String email)
+	{
+		int result =memberService.memberDelete(email);
+		mav.addObject("loc", "/member/memberManage.do");
+		mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
+		mav.setViewName("common/msg");
+	
+	return mav;
+	}
+	@RequestMapping("/member/memberManageModify.do")
+	public ModelAndView memberManageModify(ModelAndView mav,@RequestParam String email)
+	{
+		Member member=memberService.memberManageModify(email);
+		List<Map<String,String>> deptList = memberService.selectDeptList();
+		List<Map<String,String>> jobList = memberService.selectJobList();
+		String empNo1=member.getEmpNo().substring(0,6);
+		String empNo2=member.getEmpNo().substring(7,14);
+		System.out.println(empNo1+"Dfdfdf");
+		System.out.println(empNo2+"Dfdfdf");
+		mav.addObject("empNo1",empNo1);
+		mav.addObject("empNo2",empNo2);
+		mav.addObject("dept",deptList);
+		mav.addObject("job",jobList);
+		mav.addObject("member", member);
+		mav.setViewName("member/memberManageModify");
+	
+	return mav;
+	}
+	@RequestMapping("/member/memberManageModifyEnd.do")
+	public ModelAndView memberManageModifyEnd(ModelAndView mav,Member member,@RequestParam String empNo1,@RequestParam String empNo2) {
+		System.out.println("fdfdfdfd"+member);
+		System.out.println(empNo1);
+		System.out.println(empNo2);
+		member.setEmpNo(empNo1+"-"+empNo2);
+		int result=memberService.memberManageModifyEnd(member);
+		mav.addObject("loc", "/member/memberManage.do");
+		mav.addObject("msg", result>0?"수정 성공!":"수정 실패!");
+		mav.setViewName("common/msg");
+		return mav;
+	}
 }

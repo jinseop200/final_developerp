@@ -65,6 +65,26 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.updateProfileImage(member);
 	}
 
+	@Override
+	public List<Member> memberManage() {
+		return memberDAO.memberManage();
+	}
+
+	@Override
+	public int memberDelete(String email) {
+		return memberDAO.memberDelete(email);
+	}
+
+	@Override
+	public Member memberManageModify(String email) {
+		return memberDAO.memberManageModify(email);
+	}
+
+	@Override
+	public int memberManageModifyEnd(Member member) {
+		return memberDAO.memberManageModifyEnd(member);
+	}
+
 
 }
 
