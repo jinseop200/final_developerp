@@ -41,4 +41,6 @@ public interface ProductPlanDAO {
 
 	int selectTotalContentsByP();
 
+	List<Map<String, String>> monthlyOutputByProduct(String productNo);
+
 }

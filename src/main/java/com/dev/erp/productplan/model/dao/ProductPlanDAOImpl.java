@@ -108,4 +108,9 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int selectTotalContentsByP() {
 		return sqlSession.selectOne("productplan.selectTotalContentsByP");
 	}
+
+	@Override
+	public List<Map<String, String>> monthlyOutputByProduct(String productNo) {
+		return sqlSession.selectList("productplan.monthlyOutputByProduct", productNo);
+	}
 }

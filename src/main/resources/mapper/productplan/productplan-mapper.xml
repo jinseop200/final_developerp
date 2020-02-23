@@ -28,6 +28,15 @@
 		from production
 	</select>
 	
+	<select id="monthlyOutputByProduct" resultType="Map">
+		select ltrim(substr(to_char(production,'yymm'),3,2),0) as "month",
+         		sum(quantity) as "output"
+		from production
+		where pl_no = #{productNo}
+		group by ltrim(substr(to_char(production,'yymm'),3,2),0)
+		order by ltrim(substr(to_char(production,'yymm'),3,2),0) asc
+	</select>
+	
 	
 	
 	<!-- 원재료 구매계획 쿼리문 -->

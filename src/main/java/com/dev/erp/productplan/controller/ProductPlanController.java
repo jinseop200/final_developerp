@@ -61,18 +61,22 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/productionPlan.do")
 	public ModelAndView productionPlan(ModelAndView mav) {
 		
-		int epPlan = productPlanService.selectTotalEpPlan();
-		int epResult = productPlanService.selectTotalEpResult();
-		int attainment = (100*epResult)/epPlan;
-		
-		
-		mav.addObject("epPlan", epPlan);
-		mav.addObject("epResult", epResult);
-		mav.addObject("attainment", attainment);
-		
-		
-		
-		mav.setViewName("productplan/monthlyPlan");
+		try {
+			int epPlan = productPlanService.selectTotalEpPlan();
+			int epResult = productPlanService.selectTotalEpResult();
+			int attainment = (100*epResult)/epPlan;
+			
+			
+			mav.addObject("epPlan", epPlan);
+			mav.addObject("epResult", epResult);
+			mav.addObject("attainment", attainment);
+			
+			
+			
+			mav.setViewName("productplan/monthlyPlan");
+		} catch (Exception e) {
+			throw new MyException("d");
+		}
 		
 		return mav;
 	}
@@ -84,11 +88,10 @@ public class ProductPlanController {
 									 HttpServletResponse response) {
 		
 		response.setContentType("text/html;charset=utf-8");
-		/*logger.info("민병준={}", productNo);
-		List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
-		mav.addObject("graphData", graphData);
-		logger.info("graphData@@={}",graphData);
-		mav.setViewName("jsonView");*/
+		List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(productNo);
+		
+		mav.addObject("barData", barData);
+		mav.setViewName("jsonView");
 		
 		
 		return mav;

@@ -104,4 +104,9 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.selectTotalContentsByP();
 	}
 
+	@Override
+	public List<Map<String, String>> monthlyOutputByProduct(String productNo) {
+		return productPlanDAO.monthlyOutputByProduct(productNo);
+	}
+
 }

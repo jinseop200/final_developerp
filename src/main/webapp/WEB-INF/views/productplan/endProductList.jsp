@@ -133,24 +133,20 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 			contentType :"application/json; charset=utf-8",
 			dataType : "json",
 			success : data=>{
-				/* var graphData_ = data.graphData;
-				console.log(data);
+				var barData_ = data.barData;
+				console.log(barData_);
 				
-				var rmName = [];
-				var required = [];
-				var rmStock = [];
+				var month = [];
+				var output = [];
 				
-				for(let i in graphData_ ) {
+				for(let i in barData_){
 					
-					var p = graphData_[i];
-					
-					rmName.push(p.rmName);
-					required.push(p.requiredQ);
-					rmStock.push(p.rmStock);
-					
+					var mp = barData_[i];
+					month.push(mp.month+"월");
+					output.push(mp.output);
 				}
-				console.log(data.graphData); */
-				createBarChart();
+				
+				createBarChart(month, output);
 			},
 			error : (x,s,e)=>{
 				console.log("ajax요청실패",x,s,e);
@@ -160,7 +156,7 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 	
 		
 });
-function createBarChart(){
+function createBarChart(month, output){
 	
 	//그래프 자바스크립트
 	//bar
@@ -168,10 +164,10 @@ function createBarChart(){
 	var myBarChart = new Chart(ctxB, {
 	type: 'bar',
 	data: {
-	labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	labels: month,
 	datasets: [{
 	label: '월별 생산량',
-	data: [12, 19, 3, 5, 2, 3],
+	data: output,
 	backgroundColor: [
 	'rgba(255, 99, 132, 0.2)',
 	'rgba(54, 162, 235, 0.2)',
