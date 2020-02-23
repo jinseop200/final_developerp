@@ -84,4 +84,29 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.selectFirstByPL();
 	}
 
+	@Override
+	public int selectTotalEpPlan() {
+		return productPlanDAO.selectTotalEpPlan();
+	}
+
+	@Override
+	public int selectTotalEpResult() {
+		return productPlanDAO.selectTotalEpResult();
+	}
+
+	@Override
+	public List<Map<String, String>> selectProduction(int cPage, int numPerPage) {
+		return productPlanDAO.selectProduction(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectTotalContentsByP() {
+		return productPlanDAO.selectTotalContentsByP();
+	}
+
+	@Override
+	public List<Map<String, String>> monthlyOutputByProduct(String productNo) {
+		return productPlanDAO.monthlyOutputByProduct(productNo);
+	}
+
 }

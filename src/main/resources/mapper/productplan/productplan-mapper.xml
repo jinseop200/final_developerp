@@ -5,6 +5,40 @@
 <mapper namespace="productplan">
 
 
+	<!-- 생산현황 및 월별 생산계획 쿼리문 -->
+	<select id="selectTotalEpPlan" resultType="_int">
+		select sum(order_quantity)
+		from job_order
+	</select>
+	
+	<select id="selectTotalEpResult" resultType="_int">
+		select sum(quantity)
+		from production
+		where quality_yn like 'Y'
+	</select>
+	
+	<select  id="selectProduction" resultType="Map">
+		select distinct pl_no as "plNo",
+			   product_name as "productName"
+		from production	
+	</select>
+	
+	<select id="selectTotalContentsByP" resultType="_int">
+		select count(distinct product_name)
+		from production
+	</select>
+	
+	<select id="monthlyOutputByProduct" resultType="Map">
+		select ltrim(substr(to_char(production,'yymm'),3,2),0) as "month",
+         		sum(quantity) as "output"
+		from production
+		where pl_no = #{productNo}
+		group by ltrim(substr(to_char(production,'yymm'),3,2),0)
+		order by ltrim(substr(to_char(production,'yymm'),3,2),0) asc
+	</select>
+	
+	
+	
 	<!-- 원재료 구매계획 쿼리문 -->
 	<select id="selectFirstByPL" resultType="Map">
 		select pl.product_name as "productName",
@@ -23,7 +57,9 @@
 	</select>
 	
 	<select id="selectEndProduct" resultType="Map">
-		select pl_no, product_name from product_list
+		select pl_no as "plNo", 
+			   product_name as "productName" 
+		from product_list
 	</select>
 	
 	<select id="selectTotalContentByEp" resultType="_int">
@@ -82,13 +118,18 @@
 	
 	<insert id="insertJobOrder">
 		insert into job_order
-		values( #{joNo},1,1,default,
+		values( #{joNo},
+				#{plNo},
+				(select vendor_no
+				from vendor
+				where vendor_type=2 and vendor_name=#{customer}),
 				#{customer},
 				to_date(#{dueDate}, 'yyyy/MM/dd'),
 				#{manager},
 				#{productName},
 				#{quantity},
-				#{orderContent}
+				#{orderContent},
+				to_date(#{enrollDate}, 'yyyy/MM/dd')
 				)
 	</insert>
 	<!-- 작업지시서 세부사항 조회 쿼리문 -->
@@ -105,6 +146,7 @@
 		select pl_no as "content1",
 			   product_name as "content2" 
 		from product_list
+		where pt_no = 3
 	</select>
 	<select id="selectTotalContentByPn" resultType="_int">
 		select count(*) from product_list

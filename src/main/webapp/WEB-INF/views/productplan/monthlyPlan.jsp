@@ -21,15 +21,23 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css_mdb/mdb.min.css"> --%>
   
-  <style>
-  #graph{
-  	width: 90%;
-  	height:70%;
-  	margin: 0 auto;
-  }
-  
-  </style>
-  <style>
+<style>
+#graph{
+	width: 90%;
+	height:70%;
+	margin: 0 auto;
+}
+#productionStatus{
+    display: inline-block;
+    width: 25%;
+    border-style: ridge;
+    margin-left: 90px;
+    font-size: unset;
+    position: relative;
+    top: 100px;
+}
+</style>
+<style>
 .form-control {
     display: inline;
 }
@@ -50,11 +58,11 @@ input[type=text]{
 
 		
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">생산현황 및 월별 생산계획</h1>
+<h1 class="h3 mb-2 text-gray-800">생산현황 및 생산계획</h1>
 <!-- 생산현황 테이블 -->
 <div id="productionStatus">
 	<h4>생산 현황</h4>
-	<table id="stausTable" width="30%" >
+	<table id="stausTable" width="100%" >
 	  <thead>
 	    <tr>
 	      <th>완제품계획</th>
@@ -64,32 +72,32 @@ input[type=text]{
 	  </thead>
 	  <tbody>
 	  	<tr class="table-info">
-	  		<td></td>
-	  		<td></td>
-	  		<td></td>
+	  		<td>${epPlan }</td>
+	  		<td>${epResult }</td>
+	  		<td>${attainment }%</td>
 	  	</tr>
 	  </tbody>
 	</table>
 </div>
-
-<div class="form-row">
-	<div class="col-lg-20 mb-3 rowResize">
-		 <label for="productName">제품별 월별 생산계획 조회</label>&emsp;<br>
-	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-	     <input type="hidden" id="productNo" name="productNo" />
-	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
-		 	<i class="fas fa-search fa-sm"></i>
-		 </button>
+<div id="monthlyProduction" >
+	<div class="form-row">
+		<div class="col-lg-20 mb-3 rowResize">
+			 <label for="productName">제품별 월별 생산계획 조회</label>&emsp;<br>
+		     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="제 품 명" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
+		     <input type="hidden" id="productNo" name="productNo" />
+		     <button class="btn btn-primary searchProduct-btn" type="button" value="product">
+			 	<i class="fas fa-search fa-sm"></i>
+			 </button>
+		</div>
 	</div>
-</div>
-
-<br />
-<div id="graph">
-	<canvas id="barChart"></canvas>
-</div>
- 
-  <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="searchProduct">
+	
+	<br />
+	<div id="graph">
+		<canvas id="barChart"></canvas>
+	</div>
+	
+	  <!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="searchProduction">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -98,13 +106,18 @@ input[type=text]{
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body">
+        <div class="modal-body production-body">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
         </div>
     </div>
 </div>
+</div>
+
+
+ 
+
 
 
 <!-- jQuery -->
@@ -119,58 +132,18 @@ input[type=text]{
 $(()=>{
 	
 });
-	//그래프 자바스크립트
-	//bar
-	var ctxB = document.getElementById("barChart").getContext('2d');
-	var myBarChart = new Chart(ctxB, {
-	type: 'bar',
-	data: {
-	labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-	datasets: [{
-	label: '# of Votes',
-	data: [12, 19, 3, 5, 2, 3],
-	backgroundColor: [
-	'rgba(255, 99, 132, 0.2)',
-	'rgba(54, 162, 235, 0.2)',
-	'rgba(255, 206, 86, 0.2)',
-	'rgba(75, 192, 192, 0.2)',
-	'rgba(153, 102, 255, 0.2)',
-	'rgba(255, 159, 64, 0.2)'
-	],
-	borderColor: [
-	'rgba(255,99,132,1)',
-	'rgba(54, 162, 235, 1)',
-	'rgba(255, 206, 86, 1)',
-	'rgba(75, 192, 192, 1)',
-	'rgba(153, 102, 255, 1)',
-	'rgba(255, 159, 64, 1)'
-	],
-	borderWidth: 1
-	}]
-	},
-	options: {
-	scales: {
-	yAxes: [{
-	ticks: {
-	beginAtZero: true
-	}
-	}]
-	}
-	}
-	});
-
+	
 //제품조회 모달
 $(".searchProduct-btn").click(function(){
-	 $('.controll-modal-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
-	        $('#searchProduct').modal({backdrop: 'static', keyboard: false});
-	        $('#searchProduct').modal({show:true});
+	var product = $(this).val();
+	 $('.production-body').load("${pageContext.request.contextPath}/productplan/endProductList.do?plan="+product,function(){
+	        $('#searchProduction').modal({backdrop: 'static', keyboard: false});
+	        $('#searchProduction').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);
-	        $(".controll-title").html("제품 조회");
+	        $(".controll-title").html("생산품 조회");
 		});
 	});
-	
 
-	
 </script>	
 
 <!-- Page level plugins -->

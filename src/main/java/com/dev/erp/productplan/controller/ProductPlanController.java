@@ -61,8 +61,38 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/productionPlan.do")
 	public ModelAndView productionPlan(ModelAndView mav) {
 		
+		try {
+			int epPlan = productPlanService.selectTotalEpPlan();
+			int epResult = productPlanService.selectTotalEpResult();
+			int attainment = (100*epResult)/epPlan;
+			
+			
+			mav.addObject("epPlan", epPlan);
+			mav.addObject("epResult", epResult);
+			mav.addObject("attainment", attainment);
+			
+			
+			
+			mav.setViewName("productplan/monthlyPlan");
+		} catch (Exception e) {
+			throw new MyException("d");
+		}
 		
-		mav.setViewName("productplan/monthlyPlan");
+		return mav;
+	}
+	
+	@RequestMapping("/productplan/showBarChart.do")
+	@ResponseBody
+	public ModelAndView showBarChart(ModelAndView mav,
+									 @RequestParam String productNo,
+									 HttpServletResponse response) {
+		
+		response.setContentType("text/html;charset=utf-8");
+		List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(productNo);
+		
+		mav.addObject("barData", barData);
+		mav.setViewName("jsonView");
+		
 		
 		return mav;
 	}
@@ -84,8 +114,10 @@ public class ProductPlanController {
 	}
 	
 	@RequestMapping("/productplan/endProductList.do")
-	public ModelAndView searchSpecify(ModelAndView mav) {
+	public ModelAndView searchSpecify(ModelAndView mav,
+									  @RequestParam("plan") String plan) {
 		
+		mav.addObject("plan", plan);
 		mav.setViewName("productplan/endProductList");
 		
 		return mav;
@@ -93,19 +125,31 @@ public class ProductPlanController {
 	@RequestMapping(value="/productplan/endProductListPage.do")
 	@ResponseBody
 	public ModelAndView selectEndProduct(ModelAndView mav,
+										 @RequestParam("plan") String plan,
 										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
 
-		final int numPerPage = 5;
+		final int numPerPage = 10;
 		int totalContents = 0;
-		List<Map<String, String>> list = productPlanService.selectEndProduct(cPage, numPerPage);
+		List<Map<String, String>> list  = new ArrayList<>();
+		logger.info("테스트4={}", plan);
+		switch(plan) {
+		case "product":
+			list = productPlanService.selectProduction(cPage, numPerPage);
+			totalContents= productPlanService.selectTotalContentsByP();
+			break;
+			
+		case "purchase":
+			list = productPlanService.selectEndProduct(cPage, numPerPage);
+			totalContents= productPlanService.selectTotalContentsByEp();
+			break;
+		}
 		logger.info("listCheck={}", list);
-		totalContents= productPlanService.selectTotalContentsByEp();
 		
-		String url = "endProductListPage.do?";
+		String url = "endProductListPage.do?plan="+plan;
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
 		
-		mav.addObject("endProductList", list);
+		mav.addObject("list", list);
 		mav.addObject("totalContents", totalContents);
 		mav.addObject("cPage", cPage);
 		mav.addObject("numPerPage", numPerPage);
@@ -231,6 +275,7 @@ public class ProductPlanController {
 									   @RequestParam String customer,
 									   @RequestParam String manager,
 									   @RequestParam String productName,
+									   @RequestParam String plNo,
 									   @RequestParam String quantity,
 									   @RequestParam String orderContent,
 									   ModelAndView mav) {
@@ -241,10 +286,12 @@ public class ProductPlanController {
 		String str = String.join("", enrollDate.split("-"));
 		Map<String, String> joList = new HashMap<>();
 		joList.put("joNo", str+"-"+(joTotalContents+1));
+		joList.put("enrollDate", enrollDate);
 		joList.put("dueDate", dueDate);
 		joList.put("customer", customer);
 		joList.put("manager", manager);
 		joList.put("productName", productName);
+		joList.put("plNo", plNo);
 		joList.put("quantity", quantity);
 		joList.put("orderContent", orderContent);
 		
