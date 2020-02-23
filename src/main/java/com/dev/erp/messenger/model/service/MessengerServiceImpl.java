@@ -84,4 +84,5 @@ public class MessengerServiceImpl implements MessengerService {
 		return messengerDAO.messengerCount(param);
 	}
 
+
 }
