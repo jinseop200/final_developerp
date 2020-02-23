@@ -197,13 +197,17 @@ window.onload = function () {
 		var row2 = "<tr><th>검사수치</th>";
 		console.log(DATA);
 		for(var i=0;i<DATA.length;i++) {
-			row1 += "<td>"+DATA[i].label+"</td>";
-			row2 += "<td>"+DATA[i].y+"</td>";
+			
 			if(i!=0&&i%5==0) {
 				html += row1 + "</tr>" + row2 + "</tr>";
 				html += "<tr>";
 				row1 = "<tr><th>입고일</th>";
 				row2 = "<tr><th>검사수치</th>";
+				row1 += "<td>"+DATA[i].label+"</td>";
+				row2 += "<td>"+DATA[i].y+"</td>";
+			}else {
+				row1 += "<td>"+DATA[i].label+"</td>";
+				row2 += "<td>"+DATA[i].y+"</td>";	
 			}
 		}
 		html += row1 + "</tr>" + row2 + "</tr>" + "</tbody>";
