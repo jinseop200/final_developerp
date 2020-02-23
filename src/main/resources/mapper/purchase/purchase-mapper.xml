@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "purchase">
+
+	<resultMap type="map" id="purchaseMap">
+	</resultMap>
+	
+	<select id="selectPurchaseList" resultMap="purchaseMap">
+		SELECT PURCHASE.PURCHASE_DATE, PURCHASE.RM_NO, RAW_MATERIAL.RM_NAME, PURCHASE.VENDOR_NO, VENDOR.VENDOR_NAME, PURCHASE.PURCHASE_AMOUNT 
+		FROM PURCHASE LEFT JOIN VENDOR ON PURCHASE.VENDOR_NO = VENDOR.VENDOR_NO
+              LEFT JOIN RAW_MATERIAL ON PURCHASE.RM_NO = RAW_MATERIAL.RM_NO
+	</select>
+	
+	<select id="selectPurchaseInsertList" resultMap="purchaseMap">
+	   SELECT *
+	   FROM PURCHASE
+	   ORDER BY PURCHASE_DATE DESC
+	</select>
+	
+</mapper>
