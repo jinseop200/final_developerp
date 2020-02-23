@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.member.model.vo.Member;
 import com.dev.erp.schedule.model.service.ScheduleService;
 import com.dev.erp.schedule.model.vo.Schedule;
@@ -26,12 +27,17 @@ public class ScheduleController {
 
 	@RequestMapping("schedule/schedule.do")
 	public ModelAndView schedule(ModelAndView mav,@RequestParam String date) {
+		try {
 		mav.addObject("date",date);
 		mav.setViewName("main/schedule");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("schedule/scheduleInsert.do")
 	public ModelAndView insertSchedule(ModelAndView mav,Schedule schedule) {
+		try {
 		System.out.println("fdsaf"+schedule);
 		String date=schedule.getEndScheduleTime()+" "+schedule.getEndTime();
 		schedule.setEndScheduleTime(date);
@@ -44,11 +50,15 @@ public class ScheduleController {
 			mav.addObject("msg", result>0?"등록 성공!":"등록 실패!");
 			mav.setViewName("common/msg");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	
 	@RequestMapping("schedule/schedulList.do")
 	@ResponseBody
 	public List<Schedule> scheduleList(ModelAndView mav,@RequestParam String date,@RequestParam String email) {
+		try {
 		System.out.println("aaaaaaadffffffffsadf"+date);
 		System.out.println("aaaaaaadffffffffsadf"+email);
 		Map<String,Object> map = new HashMap<>();
@@ -58,16 +68,24 @@ public class ScheduleController {
 		System.out.println("SADdddddddd"+list);
 	
 		return list;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("schedule/scheduleManage.do")
 	public ModelAndView scheduleManage(ModelAndView mav,@RequestParam String date) {
+		try {
 		mav.addObject("date",date);
 		mav.setViewName("main/scheduleManage");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/schedule/scheduleManageList.do")
 	@ResponseBody
 	public List<Schedule> scheduleManageList(ModelAndView mav,@RequestParam String date,@RequestParam String email) {
+		try {
 		System.out.println("fazdfdfdf"+date);
 		System.out.println("aaaaaaadffffffffsadf"+email);
 		Map<String,Object> map = new HashMap<>();
@@ -77,6 +95,9 @@ public class ScheduleController {
 		System.out.println("SADdddddddd"+list);
 	
 		return list;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 //	@RequestMapping("schedule/scheduleManage.do")
 //	public ModelAndView scheduleManage(ModelAndView mav,@RequestParam String date,@RequestParam String email) {
@@ -94,7 +115,7 @@ public class ScheduleController {
 	@RequestMapping("schedule/scheduleDelete.do")
 	public ModelAndView scheduleDelete(ModelAndView mav,Schedule schedule,@SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn)
 	{
-		
+		try {
 		String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
 				 .orElseThrow(IllegalStateException::new);
 	System.out.println("SADfasd"+schedule);
@@ -104,11 +125,15 @@ public class ScheduleController {
 	mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
 	mav.setViewName("common/msg");
 	return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	
 	
 	@RequestMapping("schedule/scheduleModify.do")
 	public ModelAndView scheduleModify(ModelAndView mav,Schedule schedule,String []title1,String []content1) {
+		try {
 		System.out.println("Fsadfasd"+schedule);
 		String title="";
 		String content="";
@@ -131,9 +156,13 @@ public class ScheduleController {
 		mav.addObject("schedule",schedule);
 		mav.setViewName("main/scheduleModify");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("schedule/scheduleUpdate.do")
 	public ModelAndView scheduleUpdate(ModelAndView mav,Schedule schedule1,Schedule schedule) {
+		try {
 		String date=schedule.getEndScheduleTime()+" "+schedule.getEndTime();
 		schedule.setEndScheduleTime(date);
 		date=schedule.getStartScheduleTime()+" "+schedule.getStartTime();
@@ -146,6 +175,9 @@ public class ScheduleController {
 		mav.addObject("msg", result>0?"수정 성공!":"수정 실패!");
 		mav.setViewName("common/msg");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	
 	

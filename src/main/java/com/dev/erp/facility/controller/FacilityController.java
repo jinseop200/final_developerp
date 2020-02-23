@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.facility.model.service.FacilityService;
 import com.dev.erp.facility.model.vo.Facility;
 import com.dev.erp.facility.model.vo.FacilityBook;
@@ -29,6 +30,7 @@ public class FacilityController {
 	= LoggerFactory.getLogger(FacilityController.class);
 	@RequestMapping("/facility/facilityList.do")
 	public ModelAndView facilityList(ModelAndView mav) {
+		try {
 //		List<Map<String,String>> list = new ArrayList<>();
 		List<Facility> list=new ArrayList<>();
 		list=facilityService.selectAll();
@@ -36,19 +38,27 @@ public class FacilityController {
 		mav.addObject("list",list);
 		mav.setViewName("gw/facility");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/facility/facilityBook.do")
 	public ModelAndView facilityBook(ModelAndView mav,@RequestParam String facilityNo) {
+		try {
 		System.out.println("aaaaaaaaaaaaaa"+facilityNo);
 		Facility facility=facilityService.selectOne(facilityNo);
 		System.out.println("bbbb"+facility);
 		mav.addObject("facility",facility);
 		mav.setViewName("gw/facilityBook");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	
 	@RequestMapping("/facility/facilityBookInsert.do")
 	public ModelAndView facilityBookInsert(ModelAndView mav,FacilityBook facilityBook) {
+		try {
 		System.out.println("dfdsafsd"+facilityBook);
 		int result=facilityService.insertBook(facilityBook);
 		mav.addObject("msg", result>0?"예약 성공!":"예약 실패!");
@@ -56,31 +66,46 @@ public class FacilityController {
 		mav.setViewName("common/msg");
 	
 	return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 
 	}
 	@RequestMapping("/facility/facilityTime.do")
 	@ResponseBody
 	public List<FacilityBook> facilityTime(ModelAndView mav,FacilityBook facilityBook){
+		try {
 		System.out.println("sadfaa"+facilityBook);
 //		List<Map<String,String>> list = new ArrayList<>();
 		List<FacilityBook>list=facilityService.facilityTime(facilityBook);
 		System.out.println(list);
 		return list;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/facility/facilityBookList.do")
 	public ModelAndView facilityBookList(ModelAndView mav,@RequestParam int facilityNo) {
+		try {
 		mav.addObject("facilityNo",facilityNo);
 		mav.setViewName("gw/facilityBookList");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/facility/facilityBookListGet.do")
 	@ResponseBody
 	public List<FacilityBook> facilityBookListGet(ModelAndView mav,@RequestParam String bookDay,@RequestParam int facilityNo){
+		try {
 		FacilityBook facilityBook=new FacilityBook(0,facilityNo," ",bookDay," "," ");
 		List<FacilityBook> list=facilityService.facilityBookListGet(facilityBook);
 		mav.addObject("facilityNo",facilityNo);
 		mav.setViewName("gw/facilityBookList");
 		return list;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	
 }

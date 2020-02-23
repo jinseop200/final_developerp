@@ -352,24 +352,33 @@ public class MemberController {
 	@RequestMapping("member/memberManage.do")
 	public ModelAndView memberManage(ModelAndView mav)
 	{
+		try {
 		List<Member> list=memberService.memberManage();
 		mav.addObject("list",list);
 	mav.setViewName("member/memberManage");
 	return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/member/memberDelete.do")
 	public ModelAndView memberDelete(ModelAndView mav,@RequestParam String email)
 	{
+		try {
 		int result =memberService.memberDelete(email);
 		mav.addObject("loc", "/member/memberManage.do");
 		mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
 		mav.setViewName("common/msg");
 	
 	return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/member/memberManageModify.do")
 	public ModelAndView memberManageModify(ModelAndView mav,@RequestParam String email)
 	{
+		try {
 		Member member=memberService.memberManageModify(email);
 		List<Map<String,String>> deptList = memberService.selectDeptList();
 		List<Map<String,String>> jobList = memberService.selectJobList();
@@ -385,9 +394,13 @@ public class MemberController {
 		mav.setViewName("member/memberManageModify");
 	
 	return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/member/memberManageModifyEnd.do")
 	public ModelAndView memberManageModifyEnd(ModelAndView mav,Member member,@RequestParam String empNo1,@RequestParam String empNo2) {
+		try {
 		System.out.println("fdfdfdfd"+member);
 		System.out.println(empNo1);
 		System.out.println(empNo2);
@@ -397,5 +410,8 @@ public class MemberController {
 		mav.addObject("msg", result>0?"수정 성공!":"수정 실패!");
 		mav.setViewName("common/msg");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 }

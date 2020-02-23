@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.attend.model.service.AttendService;
 import com.dev.erp.attend.model.vo.Attend;
+import com.dev.erp.common.exception.MyException;
 
 
 @Controller
@@ -27,6 +28,7 @@ public class AttendController {
 
 	@RequestMapping("/attend/attendList.do")
 	public ModelAndView attendList(ModelAndView mav,@RequestParam String email) {
+		try {
 		List<Attend> list= attendService.attendShow(email);
 		String content="";
 
@@ -56,6 +58,9 @@ public class AttendController {
 		mav.addObject("content",content);
 		mav.setViewName("gw/attendCal");
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 //	@RequestMapping("/attend/attendShow.do")
 //	@ResponseBody
@@ -77,6 +82,7 @@ public class AttendController {
 	@RequestMapping("/attend/attendForm.do")
 	public ModelAndView showAttendForm(ModelAndView mav, @RequestParam String date,@RequestParam String email
 			) {
+		try {
 		System.out.println("fsdasfsfddddD");
 		Attend attend = new Attend(email, "",date,"","","","","","");
 		Attend end=new Attend(email,"","","",date,"","","","");
@@ -94,14 +100,16 @@ public class AttendController {
 		mav.addObject("holidayInfo",holidayInfo);
 		mav.setViewName("gw/attendForm");
 		return mav;
-		
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 		
 		
 
 	}
 	@RequestMapping("/attend/attendant.do")
 	public ModelAndView attendant(ModelAndView mav, @RequestParam String date,@RequestParam String email) {
-
+		try {
 		mav.addObject("loc", "/attend/attendList.do?email=${memberLoggedIn.email]");
 		String script="";
 		
@@ -112,11 +120,14 @@ public class AttendController {
 			mav.setViewName("common/msg");
 		
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 
 	}
 	@RequestMapping("/attend/leave.do")
 	public ModelAndView leave(ModelAndView mav, @RequestParam String date,@RequestParam String email) {
-	
+	try {
 		String script = "self.close(); opener.location.reload(true)";
 		mav.addObject("script",script);
 		mav.addObject("loc", "/attend/attendList.do?email=${memberLoggedIn.email]");
@@ -125,10 +136,14 @@ public class AttendController {
 			mav.addObject("msg", result>0?"퇴근 성공!":"퇴근 실패!");
 			mav.setViewName("common/msg");
 		return mav;
+	}catch(Exception e) {
+		throw new MyException("조회 실패! 관리자에게 문의하세요!");
+	}
 
 	}
 	@RequestMapping("/attend/earlyleave.do")
 	public ModelAndView earlyLeave(ModelAndView mav,@RequestParam String reason,@RequestParam String email) {
+		try {
 		Attend attend=new Attend(email,"","","","","","","",reason);
 		int result=attendService.earlyLeave(attend);
 		String script = "self.close(); opener.location.reload(true)";
@@ -138,11 +153,18 @@ public class AttendController {
 			mav.setViewName("common/msg");
 		
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 	@RequestMapping("/attend/test.do")
 	public ModelAndView test(ModelAndView mav) {
+		try {
 		mav.setViewName("gw/test");
 		
 		return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
 	}
 }
