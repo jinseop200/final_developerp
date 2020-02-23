@@ -33,7 +33,6 @@
                 <table class="table table-bordered quality-table" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>시설물 번호</th>
                       <th>시설명</th>
                       <th>전화번호</th>
                       <th>장소</th>
@@ -43,7 +42,7 @@
                   <tbody>
                 	<c:forEach items="${list}" var="l">
 	                    <tr value="${l.facilityNo }">
-	                      <td>${l.facilityNo }</td>
+	                      <td hidden>${l.facilityNo }</td>
 	                      <td><a href="#" onclick="bookList(${l.facilityNo},'${l.facilityName}')">${l.facilityName}</a></td>
 	                      <td>${l.facilityPhone}</td>
 	                      <td>${l.facilityLocation}</td>

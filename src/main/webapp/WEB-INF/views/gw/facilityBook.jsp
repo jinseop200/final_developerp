@@ -219,6 +219,9 @@
 						var str='';
 						for(var i=1;i<count;i++){
 							$("#reservS option:eq("+i+")").prop('disabled',false);
+							var text=$("#reservS option:eq("+i+")").text();
+							var text=text.substring(0,5);
+							$("#reservS option:eq("+i+")").text(text);
 						}
 						
 						$.each(data,(idx, facility)=>{
@@ -229,7 +232,9 @@
 						
 							if((facility.bookStarttime*1)<=num&&(facility.bookEndtime*1)>=num)
 								{
-								$("#reservS option:eq("+i+")").prop('disabled',true);								
+								$("#reservS option:eq("+i+")").prop('disabled',true);
+								var text=$("#reservS option:eq("+i+")").text();
+								$("#reservS option:eq("+i+")").text(text+'(마감)');
 								}
 
 							}
@@ -254,6 +259,9 @@
 					var str='';
 					for(var i=1;i<count;i++){
 						$("#reservS option:eq("+i+")").prop('disabled',false);
+						var text=$("#reservS option:eq("+i+")").text();
+						var text=text.substring(0,5);
+						$("#reservS option:eq("+i+")").text(text);
 					}
 					
 					$.each(data,(idx, facility)=>{
@@ -265,6 +273,8 @@
 						if((facility.bookStarttime*1)<=num&&(facility.bookEndtime*1)>num)
 							{
 							$("#reservS option:eq("+i+")").prop('disabled',true);
+							var text=$("#reservS option:eq("+i+")").text();
+							$("#reservS option:eq("+i+")").text(text+'(마감)');
 							}
 						}
 					});

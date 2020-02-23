@@ -64,9 +64,9 @@
 #mySearchModal {
 	z-index:1080;
 }
-table{
-text-align:center;
-}
+.modal-body{
+	text-align:center;
+	}
 </style>				
 <script>
 
