@@ -225,8 +225,8 @@ input[type=text]{
 $(".searchProduct-btn").click(function(){
 	 /* $(".epl-body").css('display','block');
 	 $(".order-body").css('display','none'); */
-	 
-	 $('.epl-body').load("${pageContext.request.contextPath}/productplan/endProductList.do",function(){
+	 var purchase = "purchase";
+	 $('.epl-body').load("${pageContext.request.contextPath}/productplan/endProductList.do?plan="+purchase,function(){
 	        $('#purchasePlan-modal').modal({backdrop: 'static', keyboard: false});
 	        $('#purchasePlan-modal').modal({show:true});
 	        $(".modal-backdrop.in").css('opacity', 0.4);

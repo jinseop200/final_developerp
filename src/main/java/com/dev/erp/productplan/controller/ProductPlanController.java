@@ -77,6 +77,23 @@ public class ProductPlanController {
 		return mav;
 	}
 	
+	@RequestMapping("/productplan/showBarChart.do")
+	@ResponseBody
+	public ModelAndView showBarChart(ModelAndView mav,
+									 @RequestParam String productNo,
+									 HttpServletResponse response) {
+		
+		response.setContentType("text/html;charset=utf-8");
+		/*logger.info("민병준={}", productNo);
+		List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
+		mav.addObject("graphData", graphData);
+		logger.info("graphData@@={}",graphData);
+		mav.setViewName("jsonView");*/
+		
+		
+		return mav;
+	}
+	
 	//============================원재료 구매계획============================
 	//헤더 ->
 	@RequestMapping("/productplan/purchasePlan.do")
@@ -94,8 +111,10 @@ public class ProductPlanController {
 	}
 	
 	@RequestMapping("/productplan/endProductList.do")
-	public ModelAndView searchSpecify(ModelAndView mav) {
+	public ModelAndView searchSpecify(ModelAndView mav,
+									  @RequestParam("plan") String plan) {
 		
+		mav.addObject("plan", plan);
 		mav.setViewName("productplan/endProductList");
 		
 		return mav;
@@ -103,19 +122,31 @@ public class ProductPlanController {
 	@RequestMapping(value="/productplan/endProductListPage.do")
 	@ResponseBody
 	public ModelAndView selectEndProduct(ModelAndView mav,
+										 @RequestParam("plan") String plan,
 										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
 
-		final int numPerPage = 5;
+		final int numPerPage = 10;
 		int totalContents = 0;
-		List<Map<String, String>> list = productPlanService.selectEndProduct(cPage, numPerPage);
+		List<Map<String, String>> list  = new ArrayList<>();
+		logger.info("테스트4={}", plan);
+		switch(plan) {
+		case "product":
+			list = productPlanService.selectProduction(cPage, numPerPage);
+			totalContents= productPlanService.selectTotalContentsByP();
+			break;
+			
+		case "purchase":
+			list = productPlanService.selectEndProduct(cPage, numPerPage);
+			totalContents= productPlanService.selectTotalContentsByEp();
+			break;
+		}
 		logger.info("listCheck={}", list);
-		totalContents= productPlanService.selectTotalContentsByEp();
 		
-		String url = "endProductListPage.do?";
+		String url = "endProductListPage.do?plan="+plan;
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
 		
-		mav.addObject("endProductList", list);
+		mav.addObject("list", list);
 		mav.addObject("totalContents", totalContents);
 		mav.addObject("cPage", cPage);
 		mav.addObject("numPerPage", numPerPage);

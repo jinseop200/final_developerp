@@ -17,6 +17,17 @@
 		where quality_yn like 'Y'
 	</select>
 	
+	<select  id="selectProduction" resultType="Map">
+		select distinct pl_no as "plNo",
+			   product_name as "productName"
+		from production	
+	</select>
+	
+	<select id="selectTotalContentsByP" resultType="_int">
+		select count(distinct product_name)
+		from production
+	</select>
+	
 	
 	
 	<!-- 원재료 구매계획 쿼리문 -->
@@ -37,7 +48,9 @@
 	</select>
 	
 	<select id="selectEndProduct" resultType="Map">
-		select pl_no, product_name from product_list
+		select pl_no as "plNo", 
+			   product_name as "productName" 
+		from product_list
 	</select>
 	
 	<select id="selectTotalContentByEp" resultType="_int">

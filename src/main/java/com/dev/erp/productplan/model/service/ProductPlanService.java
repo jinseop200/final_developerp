@@ -37,4 +37,8 @@ public interface ProductPlanService {
 
 	int selectTotalEpResult();
 
+	List<Map<String, String>> selectProduction(int cPage, int numPerPage);
+
+	int selectTotalContentsByP();
+
 }

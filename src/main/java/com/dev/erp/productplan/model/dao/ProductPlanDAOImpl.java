@@ -97,4 +97,15 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int selectTotalEpResult() {
 		return sqlSession.selectOne("productplan.selectTotalEpResult");
 	}
+
+	@Override
+	public List<Map<String, String>> selectProduction(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("productplan.selectProduction", null, rowBounds);
+	}
+
+	@Override
+	public int selectTotalContentsByP() {
+		return sqlSession.selectOne("productplan.selectTotalContentsByP");
+	}
 }

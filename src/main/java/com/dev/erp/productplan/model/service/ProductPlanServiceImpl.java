@@ -94,4 +94,14 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.selectTotalEpResult();
 	}
 
+	@Override
+	public List<Map<String, String>> selectProduction(int cPage, int numPerPage) {
+		return productPlanDAO.selectProduction(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectTotalContentsByP() {
+		return productPlanDAO.selectTotalContentsByP();
+	}
+
 }
