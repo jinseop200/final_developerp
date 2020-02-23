@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dev.erp.common.exception.MyException;
 import com.dev.erp.common.util.Utils;
 import com.dev.erp.productplan.model.service.ProductPlanService;
 
@@ -66,16 +67,12 @@ public class ProductPlanController {
 			int epResult = productPlanService.selectTotalEpResult();
 			int attainment = (100*epResult)/epPlan;
 			
-			
 			mav.addObject("epPlan", epPlan);
 			mav.addObject("epResult", epResult);
 			mav.addObject("attainment", attainment);
-			
-			
-			
 			mav.setViewName("productplan/monthlyPlan");
 		} catch (Exception e) {
-			throw new MyException("d");
+			throw new MyException("페이지를 불러올 수 없습니다.");
 		}
 		
 		return mav;
@@ -87,11 +84,15 @@ public class ProductPlanController {
 									 @RequestParam String productNo,
 									 HttpServletResponse response) {
 		
-		response.setContentType("text/html;charset=utf-8");
-		List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(productNo);
-		
-		mav.addObject("barData", barData);
-		mav.setViewName("jsonView");
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(productNo);
+			
+			mav.addObject("barData", barData);
+			mav.setViewName("jsonView");
+		} catch (Exception e) {
+			throw new MyException("차트 데이터를 불러오는 중에 에러가 발생했습니다.");
+		}
 		
 		
 		return mav;
@@ -103,12 +104,15 @@ public class ProductPlanController {
 	public ModelAndView purchasePlanView(ModelAndView mav) {
 		
 		
-		List<Map<String, String>> firstPL = productPlanService.selectFirstByPL();
-		JSONArray JfirstPL = convertListToJson(firstPL);
-		mav.addObject("firstPL", JfirstPL);
-		mav.addObject("beforeSearch","1");
-		logger.info("민병준={}", firstPL);
-		mav.setViewName("productplan/purchasePlan");
+		try {
+			List<Map<String, String>> firstPL = productPlanService.selectFirstByPL();
+			JSONArray JfirstPL = convertListToJson(firstPL);
+			mav.addObject("firstPL", JfirstPL);
+			mav.addObject("beforeSearch","1");
+			mav.setViewName("productplan/purchasePlan");
+		} catch (Exception e) {
+			throw new MyException("페이지를 불러올 수 없습니다.");
+		}
 		
 		return mav;
 	}
@@ -117,8 +121,12 @@ public class ProductPlanController {
 	public ModelAndView searchSpecify(ModelAndView mav,
 									  @RequestParam("plan") String plan) {
 		
-		mav.addObject("plan", plan);
-		mav.setViewName("productplan/endProductList");
+		try {
+			mav.addObject("plan", plan);
+			mav.setViewName("productplan/endProductList");
+		} catch (Exception e) {
+			throw new MyException("제품리스트를 불러오는 중에 오류가 발생했습니다.");
+		}
 		
 		return mav;
 	}
@@ -127,35 +135,38 @@ public class ProductPlanController {
 	public ModelAndView selectEndProduct(ModelAndView mav,
 										 @RequestParam("plan") String plan,
 										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
-		response.setContentType("text/html;charset=UTF-8");
+		
+		try {
+			response.setContentType("text/html;charset=UTF-8");
 
-		final int numPerPage = 10;
-		int totalContents = 0;
-		List<Map<String, String>> list  = new ArrayList<>();
-		logger.info("테스트4={}", plan);
-		switch(plan) {
-		case "product":
-			list = productPlanService.selectProduction(cPage, numPerPage);
-			totalContents= productPlanService.selectTotalContentsByP();
-			break;
+			final int numPerPage = 10;
+			int totalContents = 0;
+			List<Map<String, String>> list  = new ArrayList<>();
+			switch(plan) {
+			case "product":
+				list = productPlanService.selectProduction(cPage, numPerPage);
+				totalContents= productPlanService.selectTotalContentsByP();
+				break;
+				
+			case "purchase":
+				list = productPlanService.selectEndProduct(cPage, numPerPage);
+				totalContents= productPlanService.selectTotalContentsByEp();
+				break;
+			}
 			
-		case "purchase":
-			list = productPlanService.selectEndProduct(cPage, numPerPage);
-			totalContents= productPlanService.selectTotalContentsByEp();
-			break;
+			String url = "endProductListPage.do?plan="+plan;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			mav.addObject("list", list);
+			mav.addObject("totalContents", totalContents);
+			mav.addObject("cPage", cPage);
+			mav.addObject("numPerPage", numPerPage);
+			mav.addObject("pageBar", pageBar);
+			mav.addObject("AfterSearch","2");
+			mav.setViewName("jsonView");
+		} catch (Exception e) {
+			throw new MyException("제품리스트 페이지 오류발생!");
 		}
-		logger.info("listCheck={}", list);
-		
-		String url = "endProductListPage.do?plan="+plan;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		mav.addObject("list", list);
-		mav.addObject("totalContents", totalContents);
-		mav.addObject("cPage", cPage);
-		mav.addObject("numPerPage", numPerPage);
-		mav.addObject("pageBar", pageBar);
-		mav.addObject("AfterSearch","2");
-		mav.setViewName("jsonView");
 		
 		return mav;
 	}
@@ -167,12 +178,14 @@ public class ProductPlanController {
 										   @RequestParam String productNo,
 										   HttpServletResponse response) {
 		
-		response.setContentType("text/html;charset=UTF-8");
-		logger.info("민병준={}", productNo);
-		List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
-		mav.addObject("graphData", graphData);
-		logger.info("graphData@@={}",graphData);
-		mav.setViewName("jsonView");
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
+			mav.addObject("graphData", graphData);
+			mav.setViewName("jsonView");
+		} catch (Exception e) {
+			throw new MyException("제품명에 따른 그래프 데이터 불러오기 오류!");
+		}
 		
 		return mav;
 	}
@@ -182,20 +195,23 @@ public class ProductPlanController {
 	public ModelAndView insertPurchasePlanForm(ModelAndView mav,
 											   @RequestParam String[] rmNameArr,
 											   @RequestParam String requireAm) {
-		String rmName ="";
-		
-		for(String str :rmNameArr) {
-			if(str == rmNameArr[rmNameArr.length-1])
-				rmName+=str;
-			else
-				rmName+=str+" ";
+		try {
+			String rmName ="";
 			
+			for(String str :rmNameArr) {
+				if(str == rmNameArr[rmNameArr.length-1])
+					rmName+=str;
+				else
+					rmName+=str+" ";
+				
+			}
+			
+			mav.addObject("rmName", rmName);
+			mav.addObject("requireAm", requireAm);
+			mav.setViewName("productplan/orderRequest");
+		} catch (Exception e) {
+			throw new MyException("발주요청 불러오기 오류!");
 		}
-		logger.info("테스트@={}",rmName);
-		
-		mav.addObject("rmName", rmName);
-		mav.addObject("requireAm", requireAm);
-		mav.setViewName("productplan/orderRequest");
 		
 		return mav;
 	}
@@ -204,11 +220,14 @@ public class ProductPlanController {
 	//작업지시서 조회
 	@RequestMapping("/productplan/jobOrder.do")
 	public ModelAndView joView(ModelAndView mav) {
-		List<Map<String, String>> joList = productPlanService.selectJobOrder();
-		logger.info("joList@Controller={}", joList);
-		
-		mav.addObject("joList", joList);
-		mav.setViewName("productplan/jobOrder");
+		try {
+			List<Map<String, String>> joList = productPlanService.selectJobOrder();
+			
+			mav.addObject("joList", joList);
+			mav.setViewName("productplan/jobOrder");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 페이지를 불러오는 중에 오류가 발생했습니다.");
+		}
 		
 		return mav;
 	}
@@ -216,7 +235,11 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/insertJobOrder.do")
 	public ModelAndView insertJobOrderForm(ModelAndView mav) {
 		
-		mav.setViewName("productplan/insertJobOrder");
+		try {
+			mav.setViewName("productplan/insertJobOrder");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 등록창 불러오기 오류!");
+		}
 		
 		return mav;
 	}
@@ -225,8 +248,12 @@ public class ProductPlanController {
 	public ModelAndView searchDetails(@RequestParam String searchType,
 									  ModelAndView mav) {
 		
-		mav.addObject("searchType", searchType);
-		mav.setViewName("productplan/searchDetails");
+		try {
+			mav.addObject("searchType", searchType);
+			mav.setViewName("productplan/searchDetails");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 세부사항 검색 오류!");
+		}
 		
 		return mav;
 	}
@@ -238,32 +265,33 @@ public class ProductPlanController {
 										  @RequestParam String searchType,
 										  @RequestParam(defaultValue="1") int cPage,
 										  HttpServletResponse response) {
-		response.setContentType("text/html;charset=UTF-8");
-		final int numPerPage = 5;
-		int totalContents = 0;
-		List<Map<String, String>> list  = new ArrayList<>();
-		switch(searchType) {
-		case "customer":
-			list = productPlanService.selectCustomer(cPage,numPerPage);
-			totalContents = productPlanService.selectTotalContentsByCtmr();
-			break;
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			final int numPerPage = 5;
+			int totalContents = 0;
+			List<Map<String, String>> list  = new ArrayList<>();
+			switch(searchType) {
+			case "customer":
+				list = productPlanService.selectCustomer(cPage,numPerPage);
+				totalContents = productPlanService.selectTotalContentsByCtmr();
+				break;
+				
+			case "productName":
+				list = productPlanService.selectProductName(cPage,numPerPage);
+				totalContents = productPlanService.selectTotalContentsByPn();
+				break;
+			}
 			
-		case "productName":
-			list = productPlanService.selectProductName(cPage,numPerPage);
-			totalContents = productPlanService.selectTotalContentsByPn();
-			break;
+			String url = "searchDetailsPage.do?searchType="+searchType;
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			mav.addObject("detailsList", list);
+			mav.addObject("cPage", cPage);
+			mav.addObject("pageBar", pageBar);
+			mav.setViewName("jsonView");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 세부사항 검색 데이터 불러오기 오류!");
 		}
-		
-		logger.info("searchType={}", searchType);
-		String url = "searchDetailsPage.do?searchType="+searchType;
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-		
-		mav.addObject("detailsList", list);
-		mav.addObject("cPage", cPage);
-		mav.addObject("pageBar", pageBar);
-		mav.setViewName("jsonView");
-		
-			
 		
 		return mav;
 	}
@@ -280,27 +308,30 @@ public class ProductPlanController {
 									   @RequestParam String orderContent,
 									   ModelAndView mav) {
 		
-		int joTotalContents = 0;
-		joTotalContents = productPlanService.selectJoTotalContents();
-		//작업지시번호 포맷변경
-		String str = String.join("", enrollDate.split("-"));
-		Map<String, String> joList = new HashMap<>();
-		joList.put("joNo", str+"-"+(joTotalContents+1));
-		joList.put("enrollDate", enrollDate);
-		joList.put("dueDate", dueDate);
-		joList.put("customer", customer);
-		joList.put("manager", manager);
-		joList.put("productName", productName);
-		joList.put("plNo", plNo);
-		joList.put("quantity", quantity);
-		joList.put("orderContent", orderContent);
-		
-		logger.info("joList@controller={}", joList);
-		
-		int result = productPlanService.insertJobOrder(joList);
-		mav.addObject("msg",result>0?"작업지시서 신규등록 성공!":"작업지시서 신규등록 실패!");
-		mav.addObject("loc","/productplan/jobOrder.do");
-		mav.setViewName("common/msg");
+		try {
+			int joTotalContents = 0;
+			joTotalContents = productPlanService.selectJoTotalContents();
+			//작업지시번호 포맷변경
+			String str = String.join("", enrollDate.split("-"));
+			Map<String, String> joList = new HashMap<>();
+			joList.put("joNo", str+"-"+(joTotalContents+1));
+			joList.put("enrollDate", enrollDate);
+			joList.put("dueDate", dueDate);
+			joList.put("customer", customer);
+			joList.put("manager", manager);
+			joList.put("productName", productName);
+			joList.put("plNo", plNo);
+			joList.put("quantity", quantity);
+			joList.put("orderContent", orderContent);
+			
+			
+			int result = productPlanService.insertJobOrder(joList);
+			mav.addObject("msg",result>0?"작업지시서 신규등록 성공!":"작업지시서 신규등록 실패!");
+			mav.addObject("loc","/productplan/jobOrder.do");
+			mav.setViewName("common/msg");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 등록중 오류가 발생했습니다.");
+		}
 		
 		return mav;
 		
@@ -310,17 +341,21 @@ public class ProductPlanController {
 	public ModelAndView updateJobOrder(ModelAndView mav,
 										   @RequestParam(value="joNo") String joNo) {
 		
-		Map<String, String> load = productPlanService.selectOneJo(joNo);
-		String str = load.get("joNo");
-		String year = str.substring(0,4);
-		String month = str.substring(4,6);
-		String date = str.substring(6,8);
-		String str2 = String.format("%s-%s-%s",year,month,date);
-		
-		mav.addObject("enrollDate", str2);
-		mav.addObject("load", load);
-		mav.addObject("joNo",joNo);
-		mav.setViewName("productplan/updateJobOrder");
+		try {
+			Map<String, String> load = productPlanService.selectOneJo(joNo);
+			String str = load.get("joNo");
+			String year = str.substring(0,4);
+			String month = str.substring(4,6);
+			String date = str.substring(6,8);
+			String str2 = String.format("%s-%s-%s",year,month,date);
+			
+			mav.addObject("enrollDate", str2);
+			mav.addObject("load", load);
+			mav.addObject("joNo",joNo);
+			mav.setViewName("productplan/updateJobOrder");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 수정 불러오는 중에 오류가 발생했습니다.");
+		}
 		return mav;
 	}
 	//작업 지시서 수정완료
@@ -334,19 +369,22 @@ public class ProductPlanController {
 										  @RequestParam String quantity,
 										  @RequestParam String orderContent
 										  ) {
-		Map<String, String> update = new HashMap<>();
-		update.put("joNo", joNo);
-		update.put("dueDate", dueDate);
-		update.put("customer", customer);
-		update.put("manager", manager);
-		update.put("productName", productName);
-		update.put("quantity", quantity);
-		update.put("orderContent", orderContent);
-		logger.info("update@@="+update);
-		int result = productPlanService.updateJobOrderEnd(update);
-		mav.addObject("msg", result>0?"작업지시서 수정 성공!":"작업지서서 수정 실패!");
-		mav.addObject("loc", "/productplan/jobOrder.do");
-		mav.setViewName("common/msg");
+		try {
+			Map<String, String> update = new HashMap<>();
+			update.put("joNo", joNo);
+			update.put("dueDate", dueDate);
+			update.put("customer", customer);
+			update.put("manager", manager);
+			update.put("productName", productName);
+			update.put("quantity", quantity);
+			update.put("orderContent", orderContent);
+			int result = productPlanService.updateJobOrderEnd(update);
+			mav.addObject("msg", result>0?"작업지시서 수정 성공!":"작업지서서 수정 실패!");
+			mav.addObject("loc", "/productplan/jobOrder.do");
+			mav.setViewName("common/msg");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 수정완료 중 오류가 발생했습니다.");
+		}
 		return mav;
 	}
 	
@@ -354,11 +392,14 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/deleteOneJo.do")
 	public ModelAndView deleteOneJo(@RequestParam(value="joNo") String joNo,
 									ModelAndView mav) {
-		int result = productPlanService.deleteOneJo(joNo);
-		logger.info("result={}", result);
-		mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
-		mav.addObject("loc","/productplan/jobOrder.do");
-		mav.setViewName("common/msg");
+		try {
+			int result = productPlanService.deleteOneJo(joNo);
+			mav.addObject("msg", result>0?"삭제 성공!":"삭제 실패!");
+			mav.addObject("loc","/productplan/jobOrder.do");
+			mav.setViewName("common/msg");
+		} catch (Exception e) {
+			throw new MyException("작업지시서 삭제 중 오류가 발생했습니다.");
+		}
 		
 		return mav;
 	}
