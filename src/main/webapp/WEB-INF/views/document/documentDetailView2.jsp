@@ -21,11 +21,12 @@ padding:3px;
 border:1px solid #ccc;
 }
 </style>
-	<form action="${pageContext.request.contextPath}/document/updateDocument.do" name="documentEnrollFrm"  method="post" >
+	<form action="${pageContext.request.contextPath}/document/updateDocument.do" name="documentEnrollFrm"   method="post" >
 	<input type="hidden" value="${memberLoggedIn.empName}" id="empName" name="empName" />
     <input type="hidden" value="${list.docNo}" id="docNo" name="docNo" />
     <input type="hidden" value="${memberLoggedIn.email}" id="email" name="email" />
-    	<table style="margin: 0px auto; width: 800px; position: static; left: auto; top: auto;">
+    <div id="documentPrint">
+    	<table style="margin: 0px auto; width: 800px; position: static; left: auto; top: auto;" >
     		<tbody>
     			<tr>
     				<td >
@@ -130,7 +131,9 @@ border:1px solid #ccc;
 	    	</tr>  
 		</tbody>
 	</table>
+	</div>
 	<div class="modal-footer">
+		        	<button type="button" id="FrmBtn" name="documentPrint" value="1" class="btn btn-primary documentPrintBtn">인쇄</button>
                     <c:forEach items="${docLine}" var="d" varStatus="vs">
 						<c:if test="${(memberLoggedIn.empName == d.nextWriter) and (d.returnYn == 'Y') and (prevWriter.returnYn=='N')}">
 		        			<button type="submit" id="FrmBtn" name="submitApprove" value="1" class="btn btn-primary">결재</button>
@@ -146,68 +149,10 @@ border:1px solid #ccc;
             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         		</div>    
 
-</form>          
-      <!-- search-container start -->
-<!--       <div id="insert-container"> -->
-<%--           <form class="needs-validation" action="${pageContext.request.contextPath}/document/updateDocument.do"  --%>
-<!--           		name="documentEnrollFrm" method="post"> -->
-<!--                 <div class="form-row"> -->
-<!--                     <div class="col-md-6 mb-3"> -->
-<!--                     <label for="documentDate">일  자</label>&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%-- 	                <input type="text" id="documentDate" value="${list.regDate}" readonly name="documentDate" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2"> --%>
-<!--                     </div> -->
-<!--                 </div>    -->
-<!--                 <div class="form-row"> -->
-<!-- 	                <div class="col-md-6 mb-3"> -->
-<!-- 	                	<label for="documentTitle">제  목</label>&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%-- 	                    <input type="text" id="documentTitle" value="${list.docTitle}" readonly name="documentTitle" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2"> --%>
-<!-- 	                </div>  -->
-<!--                 </div> -->
-<!--                 <div class="form-row nextApproval"> -->
-<!--                         <label for="docLastapproval">결재자</label>&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%--                         <c:forEach items="${docLine}" var="d" varStatus="vs"> --%>
-<%--                         	<c:if test="${d.returnYn=='Y' && d.nextWriter!=null}"> --%>
-<%--                         	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border:1px solid red" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2"> --%>
-<!--                     		&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%--                         	</c:if> --%>
-<%--                         	<c:if test="${d.returnYn=='N' && d.nextWriter!=null}"> --%>
-<%--                         	<input type="text" id="docLastapproval" value="${d.nextWriter}" style="border:2px solid #00c500" readonly name="docLastapproval" class="form-control bg-light small nextWriter" aria-label="Search" aria-describedby="basic-addon2"> --%>
-<!--                     		&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%--                         	</c:if> --%>
-<%--                     	</c:forEach> --%>
-<!--                 </div> -->
-                
-<!--                 <div class="form-row"> -->
-<!--                     <div class="col-md-6 mb-3"> -->
-<!--                         <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%--                         <input type="text" id="docType" value="${list.docType}" readonly name="docType" class="form-control bg-light small" aria-label="Search" aria-describedby="basic-addon2"> --%>
-					
-<!--                     </div> -->
-<!--                 </div> -->
-<!--                 <div class="form-row"> -->
-<!--                     <div class="col-md-6 mb-3"> -->
-<!--                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br /> -->
-<%--                         <textarea class="form-control quality-comment" placeholder="${list.docContent}" readonly name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	 --%>
-<!--                     </div> -->
-<!--                 </div> -->
-<!-- 				<div class="modal-footer"> -->
-<%--                     <c:forEach items="${docLine}" var="d" varStatus="vs"> --%>
-<%-- 						<c:if test="${(memberLoggedIn.empName == d.nextWriter) and (d.returnYn == 'Y') and (prevWriter.returnYn=='N')}"> --%>
-<!-- 		        			<button type="submit" id="FrmBtn" name="submitApprove" value="1" class="btn btn-primary">결재</button> -->
-<!-- 		        			<button type="submit" id="FrmBtn" name="submitApprove" value="0" class="btn btn-primary">반려</button> -->
-<%-- 	        			</c:if> --%>
-<%-- 						<c:if test="${(memberLoggedIn.empName == d.nextWriter) and (d.returnYn == 'N')}"> --%>
-<!-- 		        			<button id="FrmBtn" type="button" name="submitApprove" value="1" class="btn btn-primary">결재완료됨</button> -->
-<%-- 	        			</c:if> --%>
-<%--         			</c:forEach> --%>
-<%-- 						<c:if test="${(memberLoggedIn.empName == nextWriter.nextWriter) and (prevWriter.returnYn == 'Y')}"> --%>
-<!-- 		        			<button id="FrmBtn" type="button" name="submitApprove" value="1" class="btn btn-primary">결재진행중</button> -->
-<%-- 	        			</c:if> --%>
-<!--             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
-<!--         		</div>        -->
-<!--             </form> -->
-<!--       </div> -->
-         
+</form>      
+<form name="pf">
+ <input type=hidden id="printzone">
+</form>    
 
 
 <style>
@@ -269,6 +214,14 @@ border:1px solid #ccc;
 </style>
 <script>
 	$(()=>{
+		$(".btn.btn-primary.documentPrintBtn").click(function()
+				{
+				var value = $("#documentPrint").html();
+				$("#printzone").val(value);
+// 				 document.pf.printzone.value = documentPrint.innerHTML;
+				console.log($("[name=printzone]").val());
+				 window.open("${pageContext.request.contextPath}/document/goPrint.do", "print_open","width=800,height=700,top=0,left=0,noresizable,toolbar=no,status=no,scrollbars=yes,directory=no");
+				});
 		var docLastapproval = $("#docLastapproval").val();
 	});
 
