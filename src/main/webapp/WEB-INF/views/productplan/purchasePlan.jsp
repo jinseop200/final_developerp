@@ -223,6 +223,7 @@ input[type=text]{
 	
 //제품조회 모달1
 $(".searchProduct-btn").click(function(){
+	
 	 /* $(".epl-body").css('display','block');
 	 $(".order-body").css('display','none'); */
 	 var purchase = "purchase";
