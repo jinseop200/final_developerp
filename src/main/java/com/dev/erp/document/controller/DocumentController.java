@@ -259,6 +259,9 @@ public class DocumentController {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
-	
+	@RequestMapping("/document/goPrint.do")
+	public void goPrint() {
+		
+	}
 	
 }
