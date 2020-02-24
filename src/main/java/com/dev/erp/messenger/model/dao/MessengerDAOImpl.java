@@ -77,5 +77,6 @@ public class MessengerDAOImpl implements MessengerDAO {
 	public List<Integer> messengerCount(Map<String, String> param) {
 		return sqlSession.selectList("messenger.messengerCount", param);
 	}
+
 	
 }

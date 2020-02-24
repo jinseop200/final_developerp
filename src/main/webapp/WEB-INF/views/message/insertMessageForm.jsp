@@ -78,6 +78,9 @@
 #accordionSidebar{
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
+.form-row.message{
+	height:327px;
+}
 
 </style>
 <script>  

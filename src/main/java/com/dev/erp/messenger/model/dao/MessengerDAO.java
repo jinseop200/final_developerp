@@ -32,4 +32,5 @@ public interface MessengerDAO {
 
 	List<Integer> messengerCount(Map<String, String> param);
 
+
 }

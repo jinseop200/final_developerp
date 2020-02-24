@@ -32,4 +32,5 @@ public interface MessengerService {
 
 	List<Integer> messengerCount(Map<String, String> param);
 
+
 }
