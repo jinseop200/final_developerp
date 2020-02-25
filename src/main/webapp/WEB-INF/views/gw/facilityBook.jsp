@@ -14,7 +14,8 @@
 <!--       <div id="search-container"> -->
 <!--           <form class="needs-validation" novalidate> -->
 
-      <form name="facilityBook" action="${pageContext.request.contextPath}/facility/facilityBookInsert.do" method="post">
+      <form name="facilityBook" action="${pageContext.request.contextPath}/facility/facilityBookInsert.do" method="post"
+       onsubmit="return bookValidate();">
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
 					<label for="datepicker">예약일자</label>&nbsp;&nbsp;&nbsp; <input
@@ -28,7 +29,7 @@
 							>
 <!-- 							onchange="selectReservStart(this.value)" -->
 							<option value="">시간선택(시작)</option>
-							<option value = "0600" >06:00</option> 
+							<option value ="0600" >06:00</option> 
 							<option value="0630">06:30</option>
 							<option value="0700">07:00</option>
 							<option value="0730">07:30</option>
@@ -174,6 +175,10 @@
 }
 </style>
 <script>    
+$(function bookValidate(){
+alert("DF");
+return false;
+});
   $(function() {
             //모든 datepicker에 대한 공통 옵션 설정
             $.datepicker.setDefaults({
