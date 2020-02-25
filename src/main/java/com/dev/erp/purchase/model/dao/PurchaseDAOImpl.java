@@ -25,4 +25,10 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		return sqlsession.selectList("purchase.selectPurchaseInsertList");
 	}
 
+	@Override
+	public int InsertPurchase(Map<String, String> purchase) {
+		
+		return sqlsession.insert("purchase.InsertPurchase",purchase);
+	}
+
 }

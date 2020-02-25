@@ -9,4 +9,8 @@ public interface PurchaseService {
 
 	List<Map<String, String>> selectPurchaseInsertList();
 
+	int InsertPurchase(Map<String, String> purchase);
+
+	
+
 }

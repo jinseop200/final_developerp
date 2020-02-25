@@ -1,5 +1,6 @@
 package com.dev.erp.purchase.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.purchase.model.service.PurchaseService;
@@ -78,7 +80,27 @@ public class PurchaseController {
 	
 	
 	// 모달 페이지에서 결과값 전송 컨트롤러
-	
+	@RequestMapping("/purchase/InsertPurchase.do")
+	public ModelAndView InsertRm(@RequestParam String rmNo,
+									@RequestParam String vendorNo,
+									@RequestParam String purchaseAmount,
+									ModelAndView mav) {
+
+		Map<String, String> purchase = new HashMap<>();
+		purchase.put("rmNo", rmNo);
+		purchase.put("vendorNo", vendorNo);
+		purchase.put("purchaseAmount", purchaseAmount);
+		
+		logger.info("purchase@controller={}",purchase);
+		
+		int result = perchaseservice.InsertPurchase(purchase); 
+		
+		logger.info("result@Controller={}",result);
+		
+		mav.setViewName("redirect:/purchase/purchaseInsertView.do");
+		
+		return mav;
+	}
 	
 }
 
