@@ -15,8 +15,19 @@
 	
 	<select id="selectPurchaseInsertList" resultMap="purchaseMap">
 	   SELECT *
-	   FROM PURCHASE
-	   ORDER BY PURCHASE_DATE DESC
+	   FROM ORDER_REQUEST
+	   ORDER BY REQUEST_DATE DESC
+	</select>
+	
+	<select id="InsertPurchase" resultMap="purchaseMap">
+	   INSERT INTO PURCHASE
+	   VALUES(
+	   #{rmNo},
+	   #{vendorNo},
+	   sysdate,
+	   #{purchaseAmount}
+	   )
+	   
 	</select>
 	
 </mapper>

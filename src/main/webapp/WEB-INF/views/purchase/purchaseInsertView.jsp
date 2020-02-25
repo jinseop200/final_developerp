@@ -17,19 +17,6 @@
 	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
 		<div class="input-group" style="margin:30px;">
 		
-			<div class="input-group-append">
-				<button class="btn btn-primary" type="button" id="purchaseInsert_button">
-					  구매 등록하기 
-				</button> &nbsp;&nbsp;&nbsp;&nbsp;
-				
-				<button class="btn btn-primary" type="button" id="purchaseUpdate_button">
-					  구매 수정하기 
-				</button> &nbsp;&nbsp;&nbsp;&nbsp;
-				
-				<button class="btn btn-primary" type="button" id="purchaseDelete_button">
-					  구매 삭제하기 &nbsp;&nbsp;&nbsp;
-				</button> 
-			</div>
 		</div>
 	</form>
 	
@@ -39,7 +26,7 @@
 	
 	<div class="card shadow mb-4" style="clear:both;">
 		<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
+		<h6 class="m-0 font-weight-bold text-primary">구매 요청 목록 (구매 입력할 품목을 선택해주세요) </h6>
 	</div>
 	  
 	
@@ -48,21 +35,27 @@
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			  <thead>
 			    <tr>
-			     <th>원재료 번호</th>
-			     <th>거래처 등록번호</th>
 			     <th>구매 요청일</th>
+			     <th>납기일</th>
+			     <th>원재료 번호</th>
+			     <th>원재료명</th>
+			     <th>거래처 등록번호</th>
 			     <th>필요수량</th>
+			     <th>전달내용</th>
 			    </tr>
 			  </thead>
 			  
 			  
 			  <tbody>
 		      	<c:forEach items="${purchaseInsertList}" var="purchaseInsertList" varStatus="vs">
-			        <tr>
+			        <tr class="purchaseModal">
+			          <td>${purchaseInsertList.REQUEST_DATE}</td>
+			          <td>${purchaseInsertList.DUE_DATE}</td>
 			          <td>${purchaseInsertList.RM_NO}</td>
+			          <td>${purchaseInsertList.RM_NAME}</td>
 			          <td>${purchaseInsertList.VENDOR_NO}</td>
-			          <td>${purchaseInsertList.PURCHASE_DATE}</td>
-			          <td>${purchaseInsertList.PURCHASE_AMOUNT}</td>
+			          <td>${purchaseInsertList.REQUIRE_AMOUNT}</td>
+			          <td>${purchaseInsertList.REQUEST_CONTENTS}</td>
 			        </tr>
 		        </c:forEach>
 			  </tbody>
@@ -74,7 +67,7 @@
 	          
 	          
 	<!-- Modal -->
-	<div class="modal" tabindex="-1" role="dialog" id="rmModal">
+	<div class="modal" tabindex="-1" role="dialog" id="purchaseModal">
 	    <div class="modal-dialog" role="document">
 	        <div class="modal-content">
 		        <div class="modal-header">
@@ -93,35 +86,51 @@
 
 	<script>
 	
-		$("#purchaseInsert_button").click(function(){
-		 $('.controll-modal-body').load("${pageContext.request.contextPath}/purchase/modalPurchaseInsert.do",function(){
-		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
-		        $('#rmModal').modal({show:true});
+			
+		<%--거래처번호 a태그 클릭시 정보수정 Modal 활성화--%>
+		$(".purchaseModal").click(function(){ 	
+
+			// 현재 클릭된 Row(<tr>)
+			var tr = $(this);
+			var td = tr.children();
+			
+			// td.eq(index)를 통해 값을 가져올 수도 있다.
+			var tdRequestDate = td.eq(0).text().substring(0,10);
+			var tdDueDate = td.eq(1).text().substring(0,10);
+			var tdRmNo = td.eq(2).text();
+			var tdRmName = td.eq(3).text();
+			var tdVendorNo = td.eq(4).text();
+			var tdRequireAmount = td.eq(5).text();
+			var tdRequestContents = td.eq(6).text();
+			
+			console.log(tdRequestDate);
+			console.log(tdDueDate);
+			console.log(tdRmNo);
+			console.log(tdRmName);
+			console.log(tdVendorNo);
+			console.log(tdRequireAmount);
+			console.log(tdRmName);
+			
+			
+			$('.controll-modal-body').load("${pageContext.request.contextPath}/purchase/modalPurchaseInsert.do",function(){
+		        $('#purchaseModal').modal({backdrop: 'static', keyboard: false});
+		        $('#purchaseModal').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 		        $(".controll-title").html("");
-		        $(".controll-title").html("구매 정보 등록");
+		        $(".controll-title").html("원재료 입고 정보 수정");
+				$('#purchaseModal #requestDate').val(tdRequestDate);
+				$('#purchaseModal #dueDate').val(tdDueDate);
+				$('#purchaseModal #rmNo').val(tdRmNo);
+				$('#purchaseModal #rmName').val(tdRmName);
+				$('#purchaseModal #vendorNo').val(tdVendorNo);
+				$('#purchaseModal #requirAmount').val(tdRequireAmount);
+				$('#purchaseModal #requestContents').val(tdRequestContents);
 			});
+			
+			
 		});
 		
-		$("#purchaseUpdate_button").click(function(){
-		 $('.controll-modal-body').load("${pageContext.request.contextPath}/purchase/modalPurchaseUpdate.do",function(){
-		        $('#rmModal').modal({backdrop: 'static', keyboard: false});
-		        $('#rmModal').modal({show:true});
-		        $(".modal-backdrop.in").css('opacity', 0.4);
-		        $(".controll-title").html("");
-		        $(".controll-title").html("구매 정보 수정");
-			});
-		});
 		
-		$("#purchaseDelete_button").click(function(){
-			 $('.controll-modal-body').load("${pageContext.request.contextPath}/purchase/modalPurchaseDelete.do",function(){
-			        $('#rmModal').modal({backdrop: 'static', keyboard: false});
-			        $('#rmModal').modal({show:true});
-			        $(".modal-backdrop.in").css('opacity', 0.4);
-			        $(".controll-title").html("");
-			        $(".controll-title").html("구매 정보 삭제");
-				});
-			});
 	</script>
 
 

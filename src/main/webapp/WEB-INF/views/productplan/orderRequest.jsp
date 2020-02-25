@@ -139,11 +139,6 @@
 			$("#joModal").modal('hide');
 		});
 		
-		
-
-		
-		
-				
 	});
 	</script>
 </body>

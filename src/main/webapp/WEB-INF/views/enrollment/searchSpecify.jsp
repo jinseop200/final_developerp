@@ -127,7 +127,7 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 	//console.log(value);
 	
 	if(trNum != "nulla"){
-		//console.log("1");
+		console.log("1");
 		if($("#valForSearch").val() == "receivingLotNo"){
 			//console.log("lotNo")
 			$(".table-editable tr").eq(trNum).find("td").eq(4).text(value2);
@@ -139,11 +139,11 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 		}
 	}
 	if($("#${searchType}").attr('name') == 'accountNo'){
-		//console.log("2");
+		console.log("2");
 		$("#vendorType").val(value3);
 	}
 	if($("#${searchType}").attr('name') == 'rawMaterialDetail'){
-		//console.log("3");
+		console.log("3");
 		$("#ptNo").val(value3);
 		$("#vendorType").val(value4);
 		$("#storeNo").val(1);
@@ -151,22 +151,23 @@ $(".quality-specify-table tbody").on('dblclick','tr',function(){
 		$("#quantity").focus();
 	}
 	if($("#${searchType}").attr('name') == 'showJobOrder'){
-		//console.log("4");
+		console.log("4");
 		$("#${searchType}").val(value);
 		$("#addReleasing-Modal #rProduct").val(value5);
 		$("#addReleasing-Modal #rQuantity").val(value6);
 		$("#addReleasing-Modal #rCode").val(value7);
 	}
 	if($("#valForSearch").val() == "update"){
-		//console.log("update COM")
+		console.log("update COM")
 		$("#updateWarehousing #ptNo").val(value3);
 		$("#updateWarehousing #vendorType").val(value4);
 		$("#updateWarehousing #rawMaterialDetail").val(value);
 		$("#updateWarehousing #quantity").focus();
 	}
 	
-	//console.log("4");
+	console.log("5");
 	$("#${searchType}").val(value);
+	$("#vendorTypess").val(value);
 	$("#mySearchModal").modal('hide');
 });
 

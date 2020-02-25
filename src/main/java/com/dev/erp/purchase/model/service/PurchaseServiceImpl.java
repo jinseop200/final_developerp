@@ -26,4 +26,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDAO.selectPurchaseInsertList();
 	}
 
+	@Override
+	public int InsertPurchase(Map<String, String> purchase) {
+		
+		return purchaseDAO.InsertPurchase(purchase);
+	}
+
 }

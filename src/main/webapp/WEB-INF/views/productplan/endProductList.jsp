@@ -90,6 +90,9 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 	$("#productNo").val(no); //hidden(제품번호)
 	$("#productName").val(name); //input창에 뿌려주기
 	
+	$("#lineChart").remove();
+	$("#graph").append("<canvas id='lineChart'></canvas>");
+	
 	if("${plan}" == "purchase"){
 		
 		$("#purchasePlan-modal").modal('hide');

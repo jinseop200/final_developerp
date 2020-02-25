@@ -121,7 +121,7 @@ public class EnrollmentController {
 									 @RequestParam("vendorName") String vendorName,
 							 		 @RequestParam("incharge") String incharge,
 						 		 	 @RequestParam("vendorPhone") String vendorPhone,
-						 		 	 @RequestParam("vendorTypes") String vendorTypes,
+						 		 	 @RequestParam("vendorTypess") String vendorTypes,
 										 ModelAndView mav) {
 		
 		try {

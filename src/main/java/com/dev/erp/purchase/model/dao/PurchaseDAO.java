@@ -9,4 +9,6 @@ public interface PurchaseDAO {
 
 	List<Map<String, String>> selectPurchaseInsertList();
 
+	int InsertPurchase(Map<String, String> purchase);
+
 }

@@ -108,7 +108,8 @@ $(()=>{
 		$('#updateVendor #incharge2').val(tdIncharge);
 		$('#updateVendor #vendorPhone2').val(tdVendorPhone);
 		$('#updateVendor #vendorCur').val(tdVendorNo);
-		$('#updateVendor #vendorTypes').val(tdVendorTypes);
+		$('#updateVendorNo #vendorCur').val(tdVendorNo);
+		$('#updateVendor #vendorTypess').val(tdVendorTypes);
 		
 		$('#updateVendor').modal('show');
 	});
@@ -498,8 +499,8 @@ function vendorNoUpdateValidate2(){
                 </div>
                 <div class="form-row">
 	                <div class="col-md-6 mb-3">
-	                    <label for="vendorTypes">거래처 분류</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <input type="number" id="vendorTypes" name="vendorTypes" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
+	                    <label for="vendorTypess">거래처 분류</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                    <input type="number" id="vendorTypess" name="vendorTypess" class="form-control bg-lightsmall" placeholder="거래처 분류" aria-label="Search" aria-describedby="basic-addon2">
 	                	<button class="btn btn-primary searchBtn" type="button" value="vendorTypes">
 						<i class="fas fa-search fa-sm"></i>
 						</button>
