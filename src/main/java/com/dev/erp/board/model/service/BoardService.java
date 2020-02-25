@@ -27,6 +27,9 @@ public interface BoardService {
 
 	List<Map<String,Object>> selectBoardAllList();
 
+
+	List<Board> selectBoardType();
+
 	
 	
 	

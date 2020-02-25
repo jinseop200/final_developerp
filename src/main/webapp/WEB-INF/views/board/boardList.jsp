@@ -52,6 +52,21 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                     </tr>
                   </thead>
                   <tbody >
+                  <tbody>
+                	<c:forEach items="${boardlist }" var="l" varStatus="vs">
+	                    <tr class="getTr">
+	                      <td id="${l.docNo}">${vs.count}</td>
+	                      <td>${l.regDate }</td>
+	                      <td>${l.docTitle }</td>
+	                      <td>${l.docType }</td>
+	                      <td>${l.docWriter}</td>
+	                      <td>${l.docLastapproval}</td>
+	                      <td>${l.docStatus}</td>
+	                      <td><a href="#">보기</a></td>
+	                    </tr>
+                  	</c:forEach>
+                  </tbody>
+                  
                   </tbody>
                 </table>
               </div>

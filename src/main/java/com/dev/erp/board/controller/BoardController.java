@@ -54,29 +54,15 @@ public class BoardController {
 		
 		return map;
 	}
-/*	@RequestMapping("/board/boardNoticeInsert.do")
-	public ModelAndView selectBoardNoticeInsert(ModelAndView mav)
-	{
-		List<BoardCategory> boardCategoryList= new ArrayList<>();
-		Board board = new Board();
-		for(int i=0; i<boardCategoryList.size(); i++) {
-			board=boardService.seletOneBoard(boardCategoryList.get(i).getBoardNo());
-		}
-		boardCategoryList = boardService.selectBoardCategoryList();	
-	
-		mav.addObject("boardlist",boardCategoryList);
+
+	@RequestMapping("/board/insertBoardForm.do")
+	public ModelAndView insertBoardForm(ModelAndView mav) {
+		List<Board> board = new ArrayList<>();
+		board = boardService.selectBoardType();
 		mav.addObject("board",board);
-		mav.setViewName("board/boardList");
+		mav.setViewName("/board/insertBoardForm");
 		return mav;
-	}*/
-//	@RequestMapping("/board/insertBoardForm.do")
-//	public ModelAndView insertBoardForm(ModelAndView mav) {
-//		List<Board> board = new ArrayList<>();
-//		board = boardService.selectBoardType();
-//		mav.addObject("board",board);
-//		mav.setViewName("/board/insertBoardForm");
-//		return mav;
-//	}
+	}
 	
 	@RequestMapping("/board/enrollBoard.do")
 	public ModelAndView InsertBoard(ModelAndView mav, 

@@ -12,7 +12,6 @@
 			   #{categoryComment}, 
 			   #{categoryWriter}, 
 			   #{categoryTitle},
-			   #{categoryStatus},
 			   #{categoryDate})
 		</insert>
 		
