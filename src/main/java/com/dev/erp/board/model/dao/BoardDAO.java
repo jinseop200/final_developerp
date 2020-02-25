@@ -25,6 +25,8 @@ public interface BoardDAO {
 
 	List<Map<String,Object>> selectBoardAllList();
 
+	List<Board> selectBoardType();
+
 
 	
 

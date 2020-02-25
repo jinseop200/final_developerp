@@ -55,4 +55,9 @@ import com.dev.erp.board.model.vo.BoardCategory;
 			return sqlSession.selectList("board.selectBoardAllList");
 		}
 
+		@Override
+		public List<Board> selectBoardType() {
+			return sqlSession.selectList("board.selectBoardType");
+		}
+
 }
