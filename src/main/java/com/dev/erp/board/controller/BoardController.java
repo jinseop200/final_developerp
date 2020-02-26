@@ -73,6 +73,7 @@ public class BoardController {
 												@RequestParam("categoryWriter") String categoryWriter)
 												{	
 		BoardCategory boardCategory = new BoardCategory(0,boardType,categoryComment, categoryWriter,categoryTitle,"y",categoryDate);
+		System.out.println("Dfffffffffffff"+boardCategory);
 		int result = boardService.insertBoardCategory(boardCategory);
 		logger.debug("category={}",categoryDate);
 		mav.addObject("msg",result>0?"등록성공":"등록실패");
@@ -81,8 +82,7 @@ public class BoardController {
 		return mav;
 	}
 	@RequestMapping("/board/boardDetailView.do")
-	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("categoryNo") int categoryNo) {
-		
+	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("categoryNo") int categoryNo) {		
 		Board board = new Board();
 		BoardCategory boardCategory = new BoardCategory();
 		boardCategory = boardService.boardCategoryView(categoryNo);

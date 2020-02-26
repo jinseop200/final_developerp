@@ -45,7 +45,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                       <th>No</th>
                       <th>제목</th>
                       <th>작성자</th>
-                      <th>내용</th>
+                      
                       <th>작성일자</th>
                       <th>타입</th>
                       <th>보기</th>
@@ -62,7 +62,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 	                      <td>${l.docWriter}</td>
 	                      <td>${l.docLastapproval}</td>
 	                      <td>${l.docStatus}</td>
-	                      <td><a href="#">보기</a></td>
+	                      <td><a href="#" />보기</td>
 	                    </tr>
                   	</c:forEach>
                   </tbody>
@@ -134,6 +134,23 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 /* $(".btn-primary").click(function(){
 var boardNo= $(this).closest("tr").children().eq(0).html(); */
 $(()=>{
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/board/boardAllList.do",
+		dataType:"json",
+		success:data=>{
+			console.log(data);
+			$(".board-list-table tbody").children().remove();
+			var list = data.list;
+			for(var i in list){
+				let p = list[i];
+				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
+			}
+		},
+		error : (jqxhr, textStatus, errorThrown)=>{
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
 	function detailBoard(){
 		console.log("!23123124124214");
 		var tr = $(this).parent().parent();
@@ -141,6 +158,7 @@ $(()=>{
 		console.log(tr);
 		
 		var tdCategoryNo = td.eq(0).attr("id");
+		console.log(tdCategoryNo);
 		console.log(tdCategoryNo);
 		$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+tdCategoryNo,function(){
 	        $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
@@ -151,22 +169,6 @@ $(()=>{
 		});
 		
 	};
-	$.ajax({
-		url:"${pageContext.request.contextPath}/board/boardAllList.do",
-		dataType:"json",
-		success:data=>{
-			console.log(data);
-			$(".board-list-table tbody").children().remove();
-			var list = data.list;
-			for(var i in list){
-				let p = list[i];
-				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard();>보기</a></td></tr>");
-			}
-		},
-		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
 });
 $("#board-insert-button").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/board/insertBoardForm.do",function(){
@@ -196,7 +198,7 @@ $("#boardType").change(function(){
 				$(".board-list-table tbody").children().remove();
 				for(var i in list){
 					let p = list[i];
-					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard();>보기</a></td></tr>");
+					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
 				}
 			},
 			error : (jqxhr, textStatus, errorThrown)=>{
@@ -204,7 +206,17 @@ $("#boardType").change(function(){
 			}
 		});
 });
+
+function detailBoard(tdCategoryNo){	
+	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+tdCategoryNo,function(){
+        $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
+        $('#boardDetailView').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("");
+        $(".controll-title").html("상세보기");
+	});
 	
+};
 
 </script>
 <style>
