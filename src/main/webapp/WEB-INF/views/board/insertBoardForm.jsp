@@ -1,9 +1,13 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%Date now = new Date(); 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 <title>게시물 작성</title>
 </head>
 <body>
@@ -18,7 +22,7 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="date" id="categoryDate" name="categoryDate" required >
+                    <input type="text" id="categoryDate" name="categoryDate" value=<%=sdf.format(now)%> readonly >
                     </div>
                 </div>
                 <div class="form-row">

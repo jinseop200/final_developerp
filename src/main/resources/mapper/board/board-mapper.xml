@@ -12,6 +12,7 @@
 			   #{categoryComment}, 
 			   #{categoryWriter}, 
 			   #{categoryTitle},
+			   'Y',
 			   #{categoryDate})
 		</insert>
 		

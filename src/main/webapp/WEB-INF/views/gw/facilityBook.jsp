@@ -175,10 +175,7 @@
 }
 </style>
 <script>    
-$(function bookValidate(){
-alert("DF");
-return false;
-});
+
   $(function() {
             //모든 datepicker에 대한 공통 옵션 설정
             $.datepicker.setDefaults({
