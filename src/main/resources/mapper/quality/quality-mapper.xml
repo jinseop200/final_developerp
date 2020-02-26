@@ -164,7 +164,7 @@
 	
 	<select id="selectMeasurmentFromPD" resultType="map">
 		select to_char(production,'yyyy-MM-dd') as "label", measurement as "y" from production
-		where pl_no = #{ptNo}
+		where insection_yn = 'Y' and pl_no = #{ptNo}
 		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
 			and production between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
 		</if>
@@ -172,7 +172,7 @@
 	</select>
 	<select id="selectMeasurmentFromRM" resultType="map">
 		select to_char(rec_date,'yyyy-MM-dd') as "label", measurement as "y" from receiving
-		where rm_no = #{ptNo}
+		where insection_yn = 'Y' and rm_no = #{ptNo}
 		<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
 			and rec_date between to_date(#{startDate},'yyyy/MM/dd') and to_date(#{endDate},'yyyy/MM/dd')+1
 		</if>
