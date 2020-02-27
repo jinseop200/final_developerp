@@ -11,6 +11,8 @@ public interface PurchaseService {
 
 	int InsertPurchase(Map<String, String> purchase);
 
+	int UpdatePurchase(Map<String, String> purchase);
+
 	
 
 }

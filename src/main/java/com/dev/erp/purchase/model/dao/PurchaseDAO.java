@@ -11,4 +11,6 @@ public interface PurchaseDAO {
 
 	int InsertPurchase(Map<String, String> purchase);
 
+	int UpdatePurchase(Map<String, String> purchase);
+
 }

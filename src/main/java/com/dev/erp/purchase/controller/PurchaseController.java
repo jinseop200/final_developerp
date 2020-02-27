@@ -94,8 +94,11 @@ public class PurchaseController {
 		logger.info("purchase@controller={}",purchase);
 		
 		int result = perchaseservice.InsertPurchase(purchase); 
+		int result2 = perchaseservice.UpdatePurchase(purchase); 
+		
 		
 		logger.info("result@Controller={}",result);
+		logger.info("result@Controller={}",result2);
 		
 		mav.setViewName("redirect:/purchase/purchaseInsertView.do");
 		
