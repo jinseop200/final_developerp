@@ -31,4 +31,9 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		return sqlsession.insert("purchase.InsertPurchase",purchase);
 	}
 
+	@Override
+	public int UpdatePurchase(Map<String, String> purchase) {
+		return sqlsession.update("purchase.UpdatePurchase",purchase);
+	}
+
 }
