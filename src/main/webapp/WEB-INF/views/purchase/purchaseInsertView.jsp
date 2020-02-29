@@ -42,21 +42,31 @@
 			     <th>거래처 등록번호</th>
 			     <th>필요수량</th>
 			     <th>전달내용</th>
+			     <th>구매 소요일</th>
 			    </tr>
 			  </thead>
 			  
 			  
 			  <tbody>
 		      	<c:forEach items="${purchaseInsertList}" var="purchaseInsertList" varStatus="vs">
-			        <tr class="purchaseModal">
-			          <td>${purchaseInsertList.REQUEST_DATE}</td>
-			          <td>${purchaseInsertList.DUE_DATE}</td>
-			          <td>${purchaseInsertList.RM_NO}</td>
-			          <td>${purchaseInsertList.RM_NAME}</td>
-			          <td>${purchaseInsertList.VENDOR_NO}</td>
-			          <td>${purchaseInsertList.REQUIRE_AMOUNT}</td>
-			          <td>${purchaseInsertList.REQUEST_CONTENTS}</td>
-			        </tr>
+			        <c:if test="${purchaseInsertList.REQUIRE_AMOUNT > 0}">
+			        	<tr class="purchaseModal">
+				          <td>${purchaseInsertList.REQUEST_DATE}</td>
+				          <td>${purchaseInsertList.DUE_DATE}</td>
+				          <td>${purchaseInsertList.RM_NO}</td>
+				          <td>${purchaseInsertList.RM_NAME}</td>
+				          <td>${purchaseInsertList.VENDOR_NO}</td>
+				          <td>${purchaseInsertList.REQUIRE_AMOUNT}</td>
+				          <td>${purchaseInsertList.REQUEST_CONTENTS}</td> 
+				          
+				          <c:if test="${purchaseInsertList.EXPECT < 0}">
+				          	<td><a href="#" style="color:red;"> ${purchaseInsertList.DELIVERY} </a></td> 
+				          </c:if>
+				          <c:if test="${purchaseInsertList.EXPECT >= 0}">
+				          	<td><a href="#" style="color:blue;"> ${purchaseInsertList.DELIVERY}</a></td> 
+				          </c:if>
+				        </tr>
+			        </c:if>
 		        </c:forEach>
 			  </tbody>
 			  

@@ -32,4 +32,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDAO.InsertPurchase(purchase);
 	}
 
+	@Override
+	public int UpdatePurchase(Map<String, String> purchase) {
+		return purchaseDAO.UpdatePurchase(purchase);
+	}
+
 }
