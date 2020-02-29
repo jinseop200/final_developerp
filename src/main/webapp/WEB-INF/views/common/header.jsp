@@ -421,7 +421,6 @@
             }
             .modal-content.updatePassword{
             	width:500px;
-            	height:215px;
             }
             .modal-content.updateInfo{
             	width:500px;

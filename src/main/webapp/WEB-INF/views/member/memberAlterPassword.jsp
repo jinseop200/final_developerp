@@ -80,10 +80,6 @@ function password_validate(){
 
 </script>
 <style>
-.modal-footer.updatePassword{
-	padding:0;
-	padding-top:10px;
-}
 .controll-modal-body-updatePassword{
 	padding-bottom:0;
 }
