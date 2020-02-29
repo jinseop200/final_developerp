@@ -4,9 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<title>쪽지 작성</title>
+<title>답장작성</title>
       <!-- search-container start -->
-      <div id="insert-message-container">
+      <div id="answer-message-container">
           <form class="needs-validation" action="${pageContext.request.contextPath}/message/insertMessage.do" 
           		name="documentEnrollFrm" method="post">
           		<div>
@@ -15,7 +15,7 @@
                 <div class="form-row" style="width:750px">
                     <div class="col-md-6 mb-3 col-md-6 mb-3">
                         <label for="insertSender">받는 사람</label>&nbsp;&nbsp;
-                        <input type="text" id="insertSender" style="width:290px;" name="insertSender" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" id="insertSender" style="width:290px;" value="${sender}" name="insertSender" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
                     </div>
                     <div class="col-md-6 mb-3">
                         <button class="btn btn-primary searchDocument message" type="button">
@@ -26,7 +26,7 @@
                 <div class="form-row">
                 &nbsp;
 	                	<label for="meTitle" style="padding-top:5px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</label>&nbsp;&nbsp;&nbsp;
-	                    <input type="text" id="meTitle" name="meTitle" class="form-control bg-light small" style="background-color:white !important; width:97%; margin-left:5px;"required aria-label="Search" aria-describedby="basic-addon2">
+	                    <input type="text" id="meTitle2" name="meTitle" class="form-control bg-light small" style="background-color:white !important; width:97%; margin-left:5px;"required aria-label="Search" aria-describedby="basic-addon2">
                 </div>
                 <br />
                 <div class="form-row message">
@@ -35,10 +35,10 @@
                         <textarea class="form-control message-comment" required name="messageContent" id="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
-				<div class="modal-footer ">
-        			<button type="button" id="FrmBtn" name="button" class="btn btn-primary submit">전송</button>
+                <div class="modal-footer ">
+        			<button type="button" id="FrmBtn" name="button" class="btn btn-primary submit">보내기</button>
             		<button type="button" class="btn btn-secondary insert" data-dismiss="modal">닫기</button>
-        		</div>       
+        		</div>  
             </form>
       </div>
          
@@ -122,7 +122,9 @@
 $(".btn.btn-primary.submit").click(function(){
 	var empName = $("#empName").val();
 	var insertSender = $("#insertSender").val();
-	var meTitle = $("#meTitle").val();
+	console.log("inser"+insertSender);
+	var meTitle = $("#meTitle2").val();
+	console.log("metitle"+meTitle);
 	var messageContent = $("#messageContent").val();
 	
 	$.ajax({
@@ -133,12 +135,14 @@ $(".btn.btn-primary.submit").click(function(){
 		success:data=>{
 			console.log(data);
 			$('#insertMessage').modal("hide");
+			$('#answerMessage').modal("hide");
 			alert("전송되었습니다");
 			$('.controll-modal-body-messageList').load("${pageContext.request.contextPath}/message/messageList.do?empName=${memberLoggedIn.empName}",function(){
 		        $('#messageList').modal({backdrop: 'static', keyboard: false});
 		        $('#messageList').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
 	    		$('#insertMessage').modal("hide");
+				$('#answerMessage').modal("hide");
 		    });
 		},
         error : function(x,h,r, status) {
