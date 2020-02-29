@@ -20,7 +20,7 @@
   <li class="nav-item">
     <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
   </li>
-  <li class="nav-item" style="padding-left:140px; ">
+  <li class="nav-item" style="padding-left:170px; ">
     <span class="nav-link" id="message-insert-button">신규</span>
   </li>
 </ul>
@@ -28,7 +28,7 @@
      <table class="table table-bordered message-list-table" style="text-align:center;" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
-           <th style="padding:12px 13px;">No</th>
+           <th style="padding:12px 15px;">No</th>
            <th>제목</th>
            <th class="messageShow">보낸사람</th>
            <th class="messageHide">받는사람</th>
@@ -45,9 +45,6 @@
 <style>
 .nav.nav-tabs{
 	border:0;
-}
-.nav-item:hover{
-	color:black;
 }
 .nav-item .nav-link.active{
 	color:black;
@@ -110,7 +107,6 @@ $(".messageListModal-end").click(function(){
 
 $("#messageAll").on('click',function(){
 	messageType = $(this).attr("id");
-	console.log(messageType);
 	$(".messageHide").hide();
 	$(".messageShow").show();
 	$(".nav-link").removeClass("active");
@@ -139,17 +135,12 @@ function messagePage(a){
 
 			for(var i in list ) {
 				let m = list[i];
-				var readYn ="";
-				if(m.readYn=="y"){
-					readYn="확인";
-				}else{
-					readYn="미확인";
-				}
-				console.log(m);	
 					if(m==null ){
 						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
-					}else{
-						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>"+readYn+"</td></tr>");
+					}else if(m.readYn=="y"){
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"'  ><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>확인</td></tr>");
+					}else if(m.readYn=="n"){
+						$(".message-list-table tbody").append("<tr id='"+m.meNo+"' style='color:black;'><td>"+(Number(i)+(data.cPage-1)*7+1)+"</td><td>"+m.meTitle+"</td><td>"+m.sender+"</td><td>"+m.regDate+"</td><td>미확인</td></tr>");
 					}
 				
 				}			
@@ -201,7 +192,6 @@ function messageConfirmPage(a){
 				}else{
 					readYn="미확인";
 				}
-				console.log(m);	
 					if(m==null ){
 						$(".message-list-table tbody").append("<tr><td colspan='5' style='text-align:center;'>조회된 쪽지가 없습니다.</td></tr>");
 					}else{

@@ -149,6 +149,16 @@ public class MessageController {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
 	}
+	@RequestMapping("/message/answerMessageForm.do")
+	public ModelAndView answerMessage(ModelAndView mav, @RequestParam("sender") String sender) {
+		try {
+			mav.addObject("sender",sender);
+			mav.setViewName("message/answerMessageForm");
+			return mav;
+		}catch(Exception e) {
+			throw new MyException("조회 실패! 관리자에게 문의하세요!");
+		}
+	}
 	@RequestMapping("/message/insertMessage.do")
 	@ResponseBody
 	public Map<String,Object> insertMessage(@RequestParam("empName") String empName, @RequestParam("insertSender") String insertSender,

@@ -421,7 +421,6 @@
             }
             .modal-content.updatePassword{
             	width:500px;
-            	height:215px;
             }
             .modal-content.updateInfo{
             	width:500px;
@@ -518,8 +517,25 @@
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        <div class="modal-footer">
-			          <button type="button" class="btn detailMessage-close">닫기</button>
+			          <button type="button" class="btn btn-primary detailMessage-answer">답장</button>
+			          <button type="button" class="btn btn-secondary insert detailMessage-close">닫기</button>
 			      </div>
+			        </div>
+			    </div>
+			</div>
+             <!-- answer message Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="answerMessage">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content messeage">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title-answerMessage">답장보기</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body-answerMessage">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
 			        </div>
 			    </div>
 			</div>
@@ -794,11 +810,6 @@
 				ul#search_AutoSearch li hr{margin:0;}
 				ul#search_AutoSearch li.sel{background:#bac8f3; color:white;}
 				span.srchval{color:red;}
-			  .detailMessage-close{
-			  	color: #fff;
-			    background-color: #2e59d9;
-			    border-color: #2653d4;
-			  }
 			  .noSearch{
 			  	padding:13px 28px 11px !important;
 			  	color:black;

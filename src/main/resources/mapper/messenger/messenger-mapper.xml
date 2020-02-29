@@ -6,7 +6,7 @@
 	<select id="findChatIdByEmail" resultType="string">
 		SELECT CHATID FROM CHATROOM 
 		WHERE STATUS = 'Y'
-			AND email = #{email}
+			AND email = #{email} 
 	</select>
 	
 	<insert id="insertChatRoom">
@@ -18,7 +18,7 @@
 		select * 
 		from chatlog
 		where chatid = #{chatId}
-		order by chatno
+		order by time desc
 	</select>
 	
 	<select id="findRecentList" resultType="map">
