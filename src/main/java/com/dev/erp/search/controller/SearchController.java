@@ -31,7 +31,6 @@ public class SearchController {
 			Map<String,Object> map = new HashMap<>();
 			List<Map<String,String>> list = new ArrayList<>();
 			list = searchService.searchList(srchName);
-			System.out.println(list);
 			StringBuilder csv = new StringBuilder();
 			if(list!=null && !list.isEmpty()){
 				for(int i=0; i< list.size(); i++){
@@ -46,6 +45,14 @@ public class SearchController {
 		}catch(Exception e) {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
+	}
+	
+	@RequestMapping("/search/searchKeywordInfo.do")
+	@ResponseBody
+	public Map<String,Object> searchKeywordInfo(ModelAndView mav, @RequestParam("searchKeyword") String searchKeyword,HttpServletResponse response) {
+		Map<String,Object> map = new HashMap<>();
+		map = searchService.searchKeywordInfo(searchKeyword);
+		return map;
 	}
 }
 

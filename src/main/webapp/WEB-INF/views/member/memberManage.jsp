@@ -122,15 +122,15 @@ $("#Delete ").click(function(){
 	location.href = "${pageContext.request.contextPath}/member/memberDelete.do?email="+email;
 });
 </script>
-<!-- <style> -->
-/* #myModal{ */
-/* 	z-index: 1060; */
-/* 	width:100%;	 */
-/* 	height:100%; */
+<!-- <!-- <style> --> 
+<!-- /* #myModal{ */ -->
+<!-- /* 	z-index: 1060; */ -->
+<!-- /* 	width:100%;	 */ -->
+<!-- /* 	height:100%; */ -->
 	
-/* } */
+<!-- /* } */ -->
 
-<!-- </style> -->
+<!-- <!-- </style> --> 
 
 
   <!-- Page level plugins -->
