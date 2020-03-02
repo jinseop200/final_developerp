@@ -17,4 +17,9 @@ public class SearchDAOImpl implements SearchDAO {
 	public List<Map<String, String>> searchList(String srchName) {
 		return sqlSession.selectList("search.searchList",srchName);
 	}
+
+	@Override
+	public Map<String, Object> searchKeywordInfo(String searchKeyword) {
+		return sqlSession.selectOne("search.searchKeywordInfo",searchKeyword);
+	}
 }

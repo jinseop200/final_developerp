@@ -18,4 +18,9 @@ public class SearchServiceImpl implements SearchService {
 	public List<Map<String, String>> searchList(String srchName) {
 		return searchDAO.searchList(srchName);
 	}
+
+	@Override
+	public Map<String, Object> searchKeywordInfo(String searchKeyword) {
+		return searchDAO.searchKeywordInfo(searchKeyword);
+	}
 }

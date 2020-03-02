@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.common.exception.MyException;
@@ -24,6 +27,7 @@ import com.dev.erp.document.model.service.DocumentService;
 import com.dev.erp.document.model.vo.Document;
 import com.dev.erp.document.model.vo.DocumentLine;
 import com.dev.erp.member.controller.MemberController;
+import com.dev.erp.member.model.vo.Member;
 
 @Controller
 public class DocumentController {
@@ -33,8 +37,11 @@ public class DocumentController {
 	DocumentService documentService;
 	
 	@RequestMapping("/document/documentView.do")
-	public ModelAndView documentView(ModelAndView mav, @RequestParam("empName") String empName) {
+	public ModelAndView documentView(ModelAndView mav,  HttpSession session, 
+			  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn) {
 		try {
+			String empName = Optional.ofNullable(memberLoggedIn).map(Member::getEmpName)
+					 .orElseThrow(IllegalStateException::new);
 			List<Document> docList = new ArrayList<>();
 			docList = documentService.selectDocList(empName);
 			mav.addObject("docList",docList);

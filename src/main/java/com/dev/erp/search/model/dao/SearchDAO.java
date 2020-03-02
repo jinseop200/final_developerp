@@ -7,4 +7,6 @@ public interface SearchDAO {
 
 	List<Map<String, String>> searchList(String srchName);
 
+	Map<String, Object> searchKeywordInfo(String searchKeyword);
+
 }

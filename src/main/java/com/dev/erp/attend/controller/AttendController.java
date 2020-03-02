@@ -3,6 +3,9 @@ package com.dev.erp.attend.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.attend.model.service.AttendService;
 import com.dev.erp.attend.model.vo.Attend;
 import com.dev.erp.common.exception.MyException;
+import com.dev.erp.member.model.vo.Member;
 
 
 @Controller
@@ -27,37 +32,37 @@ public class AttendController {
 	= LoggerFactory.getLogger(AttendController.class);
 
 	@RequestMapping("/attend/attendList.do")
-	public ModelAndView attendList(ModelAndView mav,@RequestParam String email) {
+	public ModelAndView attendList(ModelAndView mav, HttpSession session, 
+			  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn) {
 		try {
-		List<Attend> list= attendService.attendShow(email);
-		String content="";
-
-	System.out.println("fdfdffdfdfdddddddddddd"+list);
-		for(Attend a:list) {
-			if(a.getReason()!=null)
-			if(a.getEarlyAttend()!=null)
-			{
-				content+=",{title:'*조퇴 사유 :"+a.getReason()+"',start:'"+a.getEarlyAttendForm()+"'}";
-				content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend()+"',start:'"+a.getEarlyAttendForm()+"'}";
+			String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
+						 .orElseThrow(IllegalStateException::new);
+			List<Attend> list= attendService.attendShow(email);
+			String content="";
+	
+			for(Attend a:list) {
+				if(a.getReason()!=null)
+				if(a.getEarlyAttend()!=null)
+				{
+					content+=",{title:'*조퇴 사유 :"+a.getReason()+"',start:'"+a.getEarlyAttendForm()+"'}";
+					content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend()+"',start:'"+a.getEarlyAttendForm()+"'}";
+				}
+				else if(a.getReason().equals("휴가"))
+				{
+					
+					content+=",{title:'휴가',start:'"+a.getAttendStartForm()+"',end:'"+a.getAttendEndForm()+"'}";
+				}
+				if(a.getReason()==null) {
+				if(a.getAttendStart()!=null)
+					content+=",{title:'-출근:"+a.getAttendStart()+"',start:'"+a.getAttendStartForm()+"'}";
+				if(a.getAttendEnd()!=null)
+					content+=",{title:'-퇴근:"+a.getAttendEnd()+"',start:'"+a.getAttendEndForm()+"'}";
+				}
 			}
-			else if(a.getReason().equals("휴가"))
-			{
-				
-				content+=",{title:'휴가',start:'"+a.getAttendStartForm()+"',end:'"+a.getAttendEndForm()+"'}";
-				System.out.println("fffffffffffffffffffffffffffffffffffffff");
-			}
-			if(a.getReason()==null) {
-			if(a.getAttendStart()!=null)
-				content+=",{title:'-출근:"+a.getAttendStart()+"',start:'"+a.getAttendStartForm()+"'}";
-			if(a.getAttendEnd()!=null)
-				content+=",{title:'-퇴근:"+a.getAttendEnd()+"',start:'"+a.getAttendEndForm()+"'}";
-			}
-		}
-
-		System.out.println("Fdazzzzzz"+content);
-		mav.addObject("content",content);
-		mav.setViewName("gw/attendCal");
-		return mav;
+	
+			mav.addObject("content",content);
+			mav.setViewName("gw/attendCal");
+			return mav;
 		}catch(Exception e) {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
 		}
@@ -83,7 +88,6 @@ public class AttendController {
 	public ModelAndView showAttendForm(ModelAndView mav, @RequestParam String date,@RequestParam String email
 			) {
 		try {
-		System.out.println("fsdasfsfddddD");
 		Attend attend = new Attend(email, "",date,"","","","","","");
 		Attend end=new Attend(email,"","","",date,"","","","");
 		Attend early=new Attend(email,"","","","","",date,"","");

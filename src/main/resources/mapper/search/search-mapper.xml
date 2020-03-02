@@ -7,4 +7,9 @@
 	<select id="searchList" resultType="map">
 		select * from search where search_name like '%'|| #{searchName} || '%'
 	</select>
+	
+	<select id="searchKeywordInfo" resultType="map">
+		select search_address from search where search_name = #{searchKeyword}
+	
+	</select>
 </mapper>
