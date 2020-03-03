@@ -103,29 +103,11 @@
 	              <input type="submit" class="btn btn-outline-success" value="예약" >
 	              <input type="button" class="btn btn-outline-success"id="FrmBtn" value="취소">
 	              </div>
+	              </div>
       </form>
-      </div>
-	            
-     
-	              
-<!--             </div> -->
-<!--       </div> -->
+
       <br>
-<!--   <div class="modal" tabindex="-1" role="dialog" id="mySearchModal"> -->
-<!--     <div class="modal-dialog" role="document"> -->
-<!--         <div class="modal-content"> -->
-<!--         <div class="modal-header"> -->
-<!--             <h5 class="modal-title search-title" id="searchModalTitle"> </h5> -->
-<!--         </div> -->
-<!--         <div class="modal-body searchModalBody"> -->
-<!--             <p>Modal body text goes here.</p> -->
-<!--         </div> -->
-<!--         <div class="modal-footer"> -->
-<!--             <button type="button" class="btn btn-primary searchModal-end">끝</button> -->
-<!--         </div> -->
-<!--         </div> -->
-<!--     </div> -->
-<!--   </div> -->
+
 
 <style>
 #myModal{
@@ -175,7 +157,22 @@
 }
 </style>
 <script>    
-
+function bookValidate(){
+	var startTime =document.getElementById("reservS");
+	var endTime =document.getElementById("reservE");	
+	if(startTime.options[startTime.selectedIndex].value=='')
+		{
+		alert("시작 시간을 선택해 주세요.")
+		return false;
+		}
+	if(endTime.options[endTime.selectedIndex].value=='')
+		{
+		alert("종료 시간을 선택해 주세요.")		
+		return false;		
+		}
+	else
+		return true;
+}
   $(function() {
             //모든 datepicker에 대한 공통 옵션 설정
             $.datepicker.setDefaults({
