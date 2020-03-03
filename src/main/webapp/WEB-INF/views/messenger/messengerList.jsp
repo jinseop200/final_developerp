@@ -28,11 +28,15 @@ table.table th, table.table td {text-align: center;}
 .form-control {
     display:inline;
 }
+.controll-modal-body-messengerList{
+	height:530px;
+	overflow-y:auto;
+}
 </style>
 
 <table class="table">
-  <thead>
-    <tr>
+  <thead class="theadFixed" >
+    <tr >
       <th scope="col">No</th>
       <th scope="col">회원아이디</th>
       <th scope="col">메세지</th>
@@ -43,7 +47,7 @@ table.table th, table.table td {text-align: center;}
   <c:forEach items="${recentList }" var="m" varStatus="vs">
     <tr chatNo='<c:out value="${m.CHATID}.${m.EMAIL}"/>'>  <%-- el의 문자열 더하기 연산대신 jstl out태그 사용 --%>
       <th scope="row">${vs.count}</th>
-      <td><a href="javascript:goChat('${m.CHATID}')">${m.EMAIL}</a></td>
+      <td><a href="javascript:goChat('${m.CHATID}')">${m.EMP_NAME}</a></td>
       <td>${m.MSG }</td>
       <td><span class="badge badge-light">${m.CNT }</span></td>
     </tr>
@@ -89,6 +93,7 @@ table.table th, table.table td {text-align: center;}
 			
 <script>
 $(()=>{
+	
 	$(".btn-primary.messenger").click(function(){
 		 $('.controll-modal-body-searhMessengerList').load("${pageContext.request.contextPath}/messenger/messengerSelectList.do",function(){
 	        $('#searhMessengerList').modal({backdrop: 'static', keyboard: false});

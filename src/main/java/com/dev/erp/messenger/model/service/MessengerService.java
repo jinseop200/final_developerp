@@ -12,7 +12,7 @@ public interface MessengerService {
 
 	int insertChatRoom(List<ChatRoom> list);
 
-	List<Msg> findChatListByChatId(String chatId);
+	List<Map<String,String>> findChatListByChatId(String chatId);
 
 	int deleteChatRoom(String chatId);
 	

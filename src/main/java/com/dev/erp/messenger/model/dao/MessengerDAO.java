@@ -14,7 +14,7 @@ public interface MessengerDAO {
 
 	int insertChatRoom(ChatRoom chatRoom);
 
-	List<Msg> findChatListByChatId(String chatId);
+	List<Map<String,String>> findChatListByChatId(String chatId);
 
 	int insertChatLog(Msg fromMessage);
 
