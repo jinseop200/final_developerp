@@ -114,7 +114,6 @@ $("#messageAll").on('click',function(){
 	messagePage(0);
 });
 function messagePage(a){
-	console.log("a==="+a);
 	var url_="";
 	var empName="${memberLoggedIn.empName}";
 	

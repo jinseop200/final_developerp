@@ -8,13 +8,13 @@
 <div>
 	<ul class="list-group list-group-flush" id="data">
 	<c:forEach items="${chatList}" var="m" varStatus="vs">
-		<c:if test="${memberLoggedIn.email == m.email }">
-			<li class="list-group-item right email">${m.email}</li>
-			<li class="list-group-item right msg">${m.msg }</li>
+		<c:if test="${memberLoggedIn.email == m.EMAIL }">
+			<li class="list-group-item right email">${m.EMP_NAME}</li>
+			<li class="list-group-item right msg">${m.MSG }</li>
 		</c:if>
-		<c:if test="${memberLoggedIn.email != m.email }">
-			<li class="list-group-item left email">${m.email }</li>
-			<li class="list-group-item left msg">${m.msg }</li>
+		<c:if test="${memberLoggedIn.email != m.EMAIL }">
+			<li class="list-group-item left email">${m.EMP_NAME }</li>
+			<li class="list-group-item left msg">${m.MSG }</li>
 		</c:if>
 	</c:forEach>	
 	</ul>
@@ -65,22 +65,19 @@ padding-top:0;
 //웹소켓 선언
 //1.최초 웹소켓 생성 url: /stomp
 var socket = new SockJS('<c:url value="/messenger" />');
-console.log(socket);
 var stompClient = Stomp.over(socket);
 
 stompClient.connect({}, function(frame) {
-	console.log('connected stomp over sockjs');
-	console.log(frame);
 	
 	//사용자 확인
 	
 	// subscribe message
 	stompClient.subscribe('/chat/${chatId}', function(message) {
 		var email = "${memberLoggedIn.email}";
-		console.log("receive from /chat/${chatId} :", message);
+		var empName = "${memberLoggedIn.empName}"
 		let messsageBody = JSON.parse(message.body);
 		if(email==messsageBody.email){
-			$("#data").append("<li class=\"list-group-item right email\" >"+messsageBody.email+ "</li>");
+			$("#data").append("<li class=\"list-group-item right email\" >"+empName+ "</li>");
 			$("#data").append("<li class=\"list-group-item right msg\" >"+messsageBody.msg+ "</li>");
 		}else{
 			$("#data").append("<li class=\"list-group-item left email\" >"+messsageBody.email+ "</li>");
@@ -108,7 +105,6 @@ $(document).ready(function() {
 
 	//window focus이벤트핸들러 등록
 	$(window).on("focus", function() {
-		console.log("focus");
 		lastCheck();
 	});
 	let $msgContainer = $(".controll-modal-body-messengerChat");

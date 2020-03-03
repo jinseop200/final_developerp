@@ -31,7 +31,7 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 
 	@Override
-	public List<Msg> findChatListByChatId(String chatId) {
+	public List<Map<String,String>> findChatListByChatId(String chatId) {
 		return messengerDAO.findChatListByChatId(chatId);
 	}
 
