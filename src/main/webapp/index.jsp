@@ -74,7 +74,7 @@
 
 <!-- footer 부분 -->
 <footer>
-	<p>&lt;Copyright 2020. <strong>LEFT123</strong>. All rights reserved.&gt;</p>
+	<p>&lt;Copyright 2020. <strong>DevelopERP</strong>. All rights reserved.&gt;</p>
 </footer>
 
 </body>

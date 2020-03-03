@@ -41,14 +41,12 @@ $("#password_Change").keyup(function(event){
 function passwordCheck(){
 	var password=$("#password").val().trim();
 	var email=$("#email").val().trim();
-	console.log(email);
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/member/memberPasswordCheck.do",
 		data:{password:password, email:email},
 		dataType: "json",
 		success: data => {
-			console.log(data);
 			
 			if(data.isUsable==true){
 				$("#passwordValid").val(1);
