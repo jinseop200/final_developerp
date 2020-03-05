@@ -56,6 +56,17 @@
 			<select id="selectBoardAllList" resultType="map">
 				select C.*,B.*,to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no order by C.board_no
 			</select>
-	
+	<insert id="boardCommentInsert">
+		insert into board_comment values(SEQ_BOARD_COMMENT.NEXTVAL,#{BoardCommentLevel},#{email},#{name},#{BoardCommentContent},#{BoardRef},#{BoardCommentRef},DEFAULT)
+		</insert>
+		<select id="getBoardComment" resultType="BoardComment">
+		select * from board_comment where board_ref=#{category_No}
+		</select>
+		<delete id="boardCommentDelete">
+		delete board_comment where board_comment_no=#{BoardCommentNo}
+		</delete>
+		<delete id="boardComment2Delete">
+		delete board_comment where board_comment_ref=${BoardCommentNo}
+		</delete>
 	
 </mapper>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardComment;
 
 public interface BoardDAO {
 
@@ -26,6 +27,14 @@ public interface BoardDAO {
 	List<Map<String,Object>> selectBoardAllList();
 
 	List<Board> selectBoardType();
+
+	int boardCommentInsert(BoardComment boardComment);
+
+	List<BoardComment> getBoardComment(int categoryNo);
+
+	int boardCommentDelete(BoardComment boardComment);
+
+	int boardComment2Delete(BoardComment boardComment);
 
 
 	
