@@ -42,8 +42,6 @@ String name=(String)request.getAttribute("name");
                     </div>
                 </div>
            
-  
-      <hr style="margin-top:30px;"/>
 
 <div class="comment-container">
 	<div class="comment-editor">
@@ -59,7 +57,7 @@ String name=(String)request.getAttribute("name");
 			  <input type="hidden" name="BoardCommentLevel" value="1" />
 			  <input type="hidden" name="BoardCommentRef" value="0" />
 			  
-			  <textarea name="BoardCommentContent" cols="60" rows="3"></textarea>
+			  <textarea name="BoardCommentContent" cols="70" rows="3"></textarea>
 			  <input type="submit" id="btn-insert" value="등록" />
 		
 		</form>
@@ -122,18 +120,14 @@ String name=(String)request.getAttribute("name");
 #boardDetailView{
 	z-index: 1060;
 	width:100%;	
-	height:100%;	
 }
 .modal-body{
- height: 500px;
 }
 #searchModal {
   width: 60%;
-  height: 150px;
 }
 #insert-container {
     width:660px;
-    height: 150px;
 }
 .modal-content{
 	width:700px;
@@ -168,13 +162,17 @@ String name=(String)request.getAttribute("name");
 #accordionSidebar{
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
+.comment-container{
+	height:250px;
+	overflow-y:auto;
+}
 
 
 
 
 div.comment-container #btn-insert{width:60px; height:50px; color:white; background:#3300ff; position:relative; top:-20px;}
 
-table#tbl-comment{width:580px; margin:0 auto; border-collapse:collapse; clear:both; } 
+table#tbl-comment{width:644px;  border-collapse:collapse; clear:both; } 
 table#tbl-comment tr td{border-bottom:1px solid; border-top:1px solid; padding:5px; text-align:left; line-height:120%;}
 table#tbl-comment tr td:first-of-type {padding: 5px 5px 5px 50px;}
 table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
