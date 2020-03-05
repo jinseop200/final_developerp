@@ -200,8 +200,6 @@ $(function(){
 	
     //삭제버튼 클릭시
     $(".btn-delete").click(function(){
-    	alert($(this).val());
-    	
         if(!confirm("정말 삭제하시겠습니까?")) return;
         //삭제처리후 돌아올 현재게시판번호도 함께 전송함.
         location.href="<%=request.getContextPath()%>/board/boardCommentDelete.do?BoardCommentNo="+$(this).val()+"&BoardRef=${categorylist.categoryNo}";
