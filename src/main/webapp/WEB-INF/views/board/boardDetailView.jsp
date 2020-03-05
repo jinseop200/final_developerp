@@ -162,8 +162,8 @@ String name=(String)request.getAttribute("name");
 #accordionSidebar{
 	background-image : linear-gradient(180deg,#00475d 10%,#0a0f29 100%) !important;
 }
-.comment-container{
-	height:250px;
+.boardDetailView{
+	height:484.5px;
 	overflow-y:auto;
 }
 
