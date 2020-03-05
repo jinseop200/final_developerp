@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.dev.erp.board.model.dao.BoardDAO;
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardComment;
 
 
 @Service
@@ -60,6 +61,26 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> selectBoardType() {
 		return boardDAO.selectBoardType();
+	}
+
+	@Override
+	public int boardCommentInsert(BoardComment boardComment) {
+		return boardDAO.boardCommentInsert(boardComment);
+	}
+
+	@Override
+	public List<BoardComment> getBoardComment(int categoryNo) {
+		return boardDAO.getBoardComment(categoryNo);
+	}
+
+	@Override
+	public int boardCommentDelete(BoardComment boardComment) {
+		return boardDAO.boardCommentDelete(boardComment);
+	}
+
+	@Override
+	public int boardComment2Delete(BoardComment boardComment) {
+		return boardDAO.boardComment2Delete(boardComment);
 	}
 
 
