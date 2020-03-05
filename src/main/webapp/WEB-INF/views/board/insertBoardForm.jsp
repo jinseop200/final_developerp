@@ -74,7 +74,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <textarea class="form-control quality-comment" required name="categoryComment" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control quality-comment"  id="summernote" required name="categoryComment" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
 				<div class="modal-footer">
@@ -87,19 +87,15 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 
 
 <style>
-.modal-body{
- height: 500px;
-}
 #searchModal {
   width: 60%;
-  height: 150px;
 }
 #insert-container {
     width:660px;
-    height: 150px;
 }
 .modal-content{
-	width:700px;
+	width:684px;
+	height:100% !important;
 }
 #formGroupExampleInput {
     width: 70%;
@@ -132,9 +128,20 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 }
 
 </style>
-<script>  
+<script> 
+$(document).ready(function() {
+    $('#summernote').summernote({
+    		width:630,
+            height: 50,                 // set editor height
+            minHeight: 200,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+    });
+});
+
 
   $(()=>{
+	  $('#summernote').summernote();
 	  var date = new Date();
 	  var yyyy = date.getFullYear();
 	  var mm = date.getMonth()+1 > 9 ? date.getMonth()+1 : '0' + date.getMonth()+1;
