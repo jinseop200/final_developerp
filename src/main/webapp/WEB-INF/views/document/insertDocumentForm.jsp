@@ -106,7 +106,7 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <textarea class="form-control document-comment" required name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control document-comment" id="summernote" required name="documentContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
 				<div class="modal-footer">
@@ -130,7 +130,7 @@
     width:660px;
 }
 .modal-content{
-	width:700px;
+	width:684px;
 	height:100% !important; 
 }
 #formGroupExampleInput {
@@ -163,10 +163,21 @@
 }
 
 </style>
-<script>  
+<script> 
+$(document).ready(function() {
+    $('#summernote').summernote({
+    		width:630,
+            height: 50,                 // set editor height
+            minHeight: 200,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+    });
+});
+
 
 
   $(()=>{
+	  $('#summernote').summernote();
 	  $(".click.documentType").hide();
 	  
 	  var date = new Date();
