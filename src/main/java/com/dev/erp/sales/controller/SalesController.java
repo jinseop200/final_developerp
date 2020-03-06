@@ -208,9 +208,9 @@ public class SalesController {
 			List<Map<String,String>> outprice = new ArrayList<>();
 			totalSalesDataPerMonth = salesService.selectTotalSalesDataPerMonth();
 			
-			Map<String,String> inprice_ = new HashMap<>();
-			Map<String,String> outprice_ = new HashMap<>();
 			for(int i=0;i<totalSalesDataPerMonth.size();i++) {
+				Map<String,String> inprice_ = new HashMap<>();
+				Map<String,String> outprice_ = new HashMap<>();
 				Map<String,String> temp = totalSalesDataPerMonth.get(i);
 				inprice_.put("label", temp.get("SALES_DATE"));
 				inprice_.put("y", String.valueOf(temp.get("TOTALINPRICE")));
