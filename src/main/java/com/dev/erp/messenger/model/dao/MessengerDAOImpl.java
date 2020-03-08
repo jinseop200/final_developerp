@@ -28,7 +28,7 @@ public class MessengerDAOImpl implements MessengerDAO {
 	}
 
 	@Override
-	public List<Msg> findChatListByChatId(String chatId) {
+	public List<Map<String,String>> findChatListByChatId(String chatId) {
 		return sqlSession.selectList("messenger.findChatListByChatId", chatId);
 	}
 

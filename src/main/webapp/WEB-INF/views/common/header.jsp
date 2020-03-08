@@ -34,6 +34,8 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
   <!--  chart -->
   <style>
  .main-container{
@@ -88,8 +90,8 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Detail</h6>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}">문서결재</a>
-                <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}">출결관리</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/document/documentView.do">문서결재</a>
+                <a class="collapse-item" href="${pageContext.request.contextPath }/attend/attendList.do">출결관리</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/board/boardList.do">게시판</a>
                 <a class="collapse-item" href="${pageContext.request.contextPath }/facility/facilityList.do">시설물 예약</a>
               </div>
@@ -161,7 +163,6 @@
                   <h6 class="collapse-header">DETAIL</h6>
                    <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/productionPlan.do">월별 생산 계획</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/purchasePlan.do">원재료 구매 계획</a>
-                  <a class="collapse-item" href="cards.html">생산 현황</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/jobOrder.do">작업 지시서</a>
                 </div>
               </div>
@@ -421,7 +422,6 @@
             }
             .modal-content.updatePassword{
             	width:500px;
-            	height:215px;
             }
             .modal-content.updateInfo{
             	width:500px;
@@ -518,8 +518,25 @@
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
 			        <div class="modal-footer">
-			          <button type="button" class="btn detailMessage-close">닫기</button>
+			          <button type="button" class="btn btn-primary detailMessage-answer">답장</button>
+			          <button type="button" class="btn btn-secondary insert detailMessage-close">닫기</button>
 			      </div>
+			        </div>
+			    </div>
+			</div>
+             <!-- answer message Modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="answerMessage">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content messeage">
+			        <div class="modal-header">
+			            <h5 class="modal-title controll-title-answerMessage">답장보기</h5>
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span>
+			            </button>
+			        </div>
+			        <div class="modal-body controll-modal-body-answerMessage">
+			            <!-- <p>Modal body text goes here.</p> -->
+			        </div>
 			        </div>
 			    </div>
 			</div>
@@ -626,7 +643,6 @@
 					url:"${pageContext.request.contextPath}/message/messageCount.do?empName=${memberLoggedIn.empName}",
 					dataType:"json",
 					success:data=>{
-						console.log(data);
 						$(".badge-counter.message").html(data.messageCount);
 					}
 				})
@@ -634,7 +650,6 @@
 					url:"${pageContext.request.contextPath}/messenger/messengerCount.do",
 					dataType:"json",
 					success:data=>{
-						console.log(data);
 						$(".badge-counter.messenger").html(data.messengerCount);
 					}
 				})
@@ -643,31 +658,18 @@
 			});
 			$(".btn.btn-primary.headerText").click(function(){
 				var searchKeyword = $("#searchKeyword").val();
-				switch(searchKeyword){
-				case"전자결재":location.href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}";break;
-				case"출결관리":location.href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}";break;
-				case"게시판":location.href="${pageContext.request.contextPath }/board/boardList.do";break;
-				case"시설물예약":location.href="${pageContext.request.contextPath }/facility/facilityList.do";break;
-				case"거래처등록":location.href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do";break;
-				case"창고등록":location.href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do";break;
-				case"품목등록":location.href="${pageContext.request.contextPath }/enrollment/productEnrollment.do";break;
-				case"구매조회":location.href="${pageContext.request.contextPath }/purchase/purchaseView.do";break;
-				case"구매목록":location.href="${pageContext.request.contextPath }/purchase/purchaseInsertView.do";break;
-				case"BOM목록관리":location.href="${pageContext.request.contextPath }/production/BOMListManagement.do";break;
-				case"생산입고":location.href="${pageContext.request.contextPath }/production/warehousing.do";break;
-				case"월별생산계획":location.href="${pageContext.request.contextPath }/productplan/productionPlan.do";break;
-				case"원재료구매계획":location.href="${pageContext.request.contextPath }/productplan/purchasePlan.do";break;
-				case"작업지시서":location.href="${pageContext.request.contextPath }/productplan/jobOrder.do";break;
-				case"원재료 입출고":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
-				case"원재료 재고관리":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
-				case"완제품 재고관리":location.href="${pageContext.request.contextPath }/stock/product/productView.do";break;
-				case"창고별 재고관리":location.href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0";break;
-				case"부적합현황":location.href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do";break;
-				case"제품별 Xbar그래프":location.href="${pageContext.request.contextPath }/quality/xbarGraphByProduct.do";break;
-				case"공정계수조회":location.href="${pageContext.request.contextPath }/quality/searchCPk.do";break;
-				case"품질검사관리":location.href="${pageContext.request.contextPath }/quality/qualityInsection.do";break;
-				case"부적합관리":location.href="${pageContext.request.contextPath }/quality/qualityControll.do";break;
-				}
+				$.ajax({
+					url:"${pageContext.request.contextPath}/search/searchKeywordInfo.do?searchKeyword="+searchKeyword,
+					type:"get",
+					dataType:"json",
+					success:data=>{
+							location.href="${pageContext.request.contextPath}"+data.SEARCH_ADDRESS;
+					},
+					error:function(jqxhr,textStatus, errorThrown){
+						console.log("ajax처리실패!",jqxhr, textStatus, errorThrown);
+					}
+				})
+				
 			});
 			
 			var $autoSearch = $("#search_AutoSearch");
@@ -701,40 +703,23 @@
 				}
 				else if(e.key =='Enter'){
 					var $name = $(".sel").text();
-					console.log($name);
 					$("#searchKeyword").val($name);
 					var searchKeyword= $("#searchKeyword").val();	
-					console.log(searchKeyword);
-					switch(searchKeyword){
-					case"전자결재":location.href="${pageContext.request.contextPath }/document/documentView.do?empName=${memberLoggedIn.empName}";break;
-					case"출결관리":location.href="${pageContext.request.contextPath }/attend/attendList.do?email=${memberLoggedIn.email}";break;
-					case"게시판":location.href="${pageContext.request.contextPath }/board/boardList.do";break;
-					case"시설물예약":location.href="${pageContext.request.contextPath }/facility/facilityList.do";break;
-					case"거래처등록":location.href="${pageContext.request.contextPath }/enrollment/vendorEnrollment.do";break;
-					case"창고등록":location.href="${pageContext.request.contextPath }/enrollment/warehouseEnrollment.do";break;
-					case"품목등록":location.href="${pageContext.request.contextPath }/enrollment/productEnrollment.do";break;
-					case"구매조회":location.href="${pageContext.request.contextPath }/purchase/purchaseView.do";break;
-					case"구매목록":location.href="${pageContext.request.contextPath }/purchase/purchaseInsertView.do";break;
-					case"BOM목록관리":location.href="${pageContext.request.contextPath }/production/BOMListManagement.do";break;
-					case"생산입고":location.href="${pageContext.request.contextPath }/production/warehousing.do";break;
-					case"월별생산계획":location.href="${pageContext.request.contextPath }/productplan/productionPlan.do";break;
-					case"원재료구매계획":location.href="${pageContext.request.contextPath }/productplan/purchasePlan.do";break;
-					case"작업지시서":location.href="${pageContext.request.contextPath }/productplan/jobOrder.do";break;
-					case"원재료 입출고":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
-					case"원재료 재고관리":location.href="${pageContext.request.contextPath }/stock/rm/rmSnrView.do";break;
-					case"완제품 재고관리":location.href="${pageContext.request.contextPath }/stock/product/productView.do";break;
-					case"창고별 재고관리":location.href="${pageContext.request.contextPath }/stock/storage/storageView.do?storeNo=0";break;
-					case"부적합현황":location.href="${pageContext.request.contextPath }/quality/doughnutHistoGraph.do";break;
-					case"제품별 Xbar그래프":location.href="${pageContext.request.contextPath }/quality/xbarGraphByProduct.do";break;
-					case"공정계수조회":location.href="${pageContext.request.contextPath }/quality/searchCPk.do";break;
-					case"품질검사관리":location.href="${pageContext.request.contextPath }/quality/qualityInsection.do";break;
-					case"부적합관리":location.href="${pageContext.request.contextPath }/quality/qualityControll.do";break;
-					}
+					$.ajax({
+						url:"${pageContext.request.contextPath}/search/searchKeywordInfo.do?searchKeyword="+searchKeyword,
+						type:"get",
+						dataType:"json",
+						success:data=>{
+  							location.href="${pageContext.request.contextPath}"+data.SEARCH_ADDRESS;
+						},
+						error:function(jqxhr,textStatus, errorThrown){
+							console.log("ajax처리실패!",jqxhr, textStatus, errorThrown);
+						}
+					})
 				}
 				else{
 					var srchNameVal =$(this).val().trim();
 					if(srchNameVal.length ==0) return;
-					console.log(srchNameVal);
 					$.ajax({
 						url:"${pageContext.request.contextPath}/search/headerSearch.do",
 						type:"get",
@@ -747,9 +732,7 @@
 								html="<li class='noSearch'>조회된 결과가 없습니다. </li>";
 								$autoSearch.html(html).fadeIn(300);
 							}else{
-							//조회된 결과가 있는 경우
 								var dataArr = data.csv.split("^");
-								console.log(dataArr);
 								$.each(dataArr, (idx,val)=>{
 									html += "<li>"+val.replace(srchNameVal,'<span class = "srchval">'+srchNameVal+'</span>')+"</li>";		
 								});
@@ -794,15 +777,11 @@
 				ul#search_AutoSearch li hr{margin:0;}
 				ul#search_AutoSearch li.sel{background:#bac8f3; color:white;}
 				span.srchval{color:red;}
-			  .detailMessage-close{
-			  	color: #fff;
-			    background-color: #2e59d9;
-			    border-color: #2653d4;
-			  }
 			  .noSearch{
 			  	padding:13px 28px 11px !important;
 			  	color:black;
 			  	text-align:center;
+			  	cursor:none;
 			  }
 			  li #searchIcon{
 				position:absolute;

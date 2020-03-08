@@ -139,7 +139,6 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 		
 	}
 	
-	
 	@GetMapping("/messenger/messengerList.do")
 	public void messengerList(Model model, 
 					  HttpSession session, 
@@ -173,12 +172,12 @@ static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
 		try {
 			String email = Optional.ofNullable(memberLoggedIn).map(Member::getEmail)
 					 .orElseThrow(IllegalStateException::new);
-			List<Msg> chatList = messengerService.findChatListByChatId(chatId);
+			List<Map<String,String>> chatList = messengerService.findChatListByChatId(chatId);
 			Msg fromMessage = new Msg(0,chatId,email,"",0, null);
 			int result = messengerService.updateLastCheckLog(fromMessage);
 			
 			model.addAttribute("chatList", chatList);
-			
+			logger.debug("chatList={}",chatList);
 			return "messenger/messengerChat";
 		}catch(Exception e) {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");

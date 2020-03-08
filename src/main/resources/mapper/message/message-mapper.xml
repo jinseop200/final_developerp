@@ -5,11 +5,11 @@
 <mapper namespace="message">
 
 <select id="selectMessageList" resultMap="messageList">
-	select * from message where reciever=#{empName} order by me_no 
+	select * from message where reciever=#{empName} order by me_no desc
 </select>
 <resultMap id="messageList" type="map"></resultMap>
 <select id="selectMessageAllList" resultType="message">
-	select * from message where reciever = #{empName} order by me_no
+	select * from message where reciever = #{empName} order by me_no desc
 </select>
 
 <select id="selectAllCountByAccountNo" resultType="_int">

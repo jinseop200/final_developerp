@@ -82,6 +82,14 @@
 
 
   $(()=>{
+	  $(".btn.detailMessage-answer").on('click',function(){
+			$('.controll-modal-body-answerMessage').load("${pageContext.request.contextPath}/message/answerMessageForm.do?sender=${message.sender}",function(){
+		        $('#answerMessage').modal({backdrop: 'static', keyboard: false});
+		        $('#answerMessage').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+		    $('#detailMessage').modal("hide");
+			});
+		});
 	  
 	  
 	  $(".btn-primary.detail").click(function(){

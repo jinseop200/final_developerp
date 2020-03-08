@@ -85,28 +85,38 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 	}
 
 	@Override
-	public int selectTotalEpPlan() {
-		return productPlanDAO.selectTotalEpPlan();
+	public int selectTotalEpPlan(Map<String,String> param) {
+		return productPlanDAO.selectTotalEpPlan(param);
 	}
 
 	@Override
-	public int selectTotalEpResult() {
-		return productPlanDAO.selectTotalEpResult();
+	public int selectTotalEpResult(Map<String,String> param) {
+		return productPlanDAO.selectTotalEpResult(param);
 	}
 
 	@Override
-	public List<Map<String, String>> selectProduction(int cPage, int numPerPage) {
-		return productPlanDAO.selectProduction(cPage, numPerPage);
+	public List<Map<String, String>> selectProduction(int cPage, int numPerPage, String year) {
+		return productPlanDAO.selectProduction(cPage, numPerPage, year);
 	}
 
 	@Override
-	public int selectTotalContentsByP() {
-		return productPlanDAO.selectTotalContentsByP();
+	public int selectTotalContentsByP(String year) {
+		return productPlanDAO.selectTotalContentsByP(year);
 	}
 
 	@Override
-	public List<Map<String, String>> monthlyOutputByProduct(String productNo) {
-		return productPlanDAO.monthlyOutputByProduct(productNo);
+	public List<Map<String, String>> monthlyOutputByProduct(Map<String,String> param) {
+		return productPlanDAO.monthlyOutputByProduct(param);
+	}
+
+	@Override
+	public String productionPlanDate() {
+		return productPlanDAO.productionPlanDate();
+	}
+
+	@Override
+	public int sumLast3Months(String productName) {
+		return productPlanDAO.sumLast3Months(productName);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.erp.board.model.service.BoardService;
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardComment;
+import com.dev.erp.member.model.vo.Member;
 
 @Controller
 public class BoardController {
@@ -42,6 +46,7 @@ public class BoardController {
 		mav.setViewName("board/boardList");
 		return mav;
 	}
+
 	@RequestMapping("/board/boardClubList.do")
 	@ResponseBody
 	public Map<String,Object> selectBoardClubList( @RequestParam("boardNo") int boardNo)
@@ -82,12 +87,19 @@ public class BoardController {
 		return mav;
 	}
 	@RequestMapping("/board/boardDetailView.do")
-	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("categoryNo") int categoryNo) {		
+	public ModelAndView documentDetailView(ModelAndView mav, @RequestParam("categoryNo") int categoryNo,@SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn) {	
+		String name = Optional.ofNullable(memberLoggedIn).map(Member::getEmpName)
+				 .orElseThrow(IllegalStateException::new);
+		System.out.println("dssssssssssss"+name);
 		Board board = new Board();
 		BoardCategory boardCategory = new BoardCategory();
 		boardCategory = boardService.boardCategoryView(categoryNo);
+		List<BoardComment> boardComment =boardService.getBoardComment(categoryNo);
 		logger.debug("boardCategory={}",boardCategory);
+		System.out.println("fdsafdsaasa"+boardComment);
+		mav.addObject("boardComment",boardComment);
 		mav.addObject("list",board);
+		mav.addObject("name",name);
 		mav.addObject("categorylist",boardCategory);
 		mav.setViewName("board/boardDetailView");
 		
@@ -104,5 +116,37 @@ public class BoardController {
 		return map;
 		
 	}
+	@RequestMapping("/board/boardCommentInsert.do")
+	public ModelAndView boardCommentInsert(ModelAndView mav,BoardComment boardComment) {
+		int result=boardService.boardCommentInsert(boardComment);
+		mav.addObject("msg",result>0?"댓글 등록 성공":"댓글 등록 실패");
+		mav.addObject("loc","/board/boardList2.do?categoryNo="+boardComment.getBoardRef());
+		mav.setViewName("common/msg");
+		return mav;
+	}
 
+	@RequestMapping("/board/boardCommentDelete.do")
+	public ModelAndView boardCommentDelete(ModelAndView mav,BoardComment boardComment) {
+		System.out.println("fdfdfdddd"+boardComment);
+		int result=boardService.boardComment2Delete(boardComment);
+		 result=boardService.boardCommentDelete(boardComment);
+		mav.addObject("msg",result>0?"댓글 삭제 성공":"댓글 삭제 실패");
+		mav.addObject("loc","/board/boardList2.do?categoryNo="+boardComment.getBoardRef());
+		mav.setViewName("common/msg");
+		return mav;
+	}
+	@RequestMapping("/board/boardList2.do")
+	public ModelAndView selectBoardList2(ModelAndView mav,@RequestParam("categoryNo") int categoryNo)
+	{
+		List<Map<String,Object>> boardCategoryList= new ArrayList<>();
+		List<Board> boardList = new ArrayList<>();
+		boardCategoryList = boardService.selectBoardCategoryList();	
+		boardList = boardService.selectBoardList();
+		
+		mav.addObject("categoryNo",categoryNo);
+		mav.addObject("boardlist",boardCategoryList);
+		mav.addObject("board",boardList);
+		mav.setViewName("board/boardList2");
+		return mav;
+	}
 }

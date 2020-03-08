@@ -28,12 +28,6 @@ $(()=>{
 	var regExpName = /^[가-힣]{2,4}$/;
 	var regExpEmail = /\w+@\w+\.\w+/;
 	var regExpPhone = /^01[0179][0-9]{7,8}$/;
-	var regExpSsn1 = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[01])$/;
-	var regExpSsn2 = /^[1234]\d{6}$/;
-	
-
-<%--아이디 중복검사 이후 아이디를 변경한 경우--%>
-<%--change이벤트는 blur할 경우, 값변경 내역을 감지한다.--%>
 
 $("#emp_name").keyup(function(event){
 	var emp_name = document.getElementById("emp_name");
@@ -51,23 +45,6 @@ $("#emp_name").keyup(function(event){
 		$(".nameValidateWarning").html('');
 	}
 });	
-
-// $("#email").keyup(function(event){
-// 	var email = document.getElementById("email");
-	
-// 	if($("#email").val() == ""){
-// 		$(".emailValidateWarning").html('이메일을 입력해 주시기 바랍니다.');
-// 		$("#email").attr("style","border-bottom: 2px solid red");
-// 	}
-// 	if(!regExpEmail.test(email.value)){
-// 		$(".emailValidateWarning").html('이메일 형식이 올바르지 않습니다.');
-// 		$("#email").attr("style","border-bottom: 2px solid red");
-// 	}
-// 	else{
-// 		$("#email").attr("style","border-bottom: 2px solid green");
-// 		$(".emailValidateWarning").html('');
-// 	}
-// });
 
 $("#phone").keyup(function(event){
 	var phone = document.getElementById("phone");
@@ -93,18 +70,14 @@ $("#phone").keyup(function(event){
 function enrollValidate(){
 	var emp_name = document.getElementById("emp_name");
 	var phone = document.getElementById("phone");
-	console.log($emailValid.val());
 	<%--이름 유효성검사--%>
 	if(!regExpTest(/^[가-힣]{2,4}$/, emp_name, "이름은 2~4자의 한글만 사용 가능합니다.")){
         return false;
 	}
-	
     <%--전화번호 유효성검사--%>
 	if(!regExpTest(/^01[0179][0-9]{7,8}$/, phone, "전화번호 형식이 올바르지 않습니다.")){
         return false;
 	}
-
-	
 	return true;
 	
 }

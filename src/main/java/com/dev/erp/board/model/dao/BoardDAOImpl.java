@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.erp.board.model.vo.Board;
 import com.dev.erp.board.model.vo.BoardCategory;
+import com.dev.erp.board.model.vo.BoardComment;
 
 	@Repository
 	public class BoardDAOImpl implements BoardDAO {
@@ -58,6 +59,26 @@ import com.dev.erp.board.model.vo.BoardCategory;
 		@Override
 		public List<Board> selectBoardType() {
 			return sqlSession.selectList("board.selectBoardType");
+		}
+
+		@Override
+		public int boardCommentInsert(BoardComment boardComment) {
+			return sqlSession.insert("board.boardCommentInsert",boardComment);
+		}
+
+		@Override
+		public List<BoardComment> getBoardComment(int categoryNo) {
+			return sqlSession.selectList("board.getBoardComment",categoryNo);
+		}
+
+		@Override
+		public int boardCommentDelete(BoardComment boardComment) {
+			return sqlSession.delete("board.boardCommentDelete",boardComment);
+		}
+
+		@Override
+		public int boardComment2Delete(BoardComment boardComment) {
+			return sqlSession.delete("board.boardComment2Delete",boardComment);
 		}
 
 }

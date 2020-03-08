@@ -6,7 +6,7 @@
 	<select id="findChatIdByEmail" resultType="string">
 		SELECT CHATID FROM CHATROOM 
 		WHERE STATUS = 'Y'
-			AND email = #{email}
+			AND email = #{email} 
 	</select>
 	
 	<insert id="insertChatRoom">
@@ -14,11 +14,11 @@
 		VALUES(#{chatId}, #{email})
 	</insert>
 	
-	<select id="findChatListByChatId" resultType="msg">
-		select * 
-		from chatlog
+	<select id="findChatListByChatId" resultType="map">
+		select C.* ,E.emp_name
+		from chatlog C left join employee E on C.email = E.email
 		where chatid = #{chatId}
-		order by chatno
+		order by time 
 	</select>
 	
 	<select id="findRecentList" resultType="map">
@@ -26,7 +26,8 @@
 		from (
 		    select chatno,
 		           A.chatid, 
-		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email, 
+		           (select email from chatroom where chatid = #{chatId} and email!=#{email}) email,
+		           (select emp_name from employee where email = (select email from chatroom where chatid = #{chatId} and email!=#{email})) emp_name,
 		           msg, 
 		           time,
 		           (select count(*) from chatlog where chatid=#{chatId} and email!=#{email} and time!='0') cnt,
