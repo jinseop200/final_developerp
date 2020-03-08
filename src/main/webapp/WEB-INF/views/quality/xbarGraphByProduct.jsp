@@ -96,20 +96,6 @@ window.onload = function () {
 						}
 						UCL.push(items);
 				}
-// 				var DATA = []; 
-				
-// 				for(let i in DATA_) {
-// 						var p = DATA_[i];
-// 						var date_ = p.x;
-// 						var year = date_.substr(0,4);
-// 						var month = date_.substr(5,2)-1;
-// 						var day = date_.substr(8,2);
-// 						var items = {
-// 								x: new Date(year,month,day),
-// 								y: Number(p.y)
-// 						}
-// 						DATA.push(items);
-// 				}
 				var LCL = []; 
 				
 				for(let i in LCL_) {

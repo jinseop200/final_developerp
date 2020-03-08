@@ -33,14 +33,18 @@ public interface ProductPlanService {
 
 	List<Map<String, String>> selectFirstByPL();
 
-	int selectTotalEpPlan();
+	int selectTotalEpPlan(Map<String,String> param);
 
-	int selectTotalEpResult();
+	int selectTotalEpResult(Map<String,String> param);
 
-	List<Map<String, String>> selectProduction(int cPage, int numPerPage);
+	List<Map<String, String>> selectProduction(int cPage, int numPerPage, String year);
 
-	int selectTotalContentsByP();
+	int selectTotalContentsByP(String year);
 
-	List<Map<String, String>> monthlyOutputByProduct(String productNo);
+	List<Map<String, String>> monthlyOutputByProduct(Map<String,String> param);
+
+	String productionPlanDate();
+
+	int sumLast3Months(String productName);
 
 }

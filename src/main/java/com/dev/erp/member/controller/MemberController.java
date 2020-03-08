@@ -120,13 +120,11 @@ public class MemberController {
 	public ModelAndView memberLogin(@RequestParam String email, @RequestParam String password, ModelAndView mav, HttpSession session) {
 		
 		try {
-			//1.업무로직
 			Member m = memberService.selectOneMember(email);
 			Map<String, String> deptOne = memberService.selectOneDept(email);
 			Map<String, String> jobOne = memberService.selectOneJob(email);
 			String msg="";
 			String loc="/";
-			//로그인분기처리
 			if(m ==null) {
 				msg="존재하지 않는 이메일입니다.";
 				loc="/";
@@ -134,31 +132,22 @@ public class MemberController {
 			else {
 				if(bcryptPasswordEncoder.matches(password, m.getPassword())) {
 					msg="로그인 성공!";
-	//				session.setAttribute("memberLoggedIn", m);
 					mav.addObject("memberLoggedIn", m);
 					mav.addObject("dept_title",deptOne);
 					mav.addObject("job_name", jobOne);
-					
 					loc="/main/main.do?email="+email;
 				}else {
 					msg="비밀번호가 틀렸습니다.";
 					loc="/";
 				}
 			}
-			
-			//2.view모델처리
 			mav.addObject("msg",msg);
 			mav.addObject("loc",loc);
-			
-			//3.viewName지정
 			mav.setViewName("common/msg");
-			
-//			if(true) throw new RuntimeException("내가 던진 로그인 오류!");
 			
 		}catch(Exception e) {
 			throw new MemberException("회원관리오류!",e);
 		}
-		
 		return mav;
 	}
 	

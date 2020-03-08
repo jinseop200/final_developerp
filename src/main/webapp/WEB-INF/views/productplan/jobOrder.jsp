@@ -10,7 +10,19 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+.jo-modal-body{
+ height: 480px;
+}
+/* #searchModal {
+  width: 60%;
+  height: 150px;
+} */
 
+.modal-content2{
+	width:700px;
+}
+</style>
 		
 <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">작업 지시서</h1>
@@ -23,7 +35,7 @@
              
                 <button class="btn btn-primary" type="button" id="delete-btn">
                 	  삭제
-                </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                </button> &nbsp;&nbsp;&nbsp;
               </div>
             </div>
           </div>
@@ -71,7 +83,7 @@
   <!-- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="joModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-content2">
         <div class="modal-header">
             <h5 class="modal-title controll-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -134,11 +146,7 @@ $("#delete-btn").click(function(){
 });
 
 </script>
-<style>
-#myModal{
-	z-index: 1060;
-}
-</style>
+
 <!-- Page level plugins -->
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>

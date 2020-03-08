@@ -9,32 +9,86 @@
 	<select id="selectTotalEpPlan" resultType="_int">
 		select sum(order_quantity)
 		from job_order
+		<if test='year == "all" and productNo != null and productNo != ""'>
+		where pl_no = #{productNo} 
+		</if>
+		<if test='year != "all" and productNo != null and productNo != ""'>
+		where pl_no = #{productNo} and to_char(enrolldate, 'yyyy') like #{year} 
+		</if>
 	</select>
 	
 	<select id="selectTotalEpResult" resultType="_int">
 		select sum(quantity)
 		from production
-		where quality_yn like 'Y'
+		<if test='year == "all" and productNo != null and productNo != ""'>
+		where quality_yn like 'Y' and pl_no = #{productNo} 
+		</if>
+		<if test='year != "all" and productNo != null and productNo != ""'>
+		where quality_yn like 'Y' and pl_no = #{productNo} and to_char(production, 'yyyy') like #{year} 
+		</if>
+		
 	</select>
 	
-	<select  id="selectProduction" resultType="Map">
-		select distinct pl_no as "plNo",
-			   product_name as "productName"
-		from production	
+	<select  id="selectProduction" resultType="Map" parameterType="String">
+			select distinct pl_no as "plNo",
+				   product_name as "productName"
+			from production
+		<if test='_parameter != "all" and _parameter != null and _parameter != ""'>
+			where to_char(production, 'yyyy') like #{_parameter}
+		</if>
+
 	</select>
 	
-	<select id="selectTotalContentsByP" resultType="_int">
-		select count(distinct product_name)
-		from production
+	<select id="selectTotalContentsByP" resultType="_int" parameterType="String">
+			select count(distinct product_name)
+			from production
+		<if test= '_parameter != "all" and _parameter != null and _parameter != ""'>
+			where to_char(production, 'yyyy') like #{_parameter}
+		</if>
 	</select>
 	
 	<select id="monthlyOutputByProduct" resultType="Map">
-		select ltrim(substr(to_char(production,'yymm'),3,2),0) as "month",
-         		sum(quantity) as "output"
+		select to_number(substr(to_char(production,'yymm'),3,2)) as "month",
+        sum(quantity) as "output",
+        to_char(production, 'yyyy') as "date",
+        product_name as "productName"
 		from production
-		where pl_no = #{productNo}
-		group by ltrim(substr(to_char(production,'yymm'),3,2),0)
-		order by ltrim(substr(to_char(production,'yymm'),3,2),0) asc
+		<choose>
+			<when test='year.equals("all")'>
+			where pl_no = #{productNo} and to_char(production,'yyyy') = 2019
+			group by to_number(substr(to_char(production,'yymm'),3,2)),to_char(production, 'yyyy'),product_name
+			union
+			select to_number(substr(to_char(production,'yymm'),3,2)) as "month",
+			        sum(quantity) as "output",
+			        to_char(production, 'yyyy') as "date",
+			        product_name as "productName"
+			from production
+			where pl_no = #{productNo} and to_char(production,'yyyy') = 2020
+			group by to_number(substr(to_char(production,'yymm'),3,2)),to_char(production, 'yyyy'),product_name
+			order by 3
+			</when>
+			
+			<when test='year != "all" and year != null and year != ""'>
+			where pl_no = #{productNo} and to_char(production,'yyyy') = #{year} 
+			group by to_number(substr(to_char(production,'yymm'),3,2)),to_char(production, 'yyyy'),product_name
+			order by to_number(substr(to_char(production,'yymm'),3,2)) asc
+			</when>
+		</choose>
+	</select>
+	
+	<select id="productionPlanDate" resultType="String">
+		select to_char(sysdate,'yyyy')||'년 ' || to_number(to_char(add_months(sysdate,1),'mm'))||'월'
+		from dual
+	</select>
+	
+	<select id="sumLast3Months" resultType="_int" parameterType="String">
+		select sum(quantity)
+		from production
+		where product_name = #{value} 
+		         and to_char(production,'yymm') 
+		         in(to_char(add_months(sysdate,-1),'yymm'),
+		            to_char(add_months(sysdate,-2),'yymm'),
+		            to_char(add_months(sysdate,-3),'yymm'))
 	</select>
 	
 	
