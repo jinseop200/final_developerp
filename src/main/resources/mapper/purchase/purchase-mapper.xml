@@ -14,14 +14,14 @@
 	</select>
 	
 	<select id="selectPurchaseInsertList" resultMap="purchaseMap">
-	   SELECT ORDER_REQUEST.*, DELIVERY, DUE_DATE-SYSDATE as EXPECT
+	   SELECT ORDER_REQUEST.*, DELIVERY, DUE_DATE-(SYSDATE+DELIVERY) as EXPECT
 	   FROM ORDER_REQUEST LEFT JOIN RAW_MATERIAL ON RAW_MATERIAL.RM_NO = ORDER_REQUEST.RM_NO
 	   ORDER BY REQUEST_DATE DESC
 	</select>
 	
 	
 	
-	<!-- 구매 등록시 구매등록과 구매요청테이블의 수량 줄이기  -->
+	<!-- 구매 등록시 구매등록과 동시에 구매요청테이블의 수량 줄이기  -->
 	<select id="InsertPurchase" resultMap="purchaseMap">
 	   INSERT INTO PURCHASE
 	   VALUES(
@@ -29,6 +29,7 @@
 	   #{vendorNo},
 	   sysdate,
 	   #{purchaseAmount}
+	   )
 	</select>
 	
 	<update id="UpdatePurchase">
