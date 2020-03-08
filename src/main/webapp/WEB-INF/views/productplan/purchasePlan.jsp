@@ -54,7 +54,23 @@ input[type=text]{
 	cursor : auto;
 	background-color:#ccc;
 }
-
+/* modal position(center)*/
+.modal {
+  text-align: center;
+}
+@@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
 </style>
 
 		
@@ -64,7 +80,6 @@ input[type=text]{
 	<div class="col-lg-20 mb-3 rowResize">
 		 <label for="productName">제품별 소요량-재고량 조회</label>&emsp;<br>
 	     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="갤럭시" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-	     <input type="hidden" id="productNo" name="productNo" />
 	     <button class="btn btn-primary searchProduct-btn" type="button" value="productName">
 		 	<i class="fas fa-search fa-sm"></i>
 		 </button>
@@ -118,7 +133,7 @@ input[type=text]{
        </div>
        <div class="card-body">
          <div class="table-responsive">
-           <table class="table table-bordered jo-table" id="dataTable" width="100%" cellspacing="0">
+           <table class="table table-bordered jo-table" width="100%" cellspacing="0">
              <thead>
                <tr>
                  <th>원재료코드</th>
@@ -128,9 +143,8 @@ input[type=text]{
                  <th id="requiredAmount"><span>필요구매량</span></th>
                </tr>
              </thead>
-             <tbody>
-             	<c:if test="${beforeSearch eq '1' }">
-	             	<c:forEach items="${firstPL }" var="r" varStatus="vs">
+             <tbody id="calResult" >
+	             <c:forEach items="${firstPL }" var="r" varStatus="vs">
 	               <tr>
 	                 <td>${r.rmNo}</td>
 	                 <td>${r.rmName}</td>
@@ -138,19 +152,7 @@ input[type=text]{
 	                 <td>${r.rmStock }</td>
 	                 <td style="<c:if test='${r.requiredQ - r.rmStock > 0 }'>color:red;</c:if>">${r.requiredQ - r.rmStock }</td>
 	               </tr>
-	             	</c:forEach>
-             	</c:if>
-             	<c:if test="${afterSearch eq '2' }">
-	             	<c:forEach items="${endProductList eq '2' }" var="r" varStatus="vs">
-	               <tr>
-	                 <td>${r.rmNo}</td>
-	                 <td>${r.rmName}</td>
-	                 <td>${r.requiredQ }</td>
-	                 <td>${r.rmStock }</td>
-	                 <td style="<c:if test='${r.requiredQ - r.rmStock > 0 }'>color:red;</c:if>">${r.requiredQ - r.rmStock }</td>
-	               </tr>
-	             	</c:forEach>
-             	</c:if>
+	             </c:forEach>
              </tbody>
            </table>
          </div>
@@ -236,36 +238,37 @@ $(".searchProduct-btn").click(function(){
 	});
 	
 //필요수량 구매계획 모달2
-$(".jo-table tbody").on('dblclick', 'tr', function(){
-	
-	var rmName = $(this).children().eq(1).html();
-	var requireAm = $(this).children().eq(4).html();
-	
-	if(requireAm <= 0){
-		alert("발주요청 불가!\n(필요구매량을 확인해주세요.)");
-	}
-	else{
-		var rmNameArr = rmName.split(" ");
+	$(".jo-table tbody").on('dblclick', 'tr', function(){
 		
-		/* $(".order-body").css('display','block');
-		$(".epl-body").css('display','none'); */
+		var rmName = $(this).children().eq(1).html();
+		var requireAm = $(this).children().eq(4).html();
 		
-		$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?rmNameArr="+rmNameArr+"&requireAm="+requireAm,function(){
-	        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
-	        $('#purchasePlan-modal2').modal({show:true});
-	        $(".modal-backdrop.in").css('opacity', 0.4);
-	        $(".controll-title").html("구매계획 등록");
-		});
-		
-	}	
-});
+		if(requireAm <= 0){
+			alert("발주요청 불가!\n(필요구매량을 확인해주세요.)");
+		}
+		else{
+			var rmNameArr = rmName.split(" ");
+			
+			/* $(".order-body").css('display','block');
+			$(".epl-body").css('display','none'); */
+			
+			$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?rmNameArr="+rmNameArr+"&requireAm="+requireAm,function(){
+		        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
+		        $('#purchasePlan-modal2').modal({show:true});
+		        $(".modal-backdrop.in").css('opacity', 0.4);
+		        $(".controll-title").html("구매계획 등록");
+			});
+			
+		}	
+	});	
+
 
 	
 </script>	
 
 <!-- Page level plugins -->
-<script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js?v=<%=System.currentTimeMillis()%>"></script>
+<script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js?v=<%=System.currentTimeMillis()%>"></script>
 
 <!-- Page level custom scripts -->
 <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>

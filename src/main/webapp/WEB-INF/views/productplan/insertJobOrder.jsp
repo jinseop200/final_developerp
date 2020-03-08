@@ -8,32 +8,21 @@
 
 
 <style>
-.modal-body{
- height: 480px;
-}
-#searchModal {
-  width: 60%;
-  height: 150px;
-}
-#insert-container {
-    width:660px;
-    height: 150px;
-}
-.modal-content{
-	width:700px;
-}
+
 .ctm{
 	width: 400px;
 }
-#formGroupExampleInput {
-    width: 70%;
-}
+
 .form-control {
     display:inline;
     width: 60%;
 }
 .quality-comment {
 	width:190%;
+}
+#insert-container {
+    width:660px;
+    height: 150px;
 }
 #insert-container .btn-primary{
     background-color:#777;
@@ -45,6 +34,14 @@
 #insert-container .btn-primary:hover{
     background-color:#777;
     border-color: #777;
+}
+
+.sd-modal-body tbody tr:hover td{
+	cursor : pointer;
+	background-color:#ccc;
+}
+.sd-modal-body{
+	text-align: center;
 }
 
 </style>
@@ -69,7 +66,7 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
-	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required>
+	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required readonly>
 	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
@@ -85,7 +82,7 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3">
 	                <label for="type">제품명 </label>&emsp;&emsp;
-	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required>
+	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" required readonly>
 	                <input type="hidden" id="plNo" name="plNo" />
 	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
