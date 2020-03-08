@@ -161,7 +161,6 @@
                   <h6 class="collapse-header">DETAIL</h6>
                    <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/productionPlan.do">월별 생산 계획</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/purchasePlan.do">원재료 구매 계획</a>
-                  <a class="collapse-item" href="cards.html">생산 현황</a>
                   <a class="collapse-item" href="${pageContext.request.contextPath}/productplan/jobOrder.do">작업 지시서</a>
                 </div>
               </div>

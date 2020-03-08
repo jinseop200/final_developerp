@@ -16,11 +16,28 @@
 	cursor : auto;
 	background-color:#ccc;
 }
+.modal-body{
+	text-align: center;
+}
 
 </style>
 </head>
 <body>
-     <table class="table table-bordered endProduct-table" id="dataTable" width="100%" cellspacing="0">
+	<c:if test="${plan eq 'product'}">
+		<div id="yearOption">
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="inputGroupSelect01">년도별 조회</label>
+			  </div>
+			  <select class="custom-select yearList" id="inputGroupSelect01" name="yearList">
+			    <option ${year eq "all" ? "selected":"" } value=${year }> 전체</option>
+			    <option value="2019">2019년</option>
+			    <option value="2020">2020년</option>
+			  </select>
+			</div>
+		</div>
+	</c:if>
+     <table class="table table-bordered endProduct-table" id="" width="100%" cellspacing="0">
        <thead>
          <tr>
            <th>No.</th>
@@ -38,20 +55,30 @@
 
 <script>
 $(()=>{
+	var a = "${plan}";
+	var b = "${year}";
+	morePage(a,b);
+	
+	$(".yearList").on('change',function(){
+		b = $(".yearList option:selected").val();
+		console.log("조건변경!");
+		morePage(a,b);
+	});
 	
 	
-	morePage(0);
-
 });
 
-function morePage(a){
-	var plan = "${plan}";
-	console.log("plan4="+plan);
+function morePage(a,b){
+	var plan = a;
+	var year = b;
+	console.log("a="+a);
+	console.log("b="+b);
 	
-	console.log("a==="+a);
-	var url_="";
-	if(a==0) {
-		url_ = "${pageContext.request.contextPath}/productplan/endProductListPage.do?plan="+plan+"&cPage=1";
+	if(a=="product") {
+		url_ = "${pageContext.request.contextPath}/productplan/endProductListPage.do?plan="+plan+"&year="+year+"&cPage=1";
+	}
+	else if(a=="purchase"){
+		url_ = "${pageContext.request.contextPath}/productplan/endProductListPage.do?plan="+plan+"&year='all'&cPage=1";
 	}
 	else {
 		url_="${pageContext.request.contextPath}/productplan/"+a;
@@ -82,21 +109,20 @@ function morePage(a){
 }
 
 
+
 $(".endProduct-table tbody").on('dblclick','tr',function(){
 	
-	var no = $(this).children().eq(1).html(); //선택 행 값 담기
+	var productNo = $(this).children().eq(1).html(); //선택 행 값 담기
 	var name = $(this).children().eq(2).html(); //선택 행 값 담기
 	
-	$("#productNo").val(no); //hidden(제품번호)
 	$("#productName").val(name); //input창에 뿌려주기
 	
-	$("#lineChart").remove();
-	$("#graph").append("<canvas id='lineChart'></canvas>");
 	
 	if("${plan}" == "purchase"){
+		$("#lineChart").remove();
+		$("#graph").append("<canvas id='lineChart'></canvas>");
 		
 		$("#purchasePlan-modal").modal('hide');
-		var productNo = $("#productNo").val();
 		$.ajax({
 			url : "${pageContext.request.contextPath}/productplan/showChartByProduct.do?productNo="+productNo,
 			contentType :"application/json; charset=utf-8",
@@ -125,31 +151,88 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 				console.log("ajax요청실패",x,s,e);
 			}
 		});
+		//소요량계산 테이블 ajax
+		$.ajax({
+			url : "${pageContext.request.contextPath}/productplan/showRequireCalByProduct.do?productNo="+productNo,
+			contentType :"application/json; charset=utf-8",
+			success : data =>{
+				$("#calResult").empty();
+				var requireCal = data.requireCal;
+				var table = "";
+// 				<table class="table table-bordered jo-table" id="dataTable" width="100%" cellspacing="0">
+				
+				
+				$.each(requireCal, function(i,each){
+					table += "<tr><td>"+each.rmNo+"</td><td>"+each.rmName+"</td><td>"+each.requiredQ+"</td><td>"+each.rmStock+"</td><td>"+(each.requiredQ-each.rmStock)+"</td></tr>";
+				});
+				
+				
+				$(".jo-table").append(table);
+				
+			},
+			error : (x, s, e)=>{
+				console.log("showRequireCal ajax요청실패!",x,s,e);
+			}
+		});
 	}
 	
 	if("${plan}" == "product"){
+
+		$("#barChart").remove();
+		$("#barGraph").append("<canvas id='barChart'></canvas>");
 		
 		$("#searchProduction").modal('hide');
-		var productNo = $("#productNo").val();
+		
+		var year = $(".yearList option:selected").val()
+		if(year == '2019') {
+			$(".calNextOutput-btn").hide();
+			$("#question").hide();
+		}
+		else {
+			$(".calNextOutput-btn").show();
+			$("#question").show();
+		}
 		$.ajax({
-			url : "${pageContext.request.contextPath}/productplan/showBarChart.do?productNo="+productNo,
+			url : "${pageContext.request.contextPath}/productplan/showBarChart.do?productNo="+productNo+"&year="+year,
 			contentType :"application/json; charset=utf-8",
 			dataType : "json",
 			success : data=>{
 				var barData_ = data.barData;
+				var ss_ = data.selectedStatus;
 				console.log(barData_);
+				$("#pTitle h4 span").html("'"+barData_[0].productName+"'");
+				if(year =='all'){
+					$("#pTitle h6 span").html("전체기간");
+				}
+				else{
+					$("#pTitle h6 span").html(barData_[0].date+"년");
+				}
+				$(".spData").children().eq(0).html(ss_.spPlan);
+				$(".spData").children().eq(1).html(ss_.spResult);
+				$(".spData").children().eq(2).html(ss_.spAttainment+"%");
 				
 				var month = [];
-				var output = [];
+				var output1 = [];
+				var output2 = [];
+				var date = barData_[0].date;
 				
 				for(let i in barData_){
 					
-					var mp = barData_[i];
-					month.push(mp.month+"월");
-					output.push(mp.output);
+					var fb = {};
+					var sb = {};
+					if(i<12){
+						fb = barData_[i];
+						month.push(fb.month+"월");
+						output1.push(fb.output);
+					} 
+					else{
+						sb = barData[i];
+						output2.push(sb.output);
+					}
+					
 				}
-				
-				createBarChart(month, output);
+				console.log(output1);
+				createBarChart(month, output1, output2, date);
 			},
 			error : (x,s,e)=>{
 				console.log("ajax요청실패",x,s,e);
@@ -159,48 +242,7 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 	
 		
 });
-function createBarChart(month, output){
-	
-	//그래프 자바스크립트
-	//bar
-	var ctxB = document.getElementById("barChart").getContext('2d');
-	var myBarChart = new Chart(ctxB, {
-	type: 'bar',
-	data: {
-	labels: month,
-	datasets: [{
-	label: '월별 생산량',
-	data: output,
-	backgroundColor: [
-	'rgba(255, 99, 132, 0.2)',
-	'rgba(54, 162, 235, 0.2)',
-	'rgba(255, 206, 86, 0.2)',
-	'rgba(75, 192, 192, 0.2)',
-	'rgba(153, 102, 255, 0.2)',
-	'rgba(255, 159, 64, 0.2)'
-	],
-	borderColor: [
-	'rgba(255,99,132,1)',
-	'rgba(54, 162, 235, 1)',
-	'rgba(255, 206, 86, 1)',
-	'rgba(75, 192, 192, 1)',
-	'rgba(153, 102, 255, 1)',
-	'rgba(255, 159, 64, 1)'
-	],
-	borderWidth: 1
-	}]
-	},
-	options: {
-	scales: {
-	yAxes: [{
-	ticks: {
-	beginAtZero: true
-	}
-	}]
-	}
-	}
-	});
-}
+
 
 function createGraph(rmName, required, rmStock){
 	
@@ -243,5 +285,6 @@ function createGraph(rmName, required, rmStock){
 }
 
 </script>
+
 
 </html>

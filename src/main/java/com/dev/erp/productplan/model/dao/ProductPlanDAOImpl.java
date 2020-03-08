@@ -3,6 +3,7 @@ package com.dev.erp.productplan.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,28 +90,38 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	}
 
 	@Override
-	public int selectTotalEpPlan() {
-		return sqlSession.selectOne("productplan.selectTotalEpPlan");
+	public int selectTotalEpPlan(Map<String,String> param) {
+		return sqlSession.selectOne("productplan.selectTotalEpPlan",param);
 	}
 
 	@Override
-	public int selectTotalEpResult() {
-		return sqlSession.selectOne("productplan.selectTotalEpResult");
+	public int selectTotalEpResult(Map<String,String> param) {
+		return sqlSession.selectOne("productplan.selectTotalEpResult",param);
 	}
 
 	@Override
-	public List<Map<String, String>> selectProduction(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectProduction(int cPage, int numPerPage, String year) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
-		return sqlSession.selectList("productplan.selectProduction", null, rowBounds);
+		return sqlSession.selectList("productplan.selectProduction", year, rowBounds);
 	}
 
 	@Override
-	public int selectTotalContentsByP() {
-		return sqlSession.selectOne("productplan.selectTotalContentsByP");
+	public int selectTotalContentsByP(String year) {
+		return sqlSession.selectOne("productplan.selectTotalContentsByP", year);
 	}
 
 	@Override
-	public List<Map<String, String>> monthlyOutputByProduct(String productNo) {
-		return sqlSession.selectList("productplan.monthlyOutputByProduct", productNo);
+	public List<Map<String, String>> monthlyOutputByProduct(Map<String,String> param) {
+		return sqlSession.selectList("productplan.monthlyOutputByProduct", param);
+	}
+
+	@Override
+	public String productionPlanDate() {
+		return sqlSession.selectOne("productplan.productionPlanDate");
+	}
+
+	@Override
+	public int sumLast3Months(String productName) {
+		return sqlSession.selectOne("productplan.sumLast3Months", productName);
 	}
 }

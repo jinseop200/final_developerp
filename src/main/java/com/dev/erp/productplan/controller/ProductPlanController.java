@@ -1,5 +1,6 @@
 package com.dev.erp.productplan.controller;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,6 @@ public class ProductPlanController {
 		return jsonArray;
 	}
 
-	// map 을 json 형태로 변형
 	@SuppressWarnings({ "unchecked" })
 	public static JSONObject convertMapToJson(Map<String, String> map) {
 
@@ -56,24 +56,52 @@ public class ProductPlanController {
 		return json;
 	}
 
-
-	
 	//============================월별생산 계획============================
 	@RequestMapping("/productplan/productionPlan.do")
 	public ModelAndView productionPlan(ModelAndView mav) {
 		
-		try {
-			int epPlan = productPlanService.selectTotalEpPlan();
-			int epResult = productPlanService.selectTotalEpResult();
-			int attainment = (100*epResult)/epPlan;
-			
-			mav.addObject("epPlan", epPlan);
-			mav.addObject("epResult", epResult);
-			mav.addObject("attainment", attainment);
-			mav.setViewName("productplan/monthlyPlan");
-		} catch (Exception e) {
-			throw new MyException("페이지를 불러올 수 없습니다.");
-		}
+			try {
+				//생산계획 메인화면 설정 데이터
+				Map<String, String> empty = new HashMap<>();
+				Map<String, String> param = new HashMap<>();
+				param.put("productNo", "1009");
+				param.put("year", "all");
+				
+				//전체 생산현항 데이터
+				int epPlan = productPlanService.selectTotalEpPlan(empty);
+				int epResult = productPlanService.selectTotalEpResult(empty);
+				int epAttainment = (100*epResult)/epPlan;
+				
+				String epPlanStr = NumberFormat.getInstance().format(epPlan);
+				String epResultStr = NumberFormat.getInstance().format(epResult);
+				String epAttainmentStr = NumberFormat.getInstance().format(epAttainment);
+				Map<String, String> totalStatus = new HashMap<>();
+				totalStatus.put("epPlan", epPlanStr);
+				totalStatus.put("epResult", epResultStr);
+				totalStatus.put("epAttainment", epAttainmentStr);
+				
+				//선택된 제품 현황 데이터
+				int spPlan = productPlanService.selectTotalEpPlan(param);
+				int spResult = productPlanService.selectTotalEpResult(param);
+				int spAttainment = (100*spResult)/spPlan;
+				
+				Map<String, Integer> selectedStatus = new HashMap<>();
+				selectedStatus.put("spPlan", spPlan);
+				selectedStatus.put("spResult", spResult);
+				selectedStatus.put("spAttainment", spAttainment);
+				
+				
+				List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(param);
+				JSONArray JbarData = convertListToJson(barData);
+				
+				mav.addObject("totalStatus", totalStatus);
+				mav.addObject("selectedStatus", selectedStatus);
+				mav.addObject("barData", JbarData);
+				mav.addObject("param", param);
+				mav.setViewName("productplan/monthlyPlan");
+			} catch (Exception e) {
+				throw new MyException("월별 생산계획 페이지를 불러올 수 없습니다.");
+			}
 		
 		return mav;
 	}
@@ -82,21 +110,57 @@ public class ProductPlanController {
 	@ResponseBody
 	public ModelAndView showBarChart(ModelAndView mav,
 									 @RequestParam String productNo,
+									 @RequestParam String year,
 									 HttpServletResponse response) {
 		
-		try {
-			response.setContentType("text/html;charset=utf-8");
-			List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(productNo);
-			
-			mav.addObject("barData", barData);
-			mav.setViewName("jsonView");
-		} catch (Exception e) {
-			throw new MyException("차트 데이터를 불러오는 중에 에러가 발생했습니다.");
-		}
-		
+			try {
+				response.setContentType("text/html;charset=utf-8");
+				
+				Map<String, String> param = new HashMap<>();
+				param.put("productNo", productNo);
+				param.put("year", year);
+				
+				//선택된 제품 현황 데이터
+				int spPlan = productPlanService.selectTotalEpPlan(param);
+				int spResult = productPlanService.selectTotalEpResult(param);
+				int spAttainment = (100*spResult)/spPlan;
+				
+				String spPlanStr = NumberFormat.getInstance().format(spPlan);
+				String spResultStr = NumberFormat.getInstance().format(spResult);
+				String spAttainmentStr = NumberFormat.getInstance().format(spAttainment);
+				
+				Map<String, String> selectedStatus = new HashMap<>();
+				selectedStatus.put("spPlan", spPlanStr);
+				selectedStatus.put("spResult", spResultStr);
+				selectedStatus.put("spAttainment", spAttainmentStr);
+				
+				List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(param);
+				JSONArray JbarData = convertListToJson(barData);
+				
+				mav.addObject("selectedStatus", selectedStatus);
+				mav.addObject("barData", JbarData);
+				mav.setViewName("jsonView");
+			} catch (Exception e) {
+				throw new MyException("차트 데이터를 불러오는 중 오류가 발생했습니다.");
+			}
 		
 		return mav;
 	}
+	
+	@RequestMapping("/productplan/predictNextOutput.do")
+	public ModelAndView predictNextOutput(ModelAndView mav,
+										  @RequestParam("productName") String productName) {
+		
+		String ppDate = productPlanService.productionPlanDate();
+		double outputSum = productPlanService.sumLast3Months(productName);
+		int avg = (int)Math.round(outputSum/3);
+		
+		mav.addObject("ppDate", ppDate);
+		mav.addObject("avg", avg);
+		mav.setViewName("productplan/predictNextOutput");
+		return mav;
+	}
+	
 	
 	//============================원재료 구매계획============================
 	//헤더 ->
@@ -108,7 +172,6 @@ public class ProductPlanController {
 			List<Map<String, String>> firstPL = productPlanService.selectFirstByPL();
 			JSONArray JfirstPL = convertListToJson(firstPL);
 			mav.addObject("firstPL", JfirstPL);
-			mav.addObject("beforeSearch","1");
 			mav.setViewName("productplan/purchasePlan");
 		} catch (Exception e) {
 			throw new MyException("페이지를 불러올 수 없습니다.");
@@ -117,12 +180,31 @@ public class ProductPlanController {
 		return mav;
 	}
 	
+	@RequestMapping("/productplan/showRequireCalByProduct.do")
+	@ResponseBody
+	public ModelAndView showRequireCalByProduct(ModelAndView mav,
+												@RequestParam String productNo,
+												HttpServletResponse response) {
+		
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			List<Map<String, String>> requireCal = productPlanService.eachAmountByProduct(productNo);
+			mav.addObject("requireCal", requireCal);
+			
+			mav.setViewName("jsonView");
+		} catch (Exception e) {
+			throw new MyException("소요량계산 테이블 불러오기 실패!");
+		}
+		return mav;
+	}
+	
 	@RequestMapping("/productplan/endProductList.do")
 	public ModelAndView searchSpecify(ModelAndView mav,
-									  @RequestParam("plan") String plan) {
+	  								  @RequestParam(value="plan") String plan) {
 		
 		try {
 			mav.addObject("plan", plan);
+			mav.addObject("year", "all");
 			mav.setViewName("productplan/endProductList");
 		} catch (Exception e) {
 			throw new MyException("제품리스트를 불러오는 중에 오류가 발생했습니다.");
@@ -133,40 +215,43 @@ public class ProductPlanController {
 	@RequestMapping(value="/productplan/endProductListPage.do")
 	@ResponseBody
 	public ModelAndView selectEndProduct(ModelAndView mav,
-										 @RequestParam("plan") String plan,
+										 @RequestParam(value="plan") String plan,
+										 @RequestParam(value="year") String year,
 										 @RequestParam(defaultValue="1") int cPage, HttpServletResponse response) {
 		
-		try {
-			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.setContentType("text/html;charset=UTF-8");
 
-			final int numPerPage = 10;
-			int totalContents = 0;
-			List<Map<String, String>> list  = new ArrayList<>();
-			switch(plan) {
-			case "product":
-				list = productPlanService.selectProduction(cPage, numPerPage);
-				totalContents= productPlanService.selectTotalContentsByP();
-				break;
+				final int numPerPage = 10;
+				int totalContents = 0;
+				List<Map<String, String>> list  = new ArrayList<>();
+				switch(plan) {
+				case "product":
+					list = productPlanService.selectProduction(cPage, numPerPage, year);
+					logger.info("투썸={}",list);
+					logger.info("year={}", year);
+					totalContents= productPlanService.selectTotalContentsByP(year);
+					break;
+					
+				case "purchase":
+					list = productPlanService.selectEndProduct(cPage, numPerPage);
+					totalContents= productPlanService.selectTotalContentsByEp();
+					break;
+				}
 				
-			case "purchase":
-				list = productPlanService.selectEndProduct(cPage, numPerPage);
-				totalContents= productPlanService.selectTotalContentsByEp();
-				break;
+				String url = "endProductListPage.do?plan="+plan+"&year="+year;
+				String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
+				
+				mav.addObject("list", list);
+				mav.addObject("totalContents", totalContents);
+				mav.addObject("cPage", cPage);
+				mav.addObject("numPerPage", numPerPage);
+				mav.addObject("pageBar", pageBar);
+				
+				mav.setViewName("jsonView");
+			} catch (Exception e) {
+				throw new MyException("제품리스트를 불러오는 중 오류가 발생했습니다.");
 			}
-			
-			String url = "endProductListPage.do?plan="+plan;
-			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, url);
-			
-			mav.addObject("list", list);
-			mav.addObject("totalContents", totalContents);
-			mav.addObject("cPage", cPage);
-			mav.addObject("numPerPage", numPerPage);
-			mav.addObject("pageBar", pageBar);
-			mav.addObject("AfterSearch","2");
-			mav.setViewName("jsonView");
-		} catch (Exception e) {
-			throw new MyException("제품리스트 페이지 오류발생!");
-		}
 		
 		return mav;
 	}
@@ -175,12 +260,13 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/showChartByProduct.do")
 	@ResponseBody
 	public ModelAndView showChartByProduct(ModelAndView mav,
-										   @RequestParam String productNo,
+										   @RequestParam("productNo") String productNo,
 										   HttpServletResponse response) {
 		
 		try {
 			response.setContentType("text/html;charset=UTF-8");
 			List<Map<String, String>> graphData = productPlanService.eachAmountByProduct(productNo);
+			
 			mav.addObject("graphData", graphData);
 			mav.setViewName("jsonView");
 		} catch (Exception e) {
@@ -245,7 +331,7 @@ public class ProductPlanController {
 	}
 	//작업지시서 등록 입력폼 - 세부사항 검색
 	@RequestMapping("/productplan/searchDetails.do")
-	public ModelAndView searchDetails(@RequestParam String searchType,
+	public ModelAndView searchDetails(@RequestParam("searchType") String searchType,
 									  ModelAndView mav) {
 		
 		try {
