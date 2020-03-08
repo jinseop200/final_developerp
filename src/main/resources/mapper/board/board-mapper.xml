@@ -73,5 +73,19 @@
 		<delete id="boardComment2Delete">
 			delete board_comment where board_comment_ref=${BoardCommentNo}
 		</delete>
-	
+		<select id="updateBoard" resultType="BoardCategory">
+		select * from board_category 
+		<if test="_parameter!='관리자'">
+		where category_writer=#{categoryWriter}
+		</if>
+		</select>
+		<delete id="boardDelete">
+		delete board_category where category_No=#{categoryNo}
+		</delete>
+		<select id="boardModify" resultType="BoardCategory">
+			select * from board_category where category_No=#{categoryNo}
+		</select>
+		<update id="boardModifyEnd">
+			update board_category set category_comment=#{categoryComment},category_Title=#{categoryTitle},board_no=#{boardNo},category_date=#{categoryDate} where category_no=#{categoryNo}
+		</update>
 </mapper>

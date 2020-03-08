@@ -149,4 +149,45 @@ public class BoardController {
 		mav.setViewName("board/boardList2");
 		return mav;
 	}
+	@RequestMapping("board/UpdateBoardForm.do")
+	public ModelAndView UpdateBoard(ModelAndView mav,@RequestParam("categoryWriter") String categoryWriter) {
+		System.out.println("FDFDF"+categoryWriter);
+		List<BoardCategory> list=boardService.updateBoard(categoryWriter);
+		System.out.println("fdfdfd"+list);
+		
+		mav.addObject("list",list);
+		mav.setViewName("board/boardUpdateForm");
+		return mav;
+	}
+	@RequestMapping("board/boardDelete.do")
+	public ModelAndView boardDelete(ModelAndView mav,@RequestParam("categoryNo") int categoryNo) {
+		System.out.println("FDFDF"+categoryNo);
+		int result=boardService.boardDelete(categoryNo);
+		
+	
+		mav.addObject("msg",result>0?"게시물 삭제 성공":"게시물 삭제 실패");
+		mav.addObject("loc","/board/boardList.do");
+		mav.setViewName("common/msg");
+		return mav;
+	}
+	@RequestMapping("board/boardModifyEnd.do")
+	public ModelAndView boardModifyEnd(ModelAndView mav,BoardCategory boardCategory) {
+		
+		int result=boardService.boardModifyEnd(boardCategory);
+		mav.addObject("msg",result>0?"게시물 수정 성공":"게시물 수정 실패");
+		mav.addObject("loc","/board/boardList.do");
+		mav.setViewName("common/msg");
+		return mav;
+	}
+	@RequestMapping("board/boardModify.do")
+	public ModelAndView boardModify(ModelAndView mav,@RequestParam("categoryNo") int categoryNo) {
+		System.out.println("FDFDF"+categoryNo);
+		BoardCategory boardCategory=boardService.boardModify(categoryNo);
+		List<Board> board = new ArrayList<>();
+		board = boardService.selectBoardType();
+		mav.addObject("board",board);
+		mav.addObject("boardCategory",boardCategory);
+		mav.setViewName("board/boardModifyForm");
+		return mav;
+	}
 }

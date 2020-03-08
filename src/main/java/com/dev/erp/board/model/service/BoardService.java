@@ -39,6 +39,14 @@ public interface BoardService {
 
 	int boardComment2Delete(BoardComment boardComment);
 
+	List<BoardCategory> updateBoard(String categoryWriter);
+
+	int boardDelete(int categoryNo);
+
+	BoardCategory boardModify(int categoryNo);
+
+	int boardModifyEnd(BoardCategory boardCategory);
+
 	
 	
 	

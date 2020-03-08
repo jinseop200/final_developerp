@@ -81,4 +81,24 @@ import com.dev.erp.board.model.vo.BoardComment;
 			return sqlSession.delete("board.boardComment2Delete",boardComment);
 		}
 
+		@Override
+		public List<BoardCategory> updateBoard(String categoryWriter) {
+			return sqlSession.selectList("board.updateBoard",categoryWriter);
+		}
+
+		@Override
+		public int boardDelete(int categoryNo) {
+			return sqlSession.delete("board.boardDelete",categoryNo);
+		}
+
+		@Override
+		public BoardCategory boardModify(int categoryNo) {
+			return sqlSession.selectOne("board.boardModify", categoryNo);
+		}
+
+		@Override
+		public int boardModifyEnd(BoardCategory boardCategory) {
+			return sqlSession.update("board.boardModifyEnd",boardCategory);
+		}
+
 }

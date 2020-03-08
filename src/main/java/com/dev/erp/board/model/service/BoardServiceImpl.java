@@ -83,6 +83,26 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.boardComment2Delete(boardComment);
 	}
 
+	@Override
+	public List<BoardCategory> updateBoard(String categoryWriter) {
+		return boardDAO.updateBoard(categoryWriter);
+	}
+
+	@Override
+	public int boardDelete(int categoryNo) {
+		return boardDAO.boardDelete(categoryNo);
+	}
+
+	@Override
+	public BoardCategory boardModify(int categoryNo) {
+		return boardDAO.boardModify(categoryNo);
+	}
+
+	@Override
+	public int boardModifyEnd(BoardCategory boardCategory) {
+		return boardDAO.boardModifyEnd(boardCategory);
+	}
+
 
 
 

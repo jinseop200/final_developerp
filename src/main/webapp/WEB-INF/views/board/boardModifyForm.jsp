@@ -3,35 +3,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+ <div class="card shadow mb-4" style="clear:both;">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered quality-table" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%Date now = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
-<title>게시물 작성</title>
+<title>게시물 수정</title>
 </head>
 <body>
       <!-- search-container start -->
       <div id="insert-container">
-          <form class="needs-validation" action="${pageContext.request.contextPath}/board/enrollBoard.do" 
+          <form class="needs-validation" action="${pageContext.request.contextPath}/board/boardModifyEnd.do" 
           		name="boardEnrollFrm" method="post">
           		<div>
-          		<input type="hidden" value="${memberLoggedIn.empName}" id="categoryWriter" name="categoryWriter" />
+          		<input type="hidden" value="${boardCategory.categoryWriter}" id="categoryWriter" name="categoryWriter" />
+          		<input type="hidden" value="${boardCategory.categoryNo}" id="categoryNo" name="categoryNo" />
           		
           		</div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">일  자</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="categoryDate" name="categoryDate" value=<%=sdf.format(now)%> readonly >
+                    <input type="text" id="categoryDate" name="categoryDate" value=<%=sdf.format(now)%> readonly  >
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">타입</label>&nbsp;&nbsp;&nbsp;&nbsp;
-						<select name="boardType" id="boardType" style="width:100px">
+						<select name="boardNo" id="boardNo" style="width:100px">
 							<option value="" selected disabled >게시판</option>
 								<c:forEach items="${board}" var="d">
-									<option value="${d.boardNo}">${d.boardName}</option>
+									<option value="${d.boardNo}" ${d.boardNo eq boardCategory.boardNo? 'selected':"" }>${d.boardName}</option>
 								</c:forEach>
 						</select>
                     </div>
@@ -39,46 +49,18 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                   <div class="form-row">
                     <div class="col-md-6 mb-3">
                     <label for="datepicker">제 목</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="categoryTitle" name="categoryTitle" required >
+                    <input type="text" id="categoryTitle" name="categoryTitle" value='${boardCategory.categoryTitle}' required >
                     </div>
                 </div>   
                 
-                
-             <!--        <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="boardMiddle">참조자 &nbsp; </label>&nbsp;&nbsp;
-                        <input type="text" id="boardMiddle" name="boardMiddle" class="form-control bg-light small" required  aria-label="Search" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary searchBoard" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-                </div> -->
-                
-               <%--  <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="type">구  분 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <tr>
-						<td>
-							<select name="boardType" id="boardType" required>
-								<option value="" selected disabled >구분</option>
-									<c:forEach items="${boaTypeList}" var="b">
-										<option value="${b.BOA_TYPE}">${b.BOA_TYPE}</option>
-									</c:forEach>
-							</select>
-						</td>
-					</tr>
-					
-                    </div>
-                </div> --%>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="storeNo">내  용</label>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <textarea class="form-control quality-comment" required name="categoryComment" cols="80" rows="5" aria-label="With textarea"></textarea>	
+                        <textarea class="form-control quality-comment" required name="categoryComment" cols="80" rows="5" aria-label="With textarea" >${boardCategory.categoryComment}</textarea>	
                     </div>
                 </div>
 				<div class="modal-footer">
-        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">등록</button>
+        			<button type="submit" id="FrmBtn" name="submit" class="btn btn-primary">수정</button>
             		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         		</div>       
             </form>
