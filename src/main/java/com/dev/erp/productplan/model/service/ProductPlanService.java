@@ -47,4 +47,6 @@ public interface ProductPlanService {
 
 	int sumLast3Months(String productName);
 
+	int insertOrderRequest(Map<String, String> map);
+
 }

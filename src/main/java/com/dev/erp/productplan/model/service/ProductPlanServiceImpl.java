@@ -119,4 +119,9 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.sumLast3Months(productName);
 	}
 
+	@Override
+	public int insertOrderRequest(Map<String, String> map) {
+		return productPlanDAO.insertOrderRequest(map);
+	}
+
 }

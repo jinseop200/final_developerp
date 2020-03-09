@@ -49,4 +49,6 @@ public interface ProductPlanDAO {
 
 	int sumLast3Months(String productName);
 
+	int insertOrderRequest(Map<String, String> map);
+
 }

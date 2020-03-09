@@ -69,6 +69,8 @@
 	            <div class="col-md-6 mb-3">
 	                <label for="type">원재료명</label>&emsp;
 	                <input type="text" id="rmName" name="rmName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${rmName }" readonly>
+	                <input type="hidden" name="rmNo" id="rmNo" />
+	                <input type="hidden" name="vendorNo" id="vendorNo" />
 	            </div>
 	            <div class="col-md-6 mb-3">
 	                <label for="storeNo">필요수량</label>&emsp;

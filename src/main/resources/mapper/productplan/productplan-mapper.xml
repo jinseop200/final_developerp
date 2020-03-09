@@ -144,6 +144,12 @@
 		
 	</resultMap> -->
 	
+	<insert id="insertOrderRequest">
+		insert into order_request
+		values(
+			
+		)
+	</insert>
 	
 	<!-- 작업지시서 쿼리문 -->
 	<select id="selectJobOrder" resultMap="joMap" >
