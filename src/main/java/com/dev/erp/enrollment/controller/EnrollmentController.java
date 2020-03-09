@@ -736,6 +736,41 @@ public class EnrollmentController {
 		return mav;
 	}
 	
+	@RequestMapping("/enrollment/updateRawMeterial.do")
+	public ModelAndView updateRawMeterial(@RequestParam("productNo") String productNo,
+									 @RequestParam("accountNo") String accountNo,
+						 		 	 @RequestParam("productName") String productName,
+						 		 	 @RequestParam("inPrice") String inPrice,
+						 		 	 @RequestParam("outPrice") String outPrice,
+						 		 	 @RequestParam("spec") String spec,
+						 		 	 @RequestParam("tol") String tol,
+						 		 	 @RequestParam("delivery") String delivery,
+										 ModelAndView mav) {
+		/*try {*/
+			Map<String, String> product = new HashMap<>();
+			product.put("productNo", productNo);
+			product.put("accountNo", accountNo);
+			product.put("productName", productName);
+			product.put("inPrice", inPrice);
+			product.put("outPrice", outPrice);
+			product.put("spec", spec);
+			product.put("tol", tol);
+			product.put("delivery", delivery);
+			
+			//loger.info("product@controller={}",product);
+			
+			int result = enrollmentservice.updateRawMeterial(product); 
+			
+			//loger.info("result@Controller={}",result);
+			
+			mav.setViewName("redirect:/enrollment/productEnrollment.do");
+	/*	} catch(Exception e) {
+			//loger.error(e.getMessage(), e);
+			throw new MyException("제품 수정 오류");
+		}*/
+		return mav;
+	}
+	
 	@RequestMapping("/enrollment/updateProductNoForProductList.do")
 	public ModelAndView updateProductNoForProductList(@RequestParam String productNoCur,
 										 @RequestParam String productNoCha,

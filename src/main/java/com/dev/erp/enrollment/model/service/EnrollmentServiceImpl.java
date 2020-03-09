@@ -212,6 +212,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public int selectAllReceivingLotNo(String thisCode) {
 		return enrollmentDAO.selectAllReceivingLotNo(thisCode);
 	}
+
+	@Override
+	public int updateRawMeterial(Map<String, String> product) {
+		return enrollmentDAO.updateRawMeterial(product);
+	}
 	
 	
 }

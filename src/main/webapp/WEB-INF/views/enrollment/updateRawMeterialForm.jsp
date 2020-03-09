@@ -12,7 +12,7 @@
       <!-- search-container start -->
       <div id="search-container">
           <form class="needs-validation"
-           action="${pageContext.request.contextPath}/enrollment/updateProduct.do"
+           action="${pageContext.request.contextPath}/enrollment/updateRawMeterial.do"
            method="POST">
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
@@ -26,15 +26,6 @@
 					     <label for="accountNo">거래처등록번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="number" id="accountNo" name="accountNo" class="form-control bg-light small" placeholder="거래처등록번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
 					     <button class="btn btn-primary searchBtn" type="button" value="accountNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
 						 <i class="fas fa-search fa-sm"></i>
 						 </button>
 					</div>

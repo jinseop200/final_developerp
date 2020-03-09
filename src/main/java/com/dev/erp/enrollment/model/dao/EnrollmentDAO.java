@@ -83,4 +83,6 @@ public interface EnrollmentDAO {
 
 	int selectAllReceivingLotNo(String thisCode);
 
+	int updateRawMeterial(Map<String, String> product);
+
 }

@@ -216,6 +216,11 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	public int selectAllReceivingLotNo(String thisCode) {
 		return sqlsession.selectOne("enrollment.selectAllReceivingLotNo", thisCode);
 	}
+
+	@Override
+	public int updateRawMeterial(Map<String, String> product) {
+		return sqlsession.update("enrollment.updateRawMeterial", product);
+	}
 	
 	
 }

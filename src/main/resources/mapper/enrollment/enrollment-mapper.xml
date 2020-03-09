@@ -261,4 +261,17 @@
 		where rm_no = #{thisCode} and store_no = 2  <!-- 2인것만 -->
 	</select>
 	
+	<update id="updateRawMeterial">
+		update raw_material
+		set
+		VENDOR_NO = #{accountNo},
+		RM_NAME = #{productName},
+		INPRICE = #{inPrice},
+		OUTPRICE = #{outPrice},
+		SPEC = #{spec},
+		TOL = #{tol},
+		delivery = #{delivery}
+		where RM_NO = #{productNo}
+	</update>	
+	
 </mapper>
