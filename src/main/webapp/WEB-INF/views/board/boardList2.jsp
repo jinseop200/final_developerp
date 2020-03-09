@@ -53,13 +53,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered board-list-table" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered quality-table board" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>                    
                       <th>No</th>
                       <th>제목</th>
                       <th>작성자</th>
-                      
                       <th>작성일자</th>
                       <th>타입</th>
                       <th>보기</th>
@@ -68,18 +67,14 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                   <tbody>
                 	<c:forEach items="${boardlist }" var="l" varStatus="vs">
 	                    <tr class="getTr">
-	                      <td id="${l.docNo}">${vs.count}</td>
-	                      <td>${l.regDate }</td>
-	                      <td>${l.docTitle }</td>
-	                      <td>${l.docType }</td>
-	                      <td>${l.docWriter}</td>
-	                      <td>${l.docLastapproval}</td>
-	                      <td>${l.docStatus}</td>
-	                      <td><a href="#" />보기</td>
+	                      <td id="${l.CATEGORY_NO}" class="categoryNo">${vs.count}</td>
+	                      <td>${l.CATEGORY_TITLE }</td>
+	                      <td>${l.CATEGORY_WRITER }</td>
+	                      <td>${l.CATEGORY_DAY}</td>
+	                      <td>${l.BOARD_NAME}</td>
+	                      <td><a href="#" id="${l.CATEGORY_NO}" class="boardDetailView">보기</a></td>
 	                    </tr>
                   	</c:forEach>
-                  </tbody>
-                  
                   </tbody>
                 </table>
               </div>
@@ -108,14 +103,14 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
   <!--UpdateBoard Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="boardUpdateModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header boardAddModal">
+        <div class="modal-content boardUpdateModal">
+        <div class="modal-header boardUpdateModal">
             <h5 class="modal-title controll-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body boardAddModal">
+        <div class="modal-body controll-modal-body boardUpdateModal">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
@@ -161,35 +156,20 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 </div>
   
 <script>
+$(()=>{
+	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo=${categoryNo}",function(){
+	    $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
+	    $('#boardDetailView').modal({show:true});
+	    $(".modal-backdrop.in").css('opacity', 0.4);
+	    $(".controll-title").html("");
+	    $(".controll-title").html("상세보기");
+	});
+})
+
 
 /* $(".btn-primary").click(function(){
 var boardNo= $(this).closest("tr").children().eq(0).html(); */
-$(()=>{
-	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo=${categoryNo}",function(){
-        $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
-        $('#boardDetailView').modal({show:true});
-        $(".modal-backdrop.in").css('opacity', 0.4);
-        $(".controll-title").html("");
-        $(".controll-title").html("상세보기");
-	});
-	$.ajax({
-		url:"${pageContext.request.contextPath}/board/boardAllList.do",
-		dataType:"json",
-		success:data=>{
-			console.log(data);
-			$(".board-list-table tbody").children().remove();
-			var list = data.list;
-			for(var i in list){
-				let p = list[i];
-				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
-			}
-		},
-		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
 	function detailBoard(){
-		console.log("!23123124124214");
 		var tr = $(this).parent().parent();
 		var td = tr.children();
 		console.log(tr);
@@ -206,7 +186,6 @@ $(()=>{
 		});
 		
 	};
-});
 $("#board-insert-button").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/board/insertBoardForm.do",function(){
         $('#boardAddModal').modal({backdrop: 'static', keyboard: false});
@@ -231,41 +210,28 @@ $("#boardType").change(function(){
 	var boardNo = $("#boardType").val();
 	console.log(boardNo);
 	if(boardNo==0) {
-		url_ = "${pageContext.request.contextPath}/board/boardAllList.do";
+		location.href = "${pageContext.request.contextPath}/board/boardList.do";
 	}
 	else {
-		url_="${pageContext.request.contextPath}/board/boardClubList.do?boardNo="+boardNo;
+		location.href ="${pageContext.request.contextPath}/board/boardClubList.do?boardNo="+boardNo;
 	}
-		$.ajax({
-			url:url_,
-			dataType:"json",
-			success:data=>{
-				console.log(data);
-				var list = data.list;
-				$(".board-list-table tbody").children().remove();
-				for(var i in list){
-					let p = list[i];
-					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
-				}
-			},
-			error : (jqxhr, textStatus, errorThrown)=>{
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
 });
 
-function detailBoard(tdCategoryNo){	
-	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+tdCategoryNo,function(){
+
+$(".boardDetailView").click(function(){
+	var boardNo = $(this).attr("id");
+	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+boardNo,function(){
         $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
         $('#boardDetailView').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         $(".controll-title").html("");
         $(".controll-title").html("상세보기");
 	});
+	});
 	
-};
 
 </script>
+
 <style>
 #myModal{
 	z-index: 1060;

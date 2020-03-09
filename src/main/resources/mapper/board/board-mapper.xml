@@ -42,7 +42,7 @@
 			</select>
 			
 			<select id="selectBoardCategoryList" resultType="map">
-				select * from board_category C left join board B on C.board_no = B.board_no 
+				select C.*, B.BOARD_NAME BOARD_NAME, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY  from board_category C left join board B on C.board_no = B.board_no 
 			</select>	
 			
 			<select id="selectBoardClubList" resultType="map">
