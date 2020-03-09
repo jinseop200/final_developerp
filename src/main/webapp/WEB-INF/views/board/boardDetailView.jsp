@@ -57,7 +57,7 @@ String name=(String)request.getAttribute("name");
 			  <input type="hidden" name="BoardCommentLevel" value="1" />
 			  <input type="hidden" name="BoardCommentRef" value="0" />
 			  
-			  <textarea name="BoardCommentContent" cols="70" rows="3" required></textarea>
+			  <textarea name="BoardCommentContent" cols="63" rows="3" required></textarea>
 			  <input type="submit" id="btn-insert" value="등록" />
 		
 		</form>
