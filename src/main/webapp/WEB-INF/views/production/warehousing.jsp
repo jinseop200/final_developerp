@@ -258,6 +258,9 @@
 .ui-datepicker-trigger{
 	display: none;
 }
+.modal{
+	overflow: auto!important;
+}
 </style>
 <script>
 	var rArr = [];
