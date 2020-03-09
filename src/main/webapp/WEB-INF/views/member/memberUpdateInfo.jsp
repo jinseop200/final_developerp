@@ -117,6 +117,10 @@ function regExpTest(regExp, el, msg){
 				</tr>
 				<tr>
 					<td><input class="form-control input-text" type="hidden" 
+						name="profileImage" id="profileImage" placeholder="프로필사진" value="${memberLoggedIn.profileImage}" /></td>
+				</tr>
+				<tr>
+					<td><input class="form-control input-text" type="hidden" 
 						name="ssn1" id="ssn1" placeholder="주민번호" value="${memberLoggedIn.empNo }" /></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>

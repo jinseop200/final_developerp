@@ -20,7 +20,7 @@
   <li class="nav-item">
     <span class="nav-link" id="messageSenderForm" >보낸쪽지함</span>
   </li>
-  <li class="nav-item" style="padding-left:170px; ">
+  <li class="nav-item" style="padding-left:80px; ">
     <span class="nav-link" id="message-insert-button">신규</span>
   </li>
 </ul>
@@ -28,7 +28,7 @@
      <table class="table table-bordered message-list-table" style="text-align:center;" id="dataTable" width="100%" cellspacing="0">
        <thead>
          <tr>
-           <th style="padding:12px 15px;">No</th>
+           <th style="padding:12px 12px;">No</th>
            <th>제목</th>
            <th class="messageShow">보낸사람</th>
            <th class="messageHide">받는사람</th>

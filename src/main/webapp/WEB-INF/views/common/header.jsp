@@ -517,10 +517,7 @@
 			        <div class="modal-body controll-modal-body-detailMessage">
 			            <!-- <p>Modal body text goes here.</p> -->
 			        </div>
-			        <div class="modal-footer">
-			          <button type="button" class="btn btn-primary detailMessage-answer">답장</button>
-			          <button type="button" class="btn btn-secondary insert detailMessage-close">닫기</button>
-			      </div>
+			        
 			        </div>
 			    </div>
 			</div>
@@ -590,7 +587,6 @@
 			
 			function changeValue(obj){
 					$("#profileImgSubmit").submit();
-					alert("프로필사진이 수정되었습니다");
 	    	       	$("li.nav-item.dropdown.no-arrow.mypage").addClass("show");
 	    	       	$("a#userDropdown.nav-link.dropdown-toggle.mypage").attr("aria-expanded","true");
 	    	       	$("div.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in.mypage").addClass("show");
