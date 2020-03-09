@@ -299,20 +299,15 @@ public class MemberController {
 										  .getServletContext()
 										  .getRealPath("/resources/upload/member");
 			Member member = new Member();
-			//동적으로 directory 생성하기
 			File dir = new File(saveDirectory);
 			if(dir.exists() == false)
 				dir.mkdir();
-			//MultipartFile객체 파일업로드 처리 시작//////////////
 				if(!profileImage.isEmpty()) {
-					//파일명 재생성
 					String originalFileName = profileImage.getOriginalFilename();
 					String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 					int rndNum = (int)(Math.random()*1000);
 					String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
-					
-					//서버컴퓨터에 파일저장
 					try {
 						profileImage.transferTo(new File(saveDirectory+"/"+renamedFileName));
 					} catch (IllegalStateException e) {
@@ -323,16 +318,12 @@ public class MemberController {
 					member.setEmail(email);
 					member.setProfileImage(renamedFileName);
 				}
-			//MultipartFile객체 파일업로드 처리 끝//////////////
-			//2.업무로직
 			int result = memberService.updateProfileImage(member);
 			member = memberService.selectOneMember(email);
 			if(result>0) {
-				//3. view단 처리		
 				mav.addObject("memberLoggedIn",member);
 				mav.setViewName("main/main");
 			}
-			
 			return mav;
 		}catch(Exception e) {
 			throw new MyException("조회 실패! 관리자에게 문의하세요!");
