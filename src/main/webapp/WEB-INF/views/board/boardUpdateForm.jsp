@@ -73,7 +73,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 </div>
 <style>
 .modal-content.boardUpdateModal{	
-	width:119%;
+	width:140%;
 }
 .card.shadow.mb-4.updateBoard{
 	height:500px;
