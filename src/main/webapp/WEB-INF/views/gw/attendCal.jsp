@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function here(date){
 	 	var url = "<%=request.getContextPath()%>/attend/attendForm.do?date="+date+"&email="+'${memberLoggedIn.email}';
 		var title = "출/퇴근 기록부";
-		var spec = "left=500px, top=100px, width=500px, height=367px";
+		var spec = "left=500px, top=100px, width=400px, height=280px";
 		var popup = open("", title, spec);
 		
 		var frm = document.attendForm;
