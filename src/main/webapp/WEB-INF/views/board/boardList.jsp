@@ -260,6 +260,7 @@ function detailBoard(tdCategoryNo){
 };
 
 </script>
+
 <style>
 #myModal{
 	z-index: 1060;

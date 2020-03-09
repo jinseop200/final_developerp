@@ -13,7 +13,21 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+  
+  
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="float:right;">
+		<div class="input-group" style="margin:30px;">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="button" id="board-insert-button">
+					  게시판 등록
+				</button> &nbsp;&nbsp;&nbsp;&nbsp;
+				<button class="btn btn-primary" type="button" id="board-update-button">
+					  게시판 수정/삭제
+				</button> &nbsp;&nbsp;&nbsp;&nbsp;
+			
+			</div>
+		</div>
+	</form>
 <!-- Page Heading -->
 
 			     <div class="form-row">
@@ -51,7 +65,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                       <th>보기</th>
                     </tr>
                   </thead>
-                  <tbody >
                   <tbody>
                 	<c:forEach items="${boardlist }" var="l" varStatus="vs">
 	                    <tr class="getTr">
@@ -72,10 +85,28 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
               </div>
             </div>
           </div>
-           <button class="btn btn-primary" type="button" id="board-insert-button">신규 </button>
+       
           
   <!--insertBoard Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="boardAddModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header boardAddModal">
+            <h5 class="modal-title controll-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body controll-modal-body boardAddModal">
+            <!-- <p>Modal body text goes here.</p> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+  <!--UpdateBoard Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="boardUpdateModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header boardAddModal">
@@ -150,7 +181,7 @@ $(()=>{
 			var list = data.list;
 			for(var i in list){
 				let p = list[i];
-				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
+				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
 			}
 		},
 		error : (jqxhr, textStatus, errorThrown)=>{
@@ -186,6 +217,16 @@ $("#board-insert-button").click(function(){
 	});
 });
 
+$("#board-update-button").click(function(){
+ $('.controll-modal-body').load("${pageContext.request.contextPath}/board/UpdateBoardForm.do?categoryWriter=${memberLoggedIn.empName}",function(){
+        $('#boardUpdateModal').modal({backdrop: 'static', keyboard: false});
+        $('#boardUpdateModal').modal({show:true});
+        $(".modal-backdrop.in").css('opacity', 0.4);
+        $(".controll-title").html("");
+        $(".controll-title").html("게시판 수정/삭제");
+	});
+});
+
 $("#boardType").change(function(){
 	var boardNo = $("#boardType").val();
 	console.log(boardNo);
@@ -204,7 +245,7 @@ $("#boardType").change(function(){
 				$(".board-list-table tbody").children().remove();
 				for(var i in list){
 					let p = list[i];
-					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i))+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
+					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
 				}
 			},
 			error : (jqxhr, textStatus, errorThrown)=>{
