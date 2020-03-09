@@ -18,13 +18,10 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 			
 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4" style="clear:both;">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
-            </div>
+          <div class="card shadow mb-4 updateBoard" style="clear:both;">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered board-list-table" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered board-list-table " id="dataTable"  width="100%" cellspacing="0">
                   <thead>
                     <tr>                    
                       <th>No</th>
@@ -36,7 +33,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                       <th>삭제</th>
                     </tr>
                   </thead>
-                  <tbody >
                   <tbody>
                 	<c:forEach items="${list}" var="l" varStatus="vs">
 	                    <tr class="getTr">
@@ -50,23 +46,26 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 	                    </tr>
                   	</c:forEach>
                   </tbody>
-                  
-                  </tbody>
                 </table>
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+          	<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+          </div>
+          
+          
  <!-- board-Modify- Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="boardModify">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content boardModify">
         <div class="modal-header">
             <h5 class="modal-title controll-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body boardDetailView">
+        <div class="modal-body controll-modal-body boardModify">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         <div class="modal-footer">
@@ -75,6 +74,15 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
         </div>
     </div>
 </div>
+<style>
+.modal-content.boardUpdateModal{	
+	width:119%;
+}
+.card.shadow.mb-4.updateBoard{
+	height:500px;
+	overflow-y:auto;
+}
+</style>
  <script>
  $(()=>{
  $("#board-Delete-button ").click(function(){
@@ -93,6 +101,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 	});
  });
  </script>
+ 
  
   <!-- Page level plugins -->
   <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>

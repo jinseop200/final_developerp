@@ -105,14 +105,14 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
   <!--UpdateBoard Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="boardUpdateModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header boardAddModal">
+        <div class="modal-content boardUpdateModal">
+        <div class="modal-header boardUpdateModal">
             <h5 class="modal-title controll-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body controll-modal-body boardAddModal">
+        <div class="modal-body controll-modal-body boardUpdateModal">
             <!-- <p>Modal body text goes here.</p> -->
         </div>
         
