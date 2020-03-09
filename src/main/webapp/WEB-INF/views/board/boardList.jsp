@@ -53,13 +53,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered board-list-table" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered quality-table board" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>                    
                       <th>No</th>
                       <th>제목</th>
                       <th>작성자</th>
-                      
                       <th>작성일자</th>
                       <th>타입</th>
                       <th>보기</th>
@@ -78,8 +77,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 	                      <td><a href="#" />보기</td>
 	                    </tr>
                   	</c:forEach>
-                  </tbody>
-                  
                   </tbody>
                 </table>
               </div>
@@ -171,11 +168,11 @@ $(()=>{
 		dataType:"json",
 		success:data=>{
 			console.log(data);
-			$(".board-list-table tbody").children().remove();
+			$(".quality-table.board tbody").children().remove();
 			var list = data.list;
 			for(var i in list){
 				let p = list[i];
-				$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
+				$(".quality-table.board tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
 			}
 		},
 		error : (jqxhr, textStatus, errorThrown)=>{
@@ -183,7 +180,6 @@ $(()=>{
 		}
 	});
 	function detailBoard(){
-		console.log("!23123124124214");
 		var tr = $(this).parent().parent();
 		var td = tr.children();
 		console.log(tr);
@@ -236,10 +232,10 @@ $("#boardType").change(function(){
 			success:data=>{
 				console.log(data);
 				var list = data.list;
-				$(".board-list-table tbody").children().remove();
+				$(".quality-table.board tbody").children().remove();
 				for(var i in list){
 					let p = list[i];
-					$(".board-list-table tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
+					$(".quality-table.board tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
 				}
 			},
 			error : (jqxhr, textStatus, errorThrown)=>{
