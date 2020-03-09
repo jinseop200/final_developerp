@@ -94,6 +94,7 @@
   $(()=>{
 	  
 	  
+	  
 	  $(".searchDocument.message").click(function(){
 	    	 $('.controll-modal-body-searhMessageList').load("${pageContext.request.contextPath}/message/messageSelectList.do",function(){
 	 	        $('#searhMessageList').modal({backdrop: 'static', keyboard: false});

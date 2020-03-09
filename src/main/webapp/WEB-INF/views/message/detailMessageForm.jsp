@@ -29,6 +29,14 @@
                         <textarea class="form-control detail-message-comment" placeholder="${message.message }" readonly name="messageContent" cols="80" rows="5" aria-label="With textarea"></textarea>	
                     </div>
                 </div>
+                <div class="modal-footer">
+                	<c:if test="${message.sender != memberLoggedIn.empName}">
+			          <button type="button" class="btn btn-primary detailMessage-answer" style="color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;">답장</button>
+			          </c:if>
+			          <button type="button" class="btn btn-secondary insert detailMessage-close">닫기</button>
+			      </div>
       </div>
          
 
@@ -82,8 +90,10 @@
 
 
   $(()=>{
+	  var sender = $("#insertSender").val();
+	  console.log(sender);
 	  $(".btn.detailMessage-answer").on('click',function(){
-			$('.controll-modal-body-answerMessage').load("${pageContext.request.contextPath}/message/answerMessageForm.do?sender=${message.sender}",function(){
+			$('.controll-modal-body-answerMessage').load("${pageContext.request.contextPath}/message/answerMessageForm.do?sender="+sender,function(){
 		        $('#answerMessage').modal({backdrop: 'static', keyboard: false});
 		        $('#answerMessage').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);

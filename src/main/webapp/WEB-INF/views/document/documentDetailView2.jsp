@@ -94,7 +94,7 @@ border:1px solid #ccc;
 				    													<td style="width:320px; text-align:center; color:black; font-size:14px;">${list.startDate}&nbsp;&nbsp;~&nbsp;&nbsp;${list.endDate}</td>
 		    														</c:if>
 		    														<c:if test="${list.docType!='휴가신청서'}">
-				    													<td style="width:85px; text-align:center;">작성일자</td>
+				    													<td style="width:95px; text-align:center;">작성일자</td>
 				    													<td style="width:320px; text-align:center; color:black;">${list.regDate }</td>
 		    														</c:if>
 		    													</tr>

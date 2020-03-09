@@ -224,7 +224,7 @@ public class MemberController {
 			param.put("password", encryptedPassword);
 			int result = memberService.updatePassword(param);
 			String msg="";
-			String loc="/main/main.do";
+			String loc="/main/main.do?email="+email;
 			if(result>0) {
 				msg="비밀번호 변경성공!";
 			}
@@ -260,9 +260,9 @@ public class MemberController {
 	public ModelAndView memberUpdateInfoEnd(ModelAndView mav,@RequestParam("email") String email,
 			@RequestParam("password") String password, @RequestParam("emp_name") String emp_name,
 			@RequestParam("dept_code") String dept_code, @RequestParam("job_code") String job_code,@RequestParam("ssn1") String ssn1,
-			@RequestParam("phone") String phone) {
+			@RequestParam("phone") String phone, @RequestParam("profileImage") String profileImage) {
 		try {
-			Member member = new Member(0,emp_name,ssn1,email,phone,dept_code,job_code,null,null,"N",password,"profile.png");
+			Member member = new Member(0,emp_name,ssn1,email,phone,dept_code,job_code,null,null,"N",password,profileImage);
 			String rawPassword=member.getPassword();
 			String encryptedPassword = bcryptPasswordEncoder.encode(rawPassword);
 			member.setPassword(encryptedPassword);
@@ -272,7 +272,7 @@ public class MemberController {
 			Map<String, String> jobOne = memberService.selectOneJob(email);
 				
 			String msg="";
-			String loc="/main/main.do";
+			String loc="/main/main.do?email="+email;
 			if(result>0) {
 				msg="회원정보수정성공!";
 				mav.addObject("memberLoggedIn", member);
@@ -322,7 +322,11 @@ public class MemberController {
 			member = memberService.selectOneMember(email);
 			if(result>0) {
 				mav.addObject("memberLoggedIn",member);
-				mav.setViewName("main/main");
+				String loc = "/main/main.do?email="+email;
+				String msg = "프로필사진이 수정되었습니다";
+				mav.addObject("msg",msg);
+				mav.addObject("loc",loc);
+				mav.setViewName("common/msg");
 			}
 			return mav;
 		}catch(Exception e) {
@@ -364,8 +368,6 @@ public class MemberController {
 		List<Map<String,String>> jobList = memberService.selectJobList();
 		String empNo1=member.getEmpNo().substring(0,6);
 		String empNo2=member.getEmpNo().substring(7,14);
-		System.out.println(empNo1+"Dfdfdf");
-		System.out.println(empNo2+"Dfdfdf");
 		mav.addObject("empNo1",empNo1);
 		mav.addObject("empNo2",empNo2);
 		mav.addObject("dept",deptList);
@@ -381,9 +383,6 @@ public class MemberController {
 	@RequestMapping("/member/memberManageModifyEnd.do")
 	public ModelAndView memberManageModifyEnd(ModelAndView mav,Member member,@RequestParam String empNo1,@RequestParam String empNo2) {
 		try {
-		System.out.println("fdfdfdfd"+member);
-		System.out.println(empNo1);
-		System.out.println(empNo2);
 		member.setEmpNo(empNo1+"-"+empNo2);
 		int result=memberService.memberManageModifyEnd(member);
 		mav.addObject("loc", "/member/memberManage.do");
