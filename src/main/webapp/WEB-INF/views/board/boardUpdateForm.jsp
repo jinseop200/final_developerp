@@ -9,9 +9,6 @@
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 <fmt:requestEncoding value="utf-8"/>
  <!-- Custom styles for this page -->
-     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link href="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <!-- Page Heading -->
 
@@ -21,7 +18,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
           <div class="card shadow mb-4 updateBoard" style="clear:both;">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered board-list-table " id="dataTable"  width="100%" cellspacing="0">
+                <table class="table table-bordered board-list-table "  width="100%" cellspacing="0">
                   <thead>
                     <tr>                    
                       <th>No</th>
@@ -103,10 +100,4 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
  </script>
  
  
-  <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/datatables-demo.js"></script>
  

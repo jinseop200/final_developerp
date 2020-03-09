@@ -48,16 +48,18 @@ public class BoardController {
 	}
 
 	@RequestMapping("/board/boardClubList.do")
-	@ResponseBody
-	public Map<String,Object> selectBoardClubList( @RequestParam("boardNo") int boardNo)
+	public ModelAndView selectBoardClubList(ModelAndView mav, @RequestParam("boardNo") int boardNo)
 	{
 		List<Map<String,Object>> boardClubList= new ArrayList<>();
+		List<Board> boardList = new ArrayList<>();
 		boardClubList = boardService.selectBoardClubList(boardNo);
-		logger.debug("boardClubList={}",boardClubList);
-		Map<String,Object> map = new HashMap<>();
-		map.put("list", boardClubList);
+		boardList = boardService.selectBoardList();
 		
-		return map;
+		mav.addObject("boardlist",boardClubList);
+		mav.addObject("board",boardList);
+		mav.setViewName("board/boardList");
+		
+		return mav;
 	}
 
 	@RequestMapping("/board/insertBoardForm.do")

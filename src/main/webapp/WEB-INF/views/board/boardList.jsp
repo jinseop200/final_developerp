@@ -67,14 +67,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                   <tbody>
                 	<c:forEach items="${boardlist }" var="l" varStatus="vs">
 	                    <tr class="getTr">
-	                      <td id="${l.docNo}">${vs.count}</td>
-	                      <td>${l.regDate }</td>
-	                      <td>${l.docTitle }</td>
-	                      <td>${l.docType }</td>
-	                      <td>${l.docWriter}</td>
-	                      <td>${l.docLastapproval}</td>
-	                      <td>${l.docStatus}</td>
-	                      <td><a href="#" />보기</td>
+	                      <td id="${l.CATEGORY_NO}" class="categoryNo">${vs.count}</td>
+	                      <td>${l.CATEGORY_TITLE }</td>
+	                      <td>${l.CATEGORY_WRITER }</td>
+	                      <td>${l.CATEGORY_DAY}</td>
+	                      <td>${l.BOARD_NAME}</td>
+	                      <td><a href="#" id="${l.CATEGORY_NO}" class="boardDetailView">보기</a></td>
 	                    </tr>
                   	</c:forEach>
                   </tbody>
@@ -159,26 +157,10 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
   
 <script>
 
+
+
 /* $(".btn-primary").click(function(){
 var boardNo= $(this).closest("tr").children().eq(0).html(); */
-$(()=>{
-	
-	$.ajax({
-		url:"${pageContext.request.contextPath}/board/boardAllList.do",
-		dataType:"json",
-		success:data=>{
-			console.log(data);
-			$(".quality-table.board tbody").children().remove();
-			var list = data.list;
-			for(var i in list){
-				let p = list[i];
-				$(".quality-table.board tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick='detailBoard("+p.CATEGORY_NO+");'>보기</a></td></tr>");
-			}
-		},
-		error : (jqxhr, textStatus, errorThrown)=>{
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
 	function detailBoard(){
 		var tr = $(this).parent().parent();
 		var td = tr.children();
@@ -196,7 +178,6 @@ $(()=>{
 		});
 		
 	};
-});
 $("#board-insert-button").click(function(){
  $('.controll-modal-body').load("${pageContext.request.contextPath}/board/insertBoardForm.do",function(){
         $('#boardAddModal').modal({backdrop: 'static', keyboard: false});
@@ -221,39 +202,25 @@ $("#boardType").change(function(){
 	var boardNo = $("#boardType").val();
 	console.log(boardNo);
 	if(boardNo==0) {
-		url_ = "${pageContext.request.contextPath}/board/boardAllList.do";
+		location.href = "${pageContext.request.contextPath}/board/boardList.do";
 	}
 	else {
-		url_="${pageContext.request.contextPath}/board/boardClubList.do?boardNo="+boardNo;
+		location.href ="${pageContext.request.contextPath}/board/boardClubList.do?boardNo="+boardNo;
 	}
-		$.ajax({
-			url:url_,
-			dataType:"json",
-			success:data=>{
-				console.log(data);
-				var list = data.list;
-				$(".quality-table.board tbody").children().remove();
-				for(var i in list){
-					let p = list[i];
-					$(".quality-table.board tbody").append("<tr class='getBo'><td>"+(Number(i)+1)+"</td><td>"+p.CATEGORY_TITLE+"</td><td>"+p.CATEGORY_WRITER+"</td><td hidden>"+p.CATEGORY_COMMENT+"</td><td>"+p.CATEGORY_DAY+"</td><td>"+p.BOARD_NAME+"</td><td><a href='#' onclick=detailBoard("+p.CATEGORY_NO+");>보기</a></td></tr>");
-				}
-			},
-			error : (jqxhr, textStatus, errorThrown)=>{
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
 });
 
-function detailBoard(tdCategoryNo){	
-	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+tdCategoryNo,function(){
+
+$(".boardDetailView").click(function(){
+	var boardNo = $(this).attr("id");
+	$('.controll-modal-body.boardDetailView').load("${pageContext.request.contextPath}/board/boardDetailView.do?categoryNo="+boardNo,function(){
         $('#boardDetailView').modal({backdrop: 'static', keyboard: false});
         $('#boardDetailView').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
         $(".controll-title").html("");
         $(".controll-title").html("상세보기");
 	});
+	});
 	
-};
 
 </script>
 
