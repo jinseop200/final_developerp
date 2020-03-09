@@ -2,16 +2,6 @@
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
- <div class="card shadow mb-4" style="clear:both;">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">조회 결과</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered quality-table" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -20,6 +10,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 <title>게시물 수정</title>
 </head>
 <body>
+
+
       <!-- search-container start -->
       <div id="insert-container">
           <form class="needs-validation" action="${pageContext.request.contextPath}/board/boardModifyEnd.do" 
@@ -69,16 +61,15 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 
 
 <style>
+.card-body.boardModify{
+}
 .modal-body{
- height: 500px;
 }
 #searchModal {
   width: 60%;
-  height: 150px;
 }
 #insert-container {
     width:660px;
-    height: 150px;
 }
 .modal-content{
 	width:700px;
