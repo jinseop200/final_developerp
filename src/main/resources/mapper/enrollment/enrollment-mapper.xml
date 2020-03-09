@@ -163,7 +163,6 @@
 		update product_list
 		set
 		VENDOR_NO = #{accountNo},
-		PT_NO = #{ptNo},
 		PRODUCT_NAME = #{productName},
 		INPRICE = #{inPrice},
 		OUTPRICE = #{outPrice},

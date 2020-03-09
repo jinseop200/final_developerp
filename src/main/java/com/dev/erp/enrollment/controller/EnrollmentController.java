@@ -706,7 +706,6 @@ public class EnrollmentController {
 	@RequestMapping("/enrollment/updateProduct.do")
 	public ModelAndView updateProduct(@RequestParam("productNo") String productNo,
 									 @RequestParam("accountNo") String accountNo,
-							 		 @RequestParam("ptNo") String ptNo,
 						 		 	 @RequestParam("productName") String productName,
 						 		 	 @RequestParam("inPrice") String inPrice,
 						 		 	 @RequestParam("outPrice") String outPrice,
@@ -717,7 +716,6 @@ public class EnrollmentController {
 			Map<String, String> product = new HashMap<>();
 			product.put("productNo", productNo);
 			product.put("accountNo", accountNo);
-			product.put("ptNo", ptNo);
 			product.put("productName", productName);
 			product.put("inPrice", inPrice);
 			product.put("outPrice", outPrice);

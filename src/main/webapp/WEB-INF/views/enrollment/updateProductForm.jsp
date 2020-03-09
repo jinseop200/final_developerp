@@ -32,15 +32,6 @@
 				</div>
 				<div class="form-row">
 					<div class="col-lg-20 mb-3 rowResize">
-					     <label for="ptNo">관리번호</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					     <input type="number" id="ptNo" name="ptNo" class="form-control bg-light small" placeholder="관리번호" aria-label="Search" aria-describedby="basic-addon2" readonly="readonly">
-					     <button class="btn btn-primary searchBtn" type="button" value="ptNo">
-						 <i class="fas fa-search fa-sm"></i>
-						 </button>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-20 mb-3 rowResize">
 					     <label for="productName">품목명</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					     <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="품목명" aria-label="Search" aria-describedby="basic-addon2">
 					</div>
