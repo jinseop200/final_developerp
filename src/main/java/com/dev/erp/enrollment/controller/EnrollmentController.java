@@ -746,7 +746,7 @@ public class EnrollmentController {
 						 		 	 @RequestParam("tol") String tol,
 						 		 	 @RequestParam("delivery") String delivery,
 										 ModelAndView mav) {
-		/*try {*/
+		try {
 			Map<String, String> product = new HashMap<>();
 			product.put("productNo", productNo);
 			product.put("accountNo", accountNo);
@@ -764,10 +764,10 @@ public class EnrollmentController {
 			//loger.info("result@Controller={}",result);
 			
 			mav.setViewName("redirect:/enrollment/productEnrollment.do");
-	/*	} catch(Exception e) {
+		} catch(Exception e) {
 			//loger.error(e.getMessage(), e);
 			throw new MyException("제품 수정 오류");
-		}*/
+		}
 		return mav;
 	}
 	
