@@ -148,6 +148,10 @@
 #rmModal{
 	z-index: 1060;
 }
+#dataTable tbody tr:hover td{
+	cursor : pointer;
+	background-color:#ccc;
+}
 </style>
 
 <!-- Page level plugins -->

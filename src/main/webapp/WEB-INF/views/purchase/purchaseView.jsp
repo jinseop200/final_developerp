@@ -80,8 +80,22 @@
 #rmModal{
 	z-index: 1060;
 }
+#dataTable tbody tr:hover td{
+	cursor : auto;
+	background-color:#ccc;
+}
 </style>
-
+<script>
+$(()=>{
+	
+	$("#dataTable").DataTable({
+		// 3번째 항목을 오름 차순 
+		// order : [ [ 열 번호, 정렬 순서 ], ... ]
+		order: [ [ 0, "desc" ] ]
+	});
+	
+})
+</script>
 <!-- Page level plugins -->
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>

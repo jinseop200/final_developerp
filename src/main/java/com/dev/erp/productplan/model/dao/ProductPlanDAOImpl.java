@@ -124,4 +124,9 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int sumLast3Months(String productName) {
 		return sqlSession.selectOne("productplan.sumLast3Months", productName);
 	}
+
+	@Override
+	public int insertOrderRequest(Map<String, String> map) {
+		return sqlSession.insert("productplan.insertOrderRequest", map);
+	}
 }

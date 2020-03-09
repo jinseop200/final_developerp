@@ -171,6 +171,7 @@ public class ProductPlanController {
 		try {
 			List<Map<String, String>> firstPL = productPlanService.selectFirstByPL();
 			JSONArray JfirstPL = convertListToJson(firstPL);
+			
 			mav.addObject("firstPL", JfirstPL);
 			mav.setViewName("productplan/purchasePlan");
 		} catch (Exception e) {
@@ -228,8 +229,6 @@ public class ProductPlanController {
 				switch(plan) {
 				case "product":
 					list = productPlanService.selectProduction(cPage, numPerPage, year);
-					logger.info("투썸={}",list);
-					logger.info("year={}", year);
 					totalContents= productPlanService.selectTotalContentsByP(year);
 					break;
 					
@@ -279,8 +278,8 @@ public class ProductPlanController {
 	//필요수량에 대한 구매계획 등록창
 	@RequestMapping("/productplan/orderRequest.do")
 	public ModelAndView insertPurchasePlanForm(ModelAndView mav,
-											   @RequestParam String[] rmNameArr,
-											   @RequestParam String requireAm) {
+											   @RequestParam("rmNameArr") String[] rmNameArr,
+											   @RequestParam("requireAm") String requireAm) {
 		try {
 			String rmName ="";
 			
@@ -299,6 +298,30 @@ public class ProductPlanController {
 			throw new MyException("발주요청 불러오기 오류!");
 		}
 		
+		return mav;
+	}
+	
+	//구매요청
+	@RequestMapping("/productplan/orderRequestEnd.do")
+	public ModelAndView orderRequestFormEnd(ModelAndView mav,
+											@RequestParam String enrollDate,
+											@RequestParam String dueDate,
+											@RequestParam String rmName,
+											@RequestParam String requireAmount,
+											@RequestParam String orderContent) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("enrollDate",enrollDate);
+		map.put("dueDate",dueDate);
+		map.put("rmName",rmName);
+		map.put("requireAmount",requireAmount);
+		map.put("orderContent",orderContent);
+		int result = productPlanService.insertOrderRequest(map);
+		
+		mav.addObject("msg",result>0?"원재료 구매요청 성공!":"원재료 구매요청 실패!");
+		mav.addObject("loc","/productplan/jobOrder.do");
+		mav.setViewName("common/msg");
+		mav.setViewName("redirect:/purchase/purchaseInsertView.do");
 		return mav;
 	}
 	
