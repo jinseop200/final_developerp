@@ -124,4 +124,9 @@ public class ProductPlanServiceImpl implements ProductPlanService {
 		return productPlanDAO.insertOrderRequest(map);
 	}
 
+	@Override
+	public String selectVendorNo(String rmNo) {
+		return productPlanDAO.selectVendorNo(rmNo);
+	}
+
 }

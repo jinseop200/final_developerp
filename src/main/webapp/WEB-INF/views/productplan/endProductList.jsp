@@ -16,9 +16,9 @@
 	cursor : auto;
 	background-color:#ccc;
 }
-.modal-body{
+/* .modal-body{
 	text-align: center;
-}
+} */
 
 </style>
 </head>
@@ -163,11 +163,18 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 				
 				
 				$.each(requireCal, function(i,each){
-					table += "<tr><td>"+each.rmNo+"</td><td>"+each.rmName+"</td><td>"+each.requiredQ+"</td><td>"+each.rmStock+"</td><td>"+(each.requiredQ-each.rmStock)+"</td></tr>";
+					table += "<tr><td>"+each.rmNo+"</td><td>"+each.rmName+"</td><td>"+each.requiredQ+"</td><td>"+each.rmStock+"</td><td class='requireAm'>"+(each.requiredQ-each.rmStock)+"</td></tr>";
 				});
 				
 				
 				$(".jo-table").append(table);
+				
+				var result = $(".requireAm");
+				$.each(result, function(index, td){
+					if(td.innerHTML > 0){
+						$(this).css("color", "red");
+					}
+				});
 				
 			},
 			error : (x, s, e)=>{

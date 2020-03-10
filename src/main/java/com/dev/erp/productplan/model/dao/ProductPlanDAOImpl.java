@@ -129,4 +129,9 @@ public class ProductPlanDAOImpl implements ProductPlanDAO {
 	public int insertOrderRequest(Map<String, String> map) {
 		return sqlSession.insert("productplan.insertOrderRequest", map);
 	}
+
+	@Override
+	public String selectVendorNo(String rmNo) {
+		return sqlSession.selectOne("productplan.selectVendorNo", rmNo);
+	}
 }

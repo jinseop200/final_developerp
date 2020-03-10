@@ -49,4 +49,6 @@ public interface ProductPlanService {
 
 	int insertOrderRequest(Map<String, String> map);
 
+	String selectVendorNo(String rmNo);
+
 }

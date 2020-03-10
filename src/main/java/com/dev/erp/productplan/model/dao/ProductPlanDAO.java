@@ -51,4 +51,6 @@ public interface ProductPlanDAO {
 
 	int insertOrderRequest(Map<String, String> map);
 
+	String selectVendorNo(String rmNo);
+
 }

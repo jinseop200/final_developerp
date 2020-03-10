@@ -143,11 +143,22 @@
 		<result column="R.quantity" property="rmStock"></result>
 		
 	</resultMap> -->
+	<select id="selectVendorNo" resultType="String">
+		select vendor_no
+		from raw_material
+		where rm_no = #{rmNo}
+	</select>
 	
 	<insert id="insertOrderRequest">
 		insert into order_request
 		values(
-			
+			#{rmNo},
+			#{vendorNo},
+			to_date(#{enrollDate}, 'yyyy/MM/dd'),
+			to_date(#{dueDate}, 'yyyy/MM/dd'),
+			#{rmName},
+			#{requireAmount},
+			#{orderContent}
 		)
 	</insert>
 	

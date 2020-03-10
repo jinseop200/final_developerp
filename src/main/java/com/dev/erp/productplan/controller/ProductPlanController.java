@@ -278,6 +278,7 @@ public class ProductPlanController {
 	//필요수량에 대한 구매계획 등록창
 	@RequestMapping("/productplan/orderRequest.do")
 	public ModelAndView insertPurchasePlanForm(ModelAndView mav,
+											   @RequestParam("rmNo") String rmNo,
 											   @RequestParam("rmNameArr") String[] rmNameArr,
 											   @RequestParam("requireAm") String requireAm) {
 		try {
@@ -290,7 +291,7 @@ public class ProductPlanController {
 					rmName+=str+" ";
 				
 			}
-			
+			mav.addObject("rmNo", rmNo);
 			mav.addObject("rmName", rmName);
 			mav.addObject("requireAm", requireAm);
 			mav.setViewName("productplan/orderRequest");
@@ -307,13 +308,19 @@ public class ProductPlanController {
 											@RequestParam String enrollDate,
 											@RequestParam String dueDate,
 											@RequestParam String rmName,
+											@RequestParam String rmNo,
 											@RequestParam String requireAmount,
 											@RequestParam String orderContent) {
+		
+		logger.info("민병준={}", rmNo);
+		String vendorNo = productPlanService.selectVendorNo(rmNo);
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("enrollDate",enrollDate);
 		map.put("dueDate",dueDate);
 		map.put("rmName",rmName);
+		map.put("rmNo",rmNo);
+		map.put("vendorNo",vendorNo);
 		map.put("requireAmount",requireAmount);
 		map.put("orderContent",orderContent);
 		int result = productPlanService.insertOrderRequest(map);

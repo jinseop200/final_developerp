@@ -21,15 +21,13 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css_mdb/mdb.min.css"> --%>
   
-  <style>
-  #graph{
-  	width: 90%;
-  	height:70%;
-  	margin: 0 auto;
-  }
-  
-  </style>
-  <style>
+<style>
+#graph{
+	width: 90%;
+	height:70%;
+	margin: 0 auto;
+}
+
 .form-control {
     display: inline;
 }
@@ -63,13 +61,20 @@ input[type=text]{
     display: inline-block;
     vertical-align: middle;
     content: " ";
-    height: 100%;
   }
 }
 .modal-dialog {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+}
+.modal-body {
+    height: auto!important;
+}
+.m1 .modal-content{
+	width: 530px;
+    height: 700px;
+    text-align: center;
 }
 </style>
 
@@ -91,7 +96,7 @@ input[type=text]{
 </div>
  
 <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="purchasePlan-modal">
+<div class="modal m1" tabindex="-1" role="dialog" id="purchasePlan-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -108,7 +113,7 @@ input[type=text]{
 </div>
 
 <!-- Modal2 -->
-<div class="modal" tabindex="-1" role="dialog" id="purchasePlan-modal2">
+<div class="modal m2" tabindex="-1" role="dialog" id="purchasePlan-modal2">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -150,7 +155,7 @@ input[type=text]{
 	                 <td>${r.rmName}</td>
 	                 <td>${r.requiredQ }</td>
 	                 <td>${r.rmStock }</td>
-	                 <td style="<c:if test='${r.requiredQ - r.rmStock > 0 }'>color:red;</c:if>">${r.requiredQ - r.rmStock }</td>
+	                 <td class="requireAm">${r.requiredQ - r.rmStock }</td>
 	               </tr>
 	             </c:forEach>
              </tbody>
@@ -168,6 +173,19 @@ input[type=text]{
 <!-- MDB core JavaScript (그래프 점)-->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/js_mdb/mdb.min.js"></script>
 <script>
+
+$(()=>{
+	
+	var result = $(".requireAm");
+	$.each(result, function(index, td){
+		if(td.innerHTML > 0){
+			$(this).css("color", "red");
+		}
+		
+	});
+	
+	
+});
 	var firstPL = ${firstPL};
 	
 	var rmName_=[];
@@ -239,7 +257,7 @@ $(".searchProduct-btn").click(function(){
 	
 //필요수량 구매계획 모달2
 	$(".jo-table tbody").on('dblclick', 'tr', function(){
-		
+		var rmNo = $(this).children().eq(0).html();
 		var rmName = $(this).children().eq(1).html();
 		var requireAm = $(this).children().eq(4).html();
 		
@@ -252,7 +270,7 @@ $(".searchProduct-btn").click(function(){
 			/* $(".order-body").css('display','block');
 			$(".epl-body").css('display','none'); */
 			
-			$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?rmNameArr="+rmNameArr+"&requireAm="+requireAm,function(){
+			$(".order-body").load("${pageContext.request.contextPath}/productplan/orderRequest.do?rmNo="+rmNo+"&rmNameArr="+rmNameArr+"&requireAm="+requireAm,function(){
 		        $('#purchasePlan-modal2').modal({backdrop: 'static', keyboard: false});
 		        $('#purchasePlan-modal2').modal({show:true});
 		        $(".modal-backdrop.in").css('opacity', 0.4);
