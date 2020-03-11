@@ -22,9 +22,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
                   <thead>
                     <tr>                    
                       <th>No</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      
+                      <th style="width:180px;">제목</th>
+                      <th style="width:75px;">작성자</th>
                       <th>작성일자</th>
                       <th>수정</th>
                       <th>삭제</th>

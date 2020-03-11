@@ -115,20 +115,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 	   
 	  $("input[type=date]").val(yyyy+"-"+mm+"-"+dd);
 
-	  $(".searchDocument").click(function(){
-	    	var title = $(this).siblings().html();
-	    	$("#searchModalTitle").html(title);
-	    	 $('.searchModalBody').load("${pageContext.request.contextPath}/board/boardSelectList.do",function(){
-	 	        $('#searchDocument').modal({backdrop: 'static', keyboard: false});
-	 	        $('#searchDocument').modal({show:true});
-	 	        $(".modal-backdrop.in").css('opacity', 0.4);
-	 		});
-	            
-	    });
 	  
-	  $(".searchModal-end").click(function(){
-	    	$('#searchDocument').modal("hide");
-	    }); 
 	  
 })
   

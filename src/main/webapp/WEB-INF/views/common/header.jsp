@@ -219,10 +219,10 @@
           <hr class="sidebar-divider">
 
           <!-- Heading -->
+           <c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
           <div class="sidebar-heading">
             Admin
           </div>
-           <c:if test='${memberLoggedIn.email eq "admin@admin.com"}'>
           <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
                 <i class="fas fa-fw fa-cog"></i>

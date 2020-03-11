@@ -88,7 +88,7 @@ border:1px solid #ccc;
 		    													</tr>
 		    													<tr>
 			    													<td style="width:75px; text-align:center;">성명</td>
-			    													<td style="width:320px; text-align:center; color:black;">${memberLoggedIn.empName}</td>
+			    													<td style="width:320px; text-align:center; color:black;">${list.docWriter}</td>
 		    														<c:if test="${list.docType=='휴가신청서'}">
 				    													<td style="width:90px; text-align:center;">휴가기간</td>
 				    													<td style="width:320px; text-align:center; color:black; font-size:14px;">${list.startDate}&nbsp;&nbsp;~&nbsp;&nbsp;${list.endDate}</td>
