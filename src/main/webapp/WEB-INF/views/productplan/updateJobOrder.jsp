@@ -8,20 +8,7 @@
 
 
 <style>
-.modal-body{
- height: 480px;
-}
-#searchModal {
-  width: 60%;
-  height: 150px;
-}
-#insert-container {
-    width:660px;
-    height: 150px;
-}
-.modal-content{
-	width:700px;
-}
+
 .ctm{
 	width: 400px;
 }
@@ -46,7 +33,13 @@
     background-color:#777;
     border-color: #777;
 }
-
+.sd-modal-body tbody tr:hover td{
+	cursor : pointer;
+	background-color:#ccc;
+}
+.sd-modal-body{
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -69,7 +62,7 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3 jResize">
 	                <label for="lotNo">납품처</label>&emsp;&emsp;
-	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.customer }">
+	                <input type="text" id="customer" name="customer" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.customer }" readonly>
 	                <button class="btn btn-primary searchSpec" type="button" value="customer" data-toggle="modal" data-target="#exampleModal">
 	                
 	                    <i class="fas fa-search fa-sm"></i>
@@ -85,7 +78,7 @@
 	        <div class="form-row">
 	            <div class="col-md-6 mb-3 jResize">
 	                <label for="type">제품명 </label>&emsp;&emsp;
-	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.productName }">
+	                <input type="text" id="productName" name="productName" class="form-control bg-light small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="${load.productName }" readonly>
 	                <button class="btn btn-primary searchSpec" type="button" value="productName">
 	                    <i class="fas fa-search fa-sm"></i>
 	                </button>
