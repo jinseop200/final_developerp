@@ -40,7 +40,7 @@ public class BoardController {
 		boardCategoryList = boardService.selectBoardCategoryList();	
 		boardList = boardService.selectBoardList();
 		
-		
+		mav.addObject("boardNo",0);
 		mav.addObject("boardlist",boardCategoryList);
 		mav.addObject("board",boardList);
 		mav.setViewName("board/boardList");
@@ -54,7 +54,7 @@ public class BoardController {
 		List<Board> boardList = new ArrayList<>();
 		boardClubList = boardService.selectBoardClubList(boardNo);
 		boardList = boardService.selectBoardList();
-		
+		mav.addObject("boardNo",boardNo);
 		mav.addObject("boardlist",boardClubList);
 		mav.addObject("board",boardList);
 		mav.setViewName("board/boardList");

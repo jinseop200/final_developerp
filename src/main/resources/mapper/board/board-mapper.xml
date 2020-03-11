@@ -42,11 +42,11 @@
 			</select>
 			
 			<select id="selectBoardCategoryList" resultType="map">
-				select C.*, B.BOARD_NAME BOARD_NAME, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY  from board_category C left join board B on C.board_no = B.board_no 
+				select C.*, B.BOARD_NAME BOARD_NAME, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY  from board_category C left join board B on C.board_no = B.board_no order by C.Category_date desc
 			</select>	
 			
 			<select id="selectBoardClubList" resultType="map">
-				select C.*, B.*, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no where C.board_no = #{boardNo} 
+				select C.*, B.*, to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no where C.board_no = #{boardNo} order by C.Category_date desc
 			</select>	 
 			
 			<select id="selectBoardList" resultType="board">
@@ -54,7 +54,7 @@
 			</select>
 			
 			<select id="selectBoardAllList" resultType="map">
-				select C.*,B.*,to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no order by C.board_no
+				select C.*,B.*,to_char(C.CATEGORY_DATE,'yyyy-MM-dd') CATEGORY_DAY from board_category C left join board B on C.board_no = B.board_no order by C.Category_date
 			</select>
 			<insert id="boardCommentInsert">
 				insert into board_comment values(SEQ_BOARD_COMMENT.NEXTVAL,#{BoardCommentLevel},#{email},#{name},#{BoardCommentContent},#{BoardRef},#{BoardCommentRef},DEFAULT)
@@ -78,6 +78,7 @@
 		<if test="_parameter!='관리자'">
 		where category_writer=#{categoryWriter}
 		</if>
+		order by Category_date desc
 		</select>
 		<delete id="boardDelete">
 		delete board_category where category_No=#{categoryNo}

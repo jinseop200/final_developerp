@@ -38,7 +38,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");%>
 							<select name="boardType" id="boardType" required>
 								<option value="" selected disabled >타입</option>
 									<c:forEach items="${board}" var="b">
-										<option value="${b.boardNo}">${b.boardName}</option>
+										<option value="${b.boardNo}" ${b.boardNo eq boardNo? 'selected':"" }>${b.boardName}</option>
 									</c:forEach>
 							</select>
 						</td>

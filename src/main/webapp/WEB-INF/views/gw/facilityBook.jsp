@@ -27,41 +27,7 @@
 						</p>
 						- 예약 시작 시간 : <select name="bookStarttime" id="reservS"
 							>
-<!-- 							onchange="selectReservStart(this.value)" -->
-							<option value="">시간선택(시작)</option>
-							<option value ="0600" >06:00</option> 
-							<option value="0630">06:30</option>
-							<option value="0700">07:00</option>
-							<option value="0730">07:30</option>
-							<option value="0800">08:00</option>
-							<option value="0830">08:30</option>
-							<option value="0900">09:00</option>
-							<option value="0930">09:30</option>
-							<option value="1000">10:00</option>
-							<option value="1030">10:30</option>
-							<option value="1100">11:00</option>
-							<option value="1130">11:30</option>
-							<option value="1200">12:00</option>
-							<option value="1230">12:30</option>
-							<option value="1300">13:00</option>
-							<option value="1330">13:30</option>
-							<option value="1400">14:00</option>
-							<option value="1430">14:30</option>
-							<option value="1500">15:00</option>
-							<option value="1630">16:30</option>
-							<option value="1700">17:00</option>
-							<option value="1730">17:30</option>
-							<option value="1800">18:00</option>
-							<option value="1830">18:30</option>
-							<option value="1900">19:00</option>
-							<option value="1930">19:30</option>
-							<option value="2000">20:00</option>
-							<option value="2030">20:30</option>
-							<option value="2100">21:00</option>
-							<option value="2130">21:30</option>
-							<option value="2200">22:00</option>
-							<option value="2330">23:30</option>
-							<option value="2400">24:00</option>
+
 						</select> <br>
 						</p>
 						- 예약 종료 시간 : <select name="bookEndtime" id="reservE">
@@ -213,6 +179,34 @@ function bookValidate(){
 					url: "${pageContext.request.contextPath}/facility/facilityTime.do?bookDay="+bookDay+"&facilityNo="+facilityNo,
 					dataType: "json",
 					success: data => {
+						  var rsSi = parseInt('0600'.substring(0,2)); 
+						    var rsBun = '0600'.substring(2,4); 
+					
+						   $("#reservS option").each(function() { 
+						        $(this).remove(); 
+						     }); 
+						     $("#reservS").append("<option value=''>시간선택(시작)</option>"); 
+						$("#reservS option:eq("+0+")").attr("selected","selected");
+						     for(var i=0; i<40; i++){						  						    						    	
+						       if(rsBun == 30){ 
+						         rsSi = rsSi + 1; 
+						         rsBun = "00"; 
+						         }else if(rsBun == 00){ 
+						         rsBun = "30"; 
+						      } 
+						       
+						      if(rsSi > 9){ 
+						    	  if(rsSi>23&&rsBun==30)
+						    		  break;
+						        $("#reservS").append("<option value='"+ rsSi + rsBun + "'>"+ rsSi + ":" + rsBun + "</option>"); 
+						        } else { 
+						        $("#reservS").append("<option value='0"+ rsSi + rsBun + "'>0"+ rsSi + ":" + rsBun + "</option>"); 
+						     } 
+						     }
+						   $("#reservE option").each(function() { 
+						        $(this).remove(); 
+						     }); 
+						     $("#reservE").append("<option value=''>시간선택(종료)</option>"); 
 						var reservS = document.getElementById('reservS');
 						var count = reservS.childElementCount;
 						var str='';
@@ -232,8 +226,10 @@ function bookValidate(){
 							if((facility.bookStarttime*1)<=num&&(facility.bookEndtime*1)>=num)
 								{
 								$("#reservS option:eq("+i+")").prop('disabled',true);
-								var text=$("#reservS option:eq("+i+")").text();
+								var text=$("#reservS option:eq("+i+")").text();	
+								if(!text.match('마감'))
 								$("#reservS option:eq("+i+")").text(text+'(마감)');
+								
 								}
 
 							}
@@ -253,6 +249,30 @@ function bookValidate(){
 				url: "${pageContext.request.contextPath}/facility/facilityTime.do?bookDay="+bookDay+"&facilityNo="+facilityNo,
 				dataType: "json",
 				success: data => {
+					  var rsSi = parseInt('0600'.substring(0,2)); 
+					    var rsBun = '0600'.substring(2,4); 
+				
+					   $("#reservS option").each(function() { 
+					        $(this).remove(); 
+					     }); 
+					     $("#reservS").append("<option value=''>시간선택(시작)</option>"); 
+					$("#reservS option:eq("+0+")").attr("selected","selected");
+					     for(var i=0; i<40; i++){						  						    						    	
+					       if(rsBun == 30){ 
+					         rsSi = rsSi + 1; 
+					         rsBun = "00"; 
+					         }else if(rsBun == 00){ 
+					         rsBun = "30"; 
+					      } 
+					       
+					      if(rsSi > 9){ 
+					    	  if(rsSi>23&&rsBun==30)
+					    		  break;
+					        $("#reservS").append("<option value='"+ rsSi + rsBun + "'>"+ rsSi + ":" + rsBun + "</option>"); 
+					        } else { 
+					        $("#reservS").append("<option value='0"+ rsSi + rsBun + "'>0"+ rsSi + ":" + rsBun + "</option>"); 
+					     } 
+					     }
 					var reservS = document.getElementById('reservS');
 					var count = reservS.childElementCount;
 					var str='';

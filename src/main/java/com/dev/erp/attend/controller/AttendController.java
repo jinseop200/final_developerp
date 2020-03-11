@@ -39,13 +39,13 @@ public class AttendController {
 						 .orElseThrow(IllegalStateException::new);
 			List<Attend> list= attendService.attendShow(email);
 			String content="";
-	
+			System.out.println("aaaaaaaaaaaaa"+list);
 			for(Attend a:list) {
 				if(a.getReason()!=null)
 				if(a.getEarlyAttend()!=null)
 				{
 					content+=",{title:'*조퇴 사유 :"+a.getReason()+"',start:'"+a.getEarlyAttendForm()+"'}";
-					content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend()+"',start:'"+a.getEarlyAttendForm()+"'}";
+					content+=",{title:'*조퇴 시간 :"+a.getEarlyAttend().substring(11,16)+"',start:'"+a.getEarlyAttendForm()+"'}";
 				}
 				else if(a.getReason().equals("휴가"))
 				{
@@ -54,9 +54,9 @@ public class AttendController {
 				}
 				if(a.getReason()==null) {
 				if(a.getAttendStart()!=null)
-					content+=",{title:'-출근:"+a.getAttendStart()+"',start:'"+a.getAttendStartForm()+"'}";
+					content+=",{title:'-출근 시간:"+a.getAttendStart().substring(11,16)+"',start:'"+a.getAttendStartForm()+"'}";
 				if(a.getAttendEnd()!=null)
-					content+=",{title:'-퇴근:"+a.getAttendEnd()+"',start:'"+a.getAttendEndForm()+"'}";
+					content+=",{title:'-퇴근 시간:"+a.getAttendEnd().substring(11,16)+"',start:'"+a.getAttendEndForm()+"'}";
 				}
 			}
 	
@@ -119,7 +119,7 @@ public class AttendController {
 		
 			int result=attendService.attendant(email);
 			script = "self.close(); opener.location.reload(true)";
-			mav.addObject("msg", result>0?"출근 성공!":"출근 실패!");
+			mav.addObject("msg", result>0?"출근 처리 완료!":"출근 처리 실패!");
 			mav.addObject("script",script);
 			mav.setViewName("common/msg");
 		
@@ -137,7 +137,7 @@ public class AttendController {
 		mav.addObject("loc", "/attend/attendList.do?email=${memberLoggedIn.email]");
 		
 			int result=attendService.leave(email);
-			mav.addObject("msg", result>0?"퇴근 성공!":"퇴근 실패!");
+			mav.addObject("msg", result>0?"퇴근 처리 완료!":"퇴근 처리 실패!");
 			mav.setViewName("common/msg");
 		return mav;
 	}catch(Exception e) {
@@ -153,7 +153,7 @@ public class AttendController {
 		String script = "self.close(); opener.location.reload(true)";
 		mav.addObject("script",script);
 		mav.addObject("loc", "/attend/attendList.do?email=${memberLoggedIn.email]");
-			mav.addObject("msg", result>0?"조퇴 성공!":"조퇴 실패!");
+			mav.addObject("msg", result>0?"조퇴 처리 완료!":"조퇴 처리 실패!");
 			mav.setViewName("common/msg");
 		
 		return mav;
