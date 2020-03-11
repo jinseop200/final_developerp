@@ -264,27 +264,26 @@ console.log(barData);
 var month = [];
 var output1 = [];
 var output2 = [];
-var date = barData[0].date;
+var date = "all";
 for(let i in barData){
 	
-	var fb = {};
-	var sb = {};
+	var bar = barData[i];
 	
-	if(i<12){
-		fb = barData[i];
-		month.push(fb.month+"월");
-		output1.push(fb.output);
-	} 
-	else{
-		sb = barData[i];
-		output2.push(sb.output);
+	if(bar.date == '2019'){
+		output1.push(bar.output);
 	}
-	
+	if(bar.date == '2020'){
+		output2.push(bar.output);
+	}
+		
 }
+for(var n=1; n<=12; n++)
+	month.push(n+"월");
+	
 createBarChart(month, output1, output2, date);
 
 function createBarChart(month, output1, output2, date){
-	if(output2 == "" && date == "2019"){
+	if(date == "2019"){
 		//그래프 자바스크립트
 		//bar
 		var ctxB = document.getElementById("barChart").getContext('2d');
@@ -339,7 +338,7 @@ function createBarChart(month, output1, output2, date){
 		}
 		});
 	}
-	else if(output2 == "" && date == "2020"){
+	else if(date == "2020"){
 		//그래프 자바스크립트
 		//bar
 		var ctxB = document.getElementById("barChart").getContext('2d');
@@ -350,7 +349,7 @@ function createBarChart(month, output1, output2, date){
 		datasets: [{
 		//first bar
 		label: '2020년 생산량',
-		data: output1,
+		data: output2,
 		backgroundColor: [
 		'rgba(255, 99, 132, 0.2)', //1월
 		'rgba(54, 162, 235, 0.2)', //2월

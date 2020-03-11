@@ -94,7 +94,7 @@ function morePage(a,b){
 			$(".endProduct-table tbody").children().remove();
 			for(var i in list) {
 				let l = list[i];
-				console.log("list="+l);	
+				console.log(l);	
 				$(".endProduct-table tbody").append("<tr><td>"+(Number(i)+(data.cPage-1)*10+1)+"</td><td>"+l.plNo+"</td><td>"+l.productName+"</td><tr>");
 			}
 			$(".pageBar").html(data.pageBar);
@@ -221,23 +221,22 @@ $(".endProduct-table tbody").on('dblclick','tr',function(){
 				var month = [];
 				var output1 = [];
 				var output2 = [];
-				var date = barData_[0].date;
+				var date = $(".yearList option:selected").val();
 				
 				for(let i in barData_){
 					
-					var fb = {};
-					var sb = {};
-					if(i<12){
-						fb = barData_[i];
-						month.push(fb.month+"월");
-						output1.push(fb.output);
-					} 
-					else{
-						sb = barData[i];
-						output2.push(sb.output);
+					var bar = barData_[i]; 
+					
+					if(bar.date == '2019'){
+						output1.push(bar.output);
 					}
 					
+					if(bar.date == '2020'){
+						output2.push(bar.output);
+					}
 				}
+				for(var n=1; n<=12; n++)
+					month.push(n+"월");
 				console.log(output1);
 				createBarChart(month, output1, output2, date);
 			},
