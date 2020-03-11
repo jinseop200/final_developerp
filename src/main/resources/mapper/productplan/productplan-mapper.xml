@@ -77,7 +77,7 @@
 	</select>
 	
 	<select id="productionPlanDate" resultType="String">
-		select to_char(sysdate,'yyyy')||'년 ' || to_number(to_char(add_months(sysdate,1),'mm'))||'월'
+		select to_char(sysdate,'yyyy')||'년 ' || to_number(to_char(sysdate,'mm'))||'월'
 		from dual
 	</select>
 	
