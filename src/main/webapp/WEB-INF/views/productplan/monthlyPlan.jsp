@@ -150,7 +150,7 @@ h6{
 			    <tr>
 			      <th>완제품 계획</th>
 			      <th>완제품 실적</th>
-			      <th>달성율</th>
+			      <th>달성률</th>
 			    </tr>
 			  </thead>
 			  <tbody>
