@@ -136,7 +136,7 @@ function goChat(chatId){
         $('#messengerChat').modal({show:true});
         $(".modal-backdrop.in").css('opacity', 0.4);
        	$(".control-title-messengerChat").html("");
-        $(".control-title-messengerChat").html("채팅방");
+        $(".control-title-messengerChat").html("MessengerChat");
 	});
 };
 
