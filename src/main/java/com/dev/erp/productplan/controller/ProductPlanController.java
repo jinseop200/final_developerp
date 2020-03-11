@@ -70,11 +70,12 @@ public class ProductPlanController {
 				//전체 생산현항 데이터
 				int epPlan = productPlanService.selectTotalEpPlan(empty);
 				int epResult = productPlanService.selectTotalEpResult(empty);
-				int epAttainment = (100*epResult)/epPlan;
+				double epAttainment = (100.0*epResult)/epPlan;
 				
 				String epPlanStr = NumberFormat.getInstance().format(epPlan);
 				String epResultStr = NumberFormat.getInstance().format(epResult);
-				String epAttainmentStr = NumberFormat.getInstance().format(epAttainment);
+				String epAttainmentStr = String.format("%.1f", epAttainment);
+				
 				Map<String, String> totalStatus = new HashMap<>();
 				totalStatus.put("epPlan", epPlanStr);
 				totalStatus.put("epResult", epResultStr);
@@ -83,12 +84,16 @@ public class ProductPlanController {
 				//선택된 제품 현황 데이터
 				int spPlan = productPlanService.selectTotalEpPlan(param);
 				int spResult = productPlanService.selectTotalEpResult(param);
-				int spAttainment = (100*spResult)/spPlan;
+				double spAttainment = (100.0*spResult)/spPlan;
 				
-				Map<String, Integer> selectedStatus = new HashMap<>();
-				selectedStatus.put("spPlan", spPlan);
-				selectedStatus.put("spResult", spResult);
-				selectedStatus.put("spAttainment", spAttainment);
+				String spPlanStr = NumberFormat.getInstance().format(spPlan);
+				String spResultStr = NumberFormat.getInstance().format(spResult);
+				String spAttainmentStr = String.format("%.1f", spAttainment);
+				
+				Map<String, String> selectedStatus = new HashMap<>();
+				selectedStatus.put("spPlan", spPlanStr);
+				selectedStatus.put("spResult", spResultStr);
+				selectedStatus.put("spAttainment", spAttainmentStr);
 				
 				
 				List<Map<String, String>> barData = productPlanService.monthlyOutputByProduct(param);
@@ -385,7 +390,7 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/searchDetailsPage.do")
 	@ResponseBody
 	public ModelAndView searchDetailsPage(ModelAndView mav,
-										  @RequestParam String searchType,
+										  @RequestParam(value="searchType") String searchType,
 										  @RequestParam(defaultValue="1") int cPage,
 										  HttpServletResponse response) {
 		try {
