@@ -61,7 +61,7 @@ public class MemberController {
 			int result =memberService.insertMember(member);
 				
 			String msg="";
-			String loc="/main/main.do?email="+email;
+			String loc="/member/memberEnroll.do";
 			if(result>0) {
 				msg="회원추가성공!";
 			}
