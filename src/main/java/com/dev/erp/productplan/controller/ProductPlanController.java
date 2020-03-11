@@ -194,7 +194,7 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/showRequireCalByProduct.do")
 	@ResponseBody
 	public ModelAndView showRequireCalByProduct(ModelAndView mav,
-												@RequestParam String productNo,
+												@RequestParam(value="productNo") String productNo,
 												HttpServletResponse response) {
 		
 		try {
