@@ -31,10 +31,10 @@
                       <th>핸드폰</th>
                       <th>부서명</th>
                       <th>직급</th>
-                      <th>HIRE_DATE</th>
+                      <th>입사일</th>
                      
-                      <th>삭제</th>
                       <th>수정</th>
+                      <th>삭제</th>
                    
                     </tr>
                   </thead>
@@ -48,8 +48,8 @@
 	                      <td>${l.deptCode }</td>
 	                      <td>${l.jobCode }</td>
 	                      <td>${l.hireDate }</td>                  	                    
-	                      <td><button class="btn btn-primary" type="button"  id="Delete" >삭제</button></td>              	                    
 	                      <td><button class="btn btn-primary" type="button" id="Modify">수정하기</button> </td>
+	                      <td><button class="btn btn-primary" type="button"  id="Delete" >삭제</button></td>              	                    
 	                    </tr>
                   	</c:forEach>
                   </tbody>
