@@ -114,8 +114,8 @@ public class ProductPlanController {
 	@RequestMapping("/productplan/showBarChart.do")
 	@ResponseBody
 	public ModelAndView showBarChart(ModelAndView mav,
-									 @RequestParam String productNo,
-									 @RequestParam String year,
+									 @RequestParam(value="productNo") String productNo,
+									 @RequestParam(value="year") String year,
 									 HttpServletResponse response) {
 		
 			try {
