@@ -151,13 +151,18 @@ public class ProductPlanController {
 	public ModelAndView predictNextOutput(ModelAndView mav,
 										  @RequestParam("productName") String productName) {
 		
-		String ppDate = productPlanService.productionPlanDate();
-		double outputSum = productPlanService.sumLast3Months(productName);
-		int avg = (int)Math.round(outputSum/3);
-		
-		mav.addObject("ppDate", ppDate);
-		mav.addObject("avg", avg);
+		try {
+			String ppDate = productPlanService.productionPlanDate();
+			double outputSum = productPlanService.sumLast3Months(productName);
+			int avg = (int)Math.round(outputSum/3);
+			
+			mav.addObject("ppDate", ppDate);
+			mav.addObject("avg", avg);
+		} catch (Exception e) {
+			throw new MyException("생산 계획량 게산 오류!");
+		}
 		mav.setViewName("productplan/predictNextOutput");
+		
 		return mav;
 	}
 	
@@ -312,23 +317,25 @@ public class ProductPlanController {
 											@RequestParam String requireAmount,
 											@RequestParam String orderContent) {
 		
-		logger.info("민병준={}", rmNo);
-		String vendorNo = productPlanService.selectVendorNo(rmNo);
-		
-		Map<String, String> map = new HashMap<>();
-		map.put("enrollDate",enrollDate);
-		map.put("dueDate",dueDate);
-		map.put("rmName",rmName);
-		map.put("rmNo",rmNo);
-		map.put("vendorNo",vendorNo);
-		map.put("requireAmount",requireAmount);
-		map.put("orderContent",orderContent);
-		int result = productPlanService.insertOrderRequest(map);
-		
-		mav.addObject("msg",result>0?"원재료 구매요청 성공!":"원재료 구매요청 실패!");
-		mav.addObject("loc","/productplan/jobOrder.do");
-		mav.setViewName("common/msg");
-		mav.setViewName("redirect:/purchase/purchaseInsertView.do");
+		try {
+			String vendorNo = productPlanService.selectVendorNo(rmNo);
+			
+			Map<String, String> map = new HashMap<>();
+			map.put("enrollDate",enrollDate);
+			map.put("dueDate",dueDate);
+			map.put("rmName",rmName);
+			map.put("rmNo",rmNo);
+			map.put("vendorNo",vendorNo);
+			map.put("requireAmount",requireAmount);
+			map.put("orderContent",orderContent);
+			int result = productPlanService.insertOrderRequest(map);
+			
+			mav.addObject("msg",result>0?"원재료 구매요청 성공!":"원재료 구매요청 실패!");
+			mav.addObject("loc","/purchase/purchaseInsertView.do");
+			mav.setViewName("common/msg");
+		} catch (Exception e) {
+			throw new MyException("원재료 구매요청 오류!");
+		}
 		return mav;
 	}
 	
